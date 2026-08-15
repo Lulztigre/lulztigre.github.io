@@ -5,8 +5,16 @@
     <link>https://lulztigre.pw/</link>
     <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Aug 2026 21:30:00 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 15 Aug 2026 23:01:10 GMT</lastBuildDate>
     <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
+
+        <item>
+      <title>DropoutJeep: The Phishing Simulator That Refuses to Drop Out</title>
+      <link>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</link>
+      <guid>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</guid>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <description>DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.</description>
+    </item>
 
     <item>
       <title>GrandScream: From One Desk Phone to a Root PBX</title>

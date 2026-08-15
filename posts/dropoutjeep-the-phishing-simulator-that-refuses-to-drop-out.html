@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DropoutJeep: The Phishing Simulator That Refuses to Drop Out // LulzTigre Research</title>
+  <meta name="description" content="DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.">
+  <meta name="author" content="LulzTigre Research">
+
+  <meta property="og:title" content="DropoutJeep: The Phishing Simulator That Refuses to Drop Out">
+  <meta property="og:description" content="DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body);"></script>
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <div id="reading-progress"></div>
+
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>MEMO #006</span>
+      <span>STATUS: PUBLISHED NOTEBOOK</span>
+    </div>
+    <div class="ticker-right">
+      <span>SHORTCUT: [T] THEME / [ESC] BACK</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">KERNEL</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="../archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="../about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="../feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <header class="article-header">
+    <div class="container">
+      <div class="article-breadcrumbs">
+        <a href="../index.html">ROOT</a> <span>/</span> 
+        <a href="../archive.html">DISPATCHES</a> <span>/</span> 
+        <span>MEMO #006</span>
+      </div>
+
+      <h1 class="article-title">DropoutJeep: The Phishing Simulator That Refuses to Drop Out</h1>
+
+      <div class="article-meta-panel">
+        <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-08-15</strong></div>
+        <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>LulzTigre Research</strong></div>
+        <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
+        <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~12 MIN</strong></div>
+        <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #RED TEAM #PHISHING #AUTOMATION</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="article-layout">
+      
+      <article class="prose">
+        <div class="callout callout-definition" id="abstract">
+          <div class="callout-header">
+            <span>[ABSTRACT & CORE THESIS]</span>
+          </div>
+          <p>DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.</p>
+        </div>
+
+        <h2 id="1-introduction-the-origin-story-featuring-a-confused-hr-department">1. Introduction: The Origin Story (Featuring a Confused HR Department)</h2>
+
+<p>Every great security project starts with a humble question. Ours was: "Would our own phishing emails fool our own HR department?"</p>
+
+<p>The answer, delivered with the brutal honesty of a spam folder, was no. The emails weren't just caught — they were caught so fast we briefly suspected HR had installed a custom SNORT rule aimed specifically at us. Our carefully crafted "Please reset your password" messages went to spam with the speed and finality of a Nigerian prince's inheritance.</p>
+
+<p>And so DropoutJeep was born: a phishing simulation and security awareness platform that exists to answer one question — "could this campaign actually work?" — before the real attackers ask it on your behalf.</p>
+
+<div class="callout callout-definition"><div class="callout-header"><span>DEFINITION: DROPOUTJEEP</span></div><p>A Flask + SQLAlchemy platform that runs phishing email campaigns, builds fake landing pages, proxies real websites through a transparent MITM engine to capture credentials and MFA tokens, and generally does everything a real phishing operation does — except with written authorization and a dashboard that tracks click rates instead of a burner laptop and a prayer.</p></div>
+
+<p>The name, by the way, is a lie. This thing refuses to drop out. Every time we declare the feature list finished, a gap analysis shows up and the framework gains fifteen new modules and an existential crisis.</p>
+
+<h2 id="2-why-is-it-in-development-spoiler-emails-go-to-spam">2. Why Is It in Development? (Spoiler: Emails Go to Spam)</h2>
+
+<p>The framework is in continuous development for one reason, and it rhymes with "deliverability."</p>
+
+<p>Here is a sentence we never expected to write in a security blog: <strong>the hardest part of phishing is not the hacking — it is the inbox.</strong> You can have the best payload in the world, but if your email lands in the spam folder next to "URGENT: Your Package Is Waiting," you have successfully performed a denial of service against yourself.</p>
+
+<p>The internal gap analysis (yes, we wrote ourselves a 500-line performance review; we are that kind of team) surfaced a series of findings that can only be described as self-inflicted:</p>
+
+<pre data-lang="python"><code>msg['X-Mailer'] = 'DropoutJeep Mailer'      # the confession
+msg['X-DropoutJeep-Sim'] = 'true'           # the double confession</code></pre>
+
+<div class="callout callout-remark"><div class="callout-header"><span>REMARK: THE SIM HEADERS INCIDENT</span></div><p>For months, the mailer stamped every outgoing message with two custom headers announcing its own identity. This is the equivalent of mailing a letter with "THIS IS A TEST, PLEASE DO NOT BELIEVE THE CONTENTS" printed on the envelope in Comic Sans. Gmail, Outlook, and Proofpoint all read these headers and reacted accordingly — which is to say, they did our blue team's job for us.</p></div>
+
+<p>The fixes that followed read like a twelve-step program for email rehabilitation:</p>
+
+<ul>
+<li><strong>DKIM coverage</strong> — now signs Message-ID, Reply-To, List-Unsubscribe, and Content-Transfer-Encoding, because Gmail's verifier checks for Message-ID and we were effectively showing up to a job interview without a resume.</li><li><strong>BIMI support</strong> — Gmail and Outlook now display sender logos, so a BIMI-authenticated sender gets a logo in the inbox. We built the record generator, because nothing says "legitimate business" like a logo sitting next to your phishing email.</li><li><strong>ARC chains</strong> — for mail that gets forwarded through group mailboxes, aliases, and O365 transport rules. Without ARC, forwarded mail fails DMARC at the final destination. With ARC, your mail passes. That is the point. That is always the point.</li><li><strong>FBL registration</strong> — we now register with the Gmail, Microsoft, Comcast, Yahoo, and Verizon feedback loops to receive spam complaint notifications. Yes, you read that correctly: we signed up to receive complaints about our own phishing emails. We call it professional growth.</li><li><strong>Domain warmup</strong> — a 30-day automated cycle that sends increasing volumes of benign content (newsletters, internal memos, and cat facts) to build sender reputation. The cat facts are essential. Gmail's TensorFlow classifier has never once flagged a cat fact.</li>
+</ul>
+
+<div class="callout callout-theorem"><div class="callout-header"><span>THEOREM 1: THE DELIVERABILITY PARADOX</span></div><p>An email campaign's success is inversely proportional to how detectable its tooling is. Corollary: if your phishing framework stamps "SIMULATION" on the envelope, you do not have a phishing framework — you have a very expensive way to practice composing emails.</p></div>
+
+<h2 id="3-capabilities-the-swiss-army-chainsaw">3. Capabilities: The Swiss Army Chainsaw</h2>
+
+<p>At the time of writing, the platform ships 80-plus utility modules. We will now take you on a guided tour of the arsenal, because a framework this ambitious deserves to be shown off before it inevitably gets used against us.</p>
+
+<h3>3.1 OSINT and Recon (Stalking, But Legal)</h3>
+
+<ul>
+<li><strong>osint_linkedin</strong> — scrapes LinkedIn for job title, department, manager name, and recent activity. Output: a pretext brief referencing the target's actual projects and actual people. "Following up on the Q3 planning meeting with [real manager name]" is 100x more effective than "Verify your account," which every filter on earth has seen 100 million times.</li><li><strong>breach_lookup</strong> — checks DeHashed and IntelX for the target's email in public breach dumps. If their password leaked in 2019, the most convincing pretext is their own password: "Your password Winter2024! was found in a public database. Please reset immediately." It works every time, because nobody can resist clicking on their own leaked password. It is the phishing equivalent of hearing your name in a crowded room.</li><li><strong>geoip</strong> — IP enrichment via ipapi.co, because every good pretext needs a timezone.</li>
+</ul>
+
+<h3>3.2 Pretext and Branding (The Art of the Lie)</h3>
+
+<ul>
+<li><strong>pretext_gen</strong> — pulls from Google News RSS, NWS weather alerts, NVD CVE feeds, and SEC EDGAR to generate current-event pretexts. Nothing says "legitimate security alert" like referencing a CVE that actually exists. The weather variant is especially fun: "Due to severe weather, please confirm your remote work status." The storm is real. The link is not.</li><li><strong>branding_clone</strong> — takes a target company's login URL, scrapes the CSS, logo, and colors, and generates a matching login page. The clone is so faithful that targets assume IT redesigned the portal over the weekend. The four-tier logo detection heuristic is our proudest achievement and we will not be taking questions.</li><li><strong>template_marketplace</strong> — role-specific templates: Finance expects "Payment confirmation required," HR expects "New employee onboarding," Legal expects "Contract review required." Generic "Security Alert" templates are for people who also use the same password everywhere.</li>
+</ul>
+
+<h3>3.3 Payloads (We Wrote an OLE Writer From Scratch)</h3>
+
+<ul>
+<li><strong>equation_editor</strong> — CVE-2017-11882 (Equation Editor RCE) embedded in a DOCX as an OLE object. Still works on unpatched Office. It is 2017 and it is still working, which is either a testament to the exploit or a scathing indictment of corporate patching habits. Both, probably.</li><li><strong>remote_template</strong> — CVE-2017-0199: a DOCX that fetches a remote template from your server, which responds with an HTA. The target opens the Word document, Word does the rest, and the target goes back to their spreadsheet none the wiser.</li><li><strong>search_ms</strong> — LNK files abusing the search-ms: protocol, the number one Mark-of-the-Web bypass vector. Explorer connects to your WebDAV, loads the payload DLL, and executes — no MOTW, no warning, no "are you sure?" prompt. The file the target double-clicks might as well have "yes, I am sure" pre-filled.</li><li><strong>onenote_packager</strong> — embeds executables as attachments inside .one files. OneNote opens, the payload is right there, double-click, done. It is like a PowerPoint presentation, except the slide is a backdoor.</li><li><strong>macro_generator</strong> — DOCM and DOC files with auto-open VBA macros, powered by a full from-scratch OLE2 MS-CFB writer. We wrote our own OLE compound file format writer from scratch. That is a sentence that should concern you. The four macro obfuscation modes (chr, concat, callbyname, mixed) exist because we believe in death by a thousand string concatenations.</li><li><strong>html_smuggler</strong> — JJEncode-obfuscated JavaScript, XOR-chunked payloads, an interaction gate that assembles the payload only after a mousemove, and navigator.webdriver detection. The fake "loading..." animation is our little gift to the target.</li>
+</ul>
+
+<div class="callout callout-remark"><div class="callout-header"><span>REMARK: PAYLOAD PHILOSOPHY</span></div><p>The payload doctrine is simple: the target opens the file, the payload runs, the target goes back to work. No "Enable Content" prompts, no "are you sure you want to run macros?" — in 2026, "click to enable macros" is the phishing equivalent of a flip phone. The modern target never knows anything happened, which is either very impressive or very sad depending on whose side you are on.</p></div>
+
+<h3>3.4 C2 and Exfiltration (Your C2 Is a Meme Account Now)</h3>
+
+<ul>
+<li><strong>dead_drop</strong> — resolves C2 instructions from public surfaces: GitHub Gists, Pastebin, and Reddit user profiles. Your command-and-control is a Reddit account with three karma. If the SOC asks, you were just posting cat pictures to r/aww.</li><li><strong>websocket_c2</strong> — WebSocket C2 on port 443 via flask_sock, because port 443 is the one port no firewall dares close.</li><li><strong>domain_fronting</strong> — CDN fronting across Azure, Cloudflare, Fastly, and CloudFront. The beacon talks to Azure's CDN, Azure's CDN talks to your server, and the SOC's logs show traffic to Microsoft. Technically true.</li><li><strong>saas_mimicry</strong> — beacons that look like Teams or Slack traffic. The SOC analyst sees a Teams heartbeat and thinks "good, the company is collaborating." They are collaborating with you.</li><li><strong>doh_exfil / icmp_exfil</strong> — exfiltration over DNS-over-HTTPS and ICMP tunnels. The ICMP variant uses raw sockets and Windows ctypes, because nothing says "sophisticated exfil" like pinging your way out of a network. The network team will blame the fish tank.</li><li><strong>stegano</strong> — LSB image steganography for PNG and BMP. Hiding your loot in a cat picture is not just covert — it is the closest this industry gets to art.</li><li><strong>multi_hop_proxy</strong> — SOCKS5 chains with per-hop TLS. For when one proxy is not enough and you need to make the attribution analyst cry.</li>
+</ul>
+
+<h3>3.5 Evasion and Persistence (We Read Your EDR's Manual)</h3>
+
+<ul>
+<li><strong>stager_evasion</strong> — AMSI bypass via hardware breakpoints, ETW patching across eight functions, direct syscalls, and sleep obfuscation. We do not want to alarm anyone, but your EDR should be alarmed.</li><li><strong>sandbox_evasion</strong> — the WESTERN_EDR_PROCESSES list knows your EDR by name. Conditional execution based on process list, because a payload that detonates in a sandbox is just a very expensive screensaver.</li><li><strong>ip_reputation</strong> — conditional execution by IP and ASN, with a research-IP blocklist. If you are scanning from a university IP, the payload politely declines to execute. It is not you, it is your ASN.</li><li><strong>persistence</strong> — COM hijacking, .NET profiler injection via COR_ENABLE_PROFILING (Defender does not check environment variables for profiler injection; we checked), and IFEO debugger hijack. The IFEO variant is special: when the EDR tries to restart, your implant runs instead. It is the most passive-aggressive persistence mechanism in existence.</li>
+</ul>
+
+<h3>3.6 The MITM Proxy (The Crown Jewel)</h3>
+
+<p>The reverse proxy is where DropoutJeep stops being a phish kit and starts being a platform. It proxies the real website transparently — the target sees the real site, but form submissions flow through your server first. Capabilities include content manipulation rules, JavaScript injection, form replacement, credential extraction, MFA relay, cookie capture, curl_cffi JA3 spoofing, and a Playwright browser-in-the-middle.</p>
+
+<p>In other words: the target logs into "their" bank, and you log in right behind them, wearing their session like a stolen coat. And because it is an awareness platform, you then email them a report card.</p>
+
+<h2 id="4-architecture-or-how-we-keep-80-modules-from-catching-fire">4. Architecture (Or: How We Keep 80 Modules From Catching Fire)</h2>
+
+<p>The engineering principles are boring on purpose, because boring is what keeps 80 modules from catching fire:</p>
+
+<ul>
+<li><strong>Module convention</strong> — every utility lives in dropoutjeep_lib/utils/, uses the canonical "dropoutjeep" logger, reads API keys through a settings helper that checks the database first and the environment second, and returns graceful empty dicts on failure instead of raising exceptions. A phishing framework that crashes is just a denial-of-service tool, and we already have one of those — it is called Outlook.</li><li><strong>Stdlib-only where possible</strong> — many modules use nothing but urllib, re, logging, and typing. No dependencies, no pip install, no "works on my machine." The payload generators use struct, zipfile, and io, because you do not need the requests library to forge an OLE file — you need discipline.</li><li><strong>Lazy Playwright</strong> — imported only when needed, degrading gracefully to plain requests when absent. Like a strict parent who lets you borrow the car but only to drive to the grocery store.</li><li><strong>Deliverability is a feature, not an afterthought</strong> — the enterprise mailer is 1,341 lines of human-behavior simulation, Gaussian jitter, spam-trap detection, and audit logging with SHA256 checksums. We simulate human typing delays because machines send email like robots, and robots go to spam.</li>
+</ul>
+
+<h2 id="5-why-we-keep-building-the-roadmap">5. Why We Keep Building (The Roadmap)</h2>
+
+<p>The gap analysis is a living document that doubles as a roadmap and a therapy session. The framework sits at roughly 70 percent of the way to SOTA for Western targeting; the remaining 30 percent is the difference between "email reaches the inbox" and "email reaches the inbox and the target clicks before the EDR catches the payload."</p>
+
+<p>Every development cycle, the analysis finds new gaps, the modules get built, the deliverability gets better, and the cat facts get more numerous. The roadmap covers exfil channel hardening, deeper C2 resilience, more evasion work, and — if we are being honest — a module that automatically apologizes to the mail servers we have annoyed.</p>
+
+<h2 id="6-notes-for-the-blue-team">6. Notes for the Blue Team</h2>
+
+<p>Since this is a simulation platform, we feel obliged to tell you what it would do — so you can defend against the people who do it for real:</p>
+
+<ul>
+<li><strong>Patch your Office.</strong> CVE-2017-11882 is from 2017. If Equation Editor still works on your fleet, the real attackers do not need a framework — they need a Tuesday.</li><li><strong>Watch the cat pictures.</strong> LSB steganography hides data in images. If a user is emailing unusually large PNGs of cats to external addresses, the cats may be a lie.</li><li><strong>Check the dead drops.</strong> GitHub Gists, Pastebin, and Reddit profiles are free C2. If a Reddit account with three karma posts base64 that decodes to a command, that is not a meme — that is a beacon.</li><li><strong>Segment your voice VLAN, patch your PBX, and stop reusing passwords.</strong> See our previous memo for the details; it is all still true.</li><li><strong>The sim headers are gone.</strong> We removed X-DropoutJeep-Sim from the codebase. Stop grepping for it; it is not there anymore. (We are aware this is exactly what someone who still sends sim headers would say. We made our peace with that.)</li>
+</ul>
+
+<h2 id="7-repo-and-legal">7. Repo and Legal</h2>
+
+<p>DropoutJeep is a platform for authorized security awareness testing. Get written approval before running anything — the README says so, the framework says so, and the law says so. Point it at a network you do not own and you will discover that the fastest exploit chain of all is the legal one.</p>
+
+<p>That is the whole point: we build simulations so the real attacks never get to happen — or, if they do, so someone is ready. Also, our emails land in the inbox now. Ask us how. Actually, do not — we will tell you anyway. It is called BIMI.</p>
+
+        <div class="citation-box" id="bibtex">
+          <div class="citation-header">
+            <span class="citation-title">CITE THIS RESEARCH DISPATCH</span>
+            <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">MODAL</button>
+          </div>
+          <pre class="bibtex-code">@article{lulz2026_dropoutjee,
+  author    = {LulzTigre Research},
+  title     = {DropoutJeep: The Phishing Simulator That Refuses to Drop Out},
+  journal   = {LulzTigre Research Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html}
+}</pre>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <div class="toc-card">
+          <div class="toc-title">// NAVIGATION INDEX</div>
+          <ul class="toc-list">
+            <li><a href="#abstract" class="toc-link">0. Abstract & Thesis</a></li>
+            <li><a href="#1-introduction-the-origin-story-featuring-a-confused-hr-department" class="toc-link">1. Introduction: The Origin Story (Featuring a Confused HR Department)</a></li>
+            <li><a href="#2-why-is-it-in-development-spoiler-emails-go-to-spam" class="toc-link">2. Why Is It in Development? (Spoiler: Emails Go to Spam)</a></li>
+            <li><a href="#3-capabilities-the-swiss-army-chainsaw" class="toc-link">3. Capabilities: The Swiss Army Chainsaw</a></li>
+            <li><a href="#4-architecture-or-how-we-keep-80-modules-from-catching-fire" class="toc-link">4. Architecture (Or: How We Keep 80 Modules From Catching Fire)</a></li>
+            <li><a href="#5-why-we-keep-building-the-roadmap" class="toc-link">5. Why We Keep Building (The Roadmap)</a></li>
+            <li><a href="#6-notes-for-the-blue-team" class="toc-link">6. Notes for the Blue Team</a></li>
+            <li><a href="#7-repo-and-legal" class="toc-link">7. Repo and Legal</a></li>
+            <li><a href="#bibtex" class="toc-link">BibTeX Citation</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// ARTICLE ACTIONS</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="window.print()">PRINT / PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(window.location.href); showToast('Link copied');">SHARE PERMALINK</button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE RESEARCH. OPEN ACCESS.</span>
+        <a href="../index.html" style="color: inherit; text-decoration: underline;">← BACK TO ALL DISPATCHES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
