@@ -1,0 +1,6 @@
+# Drafts and composer
+composer.html
+*.md
+publish.py
+.DS_Store
+Thumbs.db

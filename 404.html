@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 // KERNEL PANIC // LulzTigre Research</title>
+  <meta name="robots" content="noindex">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top Telemetry -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator" style="color:#ff4444;"><span class="status-dot" style="background:#ff4444; box-shadow: 0 0 8px #ff4444;"></span>FAULT: 0x00000194 [PAGE_FAULT_IN_NONPAGED_AREA]</span>
+    </div>
+    <div class="ticker-right">
+      <span>RETURN: [/] ROOT</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge" style="background: #ff4444; color: #fff;">FAULT</span>
+      </a>
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle"><span>● PHANTOM</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 4rem 1.25rem 6rem; max-width: 800px;">
+    <div class="callout callout-theorem" style="border-left-color: #ff4444; margin-bottom: 2rem;">
+      <div class="callout-header" style="color: #ff4444;">
+        <span>[KERNEL_PANIC: UNRESOLVED SYMBOL ADDR]</span>
+      </div>
+      <h1 style="font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 3.5rem); margin: 0.5rem 0; color: var(--text-primary);">
+        404 NOT_FOUND
+      </h1>
+      <p style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
+        The requested research directory, cve, hacks, poc, or artifact path does not exist in this blaaag.
+      </p>
+    </div>
+
+    <div class="hero-meta-box" style="margin-bottom: 2rem;">
+      <div class="hero-meta-header">
+        <span>STACK TRACE DUMP</span>
+        <span>PID: 0x404</span>
+      </div>
+      <pre style="background: transparent; border: none; padding: 0; color: var(--text-muted); font-size: 0.76rem; font-family: var(--font-mono); line-height: 1.5;">
+RIP: 0010:research_poc_lookup+0x4a/0x120
+RSP: 0018:ffffc90000dfbeb8 EFLAGS: 00010246
+CR2: 0000000000000404 CR3: 0000000108a1e002
+Kernel routine attempted to dereference non-existent URI node.</pre>
+    </div>
+
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="index.html" class="btn btn-primary">RETURN TO DISPATCH ROOT →</a>
+      <a href="archive.html" class="btn btn-secondary">BROWSE ARCHIVE</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 PICK A GOD AND PRAY.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

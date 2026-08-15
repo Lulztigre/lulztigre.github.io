@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LulzTigre // Phantom Research Kernel</title>
+    <link>https://lulztigre.pw/</link>
+    <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 15 Aug 2026 21:30:00 GMT</lastBuildDate>
+    <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>GrandScream: From One Desk Phone to a Root PBX</title>
+      <link>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</link>
+      <guid>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</guid>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <description>Recon methodology and chain automation: one unauthenticated request against a Grandstream GXP phone becomes a root shell on the UCM PBX. Blind-oracle SQLi, credential reuse graphs, and the stdlib-only script that automates every handoff.</description>
+    </item>
+
+    <item>
+      <title>Deconstructing Induction Heads and Attention Routing in Deep Transformer Circuits</title>
+      <link>https://lulztigre.pw/posts/transformer-circuits-and-attention-heads.html</link>
+      <guid>https://lulztigre.pw/posts/transformer-circuits-and-attention-heads.html</guid>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <description>An empirical analysis into how two-layer attention compositions implement in-context pattern matching, with eigenvalue decomposition of W_OV and W_QK circuits.</description>
+    </item>
+
+    <item>
+      <title>Optimistic Fast-Paths in Asynchronous Byzantine Fault-Tolerant State Machine Replication</title>
+      <link>https://lulztigre.pw/posts/byzantine-consensus-in-asynchronous-networks.html</link>
+      <guid>https://lulztigre.pw/posts/byzantine-consensus-in-asynchronous-networks.html</guid>
+      <pubDate>Tue, 28 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Analyzing optimistic super-quorums to drop consensus commit latency from 3Δ to 2Δ under partial synchrony regimes.</description>
+    </item>
+
+    <item>
+      <title>Polynomial Commitment Schemes: KZG vs FRI in Recursive Verifiable Computation</title>
+      <link>https://lulztigre.pw/posts/zero-knowledge-succinct-arguments.html</link>
+      <guid>https://lulztigre.pw/posts/zero-knowledge-succinct-arguments.html</guid>
+      <pubDate>Sun, 14 Jun 2026 00:00:00 GMT</pubDate>
+      <description>A comparative study on proof size, verifier arithmetic complexity, and trusted setup assumptions between KZG and FRI in recursive zero-knowledge systems.</description>
+    </item>
+  </channel>
+</rss>

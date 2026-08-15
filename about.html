@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About // LulzTigre Research</title>
+  <meta name="description" content="Researcher profile: offensive security consulting,CMS exploit research, CVE variant analysis, coordinated disclosure, and red team tradecraft.">
+  <meta name="author" content="LulzTigre">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About & Dossier // LulzTigre">
+  <meta property="og:description" content="Offensive security consultant. Joomla CMS exploit research, CVE variant analysis, network pentesting, and coordinated disclosure.">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://lulztigre.pw/about.html">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Prevent Theme Flash -->
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top Ticker -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>DOSSIER: LZ-994</span>
+      <span>STATUS: ONLINE</span>
+    </div>
+    <div class="ticker-right">
+      <span>SHORTCUT: [T] THEME / [/] SEARCH</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">id=(root)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link active">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container" style="padding: 3rem 1.25rem 5rem;">
+    <div class="article-layout">
+
+      <article class="prose">
+        <div class="callout callout-theorem" style="margin-top:0;">
+          <div class="callout-header">
+            <span>[ABOUT ME]</span>
+          </div>
+          <p style="font-family: var(--font-sans); font-size: 1.15rem; line-height: 1.6;">
+            Hi my name is Akinlabi pronounced (Hacking lah bee) Glad you're here. I break things for a living and then write about it: CMS internals, network perimeters, red teaming, and the humans who click the wrong link. Outside client work, I run a solo CVE hunting lab, mostly Joomla, Apache and its extension ecosystem (just kidding, nothing is truly safe from me). Pull the source apart, diff the patch, chain the primitive, ship a PoC. Pwn all the things. Document everything.
+          </p>
+        </div>
+
+        <h2>// 1. WHAT I DO</h2>
+        <ul>
+          <li>
+            <strong>CMS / Source Driven Exploit Research :</strong> I perform source-code-driven security research across Java, Python, JavaScript, and PHP applications. My work focuses on finding exploitable weaknesses in web applications, APIs, CMS platforms, frameworks, plugins, and extension ecosystems. Extensive research has focused on Joomla widely deployed third-party components, including iCagenda, Balbooa Forms etc. The broader focus is on uncovering source-level vulnerabilities with practical security impact, including unauthenticated file upload, arbitrary file read, and remote code execution primitives in default or commonly deployed configurations.
+          </li>
+          <li>
+            <strong>Variant Analysis:</strong> For every patched CVE, diff the fix, enumerate missed call sites and sibling code paths, and hunt for the bug the vendor almost fixed. Findings only count when they survive dedup against NVD, GitHub, and the Joomla Security Tracker.
+          </li>
+          <li>
+            <strong>Offensive Security Consulting:</strong> Web and mobile application security testing (source review, OWASP Top 10, and OWASP Mobile Top 10), internal network penetration tests, lateral movement, and post-exploitation. Physical security assessments and social engineering, from pretexting to on-site entry testing. Perimeter device research.
+          </li>
+          <li>
+            <strong>Off Duty Hunting:</strong> Active in bug bounty programs and a regular CTF participant, including winning the Fugitive of Justice CTF during my CTI days. I also enjoy reverse engineering and low-level research, particularly working with x64 and ARM architectures through both static and dynamic analysis in Ghidra.
+          </li>
+        </ul>
+
+        <h2>// 2. CVE RESEARCH &amp; DISCLOSURE LOG (i have like 15 to upload, hang around)</h2>
+
+        <div class="callout callout-definition">
+          <div class="callout-header">
+            <span>[CVE-2026-48939 // PRE-AUTH RCE]</span>
+          </div>
+          <p style="margin-bottom:0.25rem;"><strong>iCagenda (Joomla component) — Unauthenticated Remote Code Execution</strong></p>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0;">Deterministic PoC · exploit + full writeup incoming</p>
+        </div>
+
+        <div class="callout callout-definition">
+          <div class="callout-header">
+            <span>[CVE-2026-56291 // PRE-AUTH RCE]</span>
+          </div>
+          <p style="margin-bottom:0.25rem;"><strong>Balbooa Forms (Joomla component) — Unauthenticated Remote Code Execution</strong></p>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0;">Deterministic PoC · exploit + full writeup incoming</p>
+        </div>
+
+        <div class="callout callout-remark">
+          <div class="callout-header">
+            <span>[EMBARGOED // COORDINATED DISCLOSURE]</span>
+          </div>
+          <p style="margin-bottom:0;">
+            Additional novel findings in commercial extensions and softwares are currently in coordinated disclosure with vendors. Root-cause analysis, PoCs, and detection guidance land on this page the day the patches ship. No details before then — that's the deal.
+          </p>
+        </div>
+
+   <h2>// 3. CVE METHOD</h2>
+<p>
+  Every campaign runs the same gates. A finding is not a finding until all of them pass:
+</p>
+<ul>
+  <li><strong>G1 — REPRO:</strong> 3/3 anonymous reproduction against the <em>latest</em> release, default install, zero preconditions. Vulnerable-version diffs are for root-causing only, never for validation.</li>
+  <li><strong>G2 — NOVELTY:</strong> Dedup against NVD, GitHub, and the Security Tracker. Duplicates are documented and discarded.</li>
+  <li><strong>G3 — WEAPONIZE:</strong> A deterministic, minimized PoC that proves impact — not a scanner output screenshot.</li>
+  <li><strong>G4 — REPORT:</strong> Root cause, reproduction, and detection rules, packaged for the vendor and the CVE assigner.</li>
+</ul>
+<p>
+  Dead ends get logged with the same rigor as findings. The discard pile is part of the method.
+</p>
+
+        <h2>// 4. THE LAB</h2>
+<ul>
+  <li><strong>CMS Bench:</strong> Self-hosted Joomla, WordPress, and Apache environments with pinned component versions and source trees for vulnerability research, patch diffing, and exploit replay.</li>
+  <li><strong>Source-First Tooling:</strong> Custom tooling for extracting extension codebases, performing vulnerability-to-patch diffs, and developing target-specific replay, bypass, and fuzzing workflows..</li>
+  <li><strong>RE Bench:</strong> Ghidra for static analysis, complemented by a lightweight x64/ARM dynamic debugging environment.</li>
+  <li><strong>Consulting &amp; Red Team Kit:</strong> Standard offsec tooling for web, mobile, and internal AD engagements, plus a physical/SE kit (pretext material, cloned badges, the usual) for on-site work.</li>
+  <li><strong>CTF Rig:</strong> Nothing exotic, mostly the same source-first and RE tooling above, pointed at a scoreboard instead of a client.</li>
+</ul>
+
+        <h2>// 5. OFF THE CLOCK</h2>
+        <p>
+          Gaming(MK1, The Finals and 1000 more games). Skate-boarding, Rubik Cubes, and 50 other things i obssess on for just a week.
+        </p>
+
+        <h2>// 6. CONTACT &amp; COLLABORATION</h2>
+        <p>
+          Vendors, fellow researchers, CTF teams, bug bounty programs — signals welcome. Prefer encrypted mail for anything disclosure-sensitive.
+        </p>
+        <p>
+          <strong>Email:</strong> <code>omoakin749@gmail.com</code><br>
+          <strong>GitHub:</strong> <a href="https://github.com/lulztigre" target="_blank" rel="noopener">github.com/lulztigre</a><br>
+<strong>Linkedin:</strong> <a href="https://linkedin.com/in/akinlabi-o-400893183 " target="_blank" rel="noopener">Linkedin</a><br>
+          <strong>Website:</strong> <a href="https://lulztigre.pw">https://lulztigre.pw</a>
+        </p>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="article-sidebar">
+        <div class="toc-card">
+          <div class="toc-title">// RESEARCHER BIO</div>
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; display: flex; flex-direction: column; gap: 0.5rem;">
+            <div><strong>HANDLE:</strong> LulzTigre</div>
+            <div><strong>ROLE:</strong> Head, Redteam and Forensics Opearations</div>
+            <div><strong>FOCUS:</strong> Exploit research</div>
+            <div><strong>METHOD:</strong> Variant analysis + coordinated disclosure</div>
+    <div><strong>CREDS:</strong> LPT · CPENT · CEH · CTIA · CNSE</div>
+            <div><strong>BASE:</strong> [REDACTED]</div>
+          </div>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// RSS &amp; SUBSCRIBE</div>
+          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Subscribe to CVE writeups, exploit research, and red team dispatches via standard RSS/Atom.
+          </p>
+          <a href="feed.xml" target="_blank" class="btn btn-primary btn-sm" style="width: 100%;">SUBSCRIBE (RSS)</a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE RESEARCH. OPEN ACCESS.</span>
+        <a href="index.html" style="color: inherit; text-decoration: underline;">← BACK TO DISPATCHES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

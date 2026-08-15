@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LulzTigre // Blaaag</title>
+  <meta name="description" content="Offensive security research: CMS exploit research, CVE variant analysis, red team tradecraft, and coordinated disclosure.">
+  <meta name="author" content="LulzTigre">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LulzTigre // Blaaag">
+  <meta property="og:description" content="Offensive security research: CMS exploit research, CVE variant analysis, red team tradecraft, and coordinated disclosure.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lulztigre.pw/">
+
+  <!-- Google Fonts: Space Mono, Space Grotesk, Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body);"></script>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Prevent Theme Flash -->
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top System Telemetry Ticker -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>KERNEL: LZ-SYS v2.6.4</span>
+      <span>SYS_ARCH: X86_64 // NEURAL_INTERP</span>
+    </div>
+    <div class="ticker-right">
+      <span>LATENCY: 0.8ms</span>
+      <span>KEYS: [T] THEME / [/] SEARCH</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">id=(root)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme (Void / Amber / Ghost)">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Phantom Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-title-area">
+          <div class="research-tagline">
+            <span>▶</span> CMS EXPLOIT RESEARCH // RED TEAM // CVE HUNTING
+          </div>
+          <h1 class="hero-heading">DISPATCHES FROM THE RESEARCH KERNEL.</h1>
+          <p class="hero-desc">
+            Source-driven exploit research, CVE variant analysis, and red team tradecraft.
+            Diffed patches, chained primitives, and the disclosure trail behind each one.
+          </p>
+          <div class="hero-actions">
+            <a href="#dispatches" class="btn btn-primary">VIEW DISPATCHES ↓</a>
+            <a href="about.html" class="btn btn-secondary">RESEARCH DOSSIER →</a>
+            <a href="feed.xml" class="btn btn-secondary" target="_blank">RSS [XML]</a>
+          </div>
+        </div>
+
+        <aside class="hero-meta-box">
+          <div class="hero-meta-header">
+            <span>RESEARCH TELEMETRY</span>
+            <span>ID: LZ-994</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">NODE AFFILIATION</span>
+            <span class="meta-val">Autonomous Lab</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">CORE PIPELINE</span>
+            <span class="meta-val">CMS / Extension Exploit Research</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">SUBSYSTEM</span>
+            <span class="meta-val">Red Team &amp; Network Pentesting</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">LAST SYNC</span>
+            <span class="meta-val">2026-08-15 UTC</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">DAEMON STATE</span>
+            <span class="meta-val" style="color: var(--accent-primary); font-weight:900;">ACTIVE DISCLOSURE</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Filter & Live Search Toolbar -->
+    <section class="feed-controls" id="dispatches">
+      <div class="container feed-controls-grid">
+        <div class="tag-filters">
+          <span class="filter-label">CATEGORY:</span>
+          <button class="tag-btn active" data-tag="ALL">ALL (2)</button>
+          <button class="tag-btn" data-tag="OFFENSIVE SECURITY">OFFENSIVE SECURITY</button>
+          <button class="tag-btn" data-tag="CVE RESEARCH">CVE RESEARCH</button>
+          <button class="tag-btn" data-tag="WEB">WEB</button>
+          <button class="tag-btn" data-tag="VOIP">VOIP</button>
+        </div>
+
+        <div class="search-input-box">
+          <input type="text" id="search-input" class="search-input" placeholder="Search memos, theorems, equations..." autocomplete="off">
+          <span class="search-kbd-hint">/</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Posts Feed -->
+    <section class="posts-section">
+      <div class="container">
+        <div class="section-header-bar">
+          <h2 class="section-title"><span>▶</span> RESEARCH LOG & PREPRINTS</h2>
+          <span class="posts-count" id="filtered-count">[2 RECORDS FOUND]</span>
+        </div>
+
+        <div class="posts-feed" id="posts-feed">
+
+          <!-- Post 2: Stored XSS (embargoed) -->
+          <article class="post-card"
+                   data-tags="OFFENSIVE SECURITY, CVE RESEARCH, XSS, WEB"
+                   data-bibtex="@article{lulz2026storedxss,
+  author = {LulzTigre},
+  title = {Stored XSS in a Widely Deployed CMS Plugin},
+  journal = {LulzTigre Research Dispatches},
+  year = {2026},
+  month = {August},
+  url = {https://lulztigre.pw/posts/stored-xss-cms-plugin.html}
+}">
+            <div class="post-card-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #005</span>
+                <span>DATE: TBD</span>
+              </div>
+              <span>EST. TIME: ~8 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/stored-xss-cms-plugin.html">
+                Stored XSS in a Widely Deployed CMS Plugin
+              </a>
+            </h3>
+
+            <p class="post-abstract">
+              An unauthenticated stored XSS in a popular CMS extension, found while diffing an unrelated
+              patch. Vendor and plugin name withheld pending coordinated disclosure. Full writeup, PoC,
+              and CVE reference land here the day the fix ships.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+                <span class="tag-chip">CVE RESEARCH</span>
+                <span class="tag-chip">XSS</span>
+                <span class="tag-chip">WEB</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)" title="Copy BibTeX Citation">BIBTEX</button>
+                <a href="posts/stored-xss-cms-plugin.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Post 1: GrandScream -->
+          <article class="post-card"
+                   data-tags="OFFENSIVE SECURITY, RECON, AUTOMATION, VOIP"
+                   data-bibtex="@article{lulz2026grandscream,
+  author = {LulzTigre},
+  title = {GrandScream: From One Desk Phone to a Root PBX},
+  journal = {LulzTigre Research Dispatches},
+  year = {2026},
+  month = {August},
+  url = {https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html}
+}">
+            <div class="post-card-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #004</span>
+                <span>DATE: 2026-08-15</span>
+              </div>
+              <span>EST. TIME: ~15 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/grandscream-phone-to-pbx-root.html">
+                GrandScream: From One Desk Phone to a Root PBX
+              </a>
+            </h3>
+
+            <p class="post-abstract">
+              Recon methodology and chain automation: one unauthenticated request against a Grandstream GXP phone
+              becomes a root shell on the UCM PBX. Blind-oracle SQLi, credential reuse graphs, and the
+              stdlib-only Python script that compresses the whole chain into thirty seconds.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+                <span class="tag-chip">RECON</span>
+                <span class="tag-chip">AUTOMATION</span>
+                <span class="tag-chip">VOIP</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)" title="Copy BibTeX Citation">BIBTEX</button>
+                <a href="posts/grandscream-phone-to-pbx-root.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Filter Empty State -->
+        <div class="empty-state" id="empty-state">
+          <h3>[NO MATCHING RESEARCH DISPATCHES FOUND]</h3>
+          <p style="color: var(--text-secondary); margin-top: 0.5rem;">Try clearing your search query or switching the category filter.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BibTeX Modal -->
+  <div class="modal-overlay" id="bibtex-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title">BIBTEX CITATION ENTRY</h3>
+        <button class="modal-close-btn" onclick="closeBibtexModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.75rem; color: var(--text-secondary);">
+          Direct citation snippet for LaTeX / BibLaTeX:
+        </p>
+        <pre class="bibtex-code" id="modal-bibtex-content"></pre>
+        <div style="margin-top: 1rem; display: flex; justify-content: flex-end; gap: 0.5rem;">
+          <button class="btn btn-secondary btn-sm" onclick="closeBibtexModal()">CANCEL</button>
+          <button class="btn btn-primary btn-sm" onclick="copyModalBibtex()">COPY TO CLIPBOARD</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>// LULZTIGRE RESEARCH</h4>
+          <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem;">
+            Open notebook for offensive security research and CVE hunting.
+          </p>
+          <p style="color: var(--text-muted);">Hosted via GitHub Pages & Vanilla Web Standards.</p>
+        </div>
+        <div class="footer-col">
+          <h4>// DIRECTORY INDEX</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">/ Home & Dispatches</a></li>
+            <li><a href="archive.html">/ Chronological Archive</a></li>
+            <li><a href="about.html">/ Researcher Dossier</a></li>
+            <li><a href="feed.xml">/ RSS Feed (Atom/XML)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>// NODES & CHANNELS</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lulztigre" target="_blank" rel="noopener">/ GitHub (@lulztigre)</a></li>
+            <li><a href="mailto:research@lulztigre.pw">/ Encrypted Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE. OPEN ACCESS (CC BY-SA 4.0).</span>
+        <span>PHANTOM KERNEL RESEARCH ENGINE // NO TRACKERS // NO BLOAT</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>httttt

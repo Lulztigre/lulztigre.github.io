@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chronological Research Archive // LulzTigre</title>
+  <meta name="description" content="Complete chronological index of all research memos, dispatches, and CVE writeups.">
+  <meta name="author" content="LulzTigre">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Chronological Research Archive // LulzTigre">
+  <meta property="og:description" content="Complete chronological index of all research memos and CVE writeups.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lulztigre.pw/archive.html">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top Telemetry -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>ARCHIVE_INDEX: 2 ENTRIES</span>
+      <span>INDEX_MODE: CHRONOLOGICAL</span>
+    </div>
+    <div class="ticker-right">
+      <span>KEYS: [T] THEME / [/] SEARCH</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">id=(root)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="archive.html" class="nav-link active">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 3rem 1.25rem 5rem;">
+    <div class="article-layout">
+      
+      <article class="prose">
+        <h1 style="font-family: var(--font-sans); font-size: 2.2rem; font-weight: 900; margin-bottom: 0.5rem; text-transform: uppercase;">
+          // COMPLETE RESEARCH ARCHIVE
+        </h1>
+        <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2rem;">
+          Chronological index of all published CVE research, exploit writeups, and offensive security dispatches.
+        </p>
+
+        <!-- 2026 Year Section -->
+        <div style="margin-bottom: 3rem;">
+          <h2 style="margin-top: 1rem; border-color: var(--accent-primary);">2026 RESEARCH LOG</h2>
+          
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem;">
+
+            <div class="post-card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                <span>MEMO #005 // TBD</span>
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+              </div>
+              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
+                <a href="posts/stored-xss-cms-plugin.html" style="color: var(--text-primary); text-decoration: none;">
+                  Stored XSS in a Widely Deployed CMS Plugin
+                </a>
+              </h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
+                Unauthenticated stored XSS found while diffing an unrelated patch. Vendor and plugin withheld pending coordinated disclosure.
+              </p>
+            </div>
+
+            <div class="post-card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                <span>MEMO #004 // 2026-08-15</span>
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+              </div>
+              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
+                <a href="posts/grandscream-phone-to-pbx-root.html" style="color: var(--text-primary); text-decoration: none;">
+                  GrandScream: From One Desk Phone to a Root PBX
+                </a>
+              </h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
+                Recon methodology and full-chain automation against Grandstream UCM/GXP — blind-oracle SQLi to root in one command.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="article-sidebar">
+        <div class="toc-card">
+          <div class="toc-title">// TOPIC BREAKDOWN</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.76rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span>OFFENSIVE SECURITY</span>
+              <strong style="color: var(--accent-primary);">2</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// SYNDICATION</div>
+          <p style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Automate memo ingestion via standard RSS XML feed.
+          </p>
+          <a href="feed.xml" target="_blank" class="btn btn-primary btn-sm" style="width: 100%;">OPEN RSS FEED</a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE RESEARCH.</span>
+        <a href="index.html" style="color: inherit; text-decoration: underline;">← BACK TO DISPATCHES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

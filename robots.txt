@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /composer.html
+Allow: /
+
+Sitemap: https://lulztigre.pw/feed.xml
