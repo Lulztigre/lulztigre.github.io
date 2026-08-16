@@ -250,9 +250,27 @@
     const navMenu = document.getElementById('nav-menu');
     if (!toggleBtn || !navMenu) return;
 
-    toggleBtn.addEventListener('click', () => {
+    function closeNav() {
+      navMenu.classList.remove('open');
+      toggleBtn.textContent = '☰';
+    }
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       navMenu.classList.toggle('open');
       toggleBtn.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+    });
+
+    // Close when clicking any nav link
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', closeNav);
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && e.target !== toggleBtn) {
+        closeNav();
+      }
     });
   }
 

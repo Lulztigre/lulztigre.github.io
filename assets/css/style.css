@@ -933,6 +933,32 @@ header.site-header {
   color: var(--text-secondary);
 }
 
+/* Image & Diagram Figures */
+.prose figure {
+  margin: 2rem 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.prose figcaption {
+  padding: 0.5rem 1rem;
+  background: var(--bg-elevated);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
 .copy-code-btn {
   background: transparent;
   border: 1px solid var(--border-color);
@@ -1242,48 +1268,342 @@ footer.site-footer {
   border: 1px solid var(--border-color);
 }
 
-/* Responsive */
+/* ==========================================================================
+   MOBILE & RESPONSIVE DESIGN SYSTEM
+   Optimized for seamless phone (320px - 480px), tablet (768px), and desktop
+   ========================================================================== */
+
+/* Ensure no accidental horizontal scrollbar */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Tablet & Smaller Screens (< 900px) */
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .hero-meta-box {
+    max-width: 100%;
   }
   .article-layout {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 0 4rem;
   }
   .article-sidebar {
     display: none;
   }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
 }
 
+/* Mobile Devices (< 768px) */
 @media (max-width: 768px) {
+  :root {
+    --header-height: 54px;
+  }
+
+  /* Prevent iOS input auto-zoom by keeping font-size at least 16px */
+  input[type="text"], input[type="search"], textarea, select {
+    font-size: 16px !important;
+  }
+
+  /* Telemetry / Ticker */
+  .system-ticker {
+    font-size: 0.68rem;
+    padding: 0.35rem 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ticker-left {
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .ticker-right {
+    display: none; /* Hide shortcut hints on mobile */
+  }
+
+  /* Sticky Header & Mobile Dropdown Navigation */
+  header.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .nav-wrapper {
+    position: relative;
+  }
+
+  .site-brand {
+    font-size: 1.05rem;
+    padding: 0.4rem 0.75rem;
+  }
+
   .mobile-toggle {
     display: flex;
     align-items: center;
+    justify-content: center;
+    min-width: 46px;
+    height: 100%;
+    font-size: 1.25rem;
+    border-left: 1px solid var(--border-color);
+    background: transparent;
+    cursor: pointer;
   }
+
   .nav-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
+    right: 0;
     width: 100%;
     background: var(--bg-surface);
     flex-direction: column;
-    border-bottom: 2px solid var(--border-color);
-    box-shadow: var(--shadow-lg);
+    border-bottom: 3px solid var(--border-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 999;
   }
+
   .nav-menu.open {
     display: flex;
+    animation: mobileNavDrop 0.15s ease-out;
   }
+
+  @keyframes mobileNavDrop {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .nav-link {
     border-left: none;
     border-top: 1px solid var(--border-color);
-    padding: 0.85rem 1.25rem;
+    padding: 0.9rem 1.25rem;
+    font-size: 0.9rem;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-link.active {
+    border-bottom: none;
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-elevated);
+  }
+
+  .theme-toggle-btn {
+    min-height: 44px;
+    padding: 0 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  /* Hero Section Mobile */
+  .hero-section {
+    padding: 2rem 0 2rem;
+  }
+  .hero-section::after {
+    display: none; /* Remove huge decorative text overflow */
+  }
+  .hero-heading {
+    font-size: clamp(1.85rem, 7.5vw, 2.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+  }
+
+  /* Feed Controls: Swipeable Tag Bar on Mobile */
+  .feed-controls {
+    padding: 1rem 0;
   }
   .feed-controls-grid {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.75rem;
+  }
+  .tag-filters {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0.35rem;
+    margin: 0 -1.25rem;
+    padding: 0 1.25rem 0.35rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tag-filters::-webkit-scrollbar {
+    display: none;
+  }
+  .tag-btn {
+    flex-shrink: 0;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.76rem;
+    min-height: 36px;
   }
   .search-input-box {
     max-width: 100%;
+    min-width: 100%;
+  }
+
+  /* Post Cards Mobile */
+  .posts-section {
+    padding: 1.75rem 0 3.5rem;
+  }
+  .section-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .section-title {
+    font-size: 1.2rem;
+  }
+  .post-card {
+    padding: 1.25rem 1rem;
+    gap: 0.85rem;
+  }
+  .post-card-title {
+    font-size: 1.22rem;
+    line-height: 1.3;
+  }
+  .post-abstract {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .post-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .post-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .post-card-actions .btn {
+    width: 100%;
+    min-height: 40px;
+    font-size: 0.76rem;
+  }
+
+  /* Article Page Mobile */
+  .article-header {
+    padding: 2rem 0 1.5rem;
+  }
+  .article-title {
+    font-size: clamp(1.65rem, 6.5vw, 2.3rem);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .article-meta-panel {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+  .prose {
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+  .prose h2 {
+    font-size: 1.45rem;
+    margin: 2.2rem 0 0.85rem;
+  }
+  .prose h3 {
+    font-size: 1.2rem;
+    margin: 1.75rem 0 0.65rem;
+  }
+
+  /* Code Blocks with Smooth Horizontal Scroll & Touch */
+  .prose pre {
+    margin: 1.25rem -0.5rem;
+    max-width: calc(100% + 1rem);
+    -webkit-overflow-scrolling: touch;
+  }
+  .prose pre code {
+    padding: 1rem 0.85rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  .code-header {
+    padding: 0.4rem 0.75rem;
+  }
+
+  /* Math Blocks Mobile */
+  .math-display {
+    padding: 0.75rem 0.5rem;
+    margin: 1.25rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Callouts Mobile */
+  .callout {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  /* Modal on Mobile */
+  .modal-container {
+    max-width: 96vw;
+    max-height: 90vh;
+  }
+  .modal-body {
+    padding: 1rem;
+  }
+
+  /* Toast Alerts centered on Mobile */
+  #toast-container {
+    bottom: 1.25rem;
+    right: 1rem;
+    left: 1rem;
+    align-items: center;
+  }
+  .toast {
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+  }
+
+  /* Footer Mobile */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    padding: 2rem 0;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 }
+
+/* Extra Small Phones (< 400px) */
+@media (max-width: 400px) {
+  .site-brand span:first-child {
+    font-size: 1rem;
+  }
+  .brand-badge {
+    display: none;
+  }
+  .post-card-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
