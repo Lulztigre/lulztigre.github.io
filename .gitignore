@@ -4,3 +4,4 @@ composer.html
 publish.py
 .DS_Store
 Thumbs.db
+.playwright-mcp/

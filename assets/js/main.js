@@ -116,17 +116,69 @@
     filterPosts();
   }
 
-  // --- 4. TABLE OF CONTENTS SCROLLSPY ---
+  // --- 4. TABLE OF CONTENTS SCROLLSPY & MOBILE TOC ---
   function initTableOfContents() {
+    const tocCard = document.querySelector('.article-sidebar .toc-card');
+    const prose = document.querySelector('.prose');
+
+    // Create collapsible mobile TOC if on article page with tocCard
+    if (tocCard && prose && !document.querySelector('.mobile-toc-wrapper')) {
+      const tocList = tocCard.querySelector('.toc-list');
+      if (tocList) {
+        const mobileToc = document.createElement('div');
+        mobileToc.className = 'mobile-toc-wrapper';
+        mobileToc.innerHTML = `
+          <button class="mobile-toc-toggle" type="button" aria-expanded="false">
+            <span>// NAVIGATION INDEX</span>
+            <span class="mobile-toc-icon">▼</span>
+          </button>
+          <div class="mobile-toc-dropdown">
+            <ul class="toc-list">
+              ${tocList.innerHTML}
+            </ul>
+          </div>
+        `;
+
+        const toggleBtn = mobileToc.querySelector('.mobile-toc-toggle');
+        toggleBtn.addEventListener('click', () => {
+          const isOpen = mobileToc.classList.toggle('open');
+          toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        mobileToc.querySelectorAll('.toc-link').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileToc.classList.remove('open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        // Insert after abstract callout or before first h2
+        const abstractEl = document.getElementById('abstract') || prose.querySelector('.callout');
+        if (abstractEl && abstractEl.nextElementSibling) {
+          prose.insertBefore(mobileToc, abstractEl.nextElementSibling);
+        } else {
+          const firstH2 = prose.querySelector('h2');
+          if (firstH2) {
+            prose.insertBefore(mobileToc, firstH2);
+          } else {
+            prose.prepend(mobileToc);
+          }
+        }
+      }
+    }
+
     const tocLinks = document.querySelectorAll('.toc-link');
     if (!tocLinks.length) return;
 
     const sections = [];
     tocLinks.forEach(link => {
-      const targetId = link.getAttribute('href').substring(1);
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        sections.push({ id: targetId, link, el: targetEl });
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const targetId = href.substring(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl && !sections.some(s => s.id === targetId)) {
+          sections.push({ id: targetId, el: targetEl });
+        }
       }
     });
 
@@ -134,24 +186,28 @@
 
     window.addEventListener('scroll', () => {
       const scrollPos = window.scrollY + 120;
-      let currentSection = sections[0];
+      let currentId = sections[0].id;
 
       for (let i = 0; i < sections.length; i++) {
         if (sections[i].el.offsetTop <= scrollPos) {
-          currentSection = sections[i];
+          currentId = sections[i].id;
         }
       }
 
-      tocLinks.forEach(link => link.classList.remove('active'));
-      if (currentSection) {
-        currentSection.link.classList.add('active');
-      }
+      tocLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${currentId}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
     }, { passive: true });
   }
 
   // --- 5. CODE BLOCK COPY BUTTONS ---
   function initCodeCopy() {
-    const preBlocks = document.querySelectorAll('pre');
+    const preBlocks = document.querySelectorAll('.prose pre');
     preBlocks.forEach((pre) => {
       if (pre.previousElementSibling && pre.previousElementSibling.classList.contains('code-header')) {
         return;
@@ -274,7 +330,32 @@
     });
   }
 
-  // --- 9. KEYBOARD SHORTCUTS ---
+  // --- 9. BACK TO TOP BUTTON ---
+  function initBackToTop() {
+    let btn = document.getElementById('back-to-top');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.id = 'back-to-top';
+      btn.className = 'back-to-top-btn';
+      btn.innerHTML = '<span>▲</span> <span>TOP</span>';
+      btn.setAttribute('aria-label', 'Scroll to top');
+      document.body.appendChild(btn);
+    }
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 450) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, { passive: true });
+  }
+
+  // --- 10. KEYBOARD SHORTCUTS ---
   function initKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
@@ -304,6 +385,7 @@
     initTableOfContents();
     initCodeCopy();
     initMobileNav();
+    initBackToTop();
     initKeyboardShortcuts();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
