@@ -82,7 +82,7 @@
       <div class="article-meta-panel">
         <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-08-15</strong></div>
         <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>LulzTigre Research</strong></div>
-        <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
+        <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY / SOCIAL ENGINEERING</strong></div>
         <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~12 MIN</strong></div>
         <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #RED TEAM #PHISHING #AUTOMATION</strong></div>
       </div>
@@ -97,20 +97,24 @@
           <div class="callout-header">
             <span>[ABSTRACT & CORE THESIS]</span>
           </div>
-          <p>DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.</p>
+          <p>DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing,</p>
         </div>
 
-        <h2 id="1-introduction-the-origin-story-featuring-a-confused-hr-department">1. Introduction: The Origin Story (Featuring a Confused HR Department)</h2>
+        <h2 id="1-introduction-the-origin-story-featuring-a-confused-hr-department">1. Introduction: The Origin Story </h2>
 
-<p>Every great security project starts with a humble question. Ours was: "Would our own phishing emails fool our own HR department?"</p>
+<p>Every great red team stimulation starts with a humble question. Ours was: "Would our own phishing emails hit our targets?"</p>
 
-<p>The answer, delivered with the brutal honesty of a spam folder, was no. The emails weren't just caught — they were caught so fast we briefly suspected HR had installed a custom SNORT rule aimed specifically at us. Our carefully crafted "Please reset your password" messages went to spam with the speed and finality of a Nigerian prince's inheritance.</p>
+<p>The answer, delivered with the brutal honesty of a spam folder, was no. The emails weren't just caught — they were caught so fast we briefly suspected Shalewa from accounting had installed a custom SNORT rule aimed specifically at us. Our carefully crafted "Please reset your password" messages went to spam with the speed and finality of a Nigerian prince's inheritance.</p>
 
-<p>And so DropoutJeep was born: a phishing simulation and security awareness platform that exists to answer one question — "could this campaign actually work?" — before the real attackers ask it on your behalf.</p>
+<p>And so DropoutJeep was born out of necessity: a phishing simulation and security awareness :) platform that exists to answer one question "could this campaign actually work?" before the real attackers ask it on your behalf.</p>
 
+    <figure>
+      <img src="../assets/img/dropoutdash.png" alt="Exploit Chain Topology">
+      <figcaption>[DASHBOARD // DARK MODE]</figcaption>
+    </figure>
 <div class="callout callout-definition"><div class="callout-header"><span>DEFINITION: DROPOUTJEEP</span></div><p>A Flask + SQLAlchemy platform that runs phishing email campaigns, builds fake landing pages, proxies real websites through a transparent MITM engine to capture credentials and MFA tokens, and generally does everything a real phishing operation does — except with written authorization and a dashboard that tracks click rates instead of a burner laptop and a prayer.</p></div>
 
-<p>The name, by the way, is a lie. This thing refuses to drop out. Every time we declare the feature list finished, a gap analysis shows up and the framework gains fifteen new modules and an existential crisis.</p>
+<p>The name, by the way, is a lie. This thing refuses to drop out. Every time we declare the feature list finished, a gap analysis shows up and the framework gains fifteen new modules and an existential crisis. And to make matters worse? i didn't know a real dropoutjeep from *coughs* you know who *coughs*, already existed. So i might end up changing this name.</p>
 
 <h2 id="2-why-is-it-in-development-spoiler-emails-go-to-spam">2. Why Is It in Development? (Spoiler: Emails Go to Spam)</h2>
 
@@ -118,12 +122,11 @@
 
 <p>Here is a sentence we never expected to write in a security blog: <strong>the hardest part of phishing is not the hacking — it is the inbox.</strong> You can have the best payload in the world, but if your email lands in the spam folder next to "URGENT: Your Package Is Waiting," you have successfully performed a denial of service against yourself.</p>
 
-<p>The internal gap analysis (yes, we wrote ourselves a 500-line performance review; we are that kind of team) surfaced a series of findings that can only be described as self-inflicted:</p>
+<p>The internal gap analysis (yes, we[lowkey just me] wrote ourselves a 500-line performance review; we are that kind of team) surfaced a series of findings that can only be described as self-inflicted:</p>
 
-<pre data-lang="python"><code>msg['X-Mailer'] = 'DropoutJeep Mailer'      # the confession
-msg['X-DropoutJeep-Sim'] = 'true'           # the double confession</code></pre>
+<pre data-lang="python"><code>msg['Message-ID'] ='<\sha1({time.time()}+{domain}).{time.time()}@{domain}>"</code></pre>
 
-<div class="callout callout-remark"><div class="callout-header"><span>REMARK: THE SIM HEADERS INCIDENT</span></div><p>For months, the mailer stamped every outgoing message with two custom headers announcing its own identity. This is the equivalent of mailing a letter with "THIS IS A TEST, PLEASE DO NOT BELIEVE THE CONTENTS" printed on the envelope in Comic Sans. Gmail, Outlook, and Proofpoint all read these headers and reacted accordingly — which is to say, they did our blue team's job for us.</p></div>
+<div class="callout callout-remark"><div class="callout-header"><span>REMARK: THE CLOCK IN THE ENVELOPE</span></div><p>Every outgoing message carried a Message-ID built from a SHA-1 of the send timestamp plus the sending domain. Technically a hash. Practically a clock. Gmail's classifier clusters messages with similar Message-ID patterns, so by the time the campaign had sent forty emails, the filter could reconstruct our entire sending schedule from the envelopes alone. It was the email equivalent of a getaway car with "LEASED BY JOHN DOE" painted on the door. The fix was one line: uuid4().hex. The lesson: if you are going to hash something, hash something that is not a clock..</p></div>
 
 <p>The fixes that followed read like a twelve-step program for email rehabilitation:</p>
 
@@ -149,6 +152,10 @@ msg['X-DropoutJeep-Sim'] = 'true'           # the double confession</code></pre>
 <li><strong>pretext_gen</strong> — pulls from Google News RSS, NWS weather alerts, NVD CVE feeds, and SEC EDGAR to generate current-event pretexts. Nothing says "legitimate security alert" like referencing a CVE that actually exists. The weather variant is especially fun: "Due to severe weather, please confirm your remote work status." The storm is real. The link is not.</li><li><strong>branding_clone</strong> — takes a target company's login URL, scrapes the CSS, logo, and colors, and generates a matching login page. The clone is so faithful that targets assume IT redesigned the portal over the weekend. The four-tier logo detection heuristic is our proudest achievement and we will not be taking questions.</li><li><strong>template_marketplace</strong> — role-specific templates: Finance expects "Payment confirmation required," HR expects "New employee onboarding," Legal expects "Contract review required." Generic "Security Alert" templates are for people who also use the same password everywhere.</li>
 </ul>
 
+ <figure>
+      <img src="../assets/img/pretext.png" alt="Exploit Chain Topology">
+      <figcaption>[YOU CAN MAKE THE PRETEXT BETTER]</figcaption>
+    </figure>
 <h3>3.3 Payloads (We Wrote an OLE Writer From Scratch)</h3>
 
 <ul>
@@ -157,23 +164,48 @@ msg['X-DropoutJeep-Sim'] = 'true'           # the double confession</code></pre>
 
 <div class="callout callout-remark"><div class="callout-header"><span>REMARK: PAYLOAD PHILOSOPHY</span></div><p>The payload doctrine is simple: the target opens the file, the payload runs, the target goes back to work. No "Enable Content" prompts, no "are you sure you want to run macros?" — in 2026, "click to enable macros" is the phishing equivalent of a flip phone. The modern target never knows anything happened, which is either very impressive or very sad depending on whose side you are on.</p></div>
 
+ <figure>
+      <img src="../assets/img/payload.png" alt="pew pew pew">
+      <figcaption>[THIS IS WHY THIS TOOL MIGHT NEVER GO PUBLIC, I HAVE 3 MORE I AM IMPLEMENTING]</figcaption>
+    </figure>
 <h3>3.4 C2 and Exfiltration (Your C2 Is a Meme Account Now)</h3>
 
 <ul>
-<li><strong>dead_drop</strong> — resolves C2 instructions from public surfaces: GitHub Gists, Pastebin, and Reddit user profiles. Your command-and-control is a Reddit account with three karma. If the SOC asks, you were just posting cat pictures to r/aww.</li><li><strong>websocket_c2</strong> — WebSocket C2 on port 443 via flask_sock, because port 443 is the one port no firewall dares close.</li><li><strong>domain_fronting</strong> — CDN fronting across Azure, Cloudflare, Fastly, and CloudFront. The beacon talks to Azure's CDN, Azure's CDN talks to your server, and the SOC's logs show traffic to Microsoft. Technically true.</li><li><strong>saas_mimicry</strong> — beacons that look like Teams or Slack traffic. The SOC analyst sees a Teams heartbeat and thinks "good, the company is collaborating." They are collaborating with you.</li><li><strong>doh_exfil / icmp_exfil</strong> — exfiltration over DNS-over-HTTPS and ICMP tunnels. The ICMP variant uses raw sockets and Windows ctypes, because nothing says "sophisticated exfil" like pinging your way out of a network. The network team will blame the fish tank.</li><li><strong>stegano</strong> — LSB image steganography for PNG and BMP. Hiding your loot in a cat picture is not just covert — it is the closest this industry gets to art.</li><li><strong>multi_hop_proxy</strong> — SOCKS5 chains with per-hop TLS. For when one proxy is not enough and you need to make the attribution analyst cry.</li>
+<li><strong>dead_drop</strong> — resolves C2 instructions from public surfaces: GitHub Gists, Pastebin, and Reddit user profiles. Your command-and-control is a Reddit account with three karma. If the SOC asks, you were just posting cat pictures to r/aww.</li><li><strong>websocket_c2</strong> — WebSocket C2 on port 443 via flask_sock, because port 443 is the one port no firewall dares close.</li><li><strong>domain_fronting</strong> — CDN fronting across Azure, Cloudflare, Fastly, and CloudFront. The beacon talks to Azure's CDN, Azure's CDN talks to your server, and the SOC's logs show traffic to Microsoft. Technically true.
+ <figure>
+      <img src="../assets/img/advancec2.png" alt="Exploit Chain Topology">
+      <figcaption>[I really enjoyed working on this]</figcaption>
+    </figure></li><li><strong>saas_mimicry</strong> — beacons that look like Teams or Slack traffic. The SOC analyst sees a Teams heartbeat and thinks "good, the company is collaborating." They are collaborating with you.</li><li><strong>doh_exfil / icmp_exfil</strong> — exfiltration over DNS-over-HTTPS and ICMP tunnels. The ICMP variant uses raw sockets and Windows ctypes.</li><li><strong>stegano</strong> — LSB image steganography for PNG and BMP. Hiding your loot in a cat picture is not just covert — it is the closest this industry gets to art.</li><li><strong>multi_hop_proxy</strong> — SOCKS5 chains with per-hop TLS. For when one proxy is not enough and you need to make the attribution analyst cry.</li>
 </ul>
 
+<figure>
+      <img src="../assets/img/c2_channels.png" alt="pew pew pew">
+      <figcaption>[DOH!!!]</figcaption>
+    </figure>
 <h3>3.5 Evasion and Persistence (We Read Your EDR's Manual)</h3>
 
 <ul>
 <li><strong>stager_evasion</strong> — AMSI bypass via hardware breakpoints, ETW patching across eight functions, direct syscalls, and sleep obfuscation. We do not want to alarm anyone, but your EDR should be alarmed.</li><li><strong>sandbox_evasion</strong> — the WESTERN_EDR_PROCESSES list knows your EDR by name. Conditional execution based on process list, because a payload that detonates in a sandbox is just a very expensive screensaver.</li><li><strong>ip_reputation</strong> — conditional execution by IP and ASN, with a research-IP blocklist. If you are scanning from a university IP, the payload politely declines to execute. It is not you, it is your ASN.</li><li><strong>persistence</strong> — COM hijacking, .NET profiler injection via COR_ENABLE_PROFILING (Defender does not check environment variables for profiler injection; we checked), and IFEO debugger hijack. The IFEO variant is special: when the EDR tries to restart, your implant runs instead. It is the most passive-aggressive persistence mechanism in existence.</li>
 </ul>
 
+<figure>
+      <img src="../assets/img/evasion.png" alt="pew pew pew">
+      <figcaption>[LOWKEY FIND A BETTER ALTERNATIVE TO THE STAGERS]</figcaption>
+    </figure>
+
 <h3>3.6 The MITM Proxy (The Crown Jewel)</h3>
 
 <p>The reverse proxy is where DropoutJeep stops being a phish kit and starts being a platform. It proxies the real website transparently — the target sees the real site, but form submissions flow through your server first. Capabilities include content manipulation rules, JavaScript injection, form replacement, credential extraction, MFA relay, cookie capture, curl_cffi JA3 spoofing, and a Playwright browser-in-the-middle.</p>
 
-<p>In other words: the target logs into "their" bank, and you log in right behind them, wearing their session like a stolen coat. And because it is an awareness platform, you then email them a report card.</p>
+<figure>
+      <img src="../assets/img/proxy.png" alt="pew pew pew">
+      <figcaption>[THIS IS MY FAVORITE MODULE HERE]</figcaption>
+    </figure>
+
+<figure>
+      <img src="../assets/img/proxyrule.png" alt="pew pew pew">
+      <figcaption>[YOU CAN ALSO MATCH AND REPLACE!!!]</figcaption>
+    </figure>
 
 <h2 id="4-architecture-or-how-we-keep-80-modules-from-catching-fire">4. Architecture (Or: How We Keep 80 Modules From Catching Fire)</h2>
 
@@ -194,7 +226,7 @@ msg['X-DropoutJeep-Sim'] = 'true'           # the double confession</code></pre>
 <p>Since this is a simulation platform, we feel obliged to tell you what it would do — so you can defend against the people who do it for real:</p>
 
 <ul>
-<li><strong>Patch your Office.</strong> CVE-2017-11882 is from 2017. If Equation Editor still works on your fleet, the real attackers do not need a framework — they need a Tuesday.</li><li><strong>Watch the cat pictures.</strong> LSB steganography hides data in images. If a user is emailing unusually large PNGs of cats to external addresses, the cats may be a lie.</li><li><strong>Check the dead drops.</strong> GitHub Gists, Pastebin, and Reddit profiles are free C2. If a Reddit account with three karma posts base64 that decodes to a command, that is not a meme — that is a beacon.</li><li><strong>Segment your voice VLAN, patch your PBX, and stop reusing passwords.</strong> See our previous memo for the details; it is all still true.</li><li><strong>The sim headers are gone.</strong> We removed X-DropoutJeep-Sim from the codebase. Stop grepping for it; it is not there anymore. (We are aware this is exactly what someone who still sends sim headers would say. We made our peace with that.)</li>
+<li><strong>Patch your Office.</strong> CVE-2017-11882 is from 2017. If Equation Editor still works on your fleet, the real attackers do not need a framework — they need a Tuesday.</li><li><strong>Watch the cat pictures.</strong> LSB steganography hides data in images. If a user is emailing unusually large PNGs of cats to external addresses, the cats may be a lie.</li><li><strong>Check the dead drops.</strong> GitHub Gists, Pastebin, and Reddit profiles are free C2. If a Reddit account with three karma posts base64 that decodes to a command, that is not a meme — that is a beacon.
 </ul>
 
 <h2 id="7-repo-and-legal">7. Repo and Legal</h2>
@@ -202,6 +234,8 @@ msg['X-DropoutJeep-Sim'] = 'true'           # the double confession</code></pre>
 <p>DropoutJeep is a platform for authorized security awareness testing. Get written approval before running anything — the README says so, the framework says so, and the law says so. Point it at a network you do not own and you will discover that the fastest exploit chain of all is the legal one.</p>
 
 <p>That is the whole point: we build simulations so the real attacks never get to happen — or, if they do, so someone is ready. Also, our emails land in the inbox now. Ask us how. Actually, do not — we will tell you anyway. It is called BIMI.</p>
+
+<div class="callout callout-remark"><div class="callout-header"><span>REMARK: INTERNAL ENGAGEMENTS ONLY</span></div><p>Sadly (for now), DropoutJeep is closed source, and it will stay that way for the foreseeable future. Only trusted individuals with reputable work get access because we have seen what happens otherwise: Discord and Telegram groups of scammers plotting how to use it to land BEC campaigns in corporate inboxes. We want no part of that, and we would very much like to remain a stranger to Uncle Sam. The tradecraft is public; the source is not.</p></div>
 
         <div class="citation-box" id="bibtex">
           <div class="citation-header">
