@@ -5,10 +5,18 @@
     <link>https://lulztigre.pw/</link>
     <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Aug 2026 23:01:10 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 17 Aug 2026 10:39:51 GMT</lastBuildDate>
     <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
 
-        <item>
+            <item>
+      <title>The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino</title>
+      <link>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</link>
+      <guid>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</guid>
+      <pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>
+      <description>While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.</description>
+    </item>
+
+    <item>
       <title>DropoutJeep: The Phishing Simulator That Refuses to Drop Out</title>
       <link>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</link>
       <guid>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</guid>

@@ -132,7 +132,7 @@
       <div class="container feed-controls-grid">
         <div class="tag-filters">
           <span class="filter-label">CATEGORY:</span>
-          <button class="tag-btn active" data-tag="ALL">ALL (3)</button>
+          <button class="tag-btn active" data-tag="ALL">ALL (4)</button>
           <button class="tag-btn" data-tag="OFFENSIVE SECURITY">OFFENSIVE SECURITY</button>
           <button class="tag-btn" data-tag="RED TEAM">RED TEAM</button>
           <button class="tag-btn" data-tag="CVE RESEARCH">CVE RESEARCH</button>
@@ -152,10 +152,51 @@
       <div class="container">
         <div class="section-header-bar">
           <h2 class="section-title"><span>▶</span> RESEARCH LOG & PREPRINTS</h2>
-          <span class="posts-count" id="filtered-count">[2 RECORDS FOUND]</span>
+          <span class="posts-count" id="filtered-count">[4 RECORDS FOUND]</span>
         </div>
 
         <div class="posts-feed" id="posts-feed">
+
+          <!-- Auto-generated: The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino -->
+          <article class="post-card" 
+                   data-tags="OFFENSIVE SECURITY, PATCH ANALYSIS, JDBC, RCE, VARIANT ANALYSIS"
+                   data-bibtex="@article{lulz2026_gravitino-,
+  author    = {LulzTigre Research},
+  title     = {The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino},
+  journal   = {LulzTigre Research Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html}
+}">
+            <div class="post-card-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #007</span>
+                <span>DATE: 2026-08-17</span>
+              </div>
+              <span>EST. TIME: ~10 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/gravitino-test-connection-rce-41042.html">The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino</a>
+            </h3>
+
+            <p class="post-abstract">
+              While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+                <span class="tag-chip">PATCH ANALYSIS</span>
+                <span class="tag-chip">JDBC</span>
+                <span class="tag-chip">RCE</span>
+                <span class="tag-chip">VARIANT ANALYSIS</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
+                <a href="posts/gravitino-test-connection-rce-41042.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
 
           <!-- Auto-generated: DropoutJeep: The Phishing Simulator That Refuses to Drop Out -->
           <article class="post-card" 
@@ -192,7 +233,7 @@
               </div>
               <div class="post-card-actions">
                 <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
-                <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html" class="btn btn-primary btn-sm">READ DISPATCH -></a>
+                <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
               </div>
             </div>
           </article>

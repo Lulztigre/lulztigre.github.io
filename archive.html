@@ -88,6 +88,21 @@
 
             <div class="post-card" style="padding: 1.25rem;">
               <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                <span>MEMO #007 // 2026-08-17</span>
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+              </div>
+              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
+                <a href="posts/gravitino-test-connection-rce-41042.html" style="color: var(--text-primary); text-decoration: none;">
+                  The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino
+                </a>
+              </h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
+                While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.
+              </p>
+            </div>
+
+            <div class="post-card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
                 <span>MEMO #006 // 2026-08-15</span>
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
               </div>
@@ -127,7 +142,7 @@
                 </a>
               </h3>
               <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                Recon methodology and full-chain automation against Grandstream UCM/GXP — blind-oracle SQLi to root in one command.
+                Recon methodology and full-chain automation against Grandstream UCM/GXP: blind-oracle SQLi to root in one command.
               </p>
             </div>
 
@@ -143,7 +158,7 @@
           <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.76rem;">
             <div style="display: flex; justify-content: space-between;">
               <span>OFFENSIVE SECURITY</span>
-              <strong style="color: var(--accent-primary);">3</strong>
+              <strong style="color: var(--accent-primary);">4</strong>
             </div>
           </div>
         </div>
