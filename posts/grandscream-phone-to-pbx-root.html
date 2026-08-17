@@ -4,16 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GrandScream: From One Desk Phone to a Root PBX // LulzTigre Research</title>
-  <meta name="description" content="Recon methodology and chain automation: how one unauthenticated request against a Grandstream desk phone becomes a root shell on the UCM PBX — and how a stdlib-only Python script automates every handoff.">
-  <meta name="author" content="LulzTigre">
+  <meta name="description" content="One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.">
+  <meta name="author" content="LulzTigre Research">
 
   <meta property="og:title" content="GrandScream: From One Desk Phone to a Root PBX">
-  <meta property="og:description" content="Recon methodology and chain automation against Grandstream UCM/GXP — unauth info leaks, boolean-oracle SQLi, credential reuse, and the script that glues it together.">
+  <meta property="og:description" content="One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +21,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
           onload="renderMathInElement(document.body);"></script>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=1.2">
+  <link rel="stylesheet" href="../assets/css/style.css">
 
   <script>
     (function(){
@@ -75,8 +72,8 @@
   <header class="article-header">
     <div class="container">
       <div class="article-breadcrumbs">
-        <a href="../index.html">ROOT</a> <span>/</span>
-        <a href="../archive.html">DISPATCHES</a> <span>/</span>
+        <a href="../index.html">ROOT</a> <span>/</span> 
+        <a href="../archive.html">DISPATCHES</a> <span>/</span> 
         <span>MEMO #004</span>
       </div>
 
@@ -84,237 +81,136 @@
 
       <div class="article-meta-panel">
         <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-08-15</strong></div>
-        <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>LulzTigre Research</strong></div>
+        <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>LulzTigre</strong></div>
         <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
         <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~15 MIN</strong></div>
-        <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#RECON #AUTOMATION #VOIP #EXPLOIT-CHAIN</strong></div>
+        <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #RECON #AUTOMATION #VOIP #EXPLOIT-CHAIN</strong></div>
       </div>
     </div>
   </header>
 
   <main class="container">
     <div class="article-layout">
-
+      
       <article class="prose">
         <div class="callout callout-definition" id="abstract">
           <div class="callout-header">
             <span>[ABSTRACT & CORE THESIS]</span>
           </div>
-          <p>
-            One unauthenticated GET request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it — root shell included. This dispatch documents <strong>GrandScream</strong>, a single-file, stdlib-only Python tool that chains unauthenticated information disclosure, a blind SQL injection oracle (CVE-2020-5726), credential reuse, and a restricted-CLI escape (CVE-2020-5759) into one command. The CVEs are old. The value is in the recon methodology and in what happens when you compress a multi-hour manual chain into thirty seconds of deterministic code.
-          </p>
+          <p>One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.</p>
         </div>
 
-        <p>
-          Everything below was verified in an authorized lab against a <strong>UCM6510 PBX on firmware 1.0.18.13</strong> and a <strong>GXP1625 phone on firmware 1.0.7.11</strong>. The tooling is public on <a href="https://github.com/Lulztigre/GrandScream" target="_blank" rel="noopener">GitHub</a>; the engagement-specific data (extension inventory, real secrets) stays off this blog.
-        </p>
+        <h2 id="1-the-phone-on-the-reception-desk">1. The Phone on the Reception Desk</h2>
 
-        <h2 id="sec1">1. The Setup: VoIP Fleets Are the Forgotten Attack Surface</h2>
-        <p>
-          Enterprises patch servers. Nobody patches the phone on the reception desk. IP handsets are small Linux boxes with persistent web servers, factory-default admin accounts, and firmware that ships old and stays old. The PBX behind them is worse: it holds SIP credentials for every extension, call recordings, CDRs, trunks, and — on the Grandstream UCM series — a root shell one configuration sub-command away.
-        </p>
-        <p>
-          The vulnerabilities used in this chain date from 2019–2020 and several sit in CISA's Known Exploited Vulnerabilities catalog. That's the point: this is not about zero-days, it's about what's actually still running on real networks.
-        </p>
+<p>The engagement started with one box: a Grandstream GXP1625 Executive IP Phone on 10.20.0.108, authorized lab, nothing special about it. A port scan of the thing is almost boring. Two open ports: 22, running dropbear SSH (2016.74), and 80, a web server fronting a /cgi-bin farm. No telnet, no debug ports, no pre-auth web RCE that applies to this firmware.</p>
 
-        <div class="callout callout-definition">
-          <div class="callout-header">
-            <span>[THE CHAIN, END TO END]</span>
-          </div>
-          <p>
-            <strong>GXP phone (unauth)</strong> → SIP account leak reveals PBX IP + extension →
-            <strong>UCM fingerprint</strong> (unauth version probe) → firmware eligible for CVE-2020-572x →
-            <strong>CTI blind SQLi</strong> on TCP 8888 extracts the admin password →
-            <strong>web login</strong> (md5 challenge-response) →
-            <strong>SIP credential harvest</strong> for every extension →
-            <strong>credential reuse</strong> takes the phone's web admin →
-            <strong>SSH into the UCM</strong>, escape the restricted CLI, <code>uid=0(root)</code>.
-          </p>
-        </div>
+<p>That last part mattered. I checked the phone for pre-auth exploitation first, because that is the reflex: the 2018 GXP16xx CVEs (17563/64/65) and the 2020 GXP1600 set (5738/39) are all patched in firmware 1.0.7.11. So the phone was never going to be the exploitation target. What it turned out to be was the best recon device on the network, and I almost missed it by looking for a bug instead of looking at the API.</p>
 
-        <h2 id="sec2">2. Recon Methodology, Stage by Stage</h2>
+<h2 id="2-the-phone-talks-too-much">2. The Phone Talks Too Much</h2>
 
-        <h3 id="stage0">Stage 0 — Read Before You Authenticate</h3>
-        <p>
-          The GXP1625 exposes two unauthenticated read primitives, and both are free recon:
-        </p>
-        <ul>
-          <li>
-            <code>/cgi-bin/api.values.get</code> with an empty <code>sid</code> returns a <em>whitelisted</em> set of public values — phone model, firmware, lockout state. You fingerprint the device without ever touching the login form, so you never risk the lockout.
-          </li>
-          <li>
-            <code>/cgi-bin/api-get_accounts</code> returns the SIP account table: the SIP server IP, the extension's <code>sip_id</code>, the account name, and registration status. No credentials. No rate limit worth mentioning.
-          </li>
-        </ul>
-        <p>
-          <strong>Principle 1: drain the unauthenticated read surface first.</strong> It costs nothing, it rarely trips alarms, and every field you harvest collapses a guess you'd otherwise make with a scanner.
-        </p>
-        <p>
-          Two more recon details from the phone that pay off later:
-        </p>
-        <ul>
-          <li>Login error codes are an oracle of their own: <code>wrong1</code> means the username exists, <code>wrong2</code> means it doesn't. Free username enumeration.</li>
-          <li>The lockout is aggressive and its counter <em>persists across the 5-minute window</em>. So the script checks <code>/cgi-bin/api-get_lockout</code> before every password attempt. Recon isn't just about the target's version — it's about the target's defenses. Know the lockout policy before you ever risk triggering it.</li>
-        </ul>
+<p>The web server exposes a read API and a write API. The write side, api.values.post, is session-gated. The read side, api.values.get, is whitelist-filtered and needs no session at all. With an empty sid and a request of colon-joined keys it returns public values: phone model, firmware, lockout state, session timeout.</p>
 
-        <h3 id="stage1">Stage 1 — Assets Are Nodes; Recon Is Edges</h3>
-        <p>
-          The account table leaked above contains one field that changes the entire engagement: <code>sip_server</code>. The phone tells you, unprompted, which host runs its telephony. No need to sweep the /22 looking for a lighttpd banner — the dependency is handed to you.
-        </p>
-        <p>
-          <strong>Principle 2: recon is a graph problem.</strong> A port scan enumerates nodes; the interesting data is the edges — what talks to what, with what credentials, under whose authority. The phone→PBX edge came with a version of trust attached, and that trust is exactly what the chain abuses later via credential reuse.
-        </p>
+<div class="callout callout-definition"><div class="callout-header"><span>THE FIRST LEAK</span></div><p><code>GET /cgi-bin/api-get_accounts</code>, no auth, returns the SIP account table: sip_server 10.20.0.4, sip_id 1000, name RECEPTION, registration 1. A desk phone just introduced me to its PBX.</p></div>
 
-        <h3 id="stage2">Stage 2 — Fingerprinting Is an Eligibility Check</h3>
-        <p>
-          Against the PBX, <code>POST /cgi?action=getInfo</code> (unauthenticated) returns the model, program version, and country. That one response gates the whole operation: UCM6510 firmware <strong>1.0.18.13 &lt; 1.0.19.20</strong> means the CVE-2020-572x family is in scope, and the chain is worth pursuing. On a patched box you find this out in one request instead of one failed exploit.
-        </p>
-        <p>
-          <strong>Principle 3: convert fingerprints into go/no-go decisions before firing anything.</strong> Version → CVE eligibility → chain selection. The script encodes this as an explicit step, not an assumption.
-        </p>
+<p>That response changed the shape of the engagement. The phone tells you which host runs its telephony, unprompted, as plaintext. No sweep of the /22, no banner guessing: the dependency graph is handed over. Recon is a graph problem, and the phone to PBX edge arrived with a version of trust attached, the kind the chain abuses later.</p>
 
-        <h3 id="stage3">Stage 3 — Turning a Login Challenge into a Boolean Oracle</h3>
-        <p>
-          The UCM's CTI service listens on TCP 8888 and speaks a trivial protocol: a 4-byte big-endian length prefix, then a line like <code>action=challenge&amp;user=admin</code>. The response is JSON — <code>status: 0</code> when the user matches, <code>status: -5</code> when it doesn't.
-        </p>
-        <p>
-          The <code>user</code> parameter lands in a SQLite query (CVE-2020-5726), and that binary status is all you need for a blind injection oracle:
-        </p>
-        <pre data-lang="python"><code>def oracle(self, cond, user="admin"):
-    payload = f"action=challenge&amp;user={user}' AND {cond}-- ".encode()
+<p>Two more details mattered before I touched anything else. The login endpoint (<code>/cgi-bin/dologin</code>) returns different error codes for existing and unknown usernames: wrong1 means the user exists, wrong2 means it does not. Free username enumeration. And the lockout is aggressive, with a counter that persists across five-minute windows, so a guessing loop can lock the only device that matters. The script later checks <code>/cgi-bin/api-get_lockout</code> before every single password attempt. Recon is not just about the target's versions. It is about the target's defenses, before you risk triggering them.</p>
+
+<h2 id="3-the-pbx-one-request-away">3. The PBX, One Request Away</h2>
+
+<p>The sip_server field is 10.20.0.4. Fingerprinting it took one unauthenticated request: <code>POST /cgi?action=getInfo</code> over HTTPS 8089 returns the model, program version, and country. The answer: UCM6510, firmware 1.0.18.13 (base 1.0.18.2), hardware V1.4B, lighttpd/1.4.47 underneath, and a CTI service on TCP 8888.</p>
+
+<p>That version is the go/no-go gate for the entire operation. 1.0.18.13 is below the 1.0.19.20 threshold, which puts the CVE-2020-572x family in scope: unauthenticated SQLi to RCE (5722, in CISA's Known Exploited Vulnerabilities catalog), password dump (5724/25/26), authenticated command injection (5757/58/59). On a patched box, that single getInfo response tells you to walk away in one request instead of after one failed exploit. Fingerprints are eligibility checks. Treat them that way.</p>
+
+<h2 id="4-an-oracle-on-port-8888">4. An Oracle on Port 8888</h2>
+
+<p>The CTI service speaks a protocol that is almost aggressively simple. Four-byte big-endian length prefix, then a line like <code>action=challenge&user=admin</code>. The response is JSON, and it has exactly two interesting states: status 0 when the user matches, status -5 when it does not.</p>
+
+<p>I sent a quote into the user parameter, and the response did what I wanted it to do, which is when a target becomes interesting. The user value lands in a SQLite query, and the binary status gives me a boolean oracle: 0 is true, -5 is false. That is CVE-2020-5726, a blind SQL injection in the CTI challenge, and it is the whole ballgame, because the challenge table holds the web login credential.</p>
+
+<pre><code>def oracle(self, cond, user="admin"):
+    payload = f"action=challenge&user={user}' AND {cond}-- ".encode()
     r = self._send(payload)
     return r is not None and r.get("status") == 0</code></pre>
-        <p>
-          Note the trailing space after <code>--</code>. This is not decoration: <strong>SQLite requires it</strong>. Without the space, the comment isn't parsed, the query is a syntax error, and the oracle silently answers <em>false</em> to everything — the worst failure mode a blind injection can have, because it looks like "not vulnerable" instead of "broken payload." Dialect quirks are methodology.
-        </p>
-        <p>
-          Extraction is classic bisection: loop <code>LENGTH()</code> from zero to find the length, then binary-search each character over the printable range:
-        </p>
-        <pre data-lang="python"><code>lo, hi = 0x20, 0x7E
-while lo &lt; hi:
-    mid = (lo + hi) // 2
-    if self.oracle(f"substr(({subq}),{pos},1) &gt;= '{chr(mid)}'"):
-        lo = mid + 1
-    else:
-        hi = mid
-out += chr(lo - 1)</code></pre>
 
-        <div class="callout callout-theorem">
-          <div class="callout-header">
-            <span>[QUERY BUDGET FOR BISECTION]</span>
-          </div>
-          <p>
-            The printable ASCII range spans 95 code points, so each character costs \( \lceil \log_2 95 \rceil = 7 \) queries. A 12-character password with a small length-probe loop lands around ~100 requests total — observed runtime in the lab: <strong>13 seconds</strong>, single-threaded, with polite connection churn. The same extraction by hand in a proxy replays out at an hour of copy-paste and one silent typo.
-          </p>
-        </div>
+<p>Then I hit the first real blocker of the engagement, and it is the kind that quietly kills blind injections. My first probes all returned false. Not injection-failed false. Everything false, consistently, which is the worst failure mode a blind injection can have, because it looks exactly like a patched target. The cause was one character: SQLite's -- comment requires a trailing space to be parsed. Without it, the query is a syntax error, the oracle answers false to everything, and the channel looks dead when it is merely malformed.</p>
 
-        <p>
-          Two hard-won lessons from reading data you cannot see:
-        </p>
-        <ul>
-          <li>
-            <strong>The decoy row.</strong> The <code>users</code> table holds an <code>admin</code> row whose password is <em>not</em> the web/CTI login password. The real web credential lives in the <em>challenge</em> table the outer query reads. Blind dumps need a plausibility check against how the app actually authenticates — the script extracts from the challenge table directly.
-          </li>
-          <li>
-            <strong>Row order lies.</strong> <code>LIMIT/OFFSET</code> without <code>ORDER BY</code> walks the index while column pairs were verified against rowid order, silently misaligning <code>user_name</code> with <code>user_password</code>. The blind table dump looked fine and was wrong. We only caught it because a root shell later gave ground truth from <code>/cfg/etc/ucm_config.db</code>. <strong>Always validate a blind extraction channel against a known value once</strong> — then never trust it blindly again.
-          </li>
-        </ul>
+<div class="callout callout-remark"><div class="callout-header"><span>DIALECT QUIRKS ARE METHODOLOGY</span></div><p>The trailing space after -- is not decoration. It is the difference between a working oracle and a silent false negative. When a blind channel does not work, verify the payload against the dialect before declaring the target patched.</p></div>
 
-        <h3 id="stage4">Stage 4 — Log In, Then Harvest</h3>
-        <p>
-          The UCM web API (HTTPS 8089) authenticates with a challenge-response: request <code>action=challenge</code>, compute <code>token = md5(challenge + password)</code>, submit <code>action=login</code>. With the oracle-extracted password this is one round trip to a session cookie.
-        </p>
-        <p>
-          Then the authenticated API does what PBX admin APIs do: <code>action=listAccount</code> enumerates every extension, and <code>action=getSipAccount&amp;extension=N</code> returns each one's SIP <code>authid</code>, <code>secret</code>, and voicemail PIN — in plaintext. One compromised admin account is equivalent to compromising every handset's SIP identity.
-        </p>
+<p>Extraction is plain bisection. Probe LENGTH() to find the length, then binary-search each character over the printable range 0x20 to 0x7E. The printable range spans 95 code points, so each character costs seven queries. A 12-character password plus the length loop lands around a hundred requests. Observed runtime in the lab: 13.2 seconds, single-threaded, polite connection churn included. The same extraction by hand in a proxy replays out to an hour of copy-paste and one silent typo.</p>
 
-        <h3 id="stage5">Stage 5 — The Credential Reuse Graph</h3>
-        <p>
-          In the lab, one password was simultaneously: the UCM web admin password, the phone's web admin password, and extension 1000's SIP secret. That's not luck; that's how these fleets are administered.
-        </p>
-        <p>
-          The script treats harvested secrets as a priority queue — <code>[oracle_password, sip_secret, user_supplied]</code> — and tries them against the phone's <code>/cgi-bin/dologin</code>, checking the lockout endpoint between attempts and bailing the moment it reports <code>locked</code>. <strong>Principle 4: password attacks are graph traversal with a blast-radius budget.</strong> The lockout check is the budget.
-        </p>
+<h2 id="5-two-traps-in-data-you-cannot-see">5. Two Traps in Data You Cannot See</h2>
 
-        <h3 id="stage6">Stage 6 — Root, and Ranking Your Paths</h3>
-        <p>
-          Two roads to code execution existed. The web path (CVE-2020-5722, <code>sendPasswordEmail</code> command injection) is rate-limited to one call per 60 seconds, and on the tested firmware the injection point is wrapped in a quoted heredoc — it may simply not fire. The SSH path is deterministic:
-        </p>
-        <pre data-lang="shell"><code>ssh admin@10.20.0.4          # the web admin password works here
-UCM6500 &gt; config              # enter the restricted config sub-shell
-CONFIG &gt; unset a;/bin/sh       # CVE-2020-5759: parameter injection
-~ # id                        # uid=0(root) busybox</code></pre>
-        <p>
-          <strong>Principle 5: rank exploits by reliability, not by wow-factor.</strong> The chain's final hop is the boring 2020 CLI escape precisely because it works every time. The flashy unauth web-RCE is kept as a documented fallback, rate-limit and all.
-        </p>
+<p>Blind extraction reads data you can never look at, and that distance breeds a specific kind of confidence. The users table taught me two lessons about it.</p>
 
-        <h2 id="sec3">3. Automating the Chain</h2>
-        <p>
-          Manually, this chain is two browsers, a proxy tab, a spreadsheet of leaked fields, and an SSH session — call it an hour of careful clicking, non-repeatable, and audit-hostile. Automated, it is:
-        </p>
-        <pre data-lang="shell"><code>python grandscream.py --phone 10.20.0.108
+<div class="callout callout-theorem"><div class="callout-header"><span>THE DECOY ROW</span></div><p>The users table contains an admin row whose password is not the web login password. The real credential lives in the challenge table, the one the outer query reads. A dump of the obvious table would have produced a working-looking but wrong answer. The script extracts with no FROM clause, reading the challenge query's own table directly.</p></div>
 
-[1] Phone fingerprint: 10.20.0.108
-    model=GXP1625 fw=1.0.7.11 sip_server=10.20.0.4 sip_id=1000 ...
+<p>The second trap is row order. Dumping the users table with LIMIT/OFFSET and no ORDER BY walks the index, while column pairs were verified against rowid order, and the two orders do not align. The blind full-table dump looked completely sane and was wrong: user_name and user_password shifted against each other. I only caught it because the chain later reached a root shell that gave ground truth from /cfg/etc/ucm_config.db. The rule I took from that: validate a blind extraction channel against one known value, and then never trust it blindly again.</p>
+
+<h2 id="6-login-and-what-admin-buys">6. Login, and What Admin Buys</h2>
+
+<p>With the password in hand, the web login is a formality. <code>action=challenge</code> returns a challenge string, <code>token = md5(challenge + password)</code>, <code>action=login</code> with the token returns status 0 and a session-identify cookie. Attempts are limited to about five before the API starts answering with remain_num counters in status -37 responses, so the login code does not waste attempts.</p>
+
+<p>Authenticated, the PBX admin API does what PBX admin APIs do. <code>action=listAccount</code> enumerates every extension. <code>action=getSipAccount&extension=N</code> returns that extension's SIP authid, secret, and voicemail PIN in plaintext. The users table dump gave 34 rows total, extension passwords in the clear. One compromised admin account is equivalent to every handset's SIP identity, because the API hands them out by design.</p>
+
+<h2 id="7-one-password-three-hats">7. One Password, Three Hats</h2>
+
+<p>Then the credential reuse test, which is where the chain closes. In this lab, one password was simultaneously the UCM web admin password, the GXP phone web admin password, and extension 1000's SIP secret. That is not luck. It is how VoIP fleets get administered: one credential, deployed everywhere, because it is convenient.</p>
+
+<p>The phone accepted it. <code>POST /cgi-bin/dologin</code> with the PBX's admin password returned success, a role, and an sid cookie. Full web admin on the phone, zero additional effort. The phone's SSH root rejected the same password, which is worth recording as a dead end: dropbear runs a separate authentication path and does not share the web credential store. The script treats harvested secrets as a priority queue (oracle password, then SIP secret, then user-supplied) and checks the lockout endpoint between attempts, bailing the moment the phone reports locked.</p>
+
+<h2 id="8-root-and-ranking-paths-by-reliability">8. Root, and Ranking Paths by Reliability</h2>
+
+<p>Two roads to code execution existed on the PBX. The flashy one is CVE-2020-5722, the unauthenticated sendPasswordEmail SQLi with command injection, the one sitting in CISA KEV. It is also rate-limited to one call per 60 seconds, and on this firmware the injection point is wrapped in a quoted heredoc, so it may simply not fire.</p>
+
+<p>The boring one is deterministic. SSH with the web admin password lands in a restricted dropbear CLI. From there:</p>
+
+<pre><code>UCM6500 > config
+CONFIG > unset a;/bin/sh
+~ # id</code></pre>
+
+<p><code>unset a;/bin/sh</code> is CVE-2020-5759, a parameter injection in the restricted config sub-shell that drops straight into root busybox sh. It works every time, which is exactly why it is the final hop. Rank exploits by reliability, not by wow factor. The chain's last step is the unglamorous 2020 escape because it does not depend on a rate limit or a quoted heredoc behaving.</p>
+
+<p>The root shell paid for itself immediately: <code>sqlite3 /cfg/etc/ucm_config.db</code> produced ground truth for every credential harvested blind, which is how the row-order bug in the dump got caught at all. Full admin on the phone, full admin on the PBX, root on the PBX, and every SIP secret in the fleet, in one chain.</p>
+
+<h2 id="9-the-script-is-the-writeup-that-executes">9. The Script Is the Writeup That Executes</h2>
+
+<p>By hand, that chain is two browsers, a proxy tab, a spreadsheet of leaked fields, and an SSH session: roughly an hour, non-repeatable, and hostile to auditing. Automated, it is:</p>
+
+<pre><code>python grandscream.py --phone 10.20.0.108
+
+<p>[1] Phone fingerprint: 10.20.0.108
+    model=GXP1625 fw=1.0.7.11 sip_server=10.20.0.4 sip_id=1000
 [2] PBX fingerprint: 10.20.0.4
-    model=UCM6510 version=1.0.18.13 ...
+    model=UCM6510 version=1.0.18.13
 [3] CTI blind SQLi (CVE-2020-5726) on 10.20.0.4:8888
     [+] admin user_password (challenge table) = 'admin@123456' (13.2s)
 [4] UCM web login: [+] logged in role=admin
-[5] SIP authid=123456 secret=******** vmsecret=********
-[6] Phone admin login: [+] (credential reuse)</code></pre>
-        <p>
-          Every step's output feeds the next step's input: the phone leaks the PBX, the oracle leaks the password, the password unlocks the harvest, the harvest feeds the reuse attempts. A chain with this shape <em>wants</em> to be a function pipeline. The design constraints that shaped the script:
-        </p>
-        <ul>
-          <li>
-            <strong>Stdlib only.</strong> <code>socket</code>, <code>ssl</code>, <code>struct</code>, <code>urllib</code>, <code>hashlib</code>, <code>argparse</code> — nothing else. It drops onto any engagement box without <code>pip</code>, and paramiko is optional, feature-degrading to "no interactive shell" instead of crashing. The 25-line <code>Http</code> class (cookie jar, TLS verification off, error tolerance) replaces a browser for repeatability.
-          </li>
-          <li>
-            <strong>Gated execution.</strong> The oracle is confirmed with a probe (<code>LENGTH(user_password)&gt;0</code>) before any extraction begins; a patched box gets a clean "not vulnerable" instead of garbage. Flags like <code>--password</code> let you re-run post-auth stages without re-doing the SQLi, and <code>--dump-users</code> makes the slow full-table pull opt-in.
-          </li>
-          <li>
-            <strong>Quirks encoded, once.</strong> The SQLite trailing space, the bisection bounds, the decoy-table trap, the lockout pre-check, the 60-second rate limit on the web RCE path — every lesson from Section 2 is a line of code now. That's the real argument for scripting: <em>the script is the writeup that executes.</em> Six months later you don't remember the SQLite quirk; the script does.
-          </li>
-          <li>
-            <strong>Report-shaped output.</strong> <code>run()</code> accumulates a <code>results</code> dict — fingerprints, credentials (memory only), shell status — so the tool's final state maps one-to-one onto finding sections in the engagement report.
-          </li>
-          <li>
-            <strong>Deliberately incomplete.</strong> The public build ships the recon, oracle, login, harvest, and SSH-CLI root path — but the bind/reverse shell listeners and persistence helpers from the lab notes were stripped before publishing. The methodology is the deliverable; the weaponized tail is left as an exercise for people who already know what they're doing, on networks they're allowed to do it on.
-          </li>
-        </ul>
+[5] SIP authid=123456 secret=<strong><em></strong><strong></em> vmsecret=</strong><strong><em></strong></em>
+[6] Phone admin login: [+] (credential reuse)</code></pre></p>
 
-        <div class="callout callout-remark">
-          <div class="callout-header">
-            <span>[REMARK ON AUTOMATION BOUNDARIES]</span>
-          </div>
-          <p>
-            Automating a chain does not mean automating judgment. The script will happily run against a patched PBX and report "injection not confirmed" — that's a feature. The human decisions — scope, authorization, when to stop, what goes in the report — stay outside the code, and the code is honest enough to surface "this didn't work" instead of papering over it.
-          </p>
-        </div>
+<p>Every step's output feeds the next step's input: the phone leaks the PBX, the oracle leaks the password, the password unlocks the harvest, the harvest feeds the reuse attempts. A chain with that shape wants to be a function pipeline. The design constraints that shaped the script are the lessons of the manual chain, encoded:</p>
 
-        <h2 id="sec4">4. Notes for the Blue Team</h2>
-        <ul>
-          <li><strong>Patch past 1.0.19.20</strong> on UCM65xx — or better, check whether the box still runs 2020 firmware at all, because that's the real finding.</li>
-          <li><strong>Segment the voice VLAN.</strong> A reception desk phone should not be able to introduce you to the PBX's admin interfaces. CTI on 8888 and SSH on 22 have no business being reachable from user segments.</li>
-          <li><strong>Kill credential reuse.</strong> Phone web admin = SIP secret = PBX admin is a single point of failure wearing three hats.</li>
-          <li><strong>Monitor the oracle signature:</strong> repeated <code>status 0</code>/<code>status -5</code> alternation on TCP 8888 from one source is not normal telephony behavior.</li>
-        </ul>
+<ul>
+<li>Stdlib only. socket, ssl, struct, urllib, hashlib, argparse. It drops onto any engagement box without pip; paramiko is optional and degrades to no interactive shell instead of crashing</li><li>Gated execution. The oracle is confirmed with a probe before any extraction starts; a patched box gets a clean not-vulnerable instead of garbage. Flags like --password skip the SQLi for post-auth re-runs</li><li>Quirks encoded once. The SQLite trailing space, the bisection bounds, the decoy table, the lockout pre-check, the 60-second rate limit on the web RCE path. The script is the writeup that executes; six months later it still remembers the dialect quirk you would not</li><li>Report-shaped output. The run() results dict maps one to one onto finding sections in the engagement report</li><li>Deliberately incomplete. The public build ships recon, oracle, login, harvest, and the SSH root path. The bind and reverse shell listeners and persistence helpers were stripped before publishing</li>
+</ul>
 
-        <h2 id="sec5">5. Repo &amp; Legal</h2>
-        <p>
-          Code and full command reference: <a href="https://github.com/Lulztigre/GrandScream" target="_blank" rel="noopener">github.com/Lulztigre/GrandScream</a>. Python 3.8+, standard library only, paramiko optional for the shell hop.
-        </p>
-        <p>
-          Authorized security testing only. Every technique above was developed and verified against equipment in a lab built for the purpose. Point this at a network you don't own and you'll discover the fastest exploit chain of all is the legal one.
-        </p>
+<div class="callout callout-remark"><div class="callout-header"><span>AUTOMATION BOUNDARIES</span></div><p>Automating a chain does not automate judgment. The script will happily report injection not confirmed against a patched box, and that is a feature. Scope, authorization, and when to stop stay outside the code.</p></div>
+
+<h2 id="10-notes-for-the-blue-team">10. Notes for the Blue Team</h2>
+
+<ul>
+<li>Patch past 1.0.19.20 on UCM65xx, or question why a 2020 firmware is reachable from a user segment at all</li><li>Segment the voice VLAN. A reception desk phone should not be able to introduce an attacker to the PBX admin API</li><li>Kill credential reuse. Phone web admin, SIP secret, and PBX admin sharing one password is a single point of failure wearing three hats</li><li>Monitor the oracle signature: sustained status 0 / status -5 alternation on TCP 8888 from one source is not normal telephony behavior</li>
+</ul>
+
+<p>Code and full command reference: <a href="https://github.com/Lulztigre/GrandScream" target="_blank" rel="noopener">github.com/Lulztigre/GrandScream</a>. Python 3.8+, standard library only, paramiko optional for the shell hop. Authorized security testing only: every step above was developed and verified in a lab built for the purpose, and pointing this at a network you do not own is the fastest way to learn that the legal exploit chain is the shortest one.</p>
 
         <div class="citation-box" id="bibtex">
           <div class="citation-header">
             <span class="citation-title">CITE THIS RESEARCH DISPATCH</span>
             <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">MODAL</button>
           </div>
-          <pre class="bibtex-code">@article{lulz2026grandscream,
+          <pre class="bibtex-code">@article{lulz2026_grandscrea,
   author    = {LulzTigre},
   title     = {GrandScream: From One Desk Phone to a Root PBX},
   journal   = {LulzTigre Research Dispatches},
@@ -328,12 +224,17 @@ CONFIG &gt; unset a;/bin/sh       # CVE-2020-5759: parameter injection
         <div class="toc-card">
           <div class="toc-title">// NAVIGATION INDEX</div>
           <ul class="toc-list">
-            <li><a href="#abstract" class="toc-link">0. Abstract &amp; Thesis</a></li>
-            <li><a href="#sec1" class="toc-link">1. VoIP Is the Forgotten Surface</a></li>
-            <li><a href="#sec2" class="toc-link">2. Recon, Stage by Stage</a></li>
-            <li><a href="#stage3" class="toc-link">→ Building the Oracle</a></li>
-            <li><a href="#sec3" class="toc-link">3. Automating the Chain</a></li>
-            <li><a href="#sec4" class="toc-link">4. Blue-Team Notes</a></li>
+            <li><a href="#abstract" class="toc-link">0. Abstract & Thesis</a></li>
+            <li><a href="#1-the-phone-on-the-reception-desk" class="toc-link">1. The Phone on the Reception Desk</a></li>
+            <li><a href="#2-the-phone-talks-too-much" class="toc-link">2. The Phone Talks Too Much</a></li>
+            <li><a href="#3-the-pbx-one-request-away" class="toc-link">3. The PBX, One Request Away</a></li>
+            <li><a href="#4-an-oracle-on-port-8888" class="toc-link">4. An Oracle on Port 8888</a></li>
+            <li><a href="#5-two-traps-in-data-you-cannot-see" class="toc-link">5. Two Traps in Data You Cannot See</a></li>
+            <li><a href="#6-login-and-what-admin-buys" class="toc-link">6. Login, and What Admin Buys</a></li>
+            <li><a href="#7-one-password-three-hats" class="toc-link">7. One Password, Three Hats</a></li>
+            <li><a href="#8-root-and-ranking-paths-by-reliability" class="toc-link">8. Root, and Ranking Paths by Reliability</a></li>
+            <li><a href="#9-the-script-is-the-writeup-that-executes" class="toc-link">9. The Script Is the Writeup That Executes</a></li>
+            <li><a href="#10-notes-for-the-blue-team" class="toc-link">10. Notes for the Blue Team</a></li>
             <li><a href="#bibtex" class="toc-link">BibTeX Citation</a></li>
           </ul>
         </div>
@@ -353,12 +254,12 @@ CONFIG &gt; unset a;/bin/sh       # CVE-2020-5759: parameter injection
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>© 2026 LULZTIGRE RESEARCH. OPEN ACCESS.</span>
+        <span>© 2026 LULZTIGRE. OPEN ACCESS.</span>
         <a href="../index.html" style="color: inherit; text-decoration: underline;">← BACK TO ALL DISPATCHES</a>
       </div>
     </div>
   </footer>
 
-  <script src="../assets/js/main.js?v=1.2"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>
