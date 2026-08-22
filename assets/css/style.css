@@ -174,6 +174,166 @@
   --shadow-emerald: 4px 4px 0px #38bdf8;
 }
 
+/* Synthwave — Purple/magenta cyberpunk neon */
+[data-theme="synthwave"] {
+  --bg-primary: #0e0618;
+  --bg-surface: #170b28;
+  --bg-elevated: #221438;
+  --bg-card: #1c0f30;
+  --bg-invert: #e040fb;
+
+  --text-primary: #ead0f5;
+  --text-secondary: #b07cc8;
+  --text-muted: #7a4e92;
+  --text-invert: #0e0618;
+
+  --border-color: #3d1a5c;
+  --border-light: #2a1140;
+  --border-highlight: #e040fb;
+
+  --accent-primary: #e040fb;
+  --accent-secondary: #7c4dff;
+  --accent-amber: #ff6ee6;
+  --accent-glow: rgba(224, 64, 251, 0.18);
+  --accent-tag-bg: #221438;
+  --accent-tag-text: #e879f9;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #e040fb;
+}
+
+/* Phosphor — Classic green-on-black retro CRT terminal */
+[data-theme="phosphor"] {
+  --bg-primary: #020a02;
+  --bg-surface: #051205;
+  --bg-elevated: #0a1e0a;
+  --bg-card: #071607;
+  --bg-invert: #33ff33;
+
+  --text-primary: #33ff33;
+  --text-secondary: #22bb22;
+  --text-muted: #147a14;
+  --text-invert: #020a02;
+
+  --border-color: #1a4a1a;
+  --border-light: #0f300f;
+  --border-highlight: #33ff33;
+
+  --accent-primary: #33ff33;
+  --accent-secondary: #66ff66;
+  --accent-amber: #99ff33;
+  --accent-glow: rgba(51, 255, 51, 0.15);
+  --accent-tag-bg: #0a1e0a;
+  --accent-tag-text: #33ff33;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #33ff33;
+}
+
+/* Solar — Warm golden/sepia light mode */
+[data-theme="solar"] {
+  --bg-primary: #faf6ee;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f0e8d8;
+  --bg-card: #fffdf8;
+  --bg-invert: #8b5e14;
+
+  --text-primary: #2c1d04;
+  --text-secondary: #5c4522;
+  --text-muted: #8c7a5a;
+  --text-invert: #faf6ee;
+
+  --border-color: #2c1d04;
+  --border-light: #ddd0b8;
+  --border-highlight: #c47f17;
+
+  --accent-primary: #c47f17;
+  --accent-secondary: #a35f00;
+  --accent-amber: #e6a020;
+  --accent-glow: rgba(196, 127, 23, 0.12);
+  --accent-tag-bg: #f0e8d8;
+  --accent-tag-text: #8b5e14;
+
+  --shadow-sm: 2px 2px 0px #2c1d04;
+  --shadow-md: 4px 4px 0px #2c1d04;
+  --shadow-lg: 7px 7px 0px #2c1d04;
+  --shadow-hover: 5px 5px 0px #2c1d04;
+  --shadow-active: 1px 1px 0px #2c1d04;
+  --shadow-emerald: 4px 4px 0px #c47f17;
+}
+
+/* Hazard — Neon yellow/lime on dark, warning-sign energy */
+[data-theme="hazard"] {
+  --bg-primary: #0a0a02;
+  --bg-surface: #14140a;
+  --bg-elevated: #1f1f0e;
+  --bg-card: #18180c;
+  --bg-invert: #d4ff00;
+
+  --text-primary: #e8f5a0;
+  --text-secondary: #b8c870;
+  --text-muted: #7a8a3e;
+  --text-invert: #0a0a02;
+
+  --border-color: #404010;
+  --border-light: #2a2a0a;
+  --border-highlight: #d4ff00;
+
+  --accent-primary: #d4ff00;
+  --accent-secondary: #a0e000;
+  --accent-amber: #ffee00;
+  --accent-glow: rgba(212, 255, 0, 0.15);
+  --accent-tag-bg: #1f1f0e;
+  --accent-tag-text: #d4ff00;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #d4ff00;
+}
+
+/* Cobalt — Rich navy blue with bright orange accents */
+[data-theme="cobalt"] {
+  --bg-primary: #001b33;
+  --bg-surface: #002244;
+  --bg-elevated: #003366;
+  --bg-card: #00294f;
+  --bg-invert: #ff6a00;
+
+  --text-primary: #d4e4f7;
+  --text-secondary: #8aacc8;
+  --text-muted: #4d7a9e;
+  --text-invert: #001b33;
+
+  --border-color: #1a4d7a;
+  --border-light: #0d3a64;
+  --border-highlight: #ff6a00;
+
+  --accent-primary: #ff6a00;
+  --accent-secondary: #ffa040;
+  --accent-amber: #ffcc00;
+  --accent-glow: rgba(255, 106, 0, 0.18);
+  --accent-tag-bg: #003366;
+  --accent-tag-text: #ffa040;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #ff6a00;
+}
+
 /* Reset & Base Setup */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -291,6 +451,10 @@ header.site-header {
 
 [data-theme="ghost"] header.site-header {
   background: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="solar"] header.site-header {
+  background: rgba(250, 246, 238, 0.95);
 }
 
 .nav-wrapper {

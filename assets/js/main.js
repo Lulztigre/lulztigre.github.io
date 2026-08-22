@@ -7,7 +7,7 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic'];
+  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
   
   function initTheme() {
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
@@ -40,7 +40,12 @@
       amber: '▲ AMBER',
       ghost: '○ GHOST',
       bloodmoon: '◆ BLOODMOON',
-      arctic: '◇ ARCTIC'
+      arctic: '◇ ARCTIC',
+      synthwave: '♦ SYNTHWAVE',
+      phosphor: '█ PHOSPHOR',
+      solar: '☀ SOLAR',
+      hazard: '⚠ HAZARD',
+      cobalt: '◈ COBALT'
     };
     btn.innerHTML = `<span>${icons[theme] || '◐ THEME'}</span>`;
   }
