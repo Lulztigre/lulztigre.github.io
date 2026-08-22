@@ -10,8 +10,8 @@
   const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic'];
   
   function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'void';
-    applyTheme(savedTheme);
+    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+    applyTheme(randomTheme);
   }
 
   function applyTheme(theme) {

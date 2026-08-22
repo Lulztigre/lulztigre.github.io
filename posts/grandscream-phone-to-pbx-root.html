@@ -25,8 +25,10 @@
 
   <script>
     (function(){
-      const t = localStorage.getItem('phantom_kernel_theme');
-      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic'];
+      var t = themes[Math.floor(Math.random() * themes.length)];
+      if (t !== 'void') document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('phantom_kernel_theme', t);
     })();
   </script>
 </head>
