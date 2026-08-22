@@ -118,6 +118,30 @@
           <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0;">Deterministic PoC · exploit + full writeup incoming</p>
         </div>
 
+        <div class="callout callout-definition">
+          <div class="callout-header">
+            <span>[<a href="https://www.cve.org/CVERecord?id=CVE-2026-67364" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">CVE-2026-67364</a> // PRE-AUTH PHP CODE INJECTION — CVSS 4.0: 10.0 CRITICAL]</span>
+          </div>
+          <p style="margin-bottom:0.25rem;"><strong>Balbooa Forms (Joomla component) &lt; 2.4.3.2: Pre-auth PHP Code Injection via eval()</strong></p>
+          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:0;">The form's optional custom-PHP post-submission handler is executed via eval(). The [URL parameter = X] shortcode is substituted with the raw, unescaped value of a query parameter, letting an unauthenticated attacker inject arbitrary PHP that executes server-side. The CSRF token is disclosed anonymously via a separate task, providing no real protection.</p>
+        </div>
+
+        <div class="callout callout-definition">
+          <div class="callout-header">
+            <span>[<a href="https://www.cve.org/CVERecord?id=CVE-2026-67363" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">CVE-2026-67363</a> // PRE-AUTH PAYMENT TAMPERING — CVSS 4.0: 7.7 HIGH]</span>
+          </div>
+          <p style="margin-bottom:0.25rem;"><strong>Balbooa Forms (Joomla component) &lt; 2.4.3.2: Pre-auth Payment Amount Tampering</strong></p>
+          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:0;">The stripeCharges and payAuthorize endpoints accept the charge total from a client-controlled request parameter and forward it to the payment gateway without recomputing it from configured product prices. Neither endpoint enforces authentication or CSRF checks. An unauthenticated attacker can purchase any priced item for an arbitrary amount (e.g., $0.01), and can additionally forge line items, quantities, and shipping.</p>
+        </div>
+
+        <div class="callout callout-definition">
+          <div class="callout-header">
+            <span>[<a href="https://www.cve.org/CVERecord?id=CVE-2026-75948" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">CVE-2026-75948</a> // AUTH STORED XSS — CVSS 4.0: 8.6 HIGH]</span>
+          </div>
+          <p style="margin-bottom:0.25rem;"><strong>iCagenda (Joomla component) 4.0.8–4.0.12: Authenticated Stored XSS</strong></p>
+          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:0;">The frontend "Submit an Event" form stores the <code>image</code> and <code>file</code> fields as raw strings with no output-side HTML-attribute escaping, allowing an authenticated attacker to inject persistent malicious scripts.</p>
+        </div>
+
         <div class="callout callout-remark">
           <div class="callout-header">
             <span>[EMBARGOED // COORDINATED DISCLOSURE]</span>

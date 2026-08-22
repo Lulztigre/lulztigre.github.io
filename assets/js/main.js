@@ -7,7 +7,7 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['void', 'amber', 'ghost'];
+  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic'];
   
   function initTheme() {
     const savedTheme = localStorage.getItem(THEME_KEY) || 'void';
@@ -38,7 +38,9 @@
     const icons = {
       void: '● PHANTOM',
       amber: '▲ AMBER',
-      ghost: '○ GHOST'
+      ghost: '○ GHOST',
+      bloodmoon: '◆ BLOODMOON',
+      arctic: '◇ ARCTIC'
     };
     btn.innerHTML = `<span>${icons[theme] || '◐ THEME'}</span>`;
   }

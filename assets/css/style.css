@@ -110,6 +110,70 @@
   --shadow-emerald: 4px 4px 0px #058241;
 }
 
+/* Bloodmoon — Deep crimson terminal / red-team aesthetic */
+[data-theme="bloodmoon"] {
+  --bg-primary: #0a0506;
+  --bg-surface: #140a0c;
+  --bg-elevated: #1f1012;
+  --bg-card: #170c0e;
+  --bg-invert: #ff2244;
+
+  --text-primary: #f0d0d5;
+  --text-secondary: #b87880;
+  --text-muted: #7a4650;
+  --text-invert: #0a0506;
+
+  --border-color: #4a1a22;
+  --border-light: #2e1015;
+  --border-highlight: #ff2244;
+
+  --accent-primary: #ff2244;
+  --accent-secondary: #ff6b81;
+  --accent-amber: #ff8c42;
+  --accent-glow: rgba(255, 34, 68, 0.18);
+  --accent-tag-bg: #1f1012;
+  --accent-tag-text: #ff6b81;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #ff2244;
+}
+
+/* Arctic — Cool ice-blue deep space mode */
+[data-theme="arctic"] {
+  --bg-primary: #060a10;
+  --bg-surface: #0b1220;
+  --bg-elevated: #111c30;
+  --bg-card: #0e1728;
+  --bg-invert: #7dd3fc;
+
+  --text-primary: #cfe2f3;
+  --text-secondary: #7ea8c9;
+  --text-muted: #4a6d8a;
+  --text-invert: #060a10;
+
+  --border-color: #1c3350;
+  --border-light: #132440;
+  --border-highlight: #38bdf8;
+
+  --accent-primary: #38bdf8;
+  --accent-secondary: #818cf8;
+  --accent-amber: #fbbf24;
+  --accent-glow: rgba(56, 189, 248, 0.15);
+  --accent-tag-bg: #111c30;
+  --accent-tag-text: #7dd3fc;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #38bdf8;
+}
+
 /* Reset & Base Setup */
 *, *::before, *::after {
   box-sizing: border-box;
