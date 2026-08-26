@@ -33,10 +33,8 @@
   <!-- Prevent Theme Flash -->
   <script>
     (function(){
-      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
-      var t = themes[Math.floor(Math.random() * themes.length)];
-      if (t !== 'void') document.documentElement.setAttribute('data-theme', t);
-      localStorage.setItem('phantom_kernel_theme', t);
+      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
+      if (saved !== 'void') document.documentElement.setAttribute('data-theme', saved);
     })();
   </script>
 </head>

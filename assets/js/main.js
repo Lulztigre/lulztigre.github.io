@@ -10,8 +10,8 @@
   const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
   
   function initTheme() {
-    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-    applyTheme(randomTheme);
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'void';
+    applyTheme(savedTheme);
   }
 
   function applyTheme(theme) {
@@ -25,7 +25,7 @@
   }
 
   function cycleTheme() {
-    const currentTheme = localStorage.getItem(THEME_KEY) || 'void';
+    const currentTheme = localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'void';
     const nextIndex = (themes.indexOf(currentTheme) + 1) % themes.length;
     const nextTheme = themes[nextIndex];
     applyTheme(nextTheme);

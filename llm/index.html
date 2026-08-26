@@ -2211,33 +2211,102 @@
     });
   </script>
 
-  <!-- Theme Switcher Script for Phantom Ecosystem -->
+  <!-- Theme Switcher & Toast Script for Phantom Ecosystem -->
   <script>
     (function(){
+      var THEME_KEY = 'phantom_kernel_theme';
       var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
-      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
-      document.documentElement.setAttribute('data-theme', saved);
-      
+      var icons = {
+        void: '● PHANTOM',
+        amber: '▲ AMBER',
+        ghost: '○ GHOST',
+        bloodmoon: '◆ BLOODMOON',
+        arctic: '◇ ARCTIC',
+        synthwave: '♦ SYNTHWAVE',
+        phosphor: '█ PHOSPHOR',
+        solar: '☀ SOLAR',
+        hazard: '⚠ HAZARD',
+        cobalt: '◈ COBALT'
+      };
+
+      function updateThemeBtn(t) {
+        var btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.innerHTML = '<span>' + (icons[t] || '◐ THEME') + '</span>';
+      }
+
+      function showToast(message) {
+        var container = document.getElementById('toast-container');
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'toast-container';
+          document.body.appendChild(container);
+        }
+        var toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = '<span>▶</span><span>' + message + '</span>';
+        container.appendChild(toast);
+        setTimeout(function() {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(10px)';
+          toast.style.transition = 'all 0.2s ease';
+          setTimeout(function() { toast.remove(); }, 200);
+        }, 2400);
+      }
+      window.showToast = showToast;
+
+      function applyTheme(theme) {
+        if (theme === 'void') {
+          document.documentElement.removeAttribute('data-theme');
+        } else {
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+        localStorage.setItem(THEME_KEY, theme);
+        updateThemeBtn(theme);
+      }
+
+      function cycleTheme() {
+        var current = localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'void';
+        var nextIdx = (themes.indexOf(current) + 1) % themes.length;
+        var nextTheme = themes[nextIdx];
+        applyTheme(nextTheme);
+        showToast('THEME: [' + nextTheme.toUpperCase() + ']');
+      }
+
+      // Initialize theme and label
+      var saved = localStorage.getItem(THEME_KEY) || 'void';
+      applyTheme(saved);
+
       var themeBtn = document.getElementById('theme-toggle');
       if (themeBtn) {
-        themeBtn.addEventListener('click', function(){
-          var current = document.documentElement.getAttribute('data-theme') || 'void';
-          var nextIdx = (themes.indexOf(current) + 1) % themes.length;
-          var next = themes[nextIdx];
-          document.documentElement.setAttribute('data-theme', next);
-          localStorage.setItem('phantom_kernel_theme', next);
-        });
+        themeBtn.addEventListener('click', cycleTheme);
       }
 
       window.addEventListener('keydown', function(e){
         if (e.key === 't' || e.key === 'T') {
-          var current = document.documentElement.getAttribute('data-theme') || 'void';
-          var nextIdx = (themes.indexOf(current) + 1) % themes.length;
-          var next = themes[nextIdx];
-          document.documentElement.setAttribute('data-theme', next);
-          localStorage.setItem('phantom_kernel_theme', next);
+          if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT')) {
+            return;
+          }
+          cycleTheme();
         }
       });
+
+      // Mobile navigation toggle
+      var mobileToggle = document.getElementById('mobile-nav-toggle');
+      var navMenu = document.getElementById('nav-menu');
+      if (mobileToggle && navMenu) {
+        mobileToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('open');
+          mobileToggle.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+        });
+        document.addEventListener('click', function(e) {
+          if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && e.target !== mobileToggle) {
+            navMenu.classList.remove('open');
+            mobileToggle.textContent = '☰';
+          }
+        });
+      }
     })();
   </script>
 </body>
