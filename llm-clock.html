@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- High-Impact SEO Title & Meta Tags -->
+  <title>GLM & DeepSeek Peak Hours Clock | Live Off-Peak Discount & Pricing Tracker</title>
+  <meta name="description" content="Live real-time GLM and DeepSeek peak & off-peak hours clock. Track official Beijing UTC+8 peak windows (14:00–18:00 & 09:00–12:00), 50% off-peak discounts, and API quota multipliers for GLM-5.3 & DeepSeek-V4 (4-Pro & 4-Flash).">
+  <meta name="keywords" content="GLM peak hours, DeepSeek peak hours, GLM-5.3 peak time, DeepSeek V4 off-peak discount, Z.ai GLM pricing, DeepSeek API peak time, LLM peak clock, DeepSeek peak time converter, GLM coding plan quota multiplier, DeepSeek 4 Pro pricing, DeepSeek 4 Flash pricing">
+  <meta name="author" content="LulzTigre">
+  <link rel="canonical" href="https://lulztigre.pw/llm-clock.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lulztigre.pw/llm-clock.html">
+  <meta property="og:title" content="GLM & DeepSeek Peak Hours Clock | Live Off-Peak Discount & Pricing Tracker">
+  <meta property="og:description" content="Track live GLM-5.3 and DeepSeek-V4 peak surge hours, off-peak 50% discount periods, and quota multipliers with automatic local timezone conversion.">
+  <meta property="og:image" content="https://lulztigre.pw/assets/favicon.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://lulztigre.pw/llm-clock.html">
+  <meta name="twitter:title" content="GLM & DeepSeek Peak Hours Clock | Live Off-Peak Discount Tracker">
+  <meta name="twitter:description" content="Live real-time GLM & DeepSeek peak hours clock with automatic local timezone converter and quota token calculator.">
+  <meta name="twitter:image" content="https://lulztigre.pw/assets/favicon.svg">
+
+  <!-- Schema.org JSON-LD Structured Data for Rich Search Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "GLM & DeepSeek Peak Hours Clock",
+        "url": "https://lulztigre.pw/llm-clock.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "description": "Real-time interactive clock tracking peak and off-peak pricing windows for Z.ai GLM (GLM-5.3) and DeepSeek (DeepSeek-V4 4-Pro & 4-Flash) APIs and coding plans.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are GLM peak hours?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GLM peak hours run from 14:00 to 18:00 (2:00 PM to 6:00 PM) Beijing Time (UTC+8 / Singapore Time), Monday through Friday. During peak hours, GLM-5.3 and GLM-5-Turbo models consume quota credits at a 3x multiplier."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are DeepSeek peak hours?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "DeepSeek peak hours occur twice on weekdays (Monday to Friday): 09:00 to 12:00 (9:00 AM to 12:00 PM) and 14:00 to 18:00 (2:00 PM to 6:00 PM) Beijing Time (UTC+8). DeepSeek API usage during peak hours is billed at double the standard off-peak price."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are weekends off-peak for GLM and DeepSeek?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, Saturdays and Sundays (Beijing Time UTC+8) are 100% off-peak all day for both GLM and DeepSeek APIs, providing maximum token cost savings and standard 1x quota consumption."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the off-peak discount for DeepSeek and GLM?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "DeepSeek provides a 50% discount during off-peak hours compared to peak surge rates. For GLM Coding Plans, off-peak usage runs at the standard 1x multiplier instead of the 3x peak surge rate, effectively giving developers 3x more coding capacity."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Space Mono, Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css?v=1.5">
+
+  <!-- Prevent Theme Flash -->
+  <script>
+    (function(){
+      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
+      if (saved !== 'void') document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+
+  <style>
+    /* -------------------------------------------------------------
+       BRUTALIST TACTICAL CHRONO / RETICLE STYLES (THEME-REACTIVE)
+       ------------------------------------------------------------- */
+    :root {
+      --chrono-theme-accent: var(--accent-primary, #00ff88);
+      --chrono-theme-sec: var(--accent-secondary, #38bdf8);
+      --chrono-theme-amber: var(--accent-amber, #ffb400);
+      --chrono-red: #ff3344;
+      --chrono-purple: #a855f7;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Tactical Background Matrix Grid */
+    .bg-tactical-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      z-index: 0;
+    }
+
+    .chrono-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Brutalist Header Panel */
+    .chrono-header-panel {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .chrono-header-panel::before {
+      content: "LLM_CLOCK // TELEMETRY";
+      position: absolute;
+      top: -10px;
+      left: 14px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      padding: 0 8px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      letter-spacing: 1px;
+    }
+
+    .chrono-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chrono-sigil {
+      width: 46px;
+      height: 46px;
+      background: var(--bg-surface);
+      border: 2px solid var(--accent-primary);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--accent-primary);
+      letter-spacing: -1px;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .chrono-sigil span:last-child {
+      font-size: 0.52rem;
+      margin-top: -3px;
+      color: var(--text-secondary);
+      letter-spacing: 0;
+    }
+
+    .chrono-heading-wrap h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      margin: 0;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .chrono-heading-wrap p {
+      margin: 0.2rem 0 0;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .provider-selector-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 0.35rem 0.75rem;
+    }
+
+    .provider-selector-wrap label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .provider-select-input {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-highlight);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.35rem 0.6rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Main Dashboard Layout */
+    .chrono-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .chrono-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tactical Clock Radar Frame */
+    .chrono-radar-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Tactical Corner Brackets — Reacts to Theme */
+    .corner-bracket {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+      border: 2px solid var(--accent-primary);
+      transition: border-color 0.2s ease;
+    }
+    .cb-tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+    .cb-tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+    .cb-bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+    .cb-br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+    /* CRT Scanline Overlay */
+    .crt-scanlines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.15) 50%
+      );
+      background-size: 100% 4px;
+      opacity: 0.5;
+      z-index: 4;
+    }
+
+    .chrono-toolbar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      z-index: 5;
+    }
+
+    .brutal-btn-group {
+      display: inline-flex;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brutal-btn {
+      padding: 0.35rem 0.7rem;
+      background: var(--bg-surface);
+      border: none;
+      border-right: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .brutal-btn:last-child {
+      border-right: none;
+    }
+
+    .brutal-btn.active {
+      background: var(--accent-primary);
+      color: var(--text-invert);
+      font-weight: 900;
+    }
+
+    .brutal-btn:active {
+      transform: translate(1px, 1px);
+    }
+
+    /* Radar Dial SVG Area */
+    .radar-svg-wrapper {
+      position: relative;
+      width: min(390px, 88vw);
+      height: min(390px, 88vw);
+      margin: 0.5rem auto 1.25rem;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .radar-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Radar Elements */
+    .radar-ring {
+      fill: none;
+      stroke: var(--border-color);
+      stroke-width: 1;
+      opacity: 0.5;
+    }
+
+    .radar-ring-main {
+      fill: none;
+      stroke: var(--border-color);
+      stroke-width: 2;
+    }
+
+    .radar-crosshair {
+      stroke: var(--border-color);
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+      opacity: 0.7;
+    }
+
+    /* Sector Hatched Peak Arc */
+    .radar-peak-sector {
+      fill: none;
+      stroke: var(--chrono-red);
+      stroke-width: 16;
+      stroke-linecap: butt;
+      filter: drop-shadow(0 0 8px rgba(255, 51, 68, 0.8));
+    }
+
+    .radar-offpeak-sector {
+      fill: none;
+      stroke: var(--accent-primary);
+      opacity: 0.25;
+      stroke-width: 16;
+      transition: stroke 0.2s ease;
+    }
+
+    /* Stepped Mechanical Needles — Theme Reactive */
+    .radar-hand-hour {
+      stroke: var(--accent-primary);
+      stroke-width: 5;
+      stroke-linecap: square;
+      filter: drop-shadow(0 0 5px var(--accent-primary));
+      transition: stroke 0.2s ease, filter 0.2s ease;
+    }
+
+    .is-peak .radar-hand-hour {
+      stroke: var(--chrono-red) !important;
+      filter: drop-shadow(0 0 8px var(--chrono-red)) !important;
+    }
+
+    .is-weekend .radar-hand-hour {
+      stroke: var(--accent-secondary);
+      filter: drop-shadow(0 0 5px var(--accent-secondary));
+    }
+
+    .radar-hand-min {
+      stroke: var(--text-primary);
+      stroke-width: 3;
+      stroke-linecap: square;
+      transition: stroke 0.2s ease;
+    }
+
+    /* Mechanical Stepped Second Needle */
+    .radar-hand-sec {
+      stroke: var(--accent-secondary, #ffb400);
+      stroke-width: 1.5;
+      stroke-linecap: square;
+      transition: transform 0.06s cubic-bezier(0.2, 2.2, 0.4, 1), stroke 0.2s ease;
+    }
+
+    .radar-reticle-center {
+      fill: var(--bg-primary);
+      stroke: var(--accent-primary);
+      stroke-width: 2;
+      transition: stroke 0.2s ease, fill 0.2s ease;
+    }
+
+    .radar-tick {
+      stroke: var(--border-color);
+      stroke-width: 1;
+    }
+
+    .radar-tick.major {
+      stroke: var(--text-primary);
+      stroke-width: 2.5;
+    }
+
+    .radar-numeral {
+      fill: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: central;
+      transition: fill 0.2s ease;
+    }
+
+    .radar-numeral.peak-zone-num {
+      fill: var(--chrono-red);
+      font-weight: 900;
+    }
+
+    /* Phosphor Radar Sweeper Beam Effect — Theme Reactive */
+    .radar-sweeper-beam {
+      position: absolute;
+      inset: 0;
+      border-radius: 0;
+      pointer-events: none;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 310deg,
+        rgba(0, 255, 136, 0.04) 340deg,
+        var(--accent-glow, rgba(0, 255, 136, 0.16)) 360deg
+      );
+      animation: radarSweep 8s linear infinite;
+      z-index: 2;
+    }
+
+    .is-peak .radar-sweeper-beam {
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 310deg,
+        rgba(255, 51, 68, 0.04) 340deg,
+        rgba(255, 51, 68, 0.22) 360deg
+      );
+    }
+
+    .is-weekend .radar-sweeper-beam {
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 310deg,
+        rgba(168, 85, 247, 0.04) 340deg,
+        rgba(168, 85, 247, 0.18) 360deg
+      );
+    }
+
+    @keyframes radarSweep {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Digital Tactical HUD Box */
+    .chrono-digital-box {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      z-index: 5;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .chrono-time-digits {
+      font-family: var(--font-mono);
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .chrono-tz-subline {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .chrono-dial-legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+      z-index: 5;
+    }
+
+    .legend-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-box {
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Right: Brutalist Telemetry Deck */
+    .chrono-status-deck {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Status Alert Unit */
+    .status-alert-unit {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .status-alert-unit.is-offpeak {
+      border-color: var(--accent-primary);
+      box-shadow: 5px 5px 0px var(--accent-primary);
+    }
+
+    .status-alert-unit.is-peak {
+      border-color: var(--chrono-red);
+      box-shadow: 5px 5px 0px var(--chrono-red);
+    }
+
+    .status-alert-unit.is-weekend {
+      border-color: var(--accent-secondary);
+      box-shadow: 5px 5px 0px var(--accent-secondary);
+    }
+
+    .status-alert-tag-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      font-family: var(--font-mono);
+    }
+
+    .status-badge-block {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--bg-surface);
+      border: 1.5px solid currentColor;
+    }
+
+    .badge-offpeak {
+      color: var(--accent-primary);
+      border-color: var(--accent-primary);
+    }
+
+    .badge-peak {
+      color: var(--chrono-red);
+      border-color: var(--chrono-red);
+    }
+
+    .badge-weekend {
+      color: var(--accent-secondary);
+      border-color: var(--accent-secondary);
+    }
+
+    .status-rate-callout {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--text-primary);
+    }
+
+    .status-title-lead {
+      font-size: 1.45rem;
+      font-weight: 900;
+      margin: 0 0 0.5rem;
+      font-family: var(--font-mono);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .status-brief-p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin: 0 0 1.25rem;
+      font-family: var(--font-mono);
+    }
+
+    .countdown-stepped-bar {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 0.85rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+    }
+
+    .countdown-stepped-bar .lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .countdown-stepped-bar .val {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      letter-spacing: 0.08em;
+    }
+
+    /* 24-Hour Stepped Linear Radar Bar */
+    .linear-radar-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .linear-radar-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .linear-track-box {
+      position: relative;
+      height: 22px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      margin-bottom: 0.4rem;
+    }
+
+    .track-seg-offpeak {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: var(--accent-primary);
+      opacity: 0.2;
+    }
+
+    .track-seg-peak {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--chrono-red),
+        var(--chrono-red) 6px,
+        #8b0010 6px,
+        #8b0010 12px
+      );
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+
+    .track-cursor-strobe {
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      width: 3px;
+      background: var(--text-primary);
+      box-shadow: 0 0 6px var(--text-primary), 0 0 12px var(--accent-primary);
+      z-index: 5;
+      transform: translateX(-50%);
+    }
+
+    .linear-scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* Timezone Selector */
+    .chrono-tz-box {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .chrono-tz-box label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 0.6rem;
+    }
+
+    .chrono-tz-input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      padding: 0.5rem 0.75rem;
+      outline: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chrono-tz-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    /* Global Matrix Grid */
+    .city-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .city-cell {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      transition: transform 0.1s ease, border-color 0.1s ease;
+    }
+
+    .city-cell:hover {
+      border-color: var(--accent-primary);
+      transform: translate(-1px, -1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .city-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .city-time-now {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .city-peak-window {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    .city-status-pill {
+      font-size: 0.62rem;
+      padding: 0.15rem 0.4rem;
+      border: 1px solid currentColor;
+      background: var(--bg-elevated);
+      font-weight: 900;
+    }
+
+    /* Quota Calculator */
+    .calculator-section {
+      margin-top: 2.5rem;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .calc-header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-header h2 {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin: 0;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .calc-header p {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin: 0.35rem 0 0;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 800px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .calc-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .calc-input-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .calc-input {
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      padding: 0.6rem 0.8rem;
+      box-shadow: var(--shadow-sm);
+      width: 100%;
+    }
+
+    .calc-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .calc-results-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.85rem;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      padding-bottom: 0.65rem;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .result-key {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .result-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .val-savings {
+      color: var(--accent-primary);
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    /* Pricing Plans Table */
+    .plans-table-wrap {
+      margin-top: 2.5rem;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .plans-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-align: left;
+    }
+
+    .plans-table th {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--border-color);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .plans-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .plans-table tr:hover td {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+
+    /* SEO Knowledge & FAQ Guide Section */
+    .seo-guide-section {
+      margin-top: 2.5rem;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 2rem;
+    }
+
+    .seo-guide-header {
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .seo-guide-header h2 {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    .seo-guide-header p {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin: 0.35rem 0 0;
+    }
+
+    .faq-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem 1.5rem;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .faq-question {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-question span {
+      color: var(--accent-primary);
+    }
+
+    .faq-answer {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Tactical Matrix Grid -->
+  <div class="bg-tactical-grid"></div>
+
+  <!-- Top System Telemetry Ticker -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>SYS: LLM-CLOCK // v2.0</span>
+      <span id="ticker-model-name">MODEL: GLM-5.3 // CODING ENGINE</span>
+      <span id="ticker-mult-ratio">RATE: 1X OFF-PEAK / 3X PEAK</span>
+    </div>
+    <div class="ticker-right">
+      <span id="ticker-time">BEIJING: 00:00:00 CST</span>
+      <span>KEYS: [T] THEME / [M] DIAL / [P] PROVIDER</span>
+    </div>
+  </div>
+
+  <!-- Site Header & Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">id=(root)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="llm-clock.html" class="nav-link active">/LLM_CLOCK</a></li>
+          <li class="nav-item"><a href="archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="chrono-container">
+      
+      <!-- Top Title & Provider Switcher Panel -->
+      <section class="chrono-header-panel">
+        <div class="chrono-title-group">
+          <div class="chrono-sigil" id="provider-logo-box">
+            <span id="provider-logo-text">GLM</span>
+            <span id="provider-logo-sub">5.3</span>
+          </div>
+          <div class="chrono-heading-wrap">
+            <h1 id="provider-main-heading">GLM & DEEPSEEK PEAK-HOUR CLOCK</h1>
+            <p id="provider-sub-heading">REAL-TIME API PRICING & OFF-PEAK QUOTA MULTIPLIER OPTIMIZER</p>
+          </div>
+        </div>
+
+        <!-- AI Provider Dropdown Selector -->
+        <div class="provider-selector-wrap">
+          <label for="ai-provider-select">▶ PROVIDER:</label>
+          <select class="provider-select-input" id="ai-provider-select">
+            <option value="glm" selected>[GLM] Z.ai GLM-5.3 & Coding Plans</option>
+            <option value="deepseek">[DEEPSEEK] DeepSeek-V4 (4-Pro & 4-Flash API)</option>
+          </select>
+        </div>
+
+        <div class="chrono-header-badges" style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); padding: 0.35rem 0.75rem; font-family: var(--font-mono); font-size: 0.72rem; box-shadow: var(--shadow-sm);">
+            <span style="color: var(--text-muted);">PEAK SECTOR (CST):</span>
+            <strong id="badge-peak-window" style="color: var(--text-primary); margin-left: 0.35rem;">14:00 - 18:00 (UTC+8)</strong>
+          </div>
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); padding: 0.35rem 0.75rem; font-family: var(--font-mono); font-size: 0.72rem; box-shadow: var(--shadow-sm);">
+            <span style="color: var(--text-muted);">DAYS:</span>
+            <strong style="color: var(--text-primary); margin-left: 0.35rem;">MON - FRI</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Radar & Telemetry Grid -->
+      <section class="chrono-grid">
+
+        <!-- Left: Tactical Chrono Radar Card -->
+        <div class="chrono-radar-card">
+          <!-- Corner brackets -->
+          <div class="corner-bracket cb-tl"></div>
+          <div class="corner-bracket cb-tr"></div>
+          <div class="corner-bracket cb-bl"></div>
+          <div class="corner-bracket cb-br"></div>
+          <!-- CRT Scanlines -->
+          <div class="crt-scanlines"></div>
+
+          <div class="chrono-toolbar">
+            <div>
+              <span style="color: var(--text-muted);">DIAL MODE:</span>
+              <div class="brutal-btn-group" id="dial-mode-toggle" style="margin-left: 0.4rem;">
+                <button class="brutal-btn active" data-dial="12">12-HR</button>
+                <button class="brutal-btn" data-dial="24">24-HR</button>
+              </div>
+            </div>
+
+            <div>
+              <button class="brutal-btn" id="sound-toggle-btn" style="border: 1.5px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                🔔 NOTIFY
+              </button>
+            </div>
+          </div>
+
+          <!-- Radar SVG Frame -->
+          <div class="radar-svg-wrapper">
+            <!-- Phosphor Sweeper Beam -->
+            <div class="radar-sweeper-beam"></div>
+
+            <svg class="radar-svg" id="radar-svg-dial" viewBox="0 0 400 400">
+              <!-- Background Radar Rings -->
+              <circle class="radar-ring" cx="200" cy="200" r="176" />
+              <circle class="radar-ring" cx="200" cy="200" r="140" />
+              <circle class="radar-ring" cx="200" cy="200" r="95" />
+              <circle class="radar-ring" cx="200" cy="200" r="45" />
+
+              <!-- Crosshairs -->
+              <line class="radar-crosshair" x1="20" y1="200" x2="380" y2="200" />
+              <line class="radar-crosshair" x1="200" y1="20" x2="200" y2="380" />
+
+              <!-- Outer Border Ring -->
+              <circle class="radar-ring-main" cx="200" cy="200" r="176" />
+
+              <!-- Peak Arc Dynamic Graphic(s) Projected in Active Timezone -->
+              <path class="radar-offpeak-sector" id="arc-offpeak-track" d="" />
+              <path class="radar-peak-sector" id="arc-peak-track-1" d="" />
+              <path class="radar-peak-sector" id="arc-peak-track-2" d="" style="display:none;" />
+
+              <!-- Ticks & Numerals -->
+              <g id="radar-ticks-group"></g>
+              <g id="radar-numerals-group"></g>
+
+              <!-- Clock Hands -->
+              <g id="radar-hands-group">
+                <line class="radar-hand-hour" id="hand-hour" x1="200" y1="200" x2="200" y2="105" />
+                <line class="radar-hand-min" id="hand-min" x1="200" y1="200" x2="200" y2="65" />
+                <line class="radar-hand-sec" id="hand-sec" x1="200" y1="230" x2="200" y2="48" />
+                <circle class="radar-reticle-center" cx="200" cy="200" r="5" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Digital Readout Box -->
+          <div class="chrono-digital-box">
+            <div class="chrono-time-digits" id="digital-clock-val">00:00:00</div>
+            <div class="chrono-tz-subline">
+              <span id="selected-tz-label" style="color: var(--text-primary); font-weight: 700;">LOC: BROWSER_TIME</span>
+              <span>//</span>
+              <span id="date-display-val">2026-08-26</span>
+              <span>//</span>
+              <span id="cst-reference-val" style="color: var(--accent-primary);">UTC+8 CST: 00:00:00</span>
+            </div>
+          </div>
+
+          <!-- Dial Legend -->
+          <div class="chrono-dial-legend">
+            <span class="legend-tag"><span class="legend-box" style="background: var(--accent-primary);"></span> Off-Peak (<span id="legend-offpeak-mult">1× Standard</span>)</span>
+            <span class="legend-tag"><span class="legend-box" style="background: var(--chrono-red);"></span> Peak Sector (<span id="legend-peak-mult">3× Surge</span>)</span>
+            <span class="legend-tag"><span class="legend-box" style="background: var(--accent-secondary);"></span> Weekend (<span id="legend-weekend-mult">100% Off-Peak</span>)</span>
+          </div>
+
+        </div>
+
+        <!-- Right: Brutalist Telemetry Deck -->
+        <div class="chrono-status-deck">
+
+          <!-- Current State Status Alert Unit -->
+          <div class="status-alert-unit is-offpeak" id="state-hero-card">
+            <div class="status-alert-tag-bar">
+              <span class="status-badge-block badge-offpeak" id="status-pill">
+                <span class="status-dot"></span>
+                <span id="status-pill-text">[STATE: OFF_PEAK // DISPATCH]</span>
+              </span>
+              <span class="status-rate-callout" id="status-multiplier-text">1.0× MULTIPLIER</span>
+            </div>
+
+            <h2 class="status-title-lead" id="status-headline">OPTIMAL BATCH WINDOW</h2>
+            <p class="status-brief-p" id="status-description">
+              Telemetry confirms normal 1× coefficient quota consumption. Prompt allowances, code synthesis, and sweep batches operate at maximum capital efficiency.
+            </p>
+
+            <div class="countdown-stepped-bar">
+              <span class="lbl" id="countdown-label-text">NEXT TRANSITION:</span>
+              <span class="val" id="countdown-val-text">00h 00m 00s</span>
+            </div>
+          </div>
+
+          <!-- 24-Hour Stepped Linear Radar Bar -->
+          <div class="linear-radar-card">
+            <div class="linear-radar-header">
+              <span>24-Hour Timeline Distribution</span>
+              <span id="timeline-tz-title" style="color: var(--accent-primary);">UTC+8 CST</span>
+            </div>
+
+            <div class="linear-track-box">
+              <div class="track-seg-offpeak" style="left: 0; width: 100%;"></div>
+              <div class="track-seg-peak" id="linear-peak-bar-1" style="left: 58.33%; width: 16.67%;"></div>
+              <div class="track-seg-peak" id="linear-peak-bar-2" style="display: none;"></div>
+              <div class="track-cursor-strobe" id="linear-now-cursor" style="left: 20%;"></div>
+            </div>
+
+            <div class="linear-scale-labels">
+              <span>00:00</span>
+              <span>06:00</span>
+              <span>12:00</span>
+              <span>18:00</span>
+              <span>24:00</span>
+            </div>
+          </div>
+
+          <!-- Timezone Selector -->
+          <div class="chrono-tz-box">
+            <label for="timezone-selector">Active Developer Region</label>
+            <select class="chrono-tz-input" id="timezone-selector">
+              <option value="LOCAL" selected>📍 Local Workstation Clock (Auto-Detect)</option>
+              <option value="Asia/Shanghai">🇨🇳 🇸🇬 Beijing / Singapore / Hong Kong (UTC+8) [Base Timezone]</option>
+              <option value="UTC">🌐 UTC / GMT (Universal Standard)</option>
+              <option value="America/New_York">🇺🇸 US Eastern (New York / EDT / EST)</option>
+              <option value="America/Chicago">🇺🇸 US Central (Chicago / CDT / CST)</option>
+              <option value="America/Denver">🇺🇸 US Mountain (Denver / MDT / MST)</option>
+              <option value="America/Los_Angeles">🇺🇸 US Pacific (San Francisco / Seattle / PDT / PST)</option>
+              <option value="Europe/London">🇬🇧 London (BST / GMT)</option>
+              <option value="Europe/Paris">🇪🇺 Central Europe (Paris / Berlin / CEST / CET)</option>
+              <option value="Asia/Tokyo">🇯🇵 Tokyo / Seoul (JST / KST UTC+9)</option>
+              <option value="Asia/Kolkata">🇮🇳 India (IST UTC+5:30)</option>
+              <option value="Australia/Sydney">🇦🇺 Sydney / Melbourne (AEST / AEDT)</option>
+            </select>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Global Cities Matrix Grid -->
+      <section>
+        <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 900; margin-bottom: 0.6rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.05em;">
+          ▶ GLOBAL OPERATIONAL MATRIX // PEAK-HOUR OFFSETS
+        </div>
+
+        <div class="city-matrix-grid" id="city-matrix-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Quota Token Calculator & Plan Comparisons -->
+      <section class="calculator-section">
+        <div class="calc-header">
+          <h2 id="calc-section-title">QUOTA EFFICIENCY CALCULATOR // TASK COST MODEL</h2>
+          <p id="calc-section-desc">Estimate quota point consumption and calculate savings between off-peak and peak surge windows.</p>
+        </div>
+
+        <div class="calc-grid">
+          <div>
+            <div class="calc-input-group">
+              <label class="calc-input-label">Task Context Footprint (Input + Output Tokens)</label>
+              <input type="number" class="calc-input" id="calc-tokens-input" value="100000" step="10000" min="1000">
+            </div>
+
+            <div class="calc-input-group">
+              <label class="calc-input-label">Quick Workload Presets</label>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="brutal-btn" style="border: 1.5px solid var(--border-color); box-shadow: var(--shadow-sm);" onclick="setCalcTokens(30000)">Bug Fix (30k)</button>
+                <button class="brutal-btn" style="border: 1.5px solid var(--border-color); box-shadow: var(--shadow-sm);" onclick="setCalcTokens(150000)">SWE Task (150k)</button>
+                <button class="brutal-btn" style="border: 1.5px solid var(--border-color); box-shadow: var(--shadow-sm);" onclick="setCalcTokens(500000)">Repo Audit (500k)</button>
+              </div>
+            </div>
+
+            <div class="calc-input-group" style="margin-top: 1rem;" id="calc-tier-group">
+              <label class="calc-input-label">Plan Tier / Pricing Mode</label>
+              <select class="calc-input" id="calc-tier-select">
+                <option value="lite">GLM Lite ($18/mo — Standard allowance)</option>
+                <option value="pro" selected>GLM Pro ($72/mo — Recommended for power coders)</option>
+                <option value="max">GLM Max ($160/mo — Heavy enterprise/agent workloads)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="calc-results-card">
+            <div class="result-row">
+              <span class="result-key">Off-Peak Rate Multiplier:</span>
+              <span class="result-val" style="color: var(--accent-primary);" id="calc-offpeak-mult-display">1.0× (Standard)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-key">Peak Rate Multiplier:</span>
+              <span class="result-val" style="color: var(--chrono-red);" id="calc-peak-mult-display">3.0× (Peak Surge)</span>
+            </div>
+            <div class="result-row">
+              <span class="result-key">Off-Peak Quota Cost:</span>
+              <span class="result-val" id="calc-offpeak-tokens">100,000 pts</span>
+            </div>
+            <div class="result-row">
+              <span class="result-key">Peak Quota Cost:</span>
+              <span class="result-val" id="calc-peak-tokens">300,000 pts</span>
+            </div>
+            <div class="result-row">
+              <span class="result-key">Points Conserved Off-Peak:</span>
+              <span class="result-val val-savings" id="calc-points-saved">+200,000 pts (66.7% Gain)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Plans Breakdown Table -->
+      <section class="plans-table-wrap" id="plans-table-container">
+        <!-- Dynamically populated according to active provider -->
+      </section>
+
+      <!-- SEO Knowledge Base & Official FAQ Section -->
+      <section class="seo-guide-section">
+        <div class="seo-guide-header">
+          <h2>GLM & DEEPSEEK PEAK HOURS // FREQUENTLY ASKED QUESTIONS</h2>
+          <p>Complete guide to API pricing multipliers, off-peak discount windows, and global timezone schedules.</p>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <h3 class="faq-question"><span>▶</span> What are the official GLM Peak Hours?</h3>
+            <p class="faq-answer">
+              GLM peak hours occur Monday through Friday from <strong>14:00 to 18:00 (2:00 PM – 6:00 PM) Beijing Time (UTC+8 / Singapore Standard Time)</strong>. During this 4-hour weekday window, models such as GLM-5.3 and GLM-5-Turbo consume quota credits at a <strong>3× multiplier coefficient</strong>.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question"><span>▶</span> What are the official DeepSeek Peak Hours?</h3>
+            <p class="faq-answer">
+              DeepSeek peak hours operate on weekdays across two separate windows: <strong>09:00 – 12:00 (9:00 AM – 12:00 PM)</strong> and <strong>14:00 – 18:00 (2:00 PM – 6:00 PM) Beijing Time (UTC+8)</strong>. API requests made during these peak hours for DeepSeek-V4-Flash and DeepSeek-V4-Pro are billed at double (2×) the standard rate.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question"><span>▶</span> What is the Off-Peak Discount for GLM and DeepSeek?</h3>
+            <p class="faq-answer">
+              Outside of the designated peak windows, both providers apply an automatic <strong>50% discount</strong> (1× standard rate). For GLM Coding Plans, off-peak token usage gives developers <strong>3× more coding capacity</strong> per subscription credit. DeepSeek charges $0.22/1M input tokens off-peak ($0.44 peak) for V4-Flash and $0.66/1M input tokens off-peak ($1.32 peak) for V4-Pro.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question"><span>▶</span> Are Saturdays and Sundays Off-Peak?</h3>
+            <p class="faq-answer">
+              Yes. <strong>Weekends (all-day Saturday and Sunday UTC+8) are 100% off-peak</strong> for both GLM and DeepSeek. Peak hour pricing is completely suspended on weekends, making it the ideal time for developers to batch run large-scale benchmarks, automated code audits, and multi-agent workflows.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span>LULZTIGRE // LLM PEAK-HOUR CLOCK</span>
+        <span class="footer-sep">//</span>
+        <span>PRICING & QUOTA OPTIMIZER</span>
+      </div>
+      <div class="footer-right">
+        <span>SOURCES: <a href="https://z.ai/blog/glm-5.3" target="_blank" style="color: var(--accent-primary); text-decoration: underline;">Z.AI GLM-5.3</a> / <a href="https://api-docs.deepseek.com" target="_blank" style="color: var(--accent-secondary); text-decoration: underline;">DEEPSEEK-V4 API</a></span>
+        <span class="footer-sep">//</span>
+        <a href="index.html">RETURN HOME ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // -------------------------------------------------------------
+    // PROVIDER CONFIGURATIONS & STATE
+    // -------------------------------------------------------------
+    const PROVIDERS = {
+      glm: {
+        id: 'glm',
+        name: 'Z.ai GLM-5.3 & Turbo',
+        logoText: 'GLM',
+        logoSub: '5.3',
+        heading: 'GLM PEAK-HOUR CLOCK',
+        subHeading: 'Z.AI CODING PLAN & API QUOTA MULTIPLIER OPTIMIZER',
+        peakMultiplier: 3.0,
+        offPeakMultiplier: 1.0,
+        badgeWindow: '14:00 - 18:00 (UTC+8)',
+        legendPeak: '3× Surge (14:00-18:00)',
+        legendOffpeak: '1× Standard (50% Disc.)',
+        windows: [
+          { startH: 14, startM: 0, endH: 18, endM: 0, label: '14:00 - 18:00' }
+        ],
+        descOffpeak: 'GLM Coding Plan is running at standard 1× rate (maximum efficiency). Your weekly credits and prompt tokens stretch 3× further compared to peak rates.',
+        descPeak: 'GLM models (GLM-5.3, GLM-5-Turbo) consume quota at a 3× multiplier until 18:00 UTC+8. For maximum cost savings, pause intensive background tasks until off-peak resumes.',
+        descWeekend: 'Peak windows are fully suspended during weekends (Beijing Time). All coding token usage is billed at standard 1× rate — the best time to batch run heavy test suites and agents.',
+        tableHtml: `
+          <h3 style="font-family: var(--font-mono); font-size: 0.95rem; margin-top: 0; margin-bottom: 1rem; text-transform: uppercase; color: var(--text-primary);">Z.AI GLM CODING PLAN SPECIFICATIONS</h3>
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Monthly Price</th>
+                <th>Yearly (Effective / Mo)</th>
+                <th>Peak Surge</th>
+                <th>Off-Peak Rate</th>
+                <th>Tactical Strategy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: var(--text-primary);">Lite</strong></td>
+                <td>$18 / mo</td>
+                <td>~$12.60 / mo</td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">3× Coeff</span></td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">1× Standard</span></td>
+                <td>Run batch coding, SWE-bench and large file refactors outside 14:00-18:00 UTC+8</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--text-primary);">Pro</strong></td>
+                <td>$72 / mo</td>
+                <td>~$50.40 / mo</td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">3× Coeff</span></td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">1× Standard</span></td>
+                <td>Daily power agent workflows; schedule repo indexing & sweeps during off-peak</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--text-primary);">Max</strong></td>
+                <td>$160 / mo</td>
+                <td>~$112.00 / mo</td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">3× Coeff</span></td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">1× Standard</span></td>
+                <td>Continuous multi-agent swarm runs; leverage all-day weekend discount to batch experiments</td>
+              </tr>
+            </tbody>
+          </table>
+        `
+      },
+      deepseek: {
+        id: 'deepseek',
+        name: 'DeepSeek-V4 (4-Pro & 4-Flash)',
+        logoText: 'DS',
+        logoSub: 'V4',
+        heading: 'DEEPSEEK-V4 PEAK-HOUR CLOCK',
+        subHeading: 'DEEPSEEK 4-PRO & 4-FLASH API QUOTA DISCOUNT OPTIMIZER',
+        peakMultiplier: 2.0,
+        offPeakMultiplier: 1.0,
+        badgeWindow: '09:00-12:00 & 14:00-18:00 (UTC+8)',
+        legendPeak: '2× Surge (09-12 & 14-18)',
+        legendOffpeak: '50% Discount (Off-Peak)',
+        windows: [
+          { startH: 9, startM: 0, endH: 12, endM: 0, label: '09:00 - 12:00' },
+          { startH: 14, startM: 0, endH: 18, endM: 0, label: '14:00 - 18:00' }
+        ],
+        descOffpeak: 'DeepSeek-V4 API is running with the 50% Off-Peak Discount active (standard rate). Input & output tokens are billed at half the peak surge cost.',
+        descPeak: 'DeepSeek-V4 API is currently in PEAK SURGE (double rate / standard discount inactive). Batch generation and non-urgent RAG runs should wait for the next off-peak window.',
+        descWeekend: 'All weekend (Saturday & Sunday UTC+8) is 100% OFF-PEAK. DeepSeek applies full 50% API pricing discounts throughout the entire weekend.',
+        tableHtml: `
+          <h3 style="font-family: var(--font-mono); font-size: 0.95rem; margin-top: 0; margin-bottom: 1rem; text-transform: uppercase; color: var(--text-primary);">DEEPSEEK-V4 (4-PRO & 4-FLASH) API PRICING MATRIX (PER 1M TOKENS)</h3>
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th>Model Tier</th>
+                <th>Token Category</th>
+                <th>Off-Peak Rate (50% Disc.)</th>
+                <th>Peak Surge Rate</th>
+                <th>Context Cache Discount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: var(--text-primary);">DeepSeek-V4-Flash</strong></td>
+                <td>Input (Cache Miss)</td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">$0.22 / 1M</span></td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">$0.44 / 1M</span></td>
+                <td>$0.007 / 1M (Cache Hit)</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--text-primary);">DeepSeek-V4-Flash</strong></td>
+                <td>Output (Generation)</td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">$0.66 / 1M</span></td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">$1.32 / 1M</span></td>
+                <td>Standard Output</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--text-primary);">DeepSeek-V4-Pro</strong></td>
+                <td>Input (Cache Miss)</td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">$0.66 / 1M</span></td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">$1.32 / 1M</span></td>
+                <td>$0.022 / 1M (Cache Hit)</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--text-primary);">DeepSeek-V4-Pro</strong></td>
+                <td>Output (Generation)</td>
+                <td><span style="color: var(--accent-primary); font-weight: 700;">$1.98 / 1M</span></td>
+                <td><span style="color: var(--chrono-red); font-weight: 700;">$3.96 / 1M</span></td>
+                <td>Full Reasoning & Output</td>
+              </tr>
+            </tbody>
+          </table>
+        `
+      }
+    };
+
+    let currentProviderKey = 'glm';
+    let currentSelectedTz = 'LOCAL';
+    let dialMode = '12'; // Default: 12-Hour Dial
+    let soundNotificationsEnabled = false;
+    let lastKnownStatus = null;
+
+    const BASE_TZ = 'Asia/Shanghai'; // UTC+8 China Standard Time
+
+    const GLOBAL_CITIES = [
+      { name: 'Beijing / Singapore', flag: '🇨🇳', tz: 'Asia/Shanghai' },
+      { name: 'Tokyo / Seoul', flag: '🇯🇵', tz: 'Asia/Tokyo' },
+      { name: 'London / UTC+0', flag: '🇬🇧', tz: 'Europe/London' },
+      { name: 'Paris / Berlin', flag: '🇪🇺', tz: 'Europe/Paris' },
+      { name: 'New York (EDT/EST)', flag: '🇺🇸', tz: 'America/New_York' },
+      { name: 'San Francisco (PDT)', flag: '🇺🇸', tz: 'America/Los_Angeles' },
+      { name: 'Bengaluru / IST', flag: '🇮🇳', tz: 'Asia/Kolkata' },
+      { name: 'Sydney (AEST)', flag: '🇦🇺', tz: 'Australia/Sydney' }
+    ];
+
+    // -------------------------------------------------------------
+    // TIMEZONE ENGINE & PARSING
+    // -------------------------------------------------------------
+    function getTzParts(date, tz) {
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: (tz === 'LOCAL') ? undefined : tz,
+        hourCycle: 'h23',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        weekday: 'short',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      });
+      const parts = formatter.formatToParts(date);
+      const m = {};
+      for (const p of parts) m[p.type] = p.value;
+      const dayMap = { 'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6 };
+      return {
+        year: parseInt(m.year),
+        month: parseInt(m.month),
+        day: parseInt(m.day),
+        dayOfWeek: dayMap[m.weekday],
+        hour: parseInt(m.hour),
+        minute: parseInt(m.minute),
+        second: parseInt(m.second)
+      };
+    }
+
+    function calculateStatus(now, providerKey) {
+      const cst = getTzParts(now, BASE_TZ);
+      const p = PROVIDERS[providerKey];
+      const isWeekend = (cst.dayOfWeek === 0 || cst.dayOfWeek === 6);
+      const totalSec = cst.hour * 3600 + cst.minute * 60 + cst.second;
+
+      const firstPeakStart = p.windows[0].startH * 3600 + p.windows[0].startM * 60;
+
+      if (isWeekend) {
+        let daysUntilMon = (cst.dayOfWeek === 6) ? 2 : 1;
+        let secUntilPeak = (daysUntilMon * 86400) + (firstPeakStart - totalSec);
+        return {
+          state: 'weekend',
+          isPeak: false,
+          secUntilNextPhase: secUntilPeak,
+          nextPhaseName: 'Monday Peak Window'
+        };
+      }
+
+      for (let i = 0; i < p.windows.length; i++) {
+        const w = p.windows[i];
+        const wStart = w.startH * 3600 + w.startM * 60;
+        const wEnd = w.endH * 3600 + w.endM * 60;
+
+        if (totalSec >= wStart && totalSec < wEnd) {
+          return {
+            state: 'peak',
+            isPeak: true,
+            secUntilNextPhase: wEnd - totalSec,
+            nextPhaseName: 'Off-Peak Discount'
+          };
+        }
+      }
+
+      for (let i = 0; i < p.windows.length; i++) {
+        const w = p.windows[i];
+        const wStart = w.startH * 3600 + w.startM * 60;
+        if (totalSec < wStart) {
+          return {
+            state: 'offpeak',
+            isPeak: false,
+            secUntilNextPhase: wStart - totalSec,
+            nextPhaseName: 'Peak Hours Surge'
+          };
+        }
+      }
+
+      let secUntilNext;
+      if (cst.dayOfWeek === 5) {
+        secUntilNext = (86400 - totalSec) + (2 * 86400) + firstPeakStart;
+      } else {
+        secUntilNext = (86400 - totalSec) + firstPeakStart;
+      }
+
+      return {
+        state: 'offpeak',
+        isPeak: false,
+        secUntilNextPhase: secUntilNext,
+        nextPhaseName: 'Next Peak Window'
+      };
+    }
+
+    function formatCountdown(totalSec) {
+      const days = Math.floor(totalSec / 86400);
+      const rem1 = totalSec % 86400;
+      const hours = Math.floor(rem1 / 3600);
+      const rem2 = rem1 % 3600;
+      const mins = Math.floor(rem2 / 60);
+      const secs = rem2 % 60;
+
+      const pad = (n) => String(n).padStart(2, '0');
+      if (days > 0) {
+        return `${days}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
+      }
+      return `${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
+    }
+
+    // Convert UTC+8 window into currently active timezone
+    function getActiveTzWindows(now, providerKey, targetTz) {
+      const p = PROVIDERS[providerKey];
+      const baseDateStr = now.toISOString().split('T')[0];
+
+      return p.windows.map(w => {
+        const sUtcHour = (w.startH - 8 + 24) % 24;
+        const eUtcHour = (w.endH - 8 + 24) % 24;
+        const sUtc = new Date(`${baseDateStr}T${String(sUtcHour).padStart(2,'0')}:${String(w.startM).padStart(2,'0')}:00Z`);
+        const eUtc = new Date(`${baseDateStr}T${String(eUtcHour).padStart(2,'0')}:${String(w.endM).padStart(2,'0')}:00Z`);
+
+        const sParts = getTzParts(sUtc, targetTz);
+        const eParts = getTzParts(eUtc, targetTz);
+
+        return {
+          startH: sParts.hour,
+          startM: sParts.minute,
+          endH: eParts.hour,
+          endM: eParts.minute
+        };
+      });
+    }
+
+    // -------------------------------------------------------------
+    // SVG RADAR RETICLE RENDERING
+    // -------------------------------------------------------------
+    function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+      const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+      return {
+        x: centerX + (radius * Math.cos(angleInRadians)),
+        y: centerY + (radius * Math.sin(angleInRadians))
+      };
+    }
+
+    function describeArc(x, y, radius, startAngle, endAngle) {
+      let diff = endAngle - startAngle;
+      if (diff < 0) diff += 360;
+      const start = polarToCartesian(x, y, radius, endAngle);
+      const end = polarToCartesian(x, y, radius, startAngle);
+      const largeArcFlag = diff <= 180 ? "0" : "1";
+      return [
+        "M", start.x, start.y, 
+        "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+      ].join(" ");
+    }
+
+    function renderRadarTicksAndNumerals() {
+      const ticksGroup = document.getElementById('radar-ticks-group');
+      const numsGroup = document.getElementById('radar-numerals-group');
+      ticksGroup.innerHTML = '';
+      numsGroup.innerHTML = '';
+
+      const is24 = (dialMode === '24');
+      const totalHours = is24 ? 24 : 12;
+      const degStep = 360 / totalHours;
+      const now = new Date();
+      const localWindows = getActiveTzWindows(now, currentProviderKey, currentSelectedTz);
+
+      for (let i = 0; i < totalHours; i++) {
+        const deg = i * degStep;
+        const isMajor = (i % (is24 ? 6 : 3) === 0);
+        
+        const outerPt = polarToCartesian(200, 200, 176, deg);
+        const innerPt = polarToCartesian(200, 200, isMajor ? 160 : 166, deg);
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', innerPt.x);
+        line.setAttribute('y1', innerPt.y);
+        line.setAttribute('x2', outerPt.x);
+        line.setAttribute('y2', outerPt.y);
+        line.setAttribute('class', isMajor ? 'radar-tick major' : 'radar-tick');
+        ticksGroup.appendChild(line);
+
+        // Numerals
+        const numPt = polarToCartesian(200, 200, 126, deg);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', numPt.x);
+        text.setAttribute('y', numPt.y);
+        text.setAttribute('class', 'radar-numeral');
+        
+        let label = i;
+        if (!is24) {
+          label = (i === 0) ? 12 : i;
+        } else {
+          label = String(i).padStart(2, '0');
+        }
+        text.textContent = label;
+
+        // Check if numeral is inside any local peak window
+        for (let lw of localWindows) {
+          if (is24) {
+            let inRange = false;
+            if (lw.startH <= lw.endH) {
+              inRange = (i >= lw.startH && i <= lw.endH);
+            } else {
+              inRange = (i >= lw.startH || i <= lw.endH);
+            }
+            if (inRange) {
+              text.classList.add('peak-zone-num');
+              break;
+            }
+          } else {
+            let s12 = (lw.startH % 12);
+            let e12 = (lw.endH % 12);
+            let num12 = (i % 12);
+            let inRange = false;
+            if (s12 <= e12) {
+              inRange = (num12 >= s12 && num12 <= e12);
+            } else {
+              inRange = (num12 >= s12 || num12 <= e12);
+            }
+            if (inRange) {
+              text.classList.add('peak-zone-num');
+              break;
+            }
+          }
+        }
+        numsGroup.appendChild(text);
+      }
+    }
+
+    // Mechanical stepped needle update with discrete second steps
+    function updateRadarHands(activeParts) {
+      const hours = activeParts.hour;
+      const mins = activeParts.minute;
+      const secs = activeParts.second;
+      const is24 = (dialMode === '24');
+      
+      const secAngle = secs * 6;
+      const minAngle = (mins + secs / 60) * 6;
+      
+      let hourAngle;
+      if (is24) {
+        hourAngle = (hours + mins / 60 + secs / 3600) * 15;
+      } else {
+        hourAngle = ((hours % 12) + mins / 60 + secs / 3600) * 30;
+      }
+
+      const hourPt = polarToCartesian(200, 200, 95, hourAngle);
+      const minPt = polarToCartesian(200, 200, 132, minAngle);
+      const secPt = polarToCartesian(200, 200, 144, secAngle);
+      const secTailPt = polarToCartesian(200, 200, 26, secAngle + 180);
+
+      document.getElementById('hand-hour').setAttribute('x2', hourPt.x);
+      document.getElementById('hand-hour').setAttribute('y2', hourPt.y);
+
+      document.getElementById('hand-min').setAttribute('x2', minPt.x);
+      document.getElementById('hand-min').setAttribute('y2', minPt.y);
+
+      const handSec = document.getElementById('hand-sec');
+      handSec.setAttribute('x1', secTailPt.x);
+      handSec.setAttribute('y1', secTailPt.y);
+      handSec.setAttribute('x2', secPt.x);
+      handSec.setAttribute('y2', secPt.y);
+    }
+
+    function updateArcGraphics() {
+      const is24 = (dialMode === '24');
+      const now = new Date();
+      const localWindows = getActiveTzWindows(now, currentProviderKey, currentSelectedTz);
+      const arc1 = document.getElementById('arc-peak-track-1');
+      const arc2 = document.getElementById('arc-peak-track-2');
+
+      const lw1 = localWindows[0];
+      let startDeg1 = is24 ? ((lw1.startH + lw1.startM/60) * 15) : (((lw1.startH % 12) + lw1.startM/60) * 30);
+      let endDeg1 = is24 ? ((lw1.endH + lw1.endM/60) * 15) : (((lw1.endH % 12) + lw1.endM/60) * 30);
+      arc1.setAttribute('d', describeArc(200, 200, 150, startDeg1, endDeg1));
+      arc1.style.display = 'block';
+
+      if (localWindows.length > 1) {
+        const lw2 = localWindows[1];
+        let startDeg2 = is24 ? ((lw2.startH + lw2.startM/60) * 15) : (((lw2.startH % 12) + lw2.startM/60) * 30);
+        let endDeg2 = is24 ? ((lw2.endH + lw2.endM/60) * 15) : (((lw2.endH % 12) + lw2.endM/60) * 30);
+        arc2.setAttribute('d', describeArc(200, 200, 150, startDeg2, endDeg2));
+        arc2.style.display = 'block';
+      } else {
+        arc2.style.display = 'none';
+      }
+
+      const bar1 = document.getElementById('linear-peak-bar-1');
+      const bar2 = document.getElementById('linear-peak-bar-2');
+
+      const pct1Start = ((lw1.startH + lw1.startM/60) / 24) * 100;
+      let spanHours1 = (lw1.endH + lw1.endM/60) - (lw1.startH + lw1.startM/60);
+      if (spanHours1 < 0) spanHours1 += 24;
+      const pct1Width = (spanHours1 / 24) * 100;
+      bar1.style.left = `${pct1Start}%`;
+      bar1.style.width = `${pct1Width}%`;
+
+      if (localWindows.length > 1) {
+        const lw2 = localWindows[1];
+        const pct2Start = ((lw2.startH + lw2.startM/60) / 24) * 100;
+        let spanHours2 = (lw2.endH + lw2.endM/60) - (lw2.startH + lw2.startM/60);
+        if (spanHours2 < 0) spanHours2 += 24;
+        const pct2Width = (spanHours2 / 24) * 100;
+        bar2.style.left = `${pct2Start}%`;
+        bar2.style.width = `${pct2Width}%`;
+        bar2.style.display = 'block';
+      } else {
+        bar2.style.display = 'none';
+      }
+    }
+
+    // -------------------------------------------------------------
+    // UI & STATE UPDATE
+    // -------------------------------------------------------------
+    function updateUI() {
+      const now = new Date();
+      const cst = getTzParts(now, BASE_TZ);
+      const activeParts = getTzParts(now, currentSelectedTz);
+      const p = PROVIDERS[currentProviderKey];
+      const status = calculateStatus(now, currentProviderKey);
+
+      const pad = (n) => String(n).padStart(2, '0');
+      const cstTimeStr = `${pad(cst.hour)}:${pad(cst.minute)}:${pad(cst.second)} CST`;
+      document.getElementById('ticker-time').textContent = `BEIJING: ${cstTimeStr}`;
+      document.getElementById('cst-reference-val').textContent = `UTC+8 CST: ${cstTimeStr}`;
+
+      const activeHour = (dialMode === '12') 
+        ? ((activeParts.hour % 12) || 12) 
+        : pad(activeParts.hour);
+      const ampm = (dialMode === '12') ? (activeParts.hour >= 12 ? ' PM' : ' AM') : '';
+      const activeTimeStr = `${activeHour}:${pad(activeParts.minute)}:${pad(activeParts.second)}${ampm}`;
+      document.getElementById('digital-clock-val').textContent = activeTimeStr;
+
+      document.getElementById('date-display-val').textContent = `${activeParts.year}-${pad(activeParts.month)}-${pad(activeParts.day)}`;
+
+      const tzSelector = document.getElementById('timezone-selector');
+      const selectedOptionText = tzSelector.options[tzSelector.selectedIndex].text.split('(')[0].trim();
+      document.getElementById('selected-tz-label').textContent = `${selectedOptionText}`;
+      document.getElementById('timeline-tz-title').textContent = currentSelectedTz === 'LOCAL' ? 'Workstation Clock' : currentSelectedTz;
+
+      const heroCard = document.getElementById('state-hero-card');
+      const pill = document.getElementById('status-pill');
+      const pillText = document.getElementById('status-pill-text');
+      const multText = document.getElementById('status-multiplier-text');
+      const headline = document.getElementById('status-headline');
+      const desc = document.getElementById('status-description');
+      const cdLabel = document.getElementById('countdown-label-text');
+      const cdVal = document.getElementById('countdown-val-text');
+
+      heroCard.classList.remove('is-offpeak', 'is-peak', 'is-weekend');
+      pill.classList.remove('badge-offpeak', 'badge-peak', 'badge-weekend');
+      document.body.classList.remove('is-peak', 'is-weekend');
+
+      if (status.state === 'weekend') {
+        heroCard.classList.add('is-weekend');
+        pill.classList.add('badge-weekend');
+        document.body.classList.add('is-weekend');
+        pillText.textContent = '[STATE: WEEKEND // 100% OFF-PEAK]';
+        multText.textContent = '1.0× ALL-DAY';
+        headline.textContent = 'WEEKEND OFF-PEAK ACTIVE';
+        desc.textContent = p.descWeekend;
+        cdLabel.textContent = 'UNTIL MON SURGE:';
+      } else if (status.state === 'peak') {
+        heroCard.classList.add('is-peak');
+        pill.classList.add('badge-peak');
+        document.body.classList.add('is-peak');
+        pillText.textContent = `[STATE: PEAK_SURGE // ${p.peakMultiplier}X COEFFICIENT]`;
+        multText.textContent = `${p.peakMultiplier}.0× MULTIPLIER`;
+        headline.textContent = 'SURGE COEFFICIENT ACTIVE';
+        desc.textContent = p.descPeak;
+        cdLabel.textContent = 'OFF-PEAK RESUMES IN:';
+      } else {
+        heroCard.classList.add('is-offpeak');
+        pill.classList.add('badge-offpeak');
+        pillText.textContent = '[STATE: OFF_PEAK // DISPATCH]';
+        multText.textContent = '1.0× STANDARD (50% DISC.)';
+        headline.textContent = 'OPTIMAL BATCH WINDOW';
+        desc.textContent = p.descOffpeak;
+        cdLabel.textContent = 'NEXT SURGE IN:';
+      }
+
+      cdVal.textContent = formatCountdown(status.secUntilNextPhase);
+
+      const totalDaySec = activeParts.hour * 3600 + activeParts.minute * 60 + activeParts.second;
+      const dayPct = (totalDaySec / 86400) * 100;
+      document.getElementById('linear-now-cursor').style.left = `${dayPct}%`;
+
+      updateRadarHands(activeParts);
+
+      if (lastKnownStatus !== null && lastKnownStatus !== status.state) {
+        if (soundNotificationsEnabled) {
+          triggerNotification(status.state, p.name);
+        }
+      }
+      lastKnownStatus = status.state;
+    }
+
+    // -------------------------------------------------------------
+    // PROVIDER SWITCHER
+    // -------------------------------------------------------------
+    function switchProvider(newKey) {
+      currentProviderKey = newKey;
+      const p = PROVIDERS[newKey];
+
+      document.getElementById('provider-logo-text').textContent = p.logoText;
+      document.getElementById('provider-logo-sub').textContent = p.logoSub;
+      document.getElementById('provider-main-heading').textContent = p.heading;
+      document.getElementById('provider-sub-heading').textContent = p.subHeading;
+      document.getElementById('badge-peak-window').textContent = p.badgeWindow;
+      document.getElementById('legend-peak-mult').textContent = p.legendPeak;
+      document.getElementById('legend-offpeak-mult').textContent = p.legendOffpeak;
+      document.getElementById('ticker-model-name').textContent = `MODEL: ${p.name.toUpperCase()}`;
+      document.getElementById('ticker-mult-ratio').textContent = `RATE: 1X OFF-PEAK / ${p.peakMultiplier}X PEAK`;
+
+      document.getElementById('calc-peak-mult-display').textContent = `${p.peakMultiplier}.0× (Peak Surge)`;
+      document.getElementById('calc-offpeak-mult-display').textContent = `${p.offPeakMultiplier}.0× (Standard)`;
+
+      const tierSelect = document.getElementById('calc-tier-select');
+      if (newKey === 'deepseek') {
+        tierSelect.innerHTML = `
+          <option value="flash" selected>DeepSeek-V4-Flash (Input $0.22 / Output $0.66 / 1M)</option>
+          <option value="pro">DeepSeek-V4-Pro (Input $0.66 / Output $1.98 / 1M)</option>
+        `;
+      } else {
+        tierSelect.innerHTML = `
+          <option value="lite">GLM Lite ($18/mo — Standard allowance)</option>
+          <option value="pro" selected>GLM Pro ($72/mo — Recommended for power coders)</option>
+          <option value="max">GLM Max ($160/mo — Heavy enterprise/agent workloads)</option>
+        `;
+      }
+
+      document.getElementById('plans-table-container').innerHTML = p.tableHtml;
+
+      renderRadarTicksAndNumerals();
+      updateArcGraphics();
+      renderCityMatrix();
+      updateCalculator();
+      updateUI();
+    }
+
+    // -------------------------------------------------------------
+    // GLOBAL CITIES MATRIX
+    // -------------------------------------------------------------
+    function renderCityMatrix() {
+      const container = document.getElementById('city-matrix-container');
+      const now = new Date();
+      const p = PROVIDERS[currentProviderKey];
+
+      container.innerHTML = GLOBAL_CITIES.map(city => {
+        const cityParts = getTzParts(now, city.tz);
+        const hour = String(cityParts.hour).padStart(2, '0');
+        const min = String(cityParts.minute).padStart(2, '0');
+        
+        const baseDateStr = now.toISOString().split('T')[0];
+        const windowLabels = p.windows.map(w => {
+          const sUtcHour = (w.startH - 8 + 24) % 24;
+          const eUtcHour = (w.endH - 8 + 24) % 24;
+          const sUtc = new Date(`${baseDateStr}T${String(sUtcHour).padStart(2,'0')}:${String(w.startM).padStart(2,'0')}:00Z`);
+          const eUtc = new Date(`${baseDateStr}T${String(eUtcHour).padStart(2,'0')}:${String(w.endM).padStart(2,'0')}:00Z`);
+
+          const sLocal = sUtc.toLocaleTimeString('en-US', { timeZone: city.tz, hour: '2-digit', minute: '2-digit', hour12: false });
+          const eLocal = eUtc.toLocaleTimeString('en-US', { timeZone: city.tz, hour: '2-digit', minute: '2-digit', hour12: false });
+          return `${sLocal}-${eLocal}`;
+        }).join(', ');
+
+        const status = calculateStatus(now, currentProviderKey);
+        
+        let badgeHtml = '';
+        if (status.state === 'peak') {
+          badgeHtml = `<span class="city-status-pill" style="color:var(--chrono-red);">PEAK (${p.peakMultiplier}X)</span>`;
+        } else if (status.state === 'weekend') {
+          badgeHtml = '<span class="city-status-pill" style="color:var(--accent-secondary);">WEEKEND</span>';
+        } else {
+          badgeHtml = '<span class="city-status-pill" style="color:var(--accent-primary);">OFF-PEAK</span>';
+        }
+
+        return `
+          <div class="city-cell">
+            <div class="city-name-row">
+              <span>${city.flag} ${city.name}</span>
+              ${badgeHtml}
+            </div>
+            <div class="city-time-now">${hour}:${min}</div>
+            <div class="city-peak-window">SURGE: <strong>${windowLabels}</strong></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // -------------------------------------------------------------
+    // CALCULATOR
+    // -------------------------------------------------------------
+    function updateCalculator() {
+      const tokens = parseFloat(document.getElementById('calc-tokens-input').value) || 0;
+      const p = PROVIDERS[currentProviderKey];
+      const offPeakPts = tokens * p.offPeakMultiplier;
+      const peakPts = tokens * p.peakMultiplier;
+      const savedPts = peakPts - offPeakPts;
+      const pctSavings = ((savedPts / peakPts) * 100).toFixed(1);
+
+      const formatNum = (n) => Number(n).toLocaleString();
+      document.getElementById('calc-offpeak-tokens').textContent = `${formatNum(offPeakPts)} pts / tokens`;
+      document.getElementById('calc-peak-tokens').textContent = `${formatNum(peakPts)} pts / tokens`;
+      document.getElementById('calc-points-saved').textContent = `+${formatNum(savedPts)} pts saved (${pctSavings}% Gain)`;
+    }
+
+    function setCalcTokens(val) {
+      document.getElementById('calc-tokens-input').value = val;
+      updateCalculator();
+    }
+
+    // -------------------------------------------------------------
+    // NOTIFICATIONS
+    // -------------------------------------------------------------
+    function triggerNotification(state, providerName) {
+      if (Notification.permission === 'granted') {
+        const title = state === 'peak' 
+          ? `⚡ ${providerName} Peak Hours Started (Surge Active)` 
+          : `🟢 ${providerName} Off-Peak Active (Discount Applied)`;
+        const body = state === 'peak' 
+          ? `Tokens & quota consume at peak rate. Off-peak resumes later today.` 
+          : `Optimal coding window active! Maximum token value restored.`;
+        new Notification(title, { body, icon: 'assets/favicon.svg' });
+      }
+    }
+
+    // -------------------------------------------------------------
+    // EVENT LISTENERS & INIT
+    // -------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+      const providerSelect = document.getElementById('ai-provider-select');
+      providerSelect.addEventListener('change', (e) => {
+        switchProvider(e.target.value);
+      });
+
+      // 12-Hour / 24-Hour toggle
+      document.querySelectorAll('#dial-mode-toggle .brutal-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('#dial-mode-toggle .brutal-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          dialMode = btn.getAttribute('data-dial');
+          renderRadarTicksAndNumerals();
+          updateArcGraphics();
+          updateUI();
+        });
+      });
+
+      const tzSelect = document.getElementById('timezone-selector');
+      tzSelect.addEventListener('change', (e) => {
+        currentSelectedTz = e.target.value;
+        renderRadarTicksAndNumerals();
+        updateArcGraphics();
+        updateUI();
+      });
+
+      const notifyBtn = document.getElementById('sound-toggle-btn');
+      notifyBtn.addEventListener('click', () => {
+        if (!("Notification" in window)) {
+          alert("This browser does not support desktop notifications.");
+          return;
+        }
+        if (Notification.permission === "granted") {
+          soundNotificationsEnabled = !soundNotificationsEnabled;
+          notifyBtn.textContent = soundNotificationsEnabled ? "🔔 NOTIFY ON" : "🔕 NOTIFY OFF";
+          notifyBtn.classList.toggle('active', soundNotificationsEnabled);
+        } else {
+          Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+              soundNotificationsEnabled = true;
+              notifyBtn.textContent = "🔔 NOTIFY ON";
+              notifyBtn.classList.add('active');
+              new Notification("Peak Radar Notifications Activated", { body: "You will be alerted on peak/off-peak state transitions." });
+            }
+          });
+        }
+      });
+
+      document.getElementById('calc-tokens-input').addEventListener('input', updateCalculator);
+      document.getElementById('calc-tier-select').addEventListener('change', updateCalculator);
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'm' || e.key === 'M') {
+          dialMode = (dialMode === '24') ? '12' : '24';
+          document.querySelectorAll('#dial-mode-toggle .brutal-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-dial') === dialMode);
+          });
+          renderRadarTicksAndNumerals();
+          updateArcGraphics();
+          updateUI();
+        } else if (e.key === 'p' || e.key === 'P') {
+          const nextP = (currentProviderKey === 'glm') ? 'deepseek' : 'glm';
+          providerSelect.value = nextP;
+          switchProvider(nextP);
+        }
+      });
+
+      // Initialize with 12-Hour mode default and GLM provider
+      switchProvider('glm');
+
+      function tick() {
+        updateUI();
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      setInterval(renderCityMatrix, 30000);
+    });
+  </script>
+
+  <!-- Theme Switcher Script for Phantom Ecosystem -->
+  <script>
+    (function(){
+      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
+      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
+      document.documentElement.setAttribute('data-theme', saved);
+      
+      var themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function(){
+          var current = document.documentElement.getAttribute('data-theme') || 'void';
+          var nextIdx = (themes.indexOf(current) + 1) % themes.length;
+          var next = themes[nextIdx];
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('phantom_kernel_theme', next);
+        });
+      }
+
+      window.addEventListener('keydown', function(e){
+        if (e.key === 't' || e.key === 'T') {
+          var current = document.documentElement.getAttribute('data-theme') || 'void';
+          var nextIdx = (themes.indexOf(current) + 1) % themes.length;
+          var next = themes[nextIdx];
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('phantom_kernel_theme', next);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
