@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-radar-clock"
+version = "1.0.0"
+description = "Live LLM Peak Hours & Off-Peak Discount Radar Clock for GLM & DeepSeek APIs (Linux, macOS & Windows CLI/Plugin)"
+readme = "README.md"
+authors = [{ name = "LulzTigre", email = "contact@lulztigre.pw" }]
+license = { text = "MIT" }
+keywords = ["llm", "peak-hours", "deepseek", "glm", "api", "tmux", "starship", "cli", "tui"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities"
+]
+requires-python = ">=3.9"
+
+[project.scripts]
+llm-clock = "llm_clock:main"
+llm-radar = "llm_clock:main"
+
+[tool.setuptools]
+py-modules = ["llm_clock"]

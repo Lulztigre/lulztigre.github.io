@@ -1,7 +1,13 @@
 # Drafts and composer
 composer.html
 *.md
+!README.md
 publish.py
 .DS_Store
 Thumbs.db
 .playwright-mcp/
+__pycache__/
+*.egg-info/
+dist/
+build/
+
