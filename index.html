@@ -118,7 +118,7 @@
           </div>
           <div class="meta-row">
             <span class="meta-key">LAST SYNC</span>
-            <span class="meta-val">2026-08-15 UTC</span>
+            <span class="meta-val">2026-08-30 UTC</span>
           </div>
           <div class="meta-row">
             <span class="meta-key">DAEMON STATE</span>
@@ -133,7 +133,7 @@
       <div class="container feed-controls-grid">
         <div class="tag-filters">
           <span class="filter-label">CATEGORY:</span>
-          <button class="tag-btn active" data-tag="ALL">ALL (4)</button>
+          <button class="tag-btn active" data-tag="ALL">ALL (5)</button>
           <button class="tag-btn" data-tag="OFFENSIVE SECURITY">OFFENSIVE SECURITY</button>
           <button class="tag-btn" data-tag="RED TEAM">RED TEAM</button>
           <button class="tag-btn" data-tag="CVE RESEARCH">CVE RESEARCH</button>
@@ -153,16 +153,58 @@
       <div class="container">
         <div class="section-header-bar">
           <h2 class="section-title"><span>▶</span> RESEARCH LOG & PREPRINTS</h2>
-          <span class="posts-count" id="filtered-count">[4 RECORDS FOUND]</span>
+          <span class="posts-count" id="filtered-count">[5 RECORDS FOUND]</span>
         </div>
 
         <div class="posts-feed" id="posts-feed">
 
-          <!-- Auto-generated: The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino -->
+          <!-- Auto-generated: MEMO #008 - Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms -->
+          <article class="post-card" 
+                   data-tags="OFFENSIVE SECURITY, JOOMLA, PHP, CODE INJECTION, PAYMENT TAMPERING, CVE, VARIANT ANALYSIS"
+                   data-bibtex="@article{lulz2026_balbooa-fo,
+  author    = {LulzTigre Research},
+  title     = {Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms},
+  journal   = {LulzTigre Research Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html}
+}">
+            <div class="post-card-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #008</span>
+                <span>DATE: 2026-08-30</span>
+              </div>
+              <span>EST. TIME: ~12 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/balbooa-forms-penny-rce-67363-67364.html">Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</a>
+            </h3>
+
+            <p class="post-abstract">
+              While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+                <span class="tag-chip">JOOMLA</span>
+                <span class="tag-chip">PHP</span>
+                <span class="tag-chip">CODE INJECTION</span>
+                <span class="tag-chip">PAYMENT TAMPERING</span>
+                <span class="tag-chip">CVE</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
+                <a href="posts/balbooa-forms-penny-rce-67363-67364.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Auto-generated: MEMO #007 - The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino -->
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, PATCH ANALYSIS, JDBC, RCE, VARIANT ANALYSIS"
                    data-bibtex="@article{lulz2026_gravitino-,
-  author    = {LulzTigre Research},
+  author    = {LulzTigre},
   title     = {The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino},
   journal   = {LulzTigre Research Dispatches},
   year      = {2026},
@@ -199,7 +241,7 @@
             </div>
           </article>
 
-          <!-- Auto-generated: DropoutJeep: The Phishing Simulator That Refuses to Drop Out -->
+          <!-- Auto-generated: MEMO #006 - DropoutJeep: The Phishing Simulator That Refuses to Drop Out -->
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, RED TEAM, PHISHING, AUTOMATION"
                    data-bibtex="@article{lulz2026_dropoutjee,
@@ -239,16 +281,16 @@
             </div>
           </article>
 
-          <!-- Post 2: Stored XSS (embargoed) -->
-          <article class="post-card"
+          <!-- Auto-generated: MEMO #005 - Stored XSS in a Widely Deployed CMS Plugin -->
+          <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, CVE RESEARCH, XSS, WEB"
                    data-bibtex="@article{lulz2026storedxss,
-  author = {LulzTigre},
-  title = {Stored XSS in a Widely Deployed CMS Plugin},
-  journal = {LulzTigre Research Dispatches},
-  year = {2026},
-  month = {August},
-  url = {https://lulztigre.pw/posts/stored-xss-cms-plugin.html}
+  author    = {LulzTigre},
+  title     = {Stored XSS in a Widely Deployed CMS Plugin},
+  journal   = {LulzTigre Research Dispatches},
+  year      = {2026},
+  month     = {August},
+  url       = {https://lulztigre.pw/posts/stored-xss-cms-plugin.html}
 }">
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
@@ -259,15 +301,11 @@
             </div>
 
             <h3 class="post-card-title">
-              <a href="posts/stored-xss-cms-plugin.html">
-                Stored XSS in a Widely Deployed CMS Plugin
-              </a>
+              <a href="posts/stored-xss-cms-plugin.html">Stored XSS in a Widely Deployed CMS Plugin</a>
             </h3>
 
             <p class="post-abstract">
-              An unauthenticated stored XSS in a popular CMS extension, found while diffing an unrelated
-              patch. Vendor and plugin name withheld pending coordinated disclosure. Full writeup, PoC,
-              and CVE reference land here the day the fix ships.
+              An unauthenticated stored XSS in a popular CMS extension, found while diffing an unrelated patch. Vendor and plugin name withheld pending coordinated disclosure. Full writeup, PoC, and CVE reference land here the day the fix ships.
             </p>
 
             <div class="post-card-footer">
@@ -278,22 +316,21 @@
                 <span class="tag-chip">WEB</span>
               </div>
               <div class="post-card-actions">
-                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)" title="Copy BibTeX Citation">BIBTEX</button>
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
                 <a href="posts/stored-xss-cms-plugin.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
               </div>
             </div>
           </article>
 
-          <!-- Post 1: GrandScream -->
-          <article class="post-card"
-                   data-tags="OFFENSIVE SECURITY, RECON, AUTOMATION, VOIP"
-                   data-bibtex="@article{lulz2026grandscream,
-  author = {LulzTigre},
-  title = {GrandScream: From One Desk Phone to a Root PBX},
-  journal = {LulzTigre Research Dispatches},
-  year = {2026},
-  month = {August},
-  url = {https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html}
+          <!-- Auto-generated: MEMO #004 - GrandScream: From One Desk Phone to a Root PBX -->
+          <article class="post-card" 
+                   data-tags="OFFENSIVE SECURITY, RECON, AUTOMATION, VOIP, EXPLOIT-CHAIN"
+                   data-bibtex="@article{lulz2026_grandscrea,
+  author    = {LulzTigre},
+  title     = {GrandScream: From One Desk Phone to a Root PBX},
+  journal   = {LulzTigre Research Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html}
 }">
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
@@ -304,15 +341,11 @@
             </div>
 
             <h3 class="post-card-title">
-              <a href="posts/grandscream-phone-to-pbx-root.html">
-                GrandScream: From One Desk Phone to a Root PBX
-              </a>
+              <a href="posts/grandscream-phone-to-pbx-root.html">GrandScream: From One Desk Phone to a Root PBX</a>
             </h3>
 
             <p class="post-abstract">
-              Recon methodology and chain automation: one unauthenticated request against a Grandstream GXP phone
-              becomes a root shell on the UCM PBX. Blind-oracle SQLi, credential reuse graphs, and the
-              stdlib-only Python script that compresses the whole chain into thirty seconds.
+              One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.
             </p>
 
             <div class="post-card-footer">
@@ -321,9 +354,10 @@
                 <span class="tag-chip">RECON</span>
                 <span class="tag-chip">AUTOMATION</span>
                 <span class="tag-chip">VOIP</span>
+                <span class="tag-chip">EXPLOIT-CHAIN</span>
               </div>
               <div class="post-card-actions">
-                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)" title="Copy BibTeX Citation">BIBTEX</button>
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
                 <a href="posts/grandscream-phone-to-pbx-root.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
               </div>
             </div>

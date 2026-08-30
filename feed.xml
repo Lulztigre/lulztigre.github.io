@@ -5,10 +5,18 @@
     <link>https://lulztigre.pw/</link>
     <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Aug 2026 06:16:04 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2026 19:30:45 GMT</lastBuildDate>
     <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
 
-            <item>
+    <item>
+      <title>Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</title>
+      <link>https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html</link>
+      <guid>https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html</guid>
+      <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
+      <description>While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.</description>
+    </item>
+
+    <item>
       <title>The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino</title>
       <link>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</link>
       <guid>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</guid>
@@ -29,31 +37,7 @@
       <link>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</link>
       <guid>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</guid>
       <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
-      <description>Recon methodology and chain automation: one unauthenticated request against a Grandstream GXP phone becomes a root shell on the UCM PBX. Blind-oracle SQLi, credential reuse graphs, and the stdlib-only script that automates every handoff.</description>
-    </item>
-
-    <item>
-      <title>Deconstructing Induction Heads and Attention Routing in Deep Transformer Circuits</title>
-      <link>https://lulztigre.pw/posts/transformer-circuits-and-attention-heads.html</link>
-      <guid>https://lulztigre.pw/posts/transformer-circuits-and-attention-heads.html</guid>
-      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
-      <description>An empirical analysis into how two-layer attention compositions implement in-context pattern matching, with eigenvalue decomposition of W_OV and W_QK circuits.</description>
-    </item>
-
-    <item>
-      <title>Optimistic Fast-Paths in Asynchronous Byzantine Fault-Tolerant State Machine Replication</title>
-      <link>https://lulztigre.pw/posts/byzantine-consensus-in-asynchronous-networks.html</link>
-      <guid>https://lulztigre.pw/posts/byzantine-consensus-in-asynchronous-networks.html</guid>
-      <pubDate>Tue, 28 Jul 2026 00:00:00 GMT</pubDate>
-      <description>Analyzing optimistic super-quorums to drop consensus commit latency from 3Δ to 2Δ under partial synchrony regimes.</description>
-    </item>
-
-    <item>
-      <title>Polynomial Commitment Schemes: KZG vs FRI in Recursive Verifiable Computation</title>
-      <link>https://lulztigre.pw/posts/zero-knowledge-succinct-arguments.html</link>
-      <guid>https://lulztigre.pw/posts/zero-knowledge-succinct-arguments.html</guid>
-      <pubDate>Sun, 14 Jun 2026 00:00:00 GMT</pubDate>
-      <description>A comparative study on proof size, verifier arithmetic complexity, and trusted setup assumptions between KZG and FRI in recursive zero-knowledge systems.</description>
+      <description>One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.</description>
     </item>
   </channel>
 </rss>

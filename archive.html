@@ -36,7 +36,7 @@
   <!-- Top Telemetry -->
   <div class="system-ticker">
     <div class="ticker-left">
-      <span class="status-indicator"><span class="status-dot"></span>ARCHIVE_INDEX: 3 ENTRIES</span>
+      <span class="status-indicator"><span class="status-dot"></span>ARCHIVE_INDEX: 5 ENTRIES</span>
       <span>INDEX_MODE: CHRONOLOGICAL</span>
     </div>
     <div class="ticker-right">
@@ -90,6 +90,21 @@
 
             <div class="post-card" style="padding: 1.25rem;">
               <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                <span>MEMO #008 // 2026-08-30</span>
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+              </div>
+              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
+                <a href="posts/balbooa-forms-penny-rce-67363-67364.html" style="color: var(--text-primary); text-decoration: none;">
+                  Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms
+                </a>
+              </h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
+                While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.
+              </p>
+            </div>
+
+            <div class="post-card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
                 <span>MEMO #007 // 2026-08-17</span>
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
               </div>
@@ -114,7 +129,7 @@
                 </a>
               </h3>
               <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                Why a phishing-simulation platform ships 80-plus modules: OSINT, pretext crafting, payload generation, C2, evasion, persistence, and the long, humbling fight for inbox deliverability.
+                DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.
               </p>
             </div>
 
@@ -129,7 +144,7 @@
                 </a>
               </h3>
               <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                Unauthenticated stored XSS found while diffing an unrelated patch. Vendor and plugin withheld pending coordinated disclosure.
+                An unauthenticated stored XSS in a popular CMS extension, found while diffing an unrelated patch. Vendor and plugin name withheld pending coordinated disclosure. Full writeup, PoC, and CVE reference land here the day the fix ships.
               </p>
             </div>
 
@@ -144,7 +159,7 @@
                 </a>
               </h3>
               <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                Recon methodology and full-chain automation against Grandstream UCM/GXP: blind-oracle SQLi to root in one command.
+                One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.
               </p>
             </div>
 
