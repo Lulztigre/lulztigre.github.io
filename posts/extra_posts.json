@@ -1,17 +1,1 @@
-[
-  {
-    "filename": "stored-xss-cms-plugin.html",
-    "rel_link": "posts/stored-xss-cms-plugin.html",
-    "url": "https://lulztigre.pw/posts/stored-xss-cms-plugin.html",
-    "memo_num": "005",
-    "memo_label": "MEMO #005",
-    "title": "Stored XSS in a Widely Deployed CMS Plugin",
-    "date_str": "TBD",
-    "read_time": "~8 MIN",
-    "category": "OFFENSIVE SECURITY",
-    "tags": ["OFFENSIVE SECURITY", "CVE RESEARCH", "XSS", "WEB"],
-    "abstract": "An unauthenticated stored XSS in a popular CMS extension, found while diffing an unrelated patch. Vendor and plugin name withheld pending coordinated disclosure. Full writeup, PoC, and CVE reference land here the day the fix ships.",
-    "bibtex": "@article{lulz2026storedxss,\n  author    = {Lulztigre},\n  title     = {Stored XSS in a Widely Deployed CMS Plugin},\n  journal   = {Lulztigre Dispatches},\n  year      = {2026},\n  month     = {August},\n  url       = {https://lulztigre.pw/posts/stored-xss-cms-plugin.html}\n}",
-    "embargoed": true
-  }
-]
+[]
