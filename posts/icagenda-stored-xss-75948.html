@@ -12,6 +12,9 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://lulztigre.pw/posts/icagenda-stored-xss-75948.html">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -21,12 +24,13 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
           onload="renderMathInElement(document.body);"></script>
 
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=1.5">
 
+  <!-- Prevent Theme Flash -->
   <script>
     (function(){
-      const t = localStorage.getItem('phantom_kernel_theme');
-      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
+      if (saved !== 'void') document.documentElement.setAttribute('data-theme', saved);
     })();
   </script>
 </head>
@@ -435,6 +439,9 @@ $eventData-&gt;file             = $fileLink ?? '';</code></pre>
     </div>
   </footer>
 
-  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/main.js?v=1.5"></script>
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://lulztigre.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
