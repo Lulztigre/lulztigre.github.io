@@ -261,7 +261,7 @@
     if (bibtexData) {
       modalCode.textContent = bibtexData.trim();
     } else {
-      modalCode.textContent = `@misc{phantom_dispatch,\n  author = {LulzTigre Research},\n  title = {Research Dispatch},\n  year = {2026},\n  url = {https://lulztigre.pw}\n}`;
+      modalCode.textContent = `@misc{phantom_dispatch,\n  author = {Lulztigre},\n  title = {Research Dispatch},\n  year = {2026},\n  url = {https://lulztigre.pw}\n}`;
     }
 
     modal.classList.add('open');

@@ -1,0 +1,41 @@
+name: Auto Sync Blog Posts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'posts/**'
+      - 'sync_posts.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-posts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run post synchronizer
+        run: |
+          python sync_posts.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html archive.html feed.xml
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(auto-sync): update index, archive, and feed [skip ci]"
+            git push
+          else
+            echo "No changes detected. Everything is already in sync."
+          fi

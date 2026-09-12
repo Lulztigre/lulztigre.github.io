@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LulzTigre // Blaaag</title>
+  <title>Lulztigre // Blaaag</title>
   <meta name="description" content="Offensive security research: CMS exploit research, CVE variant analysis, red team tradecraft, and coordinated disclosure.">
-  <meta name="author" content="LulzTigre">
+  <meta name="author" content="Lulztigre">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="LulzTigre // Phantom Research Kernel">
+  <meta property="og:title" content="Lulztigre // Phantom Research Kernel">
   <meta property="og:description" content="Technical research notes on neural circuits, distributed systems, and verifiable computation.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lulztigre.pw/">
@@ -133,7 +133,7 @@
       <div class="container feed-controls-grid">
         <div class="tag-filters">
           <span class="filter-label">CATEGORY:</span>
-          <button class="tag-btn active" data-tag="ALL">ALL (5)</button>
+          <button class="tag-btn active" data-tag="ALL">ALL (6)</button>
           <button class="tag-btn" data-tag="OFFENSIVE SECURITY">OFFENSIVE SECURITY</button>
           <button class="tag-btn" data-tag="RED TEAM">RED TEAM</button>
           <button class="tag-btn" data-tag="CVE RESEARCH">CVE RESEARCH</button>
@@ -153,7 +153,7 @@
       <div class="container">
         <div class="section-header-bar">
           <h2 class="section-title"><span>▶</span> RESEARCH LOG & PREPRINTS</h2>
-          <span class="posts-count" id="filtered-count">[5 RECORDS FOUND]</span>
+          <span class="posts-count" id="filtered-count">[6 RECORDS FOUND]</span>
         </div>
 
         <div class="posts-feed" id="posts-feed">
@@ -162,9 +162,9 @@
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, JOOMLA, PHP, CODE INJECTION, PAYMENT TAMPERING, CVE, VARIANT ANALYSIS"
                    data-bibtex="@article{lulz2026_balbooa-fo,
-  author    = {LulzTigre Research},
+  author    = {Lulztigre},
   title     = {Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms},
-  journal   = {LulzTigre Research Dispatches},
+  journal   = {Lulztigre Dispatches},
   year      = {2026},
   url       = {https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html}
 }">
@@ -204,9 +204,9 @@
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, PATCH ANALYSIS, JDBC, RCE, VARIANT ANALYSIS"
                    data-bibtex="@article{lulz2026_gravitino-,
-  author    = {LulzTigre},
+  author    = {Lulztigre},
   title     = {The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino},
-  journal   = {LulzTigre Research Dispatches},
+  journal   = {Lulztigre Dispatches},
   year      = {2026},
   url       = {https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html}
 }">
@@ -245,9 +245,9 @@
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, RED TEAM, PHISHING, AUTOMATION"
                    data-bibtex="@article{lulz2026_dropoutjee,
-  author    = {LulzTigre Research},
+  author    = {Lulztigre},
   title     = {DropoutJeep: The Phishing Simulator That Refuses to Drop Out},
-  journal   = {LulzTigre Research Dispatches},
+  journal   = {Lulztigre Dispatches},
   year      = {2026},
   url       = {https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html}
 }">
@@ -281,13 +281,54 @@
             </div>
           </article>
 
+          <!-- Auto-generated: MEMO #005 - The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda -->
+          <article class="post-card" 
+                   data-tags="OFFENSIVE SECURITY, CVE RESEARCH, XSS, JOOMLA, PATCH ANALYSIS"
+                   data-bibtex="@article{lulz2026_icagenda-s,
+  author    = {Lulztigre},
+  title     = {The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda},
+  journal   = {Lulztigre Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/icagenda-stored-xss-75948.html}
+}">
+            <div class="post-card-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #005</span>
+                <span>DATE: 2026-09-12</span>
+              </div>
+              <span>EST. TIME: ~15 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/icagenda-stored-xss-75948.html">The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda</a>
+            </h3>
+
+            <p class="post-abstract">
+              A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+                <span class="tag-chip">CVE RESEARCH</span>
+                <span class="tag-chip">XSS</span>
+                <span class="tag-chip">JOOMLA</span>
+                <span class="tag-chip">PATCH ANALYSIS</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
+                <a href="posts/icagenda-stored-xss-75948.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
           <!-- Auto-generated: MEMO #005 - Stored XSS in a Widely Deployed CMS Plugin -->
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, CVE RESEARCH, XSS, WEB"
                    data-bibtex="@article{lulz2026storedxss,
-  author    = {LulzTigre},
+  author    = {Lulztigre},
   title     = {Stored XSS in a Widely Deployed CMS Plugin},
-  journal   = {LulzTigre Research Dispatches},
+  journal   = {Lulztigre Dispatches},
   year      = {2026},
   month     = {August},
   url       = {https://lulztigre.pw/posts/stored-xss-cms-plugin.html}
@@ -326,9 +367,9 @@
           <article class="post-card" 
                    data-tags="OFFENSIVE SECURITY, RECON, AUTOMATION, VOIP, EXPLOIT-CHAIN"
                    data-bibtex="@article{lulz2026_grandscrea,
-  author    = {LulzTigre},
+  author    = {Lulztigre},
   title     = {GrandScream: From One Desk Phone to a Root PBX},
-  journal   = {LulzTigre Research Dispatches},
+  journal   = {Lulztigre Dispatches},
   year      = {2026},
   url       = {https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html}
 }">
@@ -399,7 +440,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4>// LULZTIGRE RESEARCH</h4>
+          <h4>// LULZTIGRE</h4>
           <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem;">
             Open notebook for offensive security research and CVE hunting.
           </p>

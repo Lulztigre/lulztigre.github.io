@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chronological Research Archive // LulzTigre</title>
+  <title>Chronological Research Archive // Lulztigre</title>
   <meta name="description" content="Complete chronological index of all research memos, dispatches, and CVE writeups.">
-  <meta name="author" content="LulzTigre">
+  <meta name="author" content="Lulztigre">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Chronological Research Archive // LulzTigre">
+  <meta property="og:title" content="Chronological Research Archive // Lulztigre">
   <meta property="og:description" content="Complete chronological index of all research memos and CVE writeups.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lulztigre.pw/archive.html">
@@ -36,7 +36,7 @@
   <!-- Top Telemetry -->
   <div class="system-ticker">
     <div class="ticker-left">
-      <span class="status-indicator"><span class="status-dot"></span>ARCHIVE_INDEX: 5 ENTRIES</span>
+      <span class="status-indicator"><span class="status-dot"></span>ARCHIVE_INDEX: 6 ENTRIES</span>
       <span>INDEX_MODE: CHRONOLOGICAL</span>
     </div>
     <div class="ticker-right">
@@ -135,6 +135,21 @@
 
             <div class="post-card" style="padding: 1.25rem;">
               <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+                <span>MEMO #005 // 2026-09-12</span>
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+              </div>
+              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
+                <a href="posts/icagenda-stored-xss-75948.html" style="color: var(--text-primary); text-decoration: none;">
+                  The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda
+                </a>
+              </h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
+                A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.
+              </p>
+            </div>
+
+            <div class="post-card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
                 <span>MEMO #005 // TBD</span>
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
               </div>
@@ -196,7 +211,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>© 2026 LULZTIGRE RESEARCH.</span>
+        <span>© 2026 LULZTIGRE.</span>
         <a href="index.html" style="color: inherit; text-decoration: underline;">← BACK TO DISPATCHES</a>
       </div>
     </div>

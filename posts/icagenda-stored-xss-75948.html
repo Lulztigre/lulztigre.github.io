@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda // Lulztigre</title>
+  <meta name="description" content="A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.">
+  <meta name="author" content="Lulztigre">
+
+  <meta property="og:title" content="The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda">
+  <meta property="og:description" content="A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lulztigre.pw/posts/icagenda-stored-xss-75948.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body);"></script>
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <script>
+    (function(){
+      const t = localStorage.getItem('phantom_kernel_theme');
+      if (t && t !== 'void') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <div id="reading-progress"></div>
+
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>MEMO #005</span>
+      <span>STATUS: PUBLISHED NOTEBOOK</span>
+    </div>
+    <div class="ticker-right">
+      <span>SHORTCUT: [T] THEME / [ESC] BACK</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">KERNEL</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="../archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="../about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="../feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <header class="article-header">
+    <div class="container">
+      <div class="article-breadcrumbs">
+        <a href="../index.html">ROOT</a> <span>/</span> 
+        <a href="../archive.html">DISPATCHES</a> <span>/</span> 
+        <span>MEMO #005</span>
+      </div>
+
+      <h1 class="article-title">The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda</h1>
+
+      <div class="article-meta-panel">
+        <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-09-12</strong></div>
+        <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>Lulztigre</strong></div>
+        <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
+        <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~15 MIN</strong></div>
+        <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #CVE RESEARCH #XSS #JOOMLA #PATCH ANALYSIS</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="article-layout">
+      
+      <article class="prose">
+        <div class="callout callout-definition" id="abstract">
+          <div class="callout-header">
+            <span>[ABSTRACT & CORE THESIS]</span>
+          </div>
+          <p>A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.</p>
+        </div>
+
+        <h2 id="1-how-an-incident-response-put-me-inside-icagenda">1. How an Incident Response Put Me Inside iCagenda</h2>
+
+<p>I did not start this hunt in a lab. I started it during an incident response, on a shared hosting account where several Joomla sites had gone down together. The engagement details stay under NDA, and none of them are needed for what follows.</p>
+
+<p>The layout was the usual one for that kind of host: several virtual hosts running as a single Linux user, which is how one broken site turns an entire account into a crime scene. Two extensions sat at the top of my suspect list: Balbooa Forms and iCagenda. Both carried unauthenticated file upload bugs in 2026. Both are in CISA's Known Exploited Vulnerabilities catalog (CVE-2026-56291 for Balbooa Forms, CVE-2026-48939 for iCagenda). Both were being mass-scanned by bots at the time.</p>
+
+<p>So I read the access logs. The bots were asking for both components, the way they ask on every Joomla site on the internet. On the hosts I could assess, neither extension was installed, and the sites that did fall went down through a different door. That is as far as attribution went, and the figures stay out of this memo on purpose.</p>
+
+<p>What stayed with me was the question the response left open. The logs tell you a component was not the door. They cannot tell you what the exploit does on a site where it is the door. I could not leave it alone: what does a KEV-listed upload chain look like when you run it end to end? To answer that, I rebuilt the environment in the lab. A Joomla install, the vendor packages for 4.0.7, 4.0.8 and 4.0.11, and the public PoCs for CVE-2026-48939.</p>
+
+<p>Rebuilding an exploit means reading the code the fix touched. That is how I ended up staring at one assignment line in the event submission model, wondering why it changed shape between two releases.</p>
+
+<div class="callout callout-definition"><div class="callout-header"><span>WHY THE IR MATTERS HERE</span></div><p>The engagement handed me version numbers, vendor packages and a reason to trust nothing about the extension. A cold review installs 4.0.11, sees an upload gate, and moves on. The IR gave me the 4.0.7 tree to diff against, and the diff is where the bug was hiding.</p></div>
+
+<h2 id="2-the-fix-that-closed-the-kev-bug">2. The Fix That Closed the KEV Bug</h2>
+
+<p>CVE-2026-48939 is the iCagenda bug everyone knows. An unauthenticated attacker uploads a file through the frontend submit form, the file lands in the web root with no extension check, and the attacker runs PHP. It was fixed in 4.0.8 (and in 3.9.15 on the older branch), and it is in the KEV catalog for good reason.</p>
+
+<p>In 4.0.7, the submit model assigns the image and file columns like this (<code>SubmitModel.php:607</code> and <code>:616</code>):</p>
+
+<pre data-lang="code"><code>$eventData-&gt;image            = ! empty($image['name']) ? $this-&gt;frontendImageUpload($image) : '';
+$eventData-&gt;file             = ! empty($file['name']) ? $this-&gt;frontendFileUpload($file) : '';</code></pre>
+
+<p>That ternary does two jobs at once. It calls the upload helper when a file was attached, and it stores an empty string when one was not. A POSTed string never reaches the database, because the branch that stores it does not exist. The bug lives inside the helper instead: <code>frontendImageUpload()</code> and <code>frontendFileUpload()</code> wrote whatever the uploader handed them.</p>
+
+<p>The 4.0.8 patch added the missing control. A <code>MediaHelper</code> import arrives at line 36, and the attachment block grows a gate (<code>SubmitModel.php:597</code> to <code>:609</code>):</p>
+
+<pre data-lang="code"><code>$fileLink = '';
+
+if ($file &amp;&amp; !empty($file['name'])) {
+    $helper = new MediaHelper();
+
+    $can = $helper-&gt;canUpload($file);
+
+    if (!$can) {
+        return false;
+    }
+
+    $fileLink = $this-&gt;frontendFileUpload($file);
+}</code></pre>
+
+<p>Joomla's own <code>canUpload()</code> is the check that CVE-2026-48939 was missing. The patch is correct, and the assignment lines stay exactly as they were, ternary and all (4.0.8, lines 622 and 631):</p>
+
+<pre data-lang="code"><code>$eventData-&gt;image            = ! empty($image['name']) ? $this-&gt;frontendImageUpload($image) : '';
+$eventData-&gt;file             = ! empty($file['name']) ? $this-&gt;frontendFileUpload($file) : '';</code></pre>
+
+<p>I verified the other half of that fix in the lab as well. On 4.0.11 a <code>shell.php</code> upload through the submit form is rejected by <code>canUpload()</code> with an invalid file type message, and nothing reaches disk. The upload RCE is closed, and it stays closed on the later builds I tested.</p>
+
+<h2 id="3-the-assignment-that-stopped-being-safe">3. The Assignment That Stopped Being Safe</h2>
+
+<p>By 4.0.11 the same block has been refactored, and the refactor is the bug. Here is the whole attachment section (<code>SubmitModel.php:594</code> to <code>:646</code>):</p>
+
+<pre data-lang="code"><code>$files = $jinput-&gt;files-&gt;get('jform', null, 'raw');
+$image = $files['image'];
+$file  = $files['file'];
+
+$imageLink = '';
+$fileLink  = '';
+
+if ($image || $file) {
+    $errorUpload = false;
+    $helper = new MediaHelper();
+
+    if (!empty($image['name'])) {
+        $imageCheck         = $image;
+        $imageCheck['name'] = File::makeSafe($imageCheck['name']);
+
+        $canUploadImage = $helper-&gt;canUpload($imageCheck);
+
+        if ($canUploadImage) {
+            $imageLink = $this-&gt;frontendImageUpload($image);
+        }
+
+        $data['image'] = $imageLink;
+    }
+
+    if (!empty($file['name'])) {
+        $fileCheck         = $file;
+        $fileCheck['name'] = File::makeSafe($fileCheck['name']);
+
+        $canUploadFile = $helper-&gt;canUpload($fileCheck);
+
+        if ($canUploadFile) {
+            $fileLink = $this-&gt;frontendFileUpload($file);
+        }
+
+        $data['file'] = $fileLink;
+    }
+    ...
+}</code></pre>
+
+<p>Read the branches closely. The write into the data array sits inside the file-name checks. With no file attached, neither branch runs, and the data array keeps whatever the form field carried.</p>
+
+<p>The old code is still in the file, commented out, right underneath (lines 648 to :684). Someone moved the logic into the upload block, and nobody covered the case where the block never executes.</p>
+
+<p>Two lines later, in the storage section, the consequence is visible (<code>SubmitModel.php:697</code> and <code>:706</code>):</p>
+
+<pre data-lang="code"><code>$eventData-&gt;image            = isset($data['image']) ? $data['image'] : '';
+$eventData-&gt;file             = isset($data['file']) ? $data['file'] : '';</code></pre>
+
+<p>The filtered POST value is stored verbatim. The form field declares <code>filter="safehtml"</code> on both the image field (<code>site/forms/submit.xml:76</code>) and the file field (<code>:323</code>). Joomla strips tags from the value, and that is the only thing standing between the request body and the database column.</p>
+
+<p>The 4.0.7 and 4.0.8 ternaries discarded the POST string by construction. The 4.0.11 code stores it. Same file, same intent, opposite behaviour.</p>
+
+<p>One version-precision note, because the CVE record and the code disagree slightly. The Joomla CNA record scopes CVE-2026-75948 to 4.0.8 through 4.0.12. In the 4.0.8 package I pulled from the vendor update feed, the assignment is still the safe ternary, and that file contains no writes into the data array at all. I could not reproduce the string path on 4.0.8. The vulnerable shape is present in 4.0.11. I did not have 4.0.9 or 4.0.10 packages to bisect the exact release that introduced it. Treat 4.0.8 as the vendor's conservative floor and 4.0.11 as the version I proved.</p>
+
+<h2 id="4-following-the-string-to-the-render-sinks">4. Following the String to the Render Sinks</h2>
+
+<p>A stored string is only a bug if something prints it. Two sinks do.</p>
+
+<p>The image sink lives in the shared library, not the component. In <code>lib_ic_library</code>, <code>Get.php::thumbnail()</code> reaches a fallback branch when it cannot read the image to build a thumbnail (<code>Get.php:214</code> to <code>:223</code>):</p>
+
+<pre data-lang="code"><code>$imageIsReadable = @file_get_contents($linkToImage);
+
+if ($imageIsReadable === false) {
+    if ($linkToImage == $file_local) {
+        // If image is local, we display original image.
+        if ($type == 'imgTag' || $type == 'imgTagLinkModal') {
+            $style = $app-&gt;isClient('administrator') ? ' style="outline: 5px solid var(--danger)"' : '';
+            $img = '&lt;img src="' . $image . '" width="' . $width . '" alt=""/' . $style . '&gt;';
+            $img.= $app-&gt;isClient('administrator') ? $img_not_readable : '';
+            return $img;
+        }</code></pre>
+
+<p>An injected string always lands in that branch, because <code>file_get_contents()</code> on something that is not a path fails. The value then goes into the tag by string concatenation, with no escaping anywhere in the chain.</p>
+
+<p>The call chain is short and it starts on the event page. <code>EventShortcuts.php</code> imports the thumb class at line 32 and builds the event image at line 106:</p>
+
+<pre data-lang="code"><code>$item-&gt;imageTag = $EVENT_IMAGE ? icagendaThumb::sizeLarge($EVENT_IMAGE, 'imgTag', true) : '';</code></pre>
+
+<p><code>sizeLarge()</code> calls the thumbnail helper with the <code>imgTag</code> mode, which is the branch that concatenates. The same file has two more tag builders in the thumbnail path (<code>Get.php:399</code> and <code>:401</code>) with the same concatenation pattern, so the sink is not a single line.</p>
+
+<p>The file sink is in the component and it is just as plain. <code>Render.php::fileTag()</code> builds an attachment link (<code>Render.php:194</code> to <code>:211</code>, the href at <code>:205</code>):</p>
+
+<pre data-lang="code"><code>static public function fileTag($file)
+{
+    $path_parts = pathinfo($file);
+    $attachment = isset($path_parts['filename'])
+                    ? '&lt;div class="ic-attachment-filename"&gt;' . $path_parts['filename'] . '&lt;/div&gt;'
+                        . (isset($path_parts['extension'])
+                            ? '&lt;div class="ic-attachment-extension"&gt;.' . $path_parts['extension']  . '&lt;/div&gt;'
+                            : '')
+                    : Text::_('COM_ICAGENDA_EVENT_DOWNLOAD');
+
+    $fileTag = '&lt;div class="ic-attachment-download"&gt;';
+    $fileTag.= '&lt;a class="ic-attachment-link" href="' . $file . '" rel="noopener" target="_blank" title="' . Text::_('COM_ICAGENDA_EVENT_DOWNLOAD') . '"&gt;';
+    $fileTag.= $attachment;
+    $fileTag.= '&lt;/a&gt;';
+    $fileTag.= '&lt;/div&gt;';
+
+    return $fileTag;
+}</code></pre>
+
+<p><code>websiteTag()</code> in the same class has the identical shape for the event website field, with the href and the link text both raw at <code>:188</code>. That matters for the patch discussion later, because a fix at the image sink alone leaves the file sink alive, and the vendor had to touch all of them.</p>
+
+<div class="callout callout-definition"><div class="callout-header"><span>THE ATTRIBUTE BREAKOUT</span></div><p>The payload has no HTML tags in it. It is a quote, a space and an event handler. The tag closes early, the browser reads the next token as a new attribute, and the handler runs. Input filters that hunt for tags never see anything to strip.</p></div>
+
+<h2 id="5-why-the-filter-does-not-catch-it">5. Why the Filter Does Not Catch It</h2>
+
+<p>Both fields use the same form type, an <code>icagenda.MediaUpload</code> element with <code>filter="safehtml"</code> on it. safehtml removes tags from the submitted value. It does not escape quotes, and it does not validate URIs as paths, so an attribute-breakout string passes validation as plain text.</p>
+
+<p>The lab results were unambiguous. Tag payloads, an img with an onerror handler for example, died at validation and never stored. Attribute-breakout payloads stored every time. The filter is not failing at its job. The job was never wide enough to cover the output side.</p>
+
+<h2 id="6-who-the-payload-fires-on">6. Who the Payload Fires On</h2>
+
+<p>The event detail view gates pending events, and the gate is worth reading because it explains the impact (<code>site/src/View/Event/HtmlView.php:92</code> to <code>:114</code>):</p>
+
+<pre data-lang="code"><code>$userLevels = $user-&gt;getAuthorisedViewLevels();
+$userGroups = $user-&gt;getAuthorisedGroups();
+
+$groupid = ComponentHelper::getParams('com_icagenda')-&gt;get('approvalGroups', ['8']);
+$groupid = \is_array($groupid) ? $groupid : [$groupid];
+
+$uri    = Uri::getInstance();
+$return = base64_encode($uri); // Encode Return URL
+$rlink  = Route::_("index.php?option=com_users&amp;view=login&amp;return=$return", false);
+
+if (!\in_array('8', $userGroups)
+    &amp;&amp; (!\in_array($item-&gt;access, $userLevels)
+        || ($item-&gt;approval == 1 &amp;&amp; ! array_intersect($userGroups, $groupid))
+    )
+) {</code></pre>
+
+<p>A submitted event starts as pending, with the approval flag set to 1. Pending events are visible only to users in the approval groups, and that parameter defaults to group 8, the Super Users group. Super Users skip the gate entirely through the first condition.</p>
+
+<p>So the first render happens in the approver's browser, during the ordinary moderation flow. A submission arrives, a notification email goes out with a link to the event, and the administrator opens it to decide. The payload runs there, with the administrator's session. That is the case I care about most, because the victim does the review on purpose.</p>
+
+<p>After approval the event page is public, and every visitor triggers it. The submission side depends on configuration. <code>submitAccess</code> defaults to Registered, so on a default install any self-registered account reaches the form, and sites that open submissions to the Public access level expose it to anonymous visitors. That is the feature working as documented for community calendars, which is exactly why the bug earned a proper report.</p>
+
+<h2 id="7-the-lab-repro">7. The Lab Repro</h2>
+
+<p>The lab was Joomla 5.4.7 with iCagenda 4.0.11 on PHP 8.4, Apache and MariaDB 11.4, built from the vendor packages. The chain is four steps.</p>
+
+<p>First, load the submit form and pull the CSRF token out of the hidden input. Second, POST the event with no file attached and the payload in the image field:</p>
+
+<pre data-lang="code"><code>POST /index.php?option=com_icagenda&amp;task=submit.submit&amp;itemID=&lt;submit-menu-id&gt;
+Content-Type: application/x-www-form-urlencoded
+
+jform[username]=attacker
+jform[created_by_email]=a@b.c
+jform[title]=Free Pizza
+jform[catid]=1
+jform[itemid]=&lt;submit-menu-id&gt;
+jform[consent][consent_tos]=tos
+jform[dates][0][date]=2026-12-01 10:00:00
+jform[displaytime]=1
+jform[image]=x" onerror="alert(document.domain)
+&lt;token&gt;=1</code></pre>
+
+<p>Two details from the debugging sessions cost me real time. The controller reads <code>itemID</code> with a capital D, not the <code>Itemid</code> the rest of Joomla uses, so a request that misses that spelling redirects instead of storing. The token parameter is the raw 32 hex name, sent as its own form field with a value of 1.</p>
+
+<p>The request returns 303, and the row lands with the payload in the image column and the approval flag set. Third, open the event as an approval-group user. The page renders this:</p>
+
+<pre data-lang="code"><code>&lt;img src="/x" onerror="alert(document.domain)" width="900" alt=""/&gt;</code></pre>
+
+<p>The image source 404s, the handler fires on load, and no click is required from anyone. Three submissions, three stored rows, three identical rendered fragments. Deterministic.</p>
+
+<p>Then I went looking for variants and dead ends, because the first payload is rarely the interesting one.</p>
+
+<ul>
+<li>The file field takes the same treatment: a quote and an onmouseover handler in <code>jform[file]</code> render into the attachment anchor and fire on hover</li><li>The file field also accepts a <code>javascript:</code> URI, which lands in the href and fires on click</li><li>Tag payloads die at validation, as covered earlier, so the attribute breakout stays the reliable vector</li><li>Joomla 6.1.2 is a dead end for a different reason: the submit task returns HTTP 500 before storage, even for a benign submission, because the form declares an <code>IC.PositiveInteger</code> validation rule that is not registered on Joomla 6. I sent the stack trace to the vendor with a correction, since my first round of 500s was my own lab database crashing mid-test</li><li>CVE-2026-48939 stays closed on 4.0.11: a PHP upload is rejected by the upload gate and nothing reaches disk</li>
+</ul>
+
+<p>That Joomla 6 result is worth keeping in mind when someone reports the extension as unexploitable on 6.x. The code path is identical. It simply cannot be reached, because validation stops the request before storage.</p>
+
+<h2 id="8-retesting-the-vendor-candidate-build">8. Retesting the Vendor Candidate Build</h2>
+
+<p>Jooml!IC sent back a candidate build, <code>icagenda-4-0-13-package-dev1</code>, and I ran the full battery against it on an in-place upgrade from 4.0.11.</p>
+
+<p>The patch diff covers 19 files. The security-relevant part is exactly what I asked for. Storage goes back to upload-only (patched <code>SubmitModel.php:697</code> and <code>:706</code>):</p>
+
+<pre data-lang="code"><code>$eventData-&gt;image            = $imageLink ?? '';
+$eventData-&gt;file             = $fileLink ?? '';</code></pre>
+
+<p>The two variables are initialized empty at lines 598 and 599, and only the upload helpers assign them, after <code>canUpload()</code> passes. A raw POST value has no path to the database anymore. The escaping layer arrived as well. <code>fileTag()</code> and <code>websiteTag()</code> now wrap their concatenations in <code>htmlspecialchars()</code> with quoted entities (<code>Render.php:188</code>, <code>:205</code>). The events feed view escapes the RSS item image, and the shortcut helpers escape venue, city, country and address.</p>
+
+<p>The battery results, against the installed candidate:</p>
+
+<ul>
+<li>Image string injection, the original vector: accepted, stored empty, three for three. Fixed</li><li>File string injection with a <code>javascript:</code> URI: stored empty. Fixed</li><li>Image upload named with a quote and an onerror handler: the filename stem is slugified, quotes come back as <code>-22-</code>, the extension is allowlisted, and the rendered tag carries no attributes. Fixed</li><li>File upload named with a quote and an onmouseover handler: same slugification, clean href. Fixed</li><li>CVE-2026-48939 upload attempt: still rejected, nothing on disk</li>
+</ul>
+
+<p>No bypass in the upload paths. The one thing the package does not carry is the fix for CVE-2026-67365, the unauthenticated SQL injection in the calendar module, because that module ships as a separate package. I flagged it to the vendor so the release notice covers both.</p>
+
+<h2 id="9-the-gap-in-a-forward-only-fix">9. The Gap in a Forward-Only Fix</h2>
+
+<p>A code fix protects new writes. It does nothing about rows already in the table, and it does nothing about a render path the patch does not ship. This fix has both problems.</p>
+
+<p>I proved the first one in the lab the blunt way. Create an event with the payload while running 4.0.11, upgrade the site to the patched build, then load the event page. The public page still serves this:</p>
+
+<pre data-lang="code"><code>&lt;img src="/x" onerror="alert(document.domain)" width="900" alt=""/&gt;</code></pre>
+
+<p>Two reasons. First, the update SQL is a single statement that bumps the version row (<code>admin/sql/updates/4.0.12.sql:1</code>), so every poisoned event in the events table keeps its payload. Second, the image sink at <code>Get.php:221</code> is unchanged in the patched tree, and <code>lib_ic_library</code> is a separate package that the component patch does not include. A site that updates only the component keeps the unescaped sink and the old data. The stored XSS fires for the approver during review and for every visitor afterwards, indefinitely, on a fully updated site.</p>
+
+<p>The file sink is a different story, because the new <code>htmlspecialchars()</code> in <code>fileTag()</code> neutralises legacy file rows at render time. The gap is specific to image rows.</p>
+
+<p>The remediation I recommended, and the vendor has it in writing, is a data cleanup in the update SQL. Any image value that is not a real path under the media folder gets reset. Plus an escape at the image sink, so the render side is safe regardless of what anyone stores later. A fix at the write side without a fix at the read side is half a fix, and attackers submit once and wait.</p>
+
+<h2 id="10-the-verdict-and-what-is-public-now">10. The Verdict, and What Is Public Now</h2>
+
+<p>CVE-2026-75948 was published on 2026-08-20 by the Joomla project's CNA, credited to me, described as authenticated stored XSS in iCagenda 4.0.8 through 4.0.12, scored CVSS 4.0 8.6 (AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N) under CWE-79. The affected range is the vendor's conservative floor, as covered earlier, and the patched behaviour is the candidate build I retested. If you run iCagenda, the practical order is: update, then clean the existing rows.</p>
+
+<p>Where I land on severity: the published score is the number to cite, and it is fair. The low-privilege metric reflects a registered submitter, and the passive interaction metric reflects a payload that fires on page load. The confidentiality and integrity ratings reflect an administrative session in the attacker's hands. In CVSS 3.1 terms I had it at 8.1 for a registered attacker and about 9.1 where submissions are open to the public level. I still think that range describes how the impact distributes across real sites.</p>
+
+<p>For anyone auditing iCagenda, the surrounding record is worth having in one place:</p>
+
+<ul>
+<li>CVE-2026-48939, unauthenticated file upload to code execution, fixed in 4.0.8 and 3.9.15, in the KEV catalog</li><li>CVE-2026-67365, unauthenticated SQL injection in the calendar module reachable through <code>com_ajax</code>, CVSS 4.0 9.2, fixed in 4.0.12, reported by Joep van Antwerpen of Onvio</li><li>CVE-2026-67366, CSRF on frontend registration actions, 5.3, fixed in 4.0.12</li><li>CVE-2026-75948, this one, fixed after 4.0.12</li>
+</ul>
+
+<p>One practical trap with that list: the calendar module's version number does not follow the package. It sat at 4.0.7 while the package climbed to 4.0.11, so an extension list showing 4.0.11 can sit next to a vulnerable module. Check the module, not the package.</p>
+
+<p>The lessons I am keeping from this one are about fix quality more than about cross-site scripting:</p>
+
+<ul>
+<li>A fix that relies on a discarding ternary is one refactor away from being no fix at all</li><li>Output escaping is the durable control. Input filtering closes the cases you thought of</li><li>A patch that ships without a data migration leaves the vulnerability live on the sites that were hit first</li><li>Diffing the fixed release against the vulnerable one finds bugs the vendor did not intend to write</li>
+</ul>
+
+<p>The PoC is a short stdlib-only Python script that submits the event and then proves the render. It stays with the disclosure packet for now, the same way the Balbooa writeups waited, and it comes here with the rest of the chain once enough sites have moved.</p>
+
+        <div class="citation-box" id="bibtex">
+          <div class="citation-header">
+            <span class="citation-title">CITE THIS RESEARCH DISPATCH</span>
+            <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">MODAL</button>
+          </div>
+          <pre class="bibtex-code">@article{lulz2026_icagenda-s,
+  author    = {Lulztigre},
+  title     = {The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda},
+  journal   = {Lulztigre Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/icagenda-stored-xss-75948.html}
+}</pre>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <div class="toc-card">
+          <div class="toc-title">// NAVIGATION INDEX</div>
+          <ul class="toc-list">
+            <li><a href="#abstract" class="toc-link">0. Abstract & Thesis</a></li>
+            <li><a href="#1-how-an-incident-response-put-me-inside-icagenda" class="toc-link">1. How an Incident Response Put Me Inside iCagenda</a></li>
+            <li><a href="#2-the-fix-that-closed-the-kev-bug" class="toc-link">2. The Fix That Closed the KEV Bug</a></li>
+            <li><a href="#3-the-assignment-that-stopped-being-safe" class="toc-link">3. The Assignment That Stopped Being Safe</a></li>
+            <li><a href="#4-following-the-string-to-the-render-sinks" class="toc-link">4. Following the String to the Render Sinks</a></li>
+            <li><a href="#5-why-the-filter-does-not-catch-it" class="toc-link">5. Why the Filter Does Not Catch It</a></li>
+            <li><a href="#6-who-the-payload-fires-on" class="toc-link">6. Who the Payload Fires On</a></li>
+            <li><a href="#7-the-lab-repro" class="toc-link">7. The Lab Repro</a></li>
+            <li><a href="#8-retesting-the-vendor-candidate-build" class="toc-link">8. Retesting the Vendor Candidate Build</a></li>
+            <li><a href="#9-the-gap-in-a-forward-only-fix" class="toc-link">9. The Gap in a Forward-Only Fix</a></li>
+            <li><a href="#10-the-verdict-and-what-is-public-now" class="toc-link">10. The Verdict, and What Is Public Now</a></li>
+            <li><a href="#bibtex" class="toc-link">BibTeX Citation</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// ARTICLE ACTIONS</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="window.print()">PRINT / PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(window.location.href); showToast('Link copied');">SHARE PERMALINK</button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE. OPEN ACCESS.</span>
+        <a href="../index.html" style="color: inherit; text-decoration: underline;">← BACK TO ALL DISPATCHES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

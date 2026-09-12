@@ -1,4 +1,4 @@
-# 🐯 LulzTigre — OffSec Research & Developer Portal
+# 🐯 Lulztigre — OffSec Research & Developer Portal
 
 > Official source repository for [lulztigre.pw](https://lulztigre.pw) / [lulztigre.github.io](https://lulztigre.github.io).
 
@@ -12,4 +12,4 @@
 
 ## 📄 License
 
-MIT License © 2026 [LulzTigre](https://lulztigre.pw)
+MIT License © 2026 [Lulztigre](https://lulztigre.pw)
