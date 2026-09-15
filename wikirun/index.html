@@ -360,6 +360,134 @@
     }
 
     /* ==========================================================================
+       ABOUT WIKIRUN EXPLAINER SECTION
+       ========================================================================== */
+    .about-wikirun {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 2px dashed var(--border-color);
+    }
+    .about-header {
+      margin-bottom: 28px;
+    }
+    .about-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .about-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .about-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 820px;
+    }
+    .about-lead strong {
+      color: var(--text-primary);
+    }
+    .about-lead em {
+      color: var(--accent-primary);
+      font-style: normal;
+      font-weight: 700;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .about-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 22px 20px;
+      transition: all 0.15s ease;
+    }
+    .about-card:hover {
+      border-color: var(--border-highlight, var(--accent-primary));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .about-icon {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+    .about-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      font-family: var(--font-sans);
+    }
+    .about-card-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .about-card-text kbd {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-secondary);
+    }
+    .rules-box {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .rules-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+    }
+    .rules-list li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      position: relative;
+      padding-left: 20px;
+    }
+    .rules-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent-secondary);
+      font-weight: 900;
+    }
+    .rules-list li strong {
+      color: var(--text-primary);
+    }
+
+    /* ==========================================================================
        ACTIVE GAME HUD & VIEWPORT
        ========================================================================== */
     #game-container {
@@ -1267,6 +1395,64 @@
         <span>⚡</span> INITIALIZE RUN
       </button>
     </div>
+
+    <!-- About WikiRun Protocol Section -->
+    <section class="about-wikirun" aria-labelledby="about-wikirun-heading">
+      <div class="about-header">
+        <span class="about-badge">// PROTOCOL SPECIFICATION</span>
+        <h2 id="about-wikirun-heading" class="about-title">WHAT IS WIKIRUN?</h2>
+        <p class="about-lead">
+          <strong>WikiRun</strong> is a client-side hypertext speedrunning game inspired by the classic <em>"Six Degrees of Wikipedia"</em>.
+          Your objective is simple yet mentally demanding: race from an <strong>Origin Article [A]</strong> to a <strong>Target Article [B]</strong> 
+          using <em>exclusively</em> the internal blue hypertext links embedded within each article.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">🧭</div>
+          <h3 class="about-card-title">1. Six Degrees of Wikipedia</h3>
+          <p class="about-card-text">
+            Virtually every concept in human knowledge is linked within an average of 3 to 6 hops. Master speedrunners navigate by finding conceptual bridges: pivoting through countries, historical eras, scientific fields, or international organizations.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-icon">⚡</div>
+          <h3 class="about-card-title">2. Zero-Latency REST Engine</h3>
+          <p class="about-card-text">
+            Runs 100% in your browser using the official Wikipedia REST API with hover prefetching. Articles render instantly inside an isolated sandbox with zero ads, tracking scripts, or visual clutter.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-icon">🛡️</div>
+          <h3 class="about-card-title">3. Anti-Cheat Protocol</h3>
+          <p class="about-card-text">
+            No Ctrl+F shortcuts allowed! Built-in heuristic listeners intercept in-page search attempts (<kbd>Ctrl+F</kbd>, <kbd>Cmd+F</kbd>, <kbd>F3</kbd>), sounding a diagnostic buzzer and serving hacker insults. Your eyes and memory do the hunting.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-icon">⏱️</div>
+          <h3 class="about-card-title">4. Fair Timing Architecture</h3>
+          <p class="about-card-text">
+            Unlike naive timer implementations, the stopwatch only begins <em>after</em> the origin article has fully parsed and painted in the DOM. Network fetch latency is automatically subtracted so connection speeds never penalize your run.
+          </p>
+        </div>
+      </div>
+
+      <div class="rules-box">
+        <div class="rules-header">
+          <span>RUNNER DIRECTIVE &amp; RULES OF ENGAGEMENT</span>
+        </div>
+        <ul class="rules-list">
+          <li><strong>Forward Traversal Only:</strong> Click internal links inside the article text. External references, edit markers, and Wikipedia navigation templates are stripped for speed.</li>
+          <li><strong>Target Radar:</strong> When the Destination page's link appears anywhere on your current article, the HUD displays a pulsing target badge so you can make your final dash.</li>
+          <li><strong>Telemetry &amp; Sharing:</strong> Reaching Target [B] stops the clock, tracks your total clicks and unique article path, and generates a clean, shareable run score.</li>
+        </ul>
+      </div>
+    </section>
   </main>
 
   <!-- =========================================================================
