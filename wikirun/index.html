@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WikiRun // Hypertext Speedrun Protocol | Lulztigre</title>
+  <meta name="description" content="Wikipedia Speedrun Game: Race from Start to Target article in minimum time and clicks.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+  <!-- Core Phantom Blog Stylesheet -->
+  <link rel="stylesheet" href="../assets/css/style.css?v=1.6">
+
+  <!-- Prevent Theme Flash -->
+  <script>
+    (function(){
+      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
+      if (saved !== 'void') document.documentElement.setAttribute('data-theme', saved);
+    })();
+  </script>
+
+  <style>
+    :root {
+      --accent-danger: #f85149;
+      --shadow-brutal: 4px 4px 0px var(--border-color);
+    }
+
+    .site-header.hidden, .site-footer.hidden {
+      display: none !important;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Progress Bar (Instant Feedback) */
+    #nav-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--accent-primary);
+      box-shadow: 0 0 10px var(--accent-primary);
+      z-index: 999;
+      transition: width 0.2s ease, opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Top System Telemetry Ticker */
+    .system-ticker {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-light);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 5px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0.05em;
+      z-index: 100;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-primary);
+      box-shadow: 0 0 8px var(--accent-primary);
+      margin-right: 6px;
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* ==========================================================================
+       LOBBY / START SCREEN
+       ========================================================================== */
+    #lobby-screen {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      width: 100%;
+    }
+
+    .game-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .badge-sub {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: var(--bg-elevated);
+      color: var(--accent-primary);
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      letter-spacing: 0.08em;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+    .hero-title span {
+      color: var(--accent-primary);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+    .hero-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .mode-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .mode-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .mode-card:hover, .mode-card.active {
+      border-color: var(--accent-primary);
+      box-shadow: var(--shadow-md), 0 0 16px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+    .mode-card.active::after {
+      content: "SELECTED";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      background: var(--accent-primary);
+      color: var(--text-invert, #ffffff);
+      font-weight: 700;
+      padding: 2px 6px;
+    }
+    .mode-icon {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .mode-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+    .mode-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Matchup Box */
+    .matchup-container {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    .matchup-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 20px;
+    }
+    .match-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      padding: 18px;
+      position: relative;
+    }
+    .match-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .match-label .badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      background: var(--bg-elevated);
+      color: var(--accent-secondary);
+    }
+    .match-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      word-break: break-word;
+      min-height: 1.8em;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .match-title input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--accent-secondary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 1.25rem;
+      font-weight: 700;
+      outline: none;
+      padding: 4px 0;
+    }
+
+    /* Autocomplete dropdown */
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent-secondary);
+      box-shadow: var(--shadow-md);
+      z-index: 120;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+    .autocomplete-item {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .autocomplete-item:hover {
+      background: var(--bg-card);
+      color: var(--accent-primary);
+    }
+
+    .match-snippet {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      line-height: 1.4;
+      max-height: 3.8em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .match-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+      font-size: 1.8rem;
+      font-weight: 900;
+    }
+
+    .preset-list {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .preset-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .preset-tag:hover {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+      background: var(--bg-card);
+    }
+
+    .lobby-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border: 2px solid;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.12s ease;
+    }
+    .btn-primary {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: var(--text-invert, #ffffff);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover {
+      background: var(--border-highlight, var(--accent-primary));
+      color: var(--text-invert, #ffffff);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+    .btn-primary:active {
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-active);
+    }
+    .btn-secondary {
+      background: var(--bg-surface);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+      background: var(--bg-elevated);
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ==========================================================================
+       ACTIVE GAME HUD & VIEWPORT
+       ========================================================================== */
+    #game-container {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .hud-bar {
+      position: sticky;
+      top: 0;
+      background: var(--bg-surface);
+      border-bottom: 2px solid var(--border-color);
+      z-index: 50;
+      padding: 8px 16px;
+      box-shadow: var(--shadow-md);
+      color: var(--text-primary);
+    }
+    .hud-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hud-targets {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+    .hud-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      color: var(--text-secondary);
+    }
+    .hud-badge.target-badge {
+      background: var(--accent-tag-bg, var(--bg-elevated));
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      font-weight: 700;
+    }
+    .hud-arrow {
+      color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    .target-detected-badge {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--accent-amber);
+      color: var(--text-invert, #000000);
+      padding: 3px 8px;
+      border-radius: 3px;
+      animation: pulse-badge 1.2s infinite ease-in-out;
+    }
+    @keyframes pulse-badge {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.96); }
+    }
+
+    .hud-stats {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .stat-pill {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+    }
+    .stat-val {
+      font-weight: 700;
+      color: var(--accent-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-val {
+      color: var(--accent-secondary);
+      font-size: 1.15rem;
+      min-width: 82px;
+    }
+
+    .hud-controls {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-hud {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.1s ease;
+    }
+    .btn-hud:hover {
+      border-color: var(--accent-secondary);
+      color: var(--accent-secondary);
+      background: var(--bg-elevated);
+    }
+    .btn-hud.btn-giveup:hover {
+      border-color: var(--accent-danger);
+      color: var(--accent-danger);
+    }
+
+    /* Status Toast Notification */
+    .status-toast {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--accent-primary);
+      color: var(--text-invert, #ffffff);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+    .status-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Trail / Breadcrumbs drawer */
+    .trail-bar {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-light);
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+    }
+    .trail-step {
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trail-step.latest {
+      color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    /* Article content container */
+    .article-wrap {
+      flex: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 24px 20px 80px;
+      overflow-x: hidden;
+    }
+
+    .page-title-banner {
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .page-title-banner h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .page-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Robust Wikipedia Styling: 100% Theme-Adaptive (Never breaks dark or light modes) */
+    .wiki-body {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-primary) !important;
+      transition: opacity 0.15s ease;
+    }
+    .wiki-body * {
+      border-color: var(--border-light) !important;
+    }
+    .wiki-body,
+    .wiki-body *:not(a):not(.spinner):not(.loading-text):not(.is-target-link):not(.target-detected-badge) {
+      color: inherit !important;
+    }
+    .wiki-body h1,
+    .wiki-body h2,
+    .wiki-body h3,
+    .wiki-body h4,
+    .wiki-body h5,
+    .wiki-body h6 {
+      color: var(--text-primary) !important;
+      font-family: var(--font-sans);
+    }
+    .wiki-body h1 {
+      font-size: 1.8rem;
+      margin: 1.8em 0 0.8em;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+    }
+    .wiki-body h2 {
+      font-size: 1.5rem;
+      margin: 1.8em 0 0.8em;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 6px;
+    }
+    .wiki-body h3 {
+      font-size: 1.25rem;
+      margin: 1.5em 0 0.6em;
+    }
+    .wiki-body h4 {
+      font-size: 1.1rem;
+      margin: 1.3em 0 0.5em;
+      font-weight: 700;
+    }
+    .wiki-body h5 {
+      font-size: 1.0rem;
+      margin: 1.1em 0 0.4em;
+      font-weight: 700;
+    }
+    .wiki-body h6 {
+      font-size: 0.9rem;
+      margin: 1.0em 0 0.3em;
+      font-weight: 700;
+    }
+    .wiki-body p {
+      margin-bottom: 1.25em;
+    }
+    .wiki-body ul, .wiki-body ol {
+      margin: 0 0 1.2em 1.8em;
+    }
+    .wiki-body li {
+      margin-bottom: 0.4em;
+    }
+    .wiki-body a {
+      color: var(--accent-secondary) !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .wiki-body a:hover {
+      color: var(--accent-primary) !important;
+      background: var(--bg-elevated);
+      border-radius: 2px;
+    }
+    .wiki-body a.is-target-link {
+      background: var(--accent-tag-bg, rgba(255, 180, 0, 0.2)) !important;
+      color: var(--accent-amber) !important;
+      font-weight: 800;
+      border: 1px solid var(--accent-amber) !important;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+    .wiki-body figure, 
+    .wiki-body .thumb, 
+    .wiki-body .thumbinner, 
+    .wiki-body .multiimageinner {
+      background: var(--bg-card) !important;
+      border: 1px solid var(--border-light) !important;
+      padding: 10px;
+      margin: 1em 0 1.5em;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-x: auto;
+    }
+    .wiki-body .trow {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 100% !important;
+    }
+    .wiki-body figcaption, .wiki-body .thumbcaption {
+      font-size: 0.82rem;
+      color: var(--text-muted) !important;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .wiki-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 2px;
+    }
+    .wiki-body table, 
+    .wiki-body .wikitable, 
+    .wiki-body .infobox {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5em 0;
+      background: var(--bg-card) !important;
+      color: var(--text-primary) !important;
+      font-size: 0.88rem;
+    }
+    .wiki-body caption {
+      caption-side: top;
+      font-weight: 700;
+      padding: 8px;
+      color: var(--text-primary) !important;
+      background: var(--bg-surface) !important;
+      border: 1px solid var(--border-light) !important;
+      border-bottom: none !important;
+    }
+    .wiki-body th, .wiki-body td {
+      border: 1px solid var(--border-light) !important;
+      padding: 8px 12px;
+    }
+    .wiki-body th {
+      background: var(--bg-elevated) !important;
+      color: var(--text-primary) !important;
+    }
+    .wiki-body td {
+      background: var(--bg-card) !important;
+      color: var(--text-primary) !important;
+    }
+    .wiki-body td *,
+    .wiki-body th * {
+      background-color: transparent !important;
+      color: inherit !important;
+    }
+    .wiki-body td a,
+    .wiki-body th a {
+      color: var(--accent-secondary) !important;
+    }
+    /* Hide Wikipedia noise/clutter */
+    .wiki-body .mw-editsection,
+    .wiki-body .navbox,
+    .wiki-body .portal,
+    .wiki-body .noprint,
+    .wiki-body .mw-empty-elt,
+    .wiki-body .ambox,
+    .wiki-body .reflist,
+    .wiki-body .reference {
+      display: none !important;
+    }
+
+    /* Loading Overlay */
+    .loading-pulse {
+      display: none;
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid var(--border-light);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .loading-text {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-primary);
+      letter-spacing: 0.08em;
+    }
+
+    /* ==========================================================================
+       VICTORY MODAL
+       ========================================================================== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--accent-primary);
+      box-shadow: var(--shadow-lg), 0 0 30px var(--accent-glow);
+      max-width: 600px;
+      width: 100%;
+      padding: 36px;
+      position: relative;
+      animation: modal-pop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      color: var(--text-primary);
+    }
+    @keyframes modal-pop {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .victory-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: var(--accent-primary);
+      color: var(--text-invert, #ffffff);
+      font-weight: 700;
+      display: inline-block;
+      padding: 4px 10px;
+      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+    }
+    .modal-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .modal-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .victory-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      padding: 16px;
+      text-align: center;
+    }
+    .v-stat-num {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+    .v-stat-lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .path-history-box {
+      margin-bottom: 24px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      padding: 16px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .path-history-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .path-node {
+      font-size: 0.85rem;
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px dashed var(--border-light);
+    }
+    .path-node:last-child {
+      border-bottom: none;
+    }
+    .path-idx {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      min-width: 24px;
+    }
+    .path-name {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .path-name.target-node {
+      color: var(--accent-primary);
+      font-weight: 800;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Target intel modal */
+    .intel-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 150;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .intel-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--accent-secondary);
+      box-shadow: var(--shadow-lg);
+      max-width: 500px;
+      width: 100%;
+      padding: 24px;
+      color: var(--text-primary);
+    }
+
+    /* Anti-Cheat Ctrl+F Intercept Modal */
+    .anti-cheat-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .anti-cheat-card {
+      background: var(--bg-surface);
+      border: 2px solid var(--accent-danger);
+      box-shadow: var(--shadow-lg), 0 0 35px rgba(248, 81, 73, 0.3);
+      max-width: 540px;
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      animation: cheat-pop 0.22s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      color: var(--text-primary);
+    }
+    @keyframes cheat-pop {
+      from { transform: scale(0.9) rotate(-1deg); opacity: 0; }
+      to { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .anti-cheat-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--accent-danger);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .anti-cheat-insult {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      min-height: 2.8em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .anti-cheat-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-danger);
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    .shake {
+      animation: screen-shake 0.35s ease-in-out;
+    }
+    @keyframes screen-shake {
+      0%, 100% { transform: translate(0, 0); }
+      15% { transform: translate(-6px, 3px); }
+      30% { transform: translate(6px, -3px); }
+      45% { transform: translate(-4px, 2px); }
+      60% { transform: translate(4px, -2px); }
+      75% { transform: translate(-2px, 1px); }
+    }
+
+    /* ==========================================================================
+       MOBILE RESPONSIVE MEDIA QUERIES (<= 768px and <= 480px)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .system-ticker {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      #lobby-screen {
+        padding: 20px 12px 60px;
+      }
+      .hero-title {
+        font-size: clamp(2rem, 9vw, 2.8rem);
+      }
+      .hero-desc {
+        font-size: 0.95rem;
+      }
+
+      .mode-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .mode-card {
+        padding: 16px;
+      }
+
+      .matchup-container {
+        padding: 16px 12px;
+      }
+      .matchup-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .match-arrow {
+        transform: rotate(90deg);
+        padding: 4px 0;
+        font-size: 1.4rem;
+      }
+      .match-box {
+        padding: 14px;
+      }
+      .match-title {
+        font-size: 1.15rem;
+      }
+
+      .preset-list {
+        gap: 6px;
+      }
+      .preset-tag {
+        font-size: 0.7rem;
+        padding: 5px 9px;
+      }
+
+      .lobby-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .lobby-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 18px;
+        font-size: 0.88rem;
+      }
+
+      /* In-Game HUD on Mobile */
+      .hud-bar {
+        padding: 8px 10px;
+      }
+      .hud-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .hud-targets {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 0.78rem;
+      }
+      .hud-badge {
+        font-size: 0.68rem;
+        padding: 2px 6px;
+      }
+      .hud-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        background: var(--bg-elevated);
+        padding: 6px 10px;
+        border: 1px solid var(--border-light);
+        border-radius: 4px;
+      }
+      .stat-pill {
+        font-size: 0.78rem;
+      }
+      .timer-val {
+        font-size: 1rem;
+        min-width: auto;
+      }
+      .hud-controls {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .btn-hud {
+        flex: 1;
+        text-align: center;
+        padding: 8px 6px;
+        font-size: 0.75rem;
+      }
+
+      /* Article Content on Mobile */
+      .article-wrap {
+        padding: 16px 12px 60px;
+      }
+      .page-title-banner h1 {
+        font-size: 1.5rem;
+      }
+      .wiki-body {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        word-break: break-word;
+      }
+      .wiki-body table, 
+      .wiki-body .wikitable, 
+      .wiki-body .infobox {
+        display: block;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      .wiki-body img {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+
+      /* Modals on Mobile */
+      .modal-card, .anti-cheat-card, .intel-card {
+        padding: 22px 16px;
+        width: 95vw;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-title {
+        font-size: 1.5rem;
+      }
+      .victory-stats {
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 10px 6px;
+        gap: 6px;
+      }
+      .v-stat-num {
+        font-size: 1.2rem;
+      }
+      .modal-actions {
+        flex-direction: column;
+      }
+      .modal-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Instant Progress Bar -->
+  <div id="nav-progress"></div>
+
+  <!-- Top System Telemetry Ticker -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>KERNEL: LZ-SYS v2.6.4</span>
+      <span>MODULE: WIKIRUN // SPEEDRUN_PROTOCOL</span>
+    </div>
+    <div class="ticker-right">
+      <span>CORS: DIRECT_REST</span>
+      <span>KEYS: [T] THEME / [ESC] DISMISS</span>
+    </div>
+  </div>
+
+  <!-- Full Site Header & Navigation -->
+  <header class="site-header" id="main-site-header">
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="site-brand">
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">id=(root)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="../llm-clock.html" class="nav-link">/LLM_CLOCK</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link active">/WIKIRUN</a></li>
+          <li class="nav-item"><a href="../archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="../about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="../feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       1. LOBBY & MATCH SELECTOR SCREEN
+       ========================================================================= -->
+  <main id="lobby-screen">
+    <div class="game-hero">
+      <div class="badge-sub">WIKIPEDIA HYPERTEXT SPEEDRUN</div>
+      <h1 class="hero-title">WIKI<span>RUN</span></h1>
+      <p class="hero-desc">
+        Navigate from <strong>Origin</strong> to <strong>Target</strong> using only internal Wikipedia links. 
+        Clock only starts once the origin article is rendered!
+      </p>
+    </div>
+
+    <!-- Mode Selector Cards -->
+    <div class="mode-cards">
+      <div class="mode-card active" onclick="selectMode('curated', this)">
+        <span class="mode-icon">🎯</span>
+        <div class="mode-title">Curated Duels</div>
+        <div class="mode-subtitle">Tested, high-connection article pairs spanning science, history, and pop culture.</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('random', this)">
+        <span class="mode-icon">🎲</span>
+        <div class="mode-title">Live Random</div>
+        <div class="mode-subtitle">Rolls 2 random articles directly via Wikipedia REST API. Hardcore mode.</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('custom', this)">
+        <span class="mode-icon">⚙️</span>
+        <div class="mode-title">Custom Challenge</div>
+        <div class="mode-subtitle">Specify your own Start and Target articles with instant live autocomplete.</div>
+      </div>
+    </div>
+
+    <!-- Matchup Box -->
+    <div class="matchup-container">
+      <div class="matchup-grid">
+        <!-- Start Article Box -->
+        <div class="match-box">
+          <div class="match-label">
+            <span>ORIGIN WORD [A]</span>
+            <span class="badge" id="start-badge">START</span>
+          </div>
+          <div class="match-title" id="start-title-display">Generating Origin...</div>
+          <div class="autocomplete-list" id="start-autocomplete"></div>
+          <div class="match-snippet" id="start-snippet-display">Loading synopsis...</div>
+        </div>
+
+        <!-- Arrow / Swap -->
+        <div class="match-arrow">
+          <span>&rarr;</span>
+        </div>
+
+        <!-- Target Article Box -->
+        <div class="match-box">
+          <div class="match-label">
+            <span>TARGET WORD [B]</span>
+            <span class="badge" id="target-badge" style="color: var(--accent-primary); border-color: var(--accent-primary);">DESTINATION</span>
+          </div>
+          <div class="match-title" id="target-title-display">Generating Target...</div>
+          <div class="autocomplete-list" id="target-autocomplete"></div>
+          <div class="match-snippet" id="target-snippet-display">Loading synopsis...</div>
+        </div>
+      </div>
+
+      <!-- Quick Preset Suggestions -->
+      <div class="preset-list" id="preset-container">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">PRESETS:</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="lobby-actions">
+      <button class="btn btn-secondary" onclick="rollNewMatchup()">
+        <span>🎲</span> Re-Roll Matchup
+      </button>
+      <button class="btn btn-primary" id="btn-start-run" onclick="startGame()">
+        <span>⚡</span> INITIALIZE RUN
+      </button>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       2. ACTIVE GAME HUD & WIKI VIEWPORT
+       ========================================================================= -->
+  <div id="game-container">
+    <!-- Sticky HUD -->
+    <header class="hud-bar">
+      <div class="hud-inner">
+        <!-- Origin & Target display -->
+        <div class="hud-targets">
+          <span class="hud-badge">START: <strong id="hud-start-name" style="color: var(--text-primary);">...</strong></span>
+          <span class="hud-arrow">&rarr;</span>
+          <span class="hud-badge target-badge">TARGET: <strong id="hud-target-name">...</strong></span>
+          <span class="target-detected-badge" id="target-detected-badge">🎯 TARGET ON THIS PAGE!</span>
+          <button class="btn-hud" onclick="openTargetIntel()" title="View synopsis of target article">Target Intel</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="hud-stats">
+          <div class="stat-pill">
+            <span class="stat-label">TIME:</span>
+            <span class="stat-val timer-val" id="hud-timer">00:00.0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">CLICKS:</span>
+            <span class="stat-val" id="hud-clicks">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">VISITED:</span>
+            <span class="stat-val" id="hud-visited">1</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="hud-controls">
+          <button class="btn-hud" onclick="undoLastClick()" id="btn-undo" title="Go back 1 step">&larr; Back</button>
+          <button class="btn-hud btn-giveup" onclick="giveUpRun()">Give Up</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Path Trail Bar -->
+    <div class="trail-bar" id="hud-trail">
+      <span style="color: var(--text-muted); font-size: 0.7rem;">PATH:</span>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-pulse" id="loading-indicator">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loading-msg">RETRIEVING WIKIPEDIA ARTICLE...</div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="article-wrap" id="article-wrap">
+      <div class="page-title-banner">
+        <h1 id="current-article-title">...</h1>
+        <div class="page-meta" id="current-article-meta">WIKIPEDIA REST PROTOCOL</div>
+      </div>
+      <div class="wiki-body" id="wiki-viewport">
+        <!-- Rendered Wikipedia HTML -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       3. VICTORY SCREEN MODAL
+       ========================================================================= -->
+  <div class="modal-backdrop" id="victory-modal">
+    <div class="modal-card">
+      <div class="victory-badge">TARGET ACQUIRED // VICTORY</div>
+      <h2 class="modal-title">MISSION COMPLETE</h2>
+      <p class="modal-subtitle">You successfully navigated the Wikipedia hypertext web!</p>
+      <div id="v-cheat-banner" style="display: none; background: rgba(248, 81, 73, 0.15); border: 1px solid var(--accent-danger); color: #f87171; font-family: var(--font-mono); font-size: 0.78rem; padding: 8px 12px; margin-bottom: 18px; text-align: center;"></div>
+
+      <div class="victory-stats">
+        <div>
+          <div class="v-stat-num" id="v-stat-time">00:00.0</div>
+          <div class="v-stat-lbl">Active Time</div>
+        </div>
+        <div>
+          <div class="v-stat-num" id="v-stat-clicks">0</div>
+          <div class="v-stat-lbl">Total Clicks</div>
+        </div>
+        <div>
+          <div class="v-stat-num" id="v-stat-speed">0.0s</div>
+          <div class="v-stat-lbl">Avg Per Click</div>
+        </div>
+      </div>
+
+      <div class="path-history-box">
+        <div class="path-history-title">VERIFIED NAVIGATION PATH</div>
+        <div id="v-path-list">
+          <!-- List of visited articles -->
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="copyShareText()" id="btn-share">
+          📋 Copy Score &amp; Path
+        </button>
+        <button class="btn btn-secondary" onclick="returnToLobby()">
+          🔄 Play Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Target Intel Modal -->
+  <div class="intel-modal" id="intel-modal">
+    <div class="intel-card">
+      <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-primary); margin-bottom: 8px;">DESTINATION INTEL</div>
+      <h3 id="intel-title" style="font-size: 1.4rem; margin-bottom: 10px; color: var(--text-primary);">...</h3>
+      <p id="intel-extract" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">...</p>
+      <button class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.8rem;" onclick="closeTargetIntel()">Close Intel</button>
+    </div>
+  </div>
+
+  <!-- Anti-Cheat Ctrl+F Intercept Modal -->
+  <div class="anti-cheat-modal" id="anti-cheat-modal">
+    <div class="anti-cheat-card">
+      <div class="anti-cheat-header">
+        <span>🚨</span>
+        <span>ANTI-CHEAT PROTOCOL TRIGGERED</span>
+      </div>
+      <div class="anti-cheat-insult" id="anti-cheat-insult">
+        Nice try, Ctrl+F warrior. Your eyes are supposed to do the reading.
+      </div>
+      <div class="anti-cheat-meta">
+        <span id="cheat-count-label">ATTEMPT #1 DETECTED</span> &nbsp;•&nbsp; <span>IN-PAGE SEARCHING PROHIBITED</span>
+      </div>
+      <button class="btn btn-primary" onclick="dismissAntiCheat()" style="background: var(--accent-danger); border-color: var(--accent-danger); color: #fff; width: 100%; justify-content: center;">
+        I APOLOGIZE AND WILL USE MY EYES
+      </button>
+    </div>
+  </div>
+
+  <!-- Native Web Audio Synthesizer (Zero asset delay) -->
+  <script>
+    const audioCtx = (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') 
+      ? new (window.AudioContext || window.webkitAudioContext)() 
+      : null;
+
+    function playTone(freq, type, duration, gainVal = 0.08) {
+      if (!audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function soundClick() {
+      playTone(600, 'sine', 0.04, 0.04);
+    }
+    function soundStart() {
+      playTone(440, 'triangle', 0.1, 0.08);
+      setTimeout(() => playTone(880, 'sine', 0.2, 0.1), 100);
+    }
+    function soundWin() {
+      playTone(440, 'triangle', 0.15, 0.1);
+      setTimeout(() => playTone(554.37, 'triangle', 0.15, 0.1), 120);
+      setTimeout(() => playTone(659.25, 'triangle', 0.18, 0.1), 240);
+      setTimeout(() => playTone(880, 'sine', 0.45, 0.12), 360);
+    }
+    function soundBuzzer() {
+      if (!audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(75, audioCtx.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch(e) {}
+    }
+  </script>
+
+  <!-- Game Logic & High-Performance Hypertext Engine -->
+  <script>
+    // =========================================================================
+    // IN-MEMORY ARTICLE CACHE & PREFETCH ENGINE (0ms Click Latency)
+    // =========================================================================
+    const articleCache = new Map(); // normalizedTitle -> htmlString
+    const prefetchInFlight = new Set();
+
+    async function fetchArticleData(title) {
+      const norm = normalizeTitle(title);
+      if (articleCache.has(norm)) {
+        return articleCache.get(norm);
+      }
+
+      const url = `https://en.wikipedia.org/api/rest_v1/page/html/${encodeURIComponent(title.replace(/ /g, '_'))}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const rawHtml = await res.text();
+      const sanitized = fastSanitizeWikiHtml(rawHtml);
+      articleCache.set(norm, sanitized);
+      return sanitized;
+    }
+
+    function prefetchArticle(title) {
+      const norm = normalizeTitle(title);
+      if (articleCache.has(norm) || prefetchInFlight.has(norm)) return;
+      prefetchInFlight.add(norm);
+      fetchArticleData(title).catch(() => {}).finally(() => prefetchInFlight.delete(norm));
+    }
+
+    function fastSanitizeWikiHtml(html) {
+      // Fast protocol repair for local or http viewing
+      return html.replace(/src="\/\//g, 'src="https://').replace(/srcset="\/\//g, 'srcset="https://');
+    }
+
+    // =========================================================================
+    // GAME STATE & CONSTANTS
+    // =========================================================================
+    const CURATED_MATCHUPS = [
+      { start: "Coffee", target: "Ancient Rome" },
+      { start: "Batman", target: "Quantum mechanics" },
+      { start: "Pizza", target: "Black hole" },
+      { start: "Internet", target: "Leonardo da Vinci" },
+      { start: "Video game", target: "French Revolution" },
+      { start: "Sushi", target: "Albert Einstein" },
+      { start: "Microprocessor", target: "Philosophy" },
+      { start: "Bicycle", target: "Apollo 11" },
+      { start: "Chocolate", target: "Industrial Revolution" },
+      { start: "Cyberpunk", target: "Socrates" },
+      { start: "Linux", target: "Pyramid of Giza" },
+      { start: "Hacking", target: "Julius Caesar" },
+      { start: "Electric guitar", target: "Dinosaur" },
+      { start: "Artificial intelligence", target: "Alexander the Great" },
+      { start: "Cryptocurrency", target: "Silk Road" },
+      { start: "Anime", target: "World War I" },
+      { start: "Super Mario", target: "Renaissance" },
+      { start: "DNA", target: "Solar System" },
+      { start: "Minecraft", target: "Grand Canyon" },
+      { start: "Skateboard", target: "Moon" }
+    ];
+
+    const FUNNY_INSULTS = [
+      "Nice try, Ctrl+F warrior. Your eyes are supposed to do the reading.",
+      "Did you really think we wouldn't notice? Use your eyeballs, you illiterate potato.",
+      "Ctrl+F detected. Skill issue confirmed.",
+      "What's next, asking ChatGPT to play the game for you? Read with your eyes!",
+      "404: Dignity not found. Searching is strictly prohibited in the speedrun protocol.",
+      "A real speedrunner reads at 5,000 WPM. You're out here pressing Ctrl+F like a script kiddie.",
+      "Cheater detected! The Wikipedia gods are weeping at your complete lack of integrity.",
+      "Bro thought this was a Google doc. Scroll like a civilized human being!",
+      "Ctrl+F? In MY speedrun? How dare you insult the hypertext spirits.",
+      "Hands off the F key! Even Wikipedia's donation banner has more shame than this.",
+      "Bro tried to Ctrl+F on Wikipedia. Go sit in the corner and think about what you did.",
+      "Warning: Excessive laziness detected. Please apply ocular effort to proceed.",
+      "Searching detected! In this dojo, we hunt links with optic nerves, not shortcuts."
+    ];
+
+    let currentMode = 'curated';
+    let matchConfig = {
+      startTitle: "Coffee",
+      targetTitle: "Ancient Rome",
+      targetExtract: ""
+    };
+
+    let gameState = {
+      active: false,
+      startTime: 0,
+      timerInterval: null,
+      elapsedMs: 0,
+      networkPauseDuration: 0,
+      clicks: 0,
+      visitedPages: [],
+      currentTitle: "",
+      cheatAttempts: 0
+    };
+
+    // =========================================================================
+    // LOBBY SETUP & AUTOCOMPLETE
+    // =========================================================================
+    function initLobby() {
+      renderPresets();
+      // ALWAYS pick a fresh random pair on initial page load / refresh
+      const randomIndex = Math.floor(Math.random() * CURATED_MATCHUPS.length);
+      selectPreset(CURATED_MATCHUPS[randomIndex]);
+      setupDelegatedWikiEvents();
+      setupKeyboardAntiCheat();
+    }
+
+    function setupKeyboardAntiCheat() {
+      window.addEventListener('keydown', (e) => {
+        // Intercept Ctrl+F (Windows/Linux), Cmd+F (Mac), F3, Ctrl+G, Cmd+G
+        const isF = e.key && e.key.toLowerCase() === 'f';
+        const isG = e.key && e.key.toLowerCase() === 'g';
+        const isCtrlCmd = e.ctrlKey || e.metaKey;
+        const isF3 = e.key === 'F3';
+
+        if ((isCtrlCmd && (isF || isG)) || isF3) {
+          // If the user is actively typing in a form input, allow normal browser editing
+          if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) && !isF) {
+            return;
+          }
+          e.preventDefault();
+          e.stopPropagation();
+          triggerAntiCheat();
+        }
+      }, true);
+    }
+
+    function triggerAntiCheat() {
+      gameState.cheatAttempts++;
+      soundBuzzer();
+
+      // Shake the card/screen
+      const card = document.querySelector('.anti-cheat-card');
+      if (card) {
+        card.classList.remove('shake');
+        void card.offsetWidth; // trigger reflow
+        card.classList.add('shake');
+      }
+
+      // Pick a random funny insult
+      const insult = FUNNY_INSULTS[Math.floor(Math.random() * FUNNY_INSULTS.length)];
+      document.getElementById('anti-cheat-insult').textContent = insult;
+      document.getElementById('cheat-count-label').textContent = `ATTEMPT #${gameState.cheatAttempts} INTERCEPTED`;
+
+      // Show modal
+      document.getElementById('anti-cheat-modal').style.display = 'flex';
+    }
+
+    function dismissAntiCheat() {
+      soundClick();
+      document.getElementById('anti-cheat-modal').style.display = 'none';
+    }
+
+    function selectMode(mode, element) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+
+      const presetBox = document.getElementById('preset-container');
+      if (mode === 'curated') {
+        presetBox.style.display = 'flex';
+        renderPresets();
+        selectPreset(CURATED_MATCHUPS[Math.floor(Math.random() * CURATED_MATCHUPS.length)]);
+      } else if (mode === 'random') {
+        presetBox.style.display = 'none';
+        rollLiveRandom();
+      } else if (mode === 'custom') {
+        presetBox.style.display = 'none';
+        enableCustomInputs();
+      }
+    }
+
+    function renderPresets() {
+      const container = document.getElementById('preset-container');
+      container.innerHTML = `<span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">PRESETS:</span>`;
+      CURATED_MATCHUPS.forEach((m) => {
+        const tag = document.createElement('div');
+        tag.className = 'preset-tag';
+        tag.textContent = `${m.start} → ${m.target}`;
+        tag.onclick = () => selectPreset(m);
+        container.appendChild(tag);
+      });
+    }
+
+    async function selectPreset(m) {
+      matchConfig.startTitle = m.start;
+      matchConfig.targetTitle = m.target;
+      renderMatchupTitles();
+      fetchSummariesForMatchup();
+      // Preload start article immediately in the background
+      prefetchArticle(m.start);
+    }
+
+    function renderMatchupTitles() {
+      document.getElementById('start-title-display').innerHTML = escapeHtml(matchConfig.startTitle);
+      document.getElementById('target-title-display').innerHTML = escapeHtml(matchConfig.targetTitle);
+    }
+
+    function enableCustomInputs() {
+      document.getElementById('start-title-display').innerHTML = `
+        <input type="text" id="input-custom-start" value="${escapeHtml(matchConfig.startTitle)}" placeholder="Type Start page..." autocomplete="off">
+      `;
+      document.getElementById('target-title-display').innerHTML = `
+        <input type="text" id="input-custom-target" value="${escapeHtml(matchConfig.targetTitle)}" placeholder="Type Target page..." autocomplete="off">
+      `;
+      document.getElementById('start-snippet-display').textContent = 'Search or enter exact Wikipedia article name.';
+      document.getElementById('target-snippet-display').textContent = 'Search or enter exact Wikipedia article name.';
+
+      setupAutocomplete('input-custom-start', 'start-autocomplete', (val) => {
+        matchConfig.startTitle = val;
+        fetchSummary(val, 'start-snippet-display');
+        prefetchArticle(val);
+      });
+
+      setupAutocomplete('input-custom-target', 'target-autocomplete', (val) => {
+        matchConfig.targetTitle = val;
+        fetchSummary(val, 'target-snippet-display', true);
+      });
+    }
+
+    function setupAutocomplete(inputId, listId, onSelect) {
+      const input = document.getElementById(inputId);
+      const list = document.getElementById(listId);
+      let debounceTimer = null;
+
+      input.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        const query = e.target.value.trim();
+        if (query.length < 2) {
+          list.style.display = 'none';
+          return;
+        }
+
+        debounceTimer = setTimeout(async () => {
+          try {
+            const res = await fetch(`https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(query)}&limit=6&format=json&origin=*`);
+            const data = await res.json();
+            const suggestions = data[1] || [];
+
+            if (suggestions.length === 0) {
+              list.style.display = 'none';
+              return;
+            }
+
+            list.innerHTML = suggestions.map(s => `<div class="autocomplete-item">${escapeHtml(s)}</div>`).join('');
+            list.style.display = 'block';
+
+            list.querySelectorAll('.autocomplete-item').forEach(item => {
+              item.addEventListener('click', () => {
+                const choice = item.textContent;
+                input.value = choice;
+                list.style.display = 'none';
+                onSelect(choice);
+              });
+            });
+          } catch(err) {
+            list.style.display = 'none';
+          }
+        }, 220);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !list.contains(e.target)) {
+          list.style.display = 'none';
+        }
+      });
+    }
+
+    function rollNewMatchup() {
+      soundClick();
+      if (currentMode === 'curated') {
+        const randomItem = CURATED_MATCHUPS[Math.floor(Math.random() * CURATED_MATCHUPS.length)];
+        selectPreset(randomItem);
+      } else if (currentMode === 'random') {
+        rollLiveRandom();
+      } else {
+        selectMode('curated', document.querySelectorAll('.mode-card')[0]);
+      }
+    }
+
+    async function rollLiveRandom() {
+      document.getElementById('start-title-display').textContent = "Rolling Origin...";
+      document.getElementById('target-title-display').textContent = "Rolling Destination...";
+      document.getElementById('start-snippet-display').textContent = "Querying Wikipedia REST API...";
+      document.getElementById('target-snippet-display').textContent = "Querying Wikipedia REST API...";
+
+      try {
+        const [resA, resB] = await Promise.all([
+          fetch('https://en.wikipedia.org/api/rest_v1/page/random/summary'),
+          fetch('https://en.wikipedia.org/api/rest_v1/page/random/summary')
+        ]);
+        const dataA = await resA.json();
+        const dataB = await resB.json();
+
+        matchConfig.startTitle = dataA.title;
+        matchConfig.targetTitle = dataB.title;
+        matchConfig.targetExtract = dataB.extract || "";
+
+        document.getElementById('start-title-display').textContent = dataA.title;
+        document.getElementById('start-snippet-display').textContent = dataA.extract || "(No summary available)";
+        document.getElementById('target-title-display').textContent = dataB.title;
+        document.getElementById('target-snippet-display').textContent = dataB.extract || "(No summary available)";
+
+        prefetchArticle(dataA.title);
+      } catch (err) {
+        console.error("Random API failed:", err);
+        selectPreset(CURATED_MATCHUPS[0]);
+      }
+    }
+
+    async function fetchSummariesForMatchup() {
+      fetchSummary(matchConfig.startTitle, 'start-snippet-display');
+      fetchSummary(matchConfig.targetTitle, 'target-snippet-display', true);
+    }
+
+    async function fetchSummary(title, elementId, isTarget = false) {
+      const el = document.getElementById(elementId);
+      el.textContent = "Loading synopsis...";
+      try {
+        const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+        if (!res.ok) throw new Error("Not found");
+        const data = await res.json();
+        el.textContent = data.extract || "No extract available.";
+        if (isTarget) matchConfig.targetExtract = data.extract || "";
+      } catch (e) {
+        el.textContent = "Article ready for speedrun.";
+      }
+    }
+
+    // =========================================================================
+    // GAMEPLAY LOOP & PRECISE TIMER INITIALIZATION
+    // =========================================================================
+    async function startGame() {
+      soundClick();
+
+      // Read custom inputs if in custom mode
+      if (currentMode === 'custom') {
+        const startIn = document.getElementById('input-custom-start');
+        const targetIn = document.getElementById('input-custom-target');
+        if (startIn && startIn.value.trim()) matchConfig.startTitle = startIn.value.trim();
+        if (targetIn && targetIn.value.trim()) matchConfig.targetTitle = targetIn.value.trim();
+      }
+
+      // Initialize game state (Timer is NOT started yet!)
+      gameState.active = false;
+      gameState.clicks = 0;
+      gameState.visitedPages = [matchConfig.startTitle];
+      gameState.currentTitle = matchConfig.startTitle;
+      gameState.elapsedMs = 0;
+      gameState.networkPauseDuration = 0;
+      clearInterval(gameState.timerInterval);
+
+      // Setup HUD in "STANDBY / LOADING" state
+      document.getElementById('hud-start-name').textContent = matchConfig.startTitle;
+      document.getElementById('hud-target-name').textContent = matchConfig.targetTitle;
+      document.getElementById('hud-clicks').textContent = "0";
+      document.getElementById('hud-visited').textContent = "1";
+      document.getElementById('hud-timer').textContent = "00:00.0";
+      document.getElementById('hud-timer').style.color = "var(--text-muted)";
+      document.getElementById('target-detected-badge').style.display = "none";
+      updateTrailBar();
+
+      // Switch screen to Game View
+      document.getElementById('lobby-screen').style.display = 'none';
+      document.getElementById('main-site-header')?.classList.add('hidden');
+      document.querySelector('.site-footer')?.classList.add('hidden');
+      document.getElementById('game-container').style.display = 'flex';
+
+      // Load initial article: Timer will start ONLY once this finishes rendering!
+      await loadArticle(matchConfig.startTitle, true);
+    }
+
+    function startTimerAfterRender() {
+      gameState.active = true;
+      gameState.startTime = performance.now();
+      document.getElementById('hud-timer').style.color = "var(--accent-secondary)";
+
+      // Sound and visual toast
+      soundStart();
+      showToast(`⚡ CLOCK ACTIVE // TARGET: ${matchConfig.targetTitle} ⚡`);
+
+      // Stopwatch ticker (updates every 50ms for smooth tenths)
+      clearInterval(gameState.timerInterval);
+      gameState.timerInterval = setInterval(() => {
+        if (!gameState.active) return;
+        const now = performance.now();
+        gameState.elapsedMs = (now - gameState.startTime) - gameState.networkPauseDuration;
+        document.getElementById('hud-timer').textContent = formatTime(Math.max(0, gameState.elapsedMs));
+      }, 50);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('status-toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    function setProgressBar(pct) {
+      const bar = document.getElementById('nav-progress');
+      if (pct <= 0) {
+        bar.style.opacity = '0';
+        bar.style.width = '0%';
+      } else {
+        bar.style.opacity = '1';
+        bar.style.width = `${pct}%`;
+        if (pct >= 100) {
+          setTimeout(() => {
+            bar.style.opacity = '0';
+            setTimeout(() => bar.style.width = '0%', 200);
+          }, 200);
+        }
+      }
+    }
+
+    // =========================================================================
+    // HIGH-PERFORMANCE ARTICLE LOADER & EVENT DELEGATION
+    // =========================================================================
+    async function loadArticle(title, isFirstArticle = false) {
+      const viewport = document.getElementById('wiki-viewport');
+      const loader = document.getElementById('loading-indicator');
+      const pageTitle = document.getElementById('current-article-title');
+
+      setProgressBar(40);
+      loader.style.display = 'block';
+      viewport.style.opacity = '0.35';
+      pageTitle.textContent = title;
+
+      const fetchStart = performance.now();
+
+      try {
+        const html = await fetchArticleData(title);
+        setProgressBar(85);
+
+        viewport.innerHTML = html;
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
+        // Scan current page for target link detection
+        detectTargetOnPage(viewport);
+
+        setProgressBar(100);
+      } catch (err) {
+        console.error("Failed to load article:", err);
+        viewport.innerHTML = `
+          <div style="padding: 40px 0; color: var(--accent-danger);">
+            <h3>ERROR LOADING ARTICLE: "${escapeHtml(title)}"</h3>
+            <p style="margin-top: 8px;">Wikipedia API might be temporarily unresponsive or title was moved.</p>
+            <button class="btn btn-secondary" style="margin-top: 16px;" onclick="undoLastClick()">Go Back</button>
+          </div>
+        `;
+      } finally {
+        loader.style.display = 'none';
+        viewport.style.opacity = '1';
+
+        const fetchDuration = performance.now() - fetchStart;
+
+        if (isFirstArticle) {
+          // Timer starts right now: the exact moment the page is rendered!
+          startTimerAfterRender();
+        } else {
+          // Compensate for network latency so internet lag doesn't penalize the player
+          gameState.networkPauseDuration += fetchDuration;
+        }
+      }
+    }
+
+    // Single delegated listener for the entire article (zero querySelectorAll overhead)
+    function setupDelegatedWikiEvents() {
+      const viewport = document.getElementById('wiki-viewport');
+
+      // Click handling
+      viewport.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a');
+        if (!anchor) return;
+
+        const href = anchor.getAttribute('href') || '';
+        const target = parseWikiTarget(href);
+
+        if (target) {
+          e.preventDefault();
+          handleWikiLinkClick(target);
+        } else if (href.startsWith('#')) {
+          // standard internal anchor jump
+        } else {
+          // External link
+          anchor.setAttribute('target', '_blank');
+          anchor.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+
+      // Hover preloading: when mouse moves over any link, fetch ahead of time!
+      viewport.addEventListener('pointerenter', (e) => {
+        const anchor = e.target.closest('a');
+        if (!anchor) return;
+        const target = parseWikiTarget(anchor.getAttribute('href') || '');
+        if (target) prefetchArticle(target);
+      }, true);
+    }
+
+    function parseWikiTarget(href) {
+      if (!href) return null;
+      if (href.startsWith('./') || href.startsWith('/wiki/')) {
+        const rawTarget = href.replace(/^\.\//, '').replace(/^\/wiki\//, '').split('#')[0];
+        const decoded = decodeURIComponent(rawTarget).replace(/_/g, ' ');
+        // Filter out non-article namespaces
+        if (/^(File|Special|Help|Template|Category|Wikipedia|Portal|Talk):/i.test(decoded)) {
+          return null;
+        }
+        return decoded.length > 0 ? decoded : null;
+      }
+      return null;
+    }
+
+    function detectTargetOnPage(container) {
+      const normTarget = normalizeTitle(matchConfig.targetTitle);
+      const links = container.getElementsByTagName('a');
+      let found = false;
+
+      for (let i = 0; i < links.length; i++) {
+        const a = links[i];
+        const t = parseWikiTarget(a.getAttribute('href') || '');
+        if (t && normalizeTitle(t) === normTarget) {
+          a.classList.add('is-target-link');
+          found = true;
+        }
+      }
+
+      const badge = document.getElementById('target-detected-badge');
+      if (found) {
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    function handleWikiLinkClick(destinationTitle) {
+      soundClick();
+
+      gameState.clicks++;
+      gameState.currentTitle = destinationTitle;
+      gameState.visitedPages.push(destinationTitle);
+
+      document.getElementById('hud-clicks').textContent = gameState.clicks;
+      document.getElementById('hud-visited').textContent = new Set(gameState.visitedPages).size;
+      updateTrailBar();
+
+      // Check Victory Condition
+      if (normalizeTitle(destinationTitle) === normalizeTitle(matchConfig.targetTitle)) {
+        triggerVictory();
+      } else {
+        loadArticle(destinationTitle);
+      }
+    }
+
+    function normalizeTitle(t) {
+      return decodeURIComponent(t || '').replace(/_/g, ' ').trim().toLowerCase();
+    }
+
+    function undoLastClick() {
+      if (gameState.visitedPages.length <= 1) return;
+      soundClick();
+      gameState.visitedPages.pop();
+      const prevTitle = gameState.visitedPages[gameState.visitedPages.length - 1];
+      gameState.currentTitle = prevTitle;
+      gameState.clicks++;
+      document.getElementById('hud-clicks').textContent = gameState.clicks;
+      document.getElementById('hud-visited').textContent = new Set(gameState.visitedPages).size;
+      updateTrailBar();
+      loadArticle(prevTitle);
+    }
+
+    function updateTrailBar() {
+      const trail = document.getElementById('hud-trail');
+      trail.innerHTML = `<span style="color: var(--text-muted); font-size: 0.7rem;">PATH (${gameState.visitedPages.length}):</span>`;
+      
+      gameState.visitedPages.forEach((p, idx) => {
+        const step = document.createElement('span');
+        const isLatest = idx === gameState.visitedPages.length - 1;
+        step.className = `trail-step ${isLatest ? 'latest' : ''}`;
+        step.innerHTML = `${idx > 0 ? '&rarr;' : ''} <span>${escapeHtml(p)}</span>`;
+        trail.appendChild(step);
+      });
+      trail.scrollLeft = trail.scrollWidth;
+    }
+
+    // =========================================================================
+    // VICTORY SCREEN & STATS
+    // =========================================================================
+    function triggerVictory() {
+      gameState.active = false;
+      clearInterval(gameState.timerInterval);
+      soundWin();
+
+      const finalTimeStr = formatTime(Math.max(0, gameState.elapsedMs));
+      const totalClicks = gameState.clicks;
+      const seconds = (gameState.elapsedMs / 1000);
+      const avgSpeed = (seconds / Math.max(1, totalClicks)).toFixed(1) + 's';
+
+      document.getElementById('v-stat-time').textContent = finalTimeStr;
+      document.getElementById('v-stat-clicks').textContent = totalClicks;
+      document.getElementById('v-stat-speed').textContent = avgSpeed;
+
+      // Populate path nodes
+      const pathList = document.getElementById('v-path-list');
+      pathList.innerHTML = '';
+      gameState.visitedPages.forEach((page, idx) => {
+        const isStart = idx === 0;
+        const isEnd = idx === gameState.visitedPages.length - 1;
+        const row = document.createElement('div');
+        row.className = 'path-node';
+        row.innerHTML = `
+          <span class="path-idx">#${idx + 1}</span>
+          <span class="path-name ${isEnd ? 'target-node' : ''}">
+            ${escapeHtml(page)} ${isStart ? '🚩 (START)' : ''} ${isEnd ? '🏆 (TARGET)' : ''}
+          </span>
+        `;
+        pathList.appendChild(row);
+      });
+
+      // Show cheat stats banner if user attempted Ctrl+F
+      const cheatBanner = document.getElementById('v-cheat-banner');
+      if (gameState.cheatAttempts > 0) {
+        cheatBanner.style.display = 'block';
+        cheatBanner.textContent = `🚨 PROTOCOL WARNING: ${gameState.cheatAttempts} Ctrl+F search attempts recorded. The speedrun council is thoroughly unimpressed.`;
+      } else {
+        cheatBanner.style.display = 'none';
+      }
+
+      document.getElementById('victory-modal').style.display = 'flex';
+    }
+
+    function copyShareText() {
+      soundClick();
+      const pathArrows = gameState.visitedPages.join(' ➔ ');
+      let shareText = `⚡ WikiRun Protocol // lulztigre.pw\n` +
+        `🏁 ${matchConfig.startTitle} ➔ ${matchConfig.targetTitle}\n` +
+        `⏱️ Time: ${formatTime(gameState.elapsedMs)} | 🖱️ ${gameState.clicks} clicks\n`;
+      if (gameState.cheatAttempts > 0) {
+        shareText += `🚨 Ctrl+F Attempts: ${gameState.cheatAttempts} (Caught!)\n`;
+      }
+      shareText += `🛤️ Path: ${pathArrows}\nPlay: https://lulztigre.pw/wikirun/`;
+
+      navigator.clipboard.writeText(shareText).then(() => {
+        const btn = document.getElementById('btn-share');
+        btn.textContent = '✅ Copied to Clipboard!';
+        setTimeout(() => {
+          btn.innerHTML = '📋 Copy Score &amp; Path';
+        }, 2500);
+      }).catch(() => {
+        alert(shareText);
+      });
+    }
+
+    function returnToLobby() {
+      soundClick();
+      gameState.active = false;
+      clearInterval(gameState.timerInterval);
+      document.getElementById('victory-modal').style.display = 'none';
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('main-site-header')?.classList.remove('hidden');
+      document.querySelector('.site-footer')?.classList.remove('hidden');
+      document.getElementById('lobby-screen').style.display = 'block';
+      rollNewMatchup();
+    }
+
+    function giveUpRun() {
+      if (confirm("Are you sure you want to abort this WikiRun?")) {
+        returnToLobby();
+      }
+    }
+
+    function openTargetIntel() {
+      soundClick();
+      document.getElementById('intel-title').textContent = matchConfig.targetTitle;
+      document.getElementById('intel-extract').textContent = matchConfig.targetExtract || "No synopsis recorded for target.";
+      document.getElementById('intel-modal').style.display = 'flex';
+    }
+
+    function closeTargetIntel() {
+      soundClick();
+      document.getElementById('intel-modal').style.display = 'none';
+    }
+
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const tenths = Math.floor((ms % 1000) / 100);
+      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${tenths}`;
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.addEventListener('DOMContentLoaded', initLobby);
+  </script>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>// LULZTIGRE</h4>
+          <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem;">
+            Open notebook for offensive security research and CVE hunting.
+          </p>
+          <p style="color: var(--text-muted);">Lightmare (IYKYK).</p>
+        </div>
+        <div class="footer-col">
+          <h4>// DIRECTORY INDEX</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">/ Home & Dispatches</a></li>
+            <li><a href="../llm-clock.html">/ LLM Peak Hours Clock</a></li>
+            <li><a href="index.html">/ WikiRun Speedrun Game</a></li>
+            <li><a href="../archive.html">/ Chronological Archive</a></li>
+            <li><a href="../about.html">/ Researcher Dossier</a></li>
+            <li><a href="../feed.xml" target="_blank">/ RSS Feed (Atom/XML)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>// NODES & CHANNELS</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lulztigre" target="_blank" rel="noopener">/ GitHub (@lulztigre)</a></li>
+            <li><a href="mailto:omoakin749@gmail.com">/ Encrypted Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE. OPEN ACCESS (CC BY-SA 4.0).</span>
+        <span>WIKIRUN HYPERTEXT ENGINE // NO TRACKERS // NO BLOAT</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Site Core Scripts (Theme switcher, mobile nav, keyboard shortcuts) -->
+  <script src="../assets/js/main.js?v=1.5"></script>
+</body>
+</html>

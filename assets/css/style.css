@@ -121,7 +121,7 @@
   --text-primary: #f0d0d5;
   --text-secondary: #b87880;
   --text-muted: #7a4650;
-  --text-invert: #0a0506;
+  --text-invert: #ffffff;
 
   --border-color: #4a1a22;
   --border-light: #2e1015;
@@ -185,7 +185,7 @@
   --text-primary: #ead0f5;
   --text-secondary: #b07cc8;
   --text-muted: #7a4e92;
-  --text-invert: #0e0618;
+  --text-invert: #ffffff;
 
   --border-color: #3d1a5c;
   --border-light: #2a1140;
@@ -361,10 +361,14 @@ body {
   background-size: 32px 32px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
 /* Selection */
 ::selection {
   background-color: var(--accent-primary);
-  color: #000000;
+  color: var(--text-invert, #000000);
 }
 
 /* Reading Progress Bar */
@@ -486,7 +490,7 @@ header.site-header {
 
 .brand-badge {
   background: var(--accent-primary);
-  color: #000000;
+  color: var(--text-invert, #000000);
   font-size: 0.65rem;
   padding: 0.15rem 0.45rem;
   font-weight: 900;
@@ -717,7 +721,7 @@ header.site-header {
 
 .btn-primary {
   background: var(--accent-primary);
-  color: #000000;
+  color: var(--text-invert, #000000);
   border-color: var(--accent-primary);
   box-shadow: var(--shadow-sm);
   font-weight: 900;
@@ -726,7 +730,8 @@ header.site-header {
 .btn-primary:hover {
   transform: translate(-2px, -2px);
   box-shadow: var(--shadow-hover);
-  background: #26ff98;
+  background: var(--border-highlight, var(--accent-primary));
+  color: var(--text-invert, #000000);
 }
 
 .btn-primary:active {
@@ -809,7 +814,7 @@ header.site-header {
 
 .tag-btn.active {
   background: var(--accent-primary);
-  color: #000000;
+  color: var(--text-invert, #000000);
   border-color: var(--accent-primary);
   font-weight: 900;
 }
@@ -1245,7 +1250,7 @@ header.site-header {
 
 .copy-code-btn:hover {
   background: var(--accent-primary);
-  color: #000000;
+  color: var(--text-invert, #000000);
 }
 
 /* Callouts / Academic Theorems */
@@ -1410,7 +1415,7 @@ header.site-header {
 
 .back-to-top-btn:hover {
   background: var(--accent-primary);
-  color: #000000;
+  color: var(--text-invert, #000000);
   transform: translateY(-2px);
 }
 
@@ -1570,7 +1575,7 @@ header.site-header {
 
 .modal-close-btn:hover {
   background: var(--accent-primary);
-  color: #000;
+  color: var(--text-invert, #000000);
 }
 
 .modal-body {
