@@ -50,6 +50,25 @@
     btn.innerHTML = `<span>${icons[theme] || '◐ THEME'}</span>`;
   }
 
+  function pickRandomTheme(excludeTheme, silent) {
+    const currentTheme = excludeTheme || localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'void';
+    let pool = themes.filter(t => t !== currentTheme);
+    if (pool.length === 0) pool = themes;
+    const nextTheme = pool[Math.floor(Math.random() * pool.length)] || 'void';
+    applyTheme(nextTheme);
+    if (!silent) {
+      showToast(`THEME: [${nextTheme.toUpperCase()}]`);
+    }
+    return nextTheme;
+  }
+  window.pickRandomTheme = pickRandomTheme;
+
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      pickRandomTheme();
+    }
+  });
+
   // --- 2. READING PROGRESS BAR ---
   function initReadingProgress() {
     const bar = document.getElementById('reading-progress');

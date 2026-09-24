@@ -23,11 +23,21 @@
 
   <link rel="stylesheet" href="assets/css/style.css?v=1.6">
 
-  <!-- Prevent Theme Flash -->
+  <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
   <script>
     (function(){
-      var saved = localStorage.getItem('phantom_kernel_theme') || 'void';
-      if (saved !== 'void') document.documentElement.setAttribute('data-theme', saved);
+      var THEME_KEY = 'phantom_kernel_theme';
+      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
+      var lastTheme = localStorage.getItem(THEME_KEY) || 'void';
+      var pool = themes.filter(function(t) { return t !== lastTheme; });
+      if (pool.length === 0) pool = themes;
+      var randomTheme = pool[Math.floor(Math.random() * pool.length)] || 'void';
+      localStorage.setItem(THEME_KEY, randomTheme);
+      if (randomTheme !== 'void') {
+        document.documentElement.setAttribute('data-theme', randomTheme);
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
     })();
   </script>
 </head>
