@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/style.css?v=1.5">
+  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
 
   <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
   <script>
@@ -34,15 +34,23 @@
     })();
   </script>
 </head>
-<body>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
 
-  <!-- Top Telemetry -->
+  <!-- Top System Telemetry Ticker -->
   <div class="system-ticker">
     <div class="ticker-left">
-      <span class="status-indicator" style="color:#ff4444;"><span class="status-dot" style="background:#ff4444; box-shadow: 0 0 8px #ff4444;"></span>FAULT: 0x00000194 [PAGE_FAULT_IN_NONPAGED_AREA]</span>
+      <span class="status-indicator" style="color: #ff3344;">
+        <span class="status-dot" style="background: #ff3344; box-shadow: 0 0 10px #ff3344;"></span>
+        KERNEL_PANIC: 0x00000194 [PAGE_FAULT]
+      </span>
+      <span class="ticker-security-level" style="color: #ff3344; border-color: #ff3344;">STATUS: SYSTEM CRASH</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
     </div>
     <div class="ticker-right">
-      <span>RETURN: [/] ROOT</span>
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut">ACTION: [ESC] RETURN HOME</span>
     </div>
   </div>
 
@@ -51,54 +59,118 @@
     <div class="container nav-wrapper">
       <a href="index.html" class="site-brand">
         <span>LULZTIGRE</span>
-        <span class="brand-badge" style="background: #ff4444; color: #fff;">FAULT</span>
+        <span class="brand-badge" style="background: #ff3344; color: #fff; border-color: #ff3344;">PANIC</span>
       </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="llm-clock.html" class="nav-link">/LLM_CLOCK</a></li>
+          <li class="nav-item"><a href="wikirun/index.html" class="nav-link">/WIKIRUN</a></li>
+          <li class="nav-item"><a href="archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
       <div class="nav-controls">
-        <button class="theme-toggle-btn" id="theme-toggle"><span>● PHANTOM</span></button>
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
       </div>
     </div>
   </header>
 
-  <main class="container" style="padding: 4rem 1.25rem 6rem; max-width: 800px;">
-    <div class="callout callout-theorem" style="border-left-color: #ff4444; margin-bottom: 2rem;">
-      <div class="callout-header" style="color: #ff4444;">
-        <span>[KERNEL_PANIC: UNRESOLVED SYMBOL ADDR]</span>
+  <main class="container" style="padding: 3rem 1.25rem 5rem; max-width: 880px; flex: 1;">
+    
+    <!-- Kernel Panic Chassis -->
+    <div class="kernel-panic-chassis">
+      <span class="card-reticle tl" style="border-color: #ff3344;"></span>
+      <span class="card-reticle br" style="border-color: #ff3344;"></span>
+      <div class="panic-scanline"></div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;">
+        <span class="panic-fault-badge">
+          <span>⚠</span> 0x00000194 // UNRESOLVED MEMORY SYMBOL
+        </span>
+        <span style="font-family: var(--font-mono); font-size: 0.7rem; color: #ff5555; letter-spacing: 0.08em; font-weight: 800;">
+          DUMP_TYPE: CRITICAL_EXCEPTION_TRAP
+        </span>
       </div>
-      <h1 style="font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 3.5rem); margin: 0.5rem 0; color: var(--text-primary);">
-        404 NOT_FOUND
+
+      <h1 class="hero-heading" data-scramble="404 KERNEL PANIC: NOT FOUND" style="color: #ff4444; font-size: clamp(2.2rem, 5vw, 3.6rem); margin: 0 0 1rem;">
+        404 KERNEL PANIC: NOT FOUND
       </h1>
-      <p style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-        The requested research directory, cve, hacks, poc, or artifact path does not exist in this blaaag.
-      </p>
-    </div>
 
-    <div class="hero-meta-box" style="margin-bottom: 2rem;">
-      <div class="hero-meta-header">
-        <span>STACK TRACE DUMP</span>
-        <span>PID: 0x404</span>
+      <!-- Diagnostic Statement Box -->
+      <div class="dossier-statement-box" style="border-left-color: #ff3344; margin-bottom: 1.5rem;">
+        <div class="statement-corner-tl" style="border-color: #ff3344;"></div>
+        <div class="statement-corner-br" style="border-color: #ff3344;"></div>
+        <p class="statement-quote" style="color: var(--text-secondary);">
+          "The requested research node, zero-day PoC, or file directory does not exist or has been moved under high-level embargo. Kernel execution routine attempted to dereference a NULL URI pointer in nonpaged memory."
+        </p>
       </div>
-      <pre style="background: transparent; border: none; padding: 0; color: var(--text-muted); font-size: 0.76rem; font-family: var(--font-mono); line-height: 1.5;">
-RIP: 0010:research_poc_lookup+0x4a/0x120
-RSP: 0018:ffffc90000dfbeb8 EFLAGS: 00010246
-CR2: 0000000000000404 CR3: 0000000108a1e002
-Kernel routine attempted to dereference non-existent URI node.</pre>
-    </div>
 
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-      <a href="index.html" class="btn btn-primary">RETURN TO DISPATCH ROOT →</a>
-      <a href="archive.html" class="btn btn-secondary">BROWSE ARCHIVE</a>
+      <!-- CPU Register Dump -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-light); padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; color: var(--text-primary); border-bottom: 1px solid var(--border-light); padding-bottom: 0.4rem; margin-bottom: 0.65rem;">
+          <span>CPU REGISTER STATE DUMP</span>
+          <span>PID: 0x00000404</span>
+        </div>
+        <table class="panic-hex-dump-table">
+          <tr>
+            <td>RIP</td>
+            <td>0010:research_poc_lookup+0x4a/0x120</td>
+            <td>RSP</td>
+            <td>ffffc90000dfbeb8</td>
+          </tr>
+          <tr>
+            <td>CR2</td>
+            <td>0000000000000404</td>
+            <td>CR3</td>
+            <td>0000000108a1e002</td>
+          </tr>
+          <tr>
+            <td>RAX</td>
+            <td>00000000deadbeef</td>
+            <td>RBX</td>
+            <td>00007fffa1b2c3d4</td>
+          </tr>
+          <tr>
+            <td>RSI</td>
+            <td>0000000000000000</td>
+            <td>RDI</td>
+            <td>ffffffffffffffff</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Tactical Recovery Controls -->
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <a href="index.html" class="btn btn-primary" style="background: #ff3344; border-color: #ff3344; color: #fff;">
+          RELOAD DISPATCH ROOT →
+        </a>
+        <a href="archive.html" class="btn btn-secondary">
+          BROWSE RESEARCH ARCHIVE
+        </a>
+        <a href="about.html" class="btn btn-secondary">
+          OPERATIVE DOSSIER
+        </a>
+      </div>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>© 2026 PICK A GOD AND PRAY.</span>
+        <span>© 2026 LULZTIGRE. EXCEPTION HANDLER RECOVERY ROUTINE.</span>
+        <a href="index.html" style="color: inherit; text-decoration: underline;">← RETURN TO ROOT</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=1.5"></script>
+  <script src="assets/js/main.js?v=2.5"></script>
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://lulztigre.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>

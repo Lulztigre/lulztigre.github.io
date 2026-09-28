@@ -24,7 +24,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
           onload="renderMathInElement(document.body);"></script>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=1.5">
+  <link rel="stylesheet" href="../assets/css/style.css?v=2.5">
 
   <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
   <script>
@@ -48,13 +48,18 @@
 
   <div id="reading-progress"></div>
 
+  <!-- Top System Telemetry Ticker -->
   <div class="system-ticker">
     <div class="ticker-left">
-      <span class="status-indicator"><span class="status-dot"></span>MEMO #004</span>
-      <span>STATUS: PUBLISHED NOTEBOOK</span>
+      <span class="status-indicator"><span class="status-dot"></span>MEMO #004 // EXPLOIT CHAIN DISPATCH</span>
+      <span class="ticker-security-level">CLEARANCE: LEVEL-4 // TOP SECRET</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
     </div>
     <div class="ticker-right">
-      <span>SHORTCUT: [T] THEME / [ESC] BACK</span>
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [ESC] BACK</span>
     </div>
   </div>
 
@@ -62,12 +67,14 @@
     <div class="container nav-wrapper">
       <a href="../index.html" class="site-brand">
         <span>LULZTIGRE</span>
-        <span class="brand-badge">KERNEL</span>
+        <span class="brand-badge">id=(root)</span>
       </a>
 
       <nav>
         <ul class="nav-menu" id="nav-menu">
           <li class="nav-item"><a href="../index.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="../llm-clock.html" class="nav-link">/LLM_CLOCK</a></li>
+          <li class="nav-item"><a href="../wikirun/index.html" class="nav-link">/WIKIRUN</a></li>
           <li class="nav-item"><a href="../archive.html" class="nav-link">/ARCHIVE</a></li>
           <li class="nav-item"><a href="../about.html" class="nav-link">/ABOUT_ME</a></li>
           <li class="nav-item"><a href="../feed.xml" class="nav-link" target="_blank">/RSS</a></li>
@@ -83,22 +90,55 @@
     </div>
   </header>
 
-  <header class="article-header">
+  <header class="article-header" style="background: transparent; border-bottom: none; padding: 2rem 0 0.5rem;">
     <div class="container">
-      <div class="article-breadcrumbs">
-        <a href="../index.html">ROOT</a> <span>/</span> 
-        <a href="../archive.html">DISPATCHES</a> <span>/</span> 
-        <span>MEMO #004</span>
-      </div>
+      <div class="article-tactical-header-card">
+        <span class="card-reticle tl"></span>
+        <span class="card-reticle br"></span>
 
-      <h1 class="article-title">GrandScream: From One Desk Phone to a Root PBX</h1>
+        <div class="article-breadcrumbs">
+          <a href="../index.html">ROOT</a> <span>/</span> 
+          <a href="../archive.html">DISPATCHES</a> <span>/</span> 
+          <span>MEMO #004</span>
+        </div>
 
-      <div class="article-meta-panel">
-        <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-08-15</strong></div>
-        <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>Lulztigre</strong></div>
-        <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
-        <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~15 MIN</strong></div>
-        <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #RECON #AUTOMATION #VOIP #EXPLOIT-CHAIN</strong></div>
+        <div class="dossier-meta-badge" style="margin-bottom: 0.75rem;">
+          <span class="dossier-beacon"></span>
+          <span class="dossier-code">DISPATCH // FULL WEAPONIZATION CHAIN</span>
+          <span class="dossier-sub-id" style="color: #ff3366;">CVSS 9.8 ROOT COMPROMISE</span>
+        </div>
+
+        <h1 class="article-title" data-scramble="GrandScream: From One Desk Phone to a Root PBX" style="margin-bottom: 1rem;">
+          GrandScream: From One Desk Phone to a Root PBX
+        </h1>
+
+        <!-- CVSS Meter -->
+        <div class="cvss-bar-track" style="margin-bottom: 1rem;">
+          <div class="cvss-bar-fill cvss-fill-100"></div>
+        </div>
+
+        <div class="article-tactical-telemetry">
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">CHAIN PRIMITIVE</span>
+            <span class="article-telemetry-val" style="color: #ff3366;">Unauth Leak → Blind SQLi → Root</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">TARGET HARDWARE</span>
+            <span class="article-telemetry-val">Grandstream GXP16xx / PBX</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">IMPACT SECTOR</span>
+            <span class="article-telemetry-val">VoIP Hardware &amp; Enterprise PBX</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">DISCLOSURE DATE</span>
+            <span class="article-telemetry-val">2026-08-15 UTC</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">RESEARCH OPERATIVE</span>
+            <span class="article-telemetry-val">Akinlabi [Lulztigre]</span>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -235,6 +275,30 @@ CONFIG > unset a;/bin/sh
       </article>
 
       <aside class="article-sidebar">
+        <!-- Operative Dossier Mini-Widget -->
+        <div class="operative-dossier-widget">
+          <span class="card-reticle tl"></span>
+          <span class="card-reticle br"></span>
+          <div class="operative-widget-header">
+            <span>OPERATIVE TELEMETRY</span>
+            <span>LZ-994</span>
+          </div>
+          <div class="operative-widget-profile">
+            <div class="operative-widget-avatar">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.84 2.16 7.18 5.34 8.86.32-.4.65-.87.97-1.42.23-.4.43-.83.61-1.29-.6-.4-1.12-.9-1.54-1.5-.7-.99-1.09-2.22-1.09-3.53 0-3.31 2.69-6 6-6s6 2.69 6 6c0 1.31-.39 2.54-1.09 3.53-.42.6-.94 1.1-1.54 1.5.18.46.38.89.61 1.29.32.55.65 1.02.97 1.42C19.84 19.18 22 15.84 22 12c0-5.52-4.48-10-10-10zm-3 12c-.83 0-1.5-.67-1.5-1.5S8.17 11 9 11s1.5.67 1.5 1.5S9.83 14 9 14zm6 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </div>
+            <div class="operative-widget-info">
+              <h4 class="operative-widget-name">AKINLABI</h4>
+              <span class="operative-widget-role">HEAD OF RED TEAM &amp; RESEARCH</span>
+            </div>
+          </div>
+          <div class="operative-doctrine-box">
+            <span class="doctrine-prefix">DOCTRINE //</span>
+            <span class="doctrine-quote">"pick a god and pray"</span>
+          </div>
+          <a href="../about.html" class="operative-widget-link">VIEW FULL DOSSIER →</a>
+        </div>
+
         <div class="toc-card">
           <div class="toc-title">// NAVIGATION INDEX</div>
           <ul class="toc-list">
@@ -274,7 +338,7 @@ CONFIG > unset a;/bin/sh
     </div>
   </footer>
 
-  <script src="../assets/js/main.js?v=1.5"></script>
+  <script src="../assets/js/main.js?v=2.5"></script>
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://lulztigre.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>

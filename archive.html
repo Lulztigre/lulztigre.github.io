@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/style.css?v=1.6">
+  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
 
   <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
   <script>
@@ -43,14 +43,18 @@
 </head>
 <body>
 
-  <!-- Top Telemetry -->
+  <!-- Top System Telemetry Ticker -->
   <div class="system-ticker">
     <div class="ticker-left">
-      <span class="status-indicator"><span class="status-dot"></span>ARCHIVE_INDEX: 5 ENTRIES</span>
-      <span>INDEX_MODE: CHRONOLOGICAL</span>
+      <span class="status-indicator"><span class="status-dot"></span>DOSSIER: LZ-994</span>
+      <span class="ticker-security-level">CLEARANCE: LEVEL-4 // TOP SECRET</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
     </div>
     <div class="ticker-right">
-      <span>KEYS: [T] THEME / [/] SEARCH</span>
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [/] SEARCH</span>
     </div>
   </div>
 
@@ -82,111 +86,284 @@
     </div>
   </header>
 
-  <main class="container" style="padding: 3rem 1.25rem 5rem;">
-    <div class="article-layout">
+  <main class="container" style="padding: 2.5rem 1.25rem 5rem;">
+    <!-- Tactical Archive Banner -->
+    <section class="archive-ledger-banner">
+      <span class="card-reticle tl"></span>
+      <span class="card-reticle br"></span>
+
+      <div class="dossier-meta-badge">
+        <span class="dossier-beacon"></span>
+        <span class="dossier-code">LEDGER // CLASSIFIED CHRONICLE</span>
+        <span class="dossier-sub-id">ARCHIVE NODE LZ-994</span>
+      </div>
+
+      <h1 class="hero-heading" data-scramble="CHRONOLOGICAL RESEARCH ARCHIVE" style="font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 0.75rem;">
+        CHRONOLOGICAL RESEARCH ARCHIVE
+      </h1>
+
+      <p style="font-family: var(--font-mono); font-size: 0.86rem; color: var(--text-secondary); max-width: 820px; line-height: 1.65; margin-bottom: 0;">
+        Complete chronological ledger of published zero-day disclosures, CVE variant hunts, exploit chains, and offensive tradecraft notes. Cleanroom reproducible Proof-of-Concepts and coordinated vendor disclosure trails.
+      </p>
+
+      <!-- Archive Stats Strip -->
+      <div class="archive-stats-strip">
+        <div class="archive-stat-tile">
+          <span class="archive-stat-val">5</span>
+          <span class="archive-stat-lbl">PUBLISHED MEMOS</span>
+        </div>
+        <div class="archive-stat-tile">
+          <span class="archive-stat-val" style="color: #ff3366;">10.0</span>
+          <span class="archive-stat-lbl">MAX CVSS SEVERITY</span>
+        </div>
+        <div class="archive-stat-tile">
+          <span class="archive-stat-val">4</span>
+          <span class="archive-stat-lbl">CVE DISCLOSURES</span>
+        </div>
+        <div class="archive-stat-tile">
+          <span class="archive-stat-val">100%</span>
+          <span class="archive-stat-lbl">CLEANROOM REPRO</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="article-layout" style="padding: 0;">
       
-      <article class="prose">
-        <h1 style="font-family: var(--font-sans); font-size: 2.2rem; font-weight: 900; margin-bottom: 0.5rem; text-transform: uppercase;">
-          // COMPLETE RESEARCH ARCHIVE
-        </h1>
-        <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 2rem;">
-          Chronological index of all published CVE research, exploit writeups, and offensive security dispatches.
-        </p>
-
-        <!-- 2026 Year Section -->
-        <div style="margin-bottom: 3rem;">
-          <h2 style="margin-top: 1rem; border-color: var(--accent-primary);">2026 RESEARCH LOG</h2>
-          
-          <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem;">
-
-            <div class="post-card" style="padding: 1.25rem;">
-              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
-                <span>MEMO #008 // 2026-08-30</span>
-                <span class="tag-chip">OFFENSIVE SECURITY</span>
-              </div>
-              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
-                <a href="posts/balbooa-forms-penny-rce-67363-67364.html" style="color: var(--text-primary); text-decoration: none;">
-                  Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms
-                </a>
-              </h3>
-              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.
-              </p>
-            </div>
-
-            <div class="post-card" style="padding: 1.25rem;">
-              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
-                <span>MEMO #007 // 2026-08-17</span>
-                <span class="tag-chip">OFFENSIVE SECURITY</span>
-              </div>
-              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
-                <a href="posts/gravitino-test-connection-rce-41042.html" style="color: var(--text-primary); text-decoration: none;">
-                  The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino
-                </a>
-              </h3>
-              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.
-              </p>
-            </div>
-
-            <div class="post-card" style="padding: 1.25rem;">
-              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
-                <span>MEMO #006 // 2026-08-15</span>
-                <span class="tag-chip">OFFENSIVE SECURITY</span>
-              </div>
-              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
-                <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html" style="color: var(--text-primary); text-decoration: none;">
-                  DropoutJeep: The Phishing Simulator That Refuses to Drop Out
-                </a>
-              </h3>
-              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.
-              </p>
-            </div>
-
-            <div class="post-card" style="padding: 1.25rem;">
-              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
-                <span>MEMO #005 // 2026-09-12</span>
-                <span class="tag-chip">OFFENSIVE SECURITY</span>
-              </div>
-              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
-                <a href="posts/icagenda-stored-xss-75948.html" style="color: var(--text-primary); text-decoration: none;">
-                  The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda
-                </a>
-              </h3>
-              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.
-              </p>
-            </div>
-
-            <div class="post-card" style="padding: 1.25rem;">
-              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
-                <span>MEMO #004 // 2026-08-15</span>
-                <span class="tag-chip">OFFENSIVE SECURITY</span>
-              </div>
-              <h3 style="font-size: 1.15rem; margin: 0.35rem 0;">
-                <a href="posts/grandscream-phone-to-pbx-root.html" style="color: var(--text-primary); text-decoration: none;">
-                  GrandScream: From One Desk Phone to a Root PBX
-                </a>
-              </h3>
-              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0;">
-                One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.
-              </p>
-            </div>
-
-          </div>
+      <div>
+        <!-- 2026 Cycle Timeline -->
+        <div class="archive-cycle-divider">
+          <span>// CYCLE 2026 // FIELD DISPATCHES</span>
         </div>
 
-      </article>
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
 
-      <!-- Sidebar -->
+          <!-- Entry 0x08: Balbooa Forms -->
+          <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x08</span>
+                <span class="memo-num-badge">MEMO #008</span>
+                <span class="target-badge-pill">TARGET: <strong>Balbooa Forms 2.4.3.1</strong></span>
+                <span>2026-08-30</span>
+              </div>
+              <span class="post-cvss-indicator crit">CVSS 9.8 CRITICAL</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/balbooa-forms-penny-rce-67363-67364.html">
+                Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws: custom-PHP eval() query injection and payment parameter tampering.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-critical">CVE-2026-67363</span>
+                <span class="tag-chip chip-critical">CVE-2026-67364</span>
+                <span class="tag-chip chip-verified">VERIFIED POC</span>
+                <span class="tag-chip">JOOMLA</span>
+              </div>
+              <a href="posts/balbooa-forms-penny-rce-67363-67364.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+          <!-- Entry 0x07: Apache Gravitino -->
+          <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x07</span>
+                <span class="memo-num-badge">MEMO #007</span>
+                <span class="target-badge-pill">TARGET: <strong>Apache Gravitino 0.5.0–0.7.0</strong></span>
+                <span>2026-08-17</span>
+              </div>
+              <span class="post-cvss-indicator crit">CVSS 9.8 CRITICAL</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/gravitino-test-connection-rce-41042.html">
+                The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-critical">CVE-2026-41042</span>
+                <span class="tag-chip chip-verified">DETERMINISTIC POC</span>
+                <span class="tag-chip">JDBC DRIVER RCE</span>
+              </div>
+              <a href="posts/gravitino-test-connection-rce-41042.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+          <!-- Entry 0x06: DropoutJeep -->
+          <article class="archive-entry-card" style="border-left: 4px solid var(--accent-primary);">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x06</span>
+                <span class="memo-num-badge">MEMO #006</span>
+                <span class="target-badge-pill">FRAMEWORK: <strong>DropoutJeep v2.1</strong></span>
+                <span>2026-08-15</span>
+              </div>
+              <span class="post-cvss-indicator sec">RED TEAM SIM</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html">
+                DropoutJeep: The Phishing Simulator That Refuses to Drop Out
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-verified">80+ MODULES</span>
+                <span class="tag-chip">RED TEAM</span>
+                <span class="tag-chip">PHISHING SIM</span>
+              </div>
+              <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+          <!-- Entry 0x05: iCagenda -->
+          <article class="archive-entry-card" style="border-left: 4px solid #ff9900;">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x05</span>
+                <span class="memo-num-badge">MEMO #005</span>
+                <span class="target-badge-pill">TARGET: <strong>iCagenda 4.0.8–4.0.12</strong></span>
+                <span>2026-09-12</span>
+              </div>
+              <span class="post-cvss-indicator high">CVSS 7.2 HIGH</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/icagenda-stored-xss-75948.html">
+                The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              A stored XSS in iCagenda 4.0.8 through 4.0.12, found while rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores image and file fields as raw unescaped strings.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-high">CVE-2026-75948</span>
+                <span class="tag-chip chip-verified">COORDINATED FIX</span>
+                <span class="tag-chip">STORED XSS</span>
+              </div>
+              <a href="posts/icagenda-stored-xss-75948.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+          <!-- Entry 0x04: GrandScream -->
+          <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x04</span>
+                <span class="memo-num-badge">MEMO #004</span>
+                <span class="target-badge-pill">TARGET: <strong>Grandstream GXP16xx / PBX</strong></span>
+                <span>2026-08-15</span>
+              </div>
+              <span class="post-cvss-indicator crit">CVSS 9.8 ROOT CHAIN</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/grandscream-phone-to-pbx-root.html">
+                GrandScream: From One Desk Phone to a Root PBX
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. Full narrative of the unauth leak to blind SQLi to root.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-critical">ROOT CHAIN</span>
+                <span class="tag-chip chip-verified">PROVEN WEAPONIZATION</span>
+                <span class="tag-chip">VOIP ROOT</span>
+              </div>
+              <a href="posts/grandscream-phone-to-pbx-root.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Tactical Sidebar -->
       <aside class="article-sidebar">
+        <!-- Operative Dossier Mini-Widget -->
+        <div class="operative-dossier-widget">
+          <span class="card-reticle tl"></span>
+          <span class="card-reticle br"></span>
+          <div class="operative-widget-header">
+            <span>OPERATIVE TELEMETRY</span>
+            <span>LZ-994</span>
+          </div>
+          <div class="operative-widget-profile">
+            <div class="operative-widget-avatar">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.84 2.16 7.18 5.34 8.86.32-.4.65-.87.97-1.42.23-.4.43-.83.61-1.29-.6-.4-1.12-.9-1.54-1.5-.7-.99-1.09-2.22-1.09-3.53 0-3.31 2.69-6 6-6s6 2.69 6 6c0 1.31-.39 2.54-1.09 3.53-.42.6-.94 1.1-1.54 1.5.18.46.38.89.61 1.29.32.55.65 1.02.97 1.42C19.84 19.18 22 15.84 22 12c0-5.52-4.48-10-10-10zm-3 12c-.83 0-1.5-.67-1.5-1.5S8.17 11 9 11s1.5.67 1.5 1.5S9.83 14 9 14zm6 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </div>
+            <div class="operative-widget-info">
+              <h4 class="operative-widget-name">AKINLABI</h4>
+              <span class="operative-widget-role">HEAD OF RED TEAM &amp; RESEARCH</span>
+            </div>
+          </div>
+          <div class="operative-doctrine-box">
+            <span class="doctrine-prefix">DOCTRINE //</span>
+            <span class="doctrine-quote">"pick a god and pray"</span>
+          </div>
+          <a href="about.html" class="operative-widget-link">VIEW FULL DOSSIER →</a>
+        </div>
+
         <div class="toc-card">
-          <div class="toc-title">// TOPIC BREAKDOWN</div>
-          <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.76rem;">
-            <div style="display: flex; justify-content: space-between;">
+          <div class="toc-title">// SECTOR BREAKDOWN</div>
+          <div style="display: flex; flex-direction: column; gap: 0.65rem; font-family: var(--font-mono); font-size: 0.76rem;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.35rem; border-bottom: 1px dashed var(--border-light);">
               <span>OFFENSIVE SECURITY</span>
-              <strong style="color: var(--accent-primary);">4</strong>
+              <strong style="color: var(--accent-primary);">5</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.35rem; border-bottom: 1px dashed var(--border-light);">
+              <span>CMS EXPLOITS (PHP)</span>
+              <strong style="color: var(--accent-primary);">2</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.35rem; border-bottom: 1px dashed var(--border-light);">
+              <span>JDBC REST RCE</span>
+              <strong style="color: var(--accent-primary);">1</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.35rem; border-bottom: 1px dashed var(--border-light);">
+              <span>VOIP PBX CHAINS</span>
+              <strong style="color: var(--accent-primary);">1</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>RED TEAM SIM</span>
+              <strong style="color: var(--accent-primary);">1</strong>
             </div>
           </div>
         </div>
@@ -207,13 +384,13 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>© 2026 LULZTIGRE.</span>
+        <span>© 2026 LULZTIGRE. CLASSIFIED RESEARCH LEDGER.</span>
         <a href="index.html" style="color: inherit; text-decoration: underline;">← BACK TO DISPATCHES</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=1.5"></script>
+  <script src="assets/js/main.js?v=2.5"></script>
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://lulztigre.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>

@@ -5,14 +5,14 @@
     <link>https://lulztigre.pw/</link>
     <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Sep 2026 00:13:28 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 28 Sep 2026 09:53:36 GMT</lastBuildDate>
     <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
 
     <item>
       <title>Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</title>
       <link>https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html</link>
       <guid>https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html</guid>
-      <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
       <description>While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.</description>
     </item>
 
@@ -20,7 +20,7 @@
       <title>The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino</title>
       <link>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</link>
       <guid>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</guid>
-      <pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
       <description>While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.</description>
     </item>
 
@@ -28,7 +28,7 @@
       <title>DropoutJeep: The Phishing Simulator That Refuses to Drop Out</title>
       <link>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</link>
       <guid>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</guid>
-      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
       <description>DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.</description>
     </item>
 
@@ -36,7 +36,7 @@
       <title>The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda</title>
       <link>https://lulztigre.pw/posts/icagenda-stored-xss-75948.html</link>
       <guid>https://lulztigre.pw/posts/icagenda-stored-xss-75948.html</guid>
-      <pubDate>Sat, 12 Sep 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
       <description>A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.</description>
     </item>
 
@@ -44,7 +44,7 @@
       <title>GrandScream: From One Desk Phone to a Root PBX</title>
       <link>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</link>
       <guid>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</guid>
-      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
       <description>One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.</description>
     </item>
   </channel>

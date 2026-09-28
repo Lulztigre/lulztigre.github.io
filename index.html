@@ -28,7 +28,7 @@
           onload="renderMathInElement(document.body);"></script>
 
   <!-- Core Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=1.6">
+  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
 
   <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
   <script>
@@ -53,12 +53,15 @@
   <!-- Top System Telemetry Ticker -->
   <div class="system-ticker">
     <div class="ticker-left">
-      <span class="status-indicator"><span class="status-dot"></span>KERNEL: LZ-SYS v2.6.4</span>
-      <span>SYS_ARCH: X86_64 // NEURAL_INTERP</span>
+      <span class="status-indicator"><span class="status-dot"></span>DOSSIER: LZ-994</span>
+      <span class="ticker-security-level">CLEARANCE: LEVEL-4 // TOP SECRET</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
     </div>
     <div class="ticker-right">
-      <span>LATENCY: 0.8ms</span>
-      <span>KEYS: [T] THEME / [/] SEARCH</span>
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [/] SEARCH</span>
     </div>
   </div>
 
@@ -82,7 +85,7 @@
       </nav>
 
       <div class="nav-controls">
-        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme (Void / Amber / Ghost)">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
           <span>● PHANTOM</span>
         </button>
         <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
@@ -91,49 +94,92 @@
   </header>
 
   <main>
-    <!-- Phantom Hero Section -->
+    <!-- Tactical Research Command Hero Section -->
     <section class="hero-section">
       <div class="container hero-grid">
         <div class="hero-title-area">
-          <div class="research-tagline">
-            <span>▶</span> CMS EXPLOIT RESEARCH // RED TEAM // CVE HUNTING
+          <div class="dossier-meta-badge">
+            <span class="dossier-beacon"></span>
+            <span class="dossier-code">COMMAND // OFFENSIVE SECURITY RESEARCH KERNEL</span>
+            <span class="dossier-sub-id">DISPATCH NODE LZ-994</span>
           </div>
-          <h1 class="hero-heading">DISPATCHES FROM THE RESEARCH KERNEL.</h1>
-          <p class="hero-desc">
-            Source-driven exploit research, CVE variant analysis, and red team tradecraft.
-            Diffed patches, chained primitives, and the disclosure trail behind each one.
-          </p>
-          <div class="hero-actions">
+
+          <h1 class="hero-heading" data-scramble="DISPATCHES FROM THE RESEARCH KERNEL.">
+            DISPATCHES FROM THE RESEARCH KERNEL.
+          </h1>
+
+          <div class="dossier-pronounce">
+            <span class="phonetic-icon">⚡</span>
+            <span class="phonetic-text">SUBSYSTEM: <code>CMS ZERO-DAYS // VARIANT HUNTING // RED TEAM</code></span>
+            <span class="phonetic-divider">//</span>
+            <span class="phonetic-role">LZ-994 CLASSIFIED REPO</span>
+          </div>
+
+          <div class="dossier-statement-box">
+            <div class="statement-corner-tl"></div>
+            <div class="statement-corner-br"></div>
+            <p class="statement-quote">
+              "Source-driven exploit research, CVE variant analysis, and red team tradecraft. Diffed vendor patches, chained primitives, and the coordinated disclosure trail behind each one. <strong>Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC.</strong>"
+            </p>
+          </div>
+
+          <!-- Tactical Metric Ribbons -->
+          <div class="dossier-stats-ribbon" style="margin-top: 1rem;">
+            <div class="dossier-stat-tile">
+              <span class="stat-num text-glow">15+</span>
+              <span class="stat-lbl">CVE DISCLOSURES</span>
+            </div>
+            <div class="dossier-stat-tile">
+              <span class="stat-num stat-critical">10.0</span>
+              <span class="stat-lbl">MAX CVSS CRITICAL</span>
+            </div>
+            <div class="dossier-stat-tile">
+              <span class="stat-num text-glow">100%</span>
+              <span class="stat-lbl">CLEANROOM REPRO</span>
+            </div>
+            <div class="dossier-stat-tile">
+              <span class="stat-num text-glow">5x</span>
+              <span class="stat-lbl">ACTIVE DISPATCHES</span>
+            </div>
+          </div>
+
+          <div class="hero-actions" style="margin-top: 1.25rem;">
             <a href="#dispatches" class="btn btn-primary">VIEW DISPATCHES ↓</a>
             <a href="about.html" class="btn btn-secondary">RESEARCH DOSSIER →</a>
             <a href="feed.xml" class="btn btn-secondary" target="_blank">RSS [XML]</a>
           </div>
         </div>
 
-        <aside class="hero-meta-box">
-          <div class="hero-meta-header">
-            <span>RESEARCH TELEMETRY</span>
-            <span>ID: LZ-994</span>
+        <!-- Tactical Telemetry Chassis -->
+        <aside class="hero-meta-chassis">
+          <span class="card-reticle tl"></span>
+          <span class="card-reticle br"></span>
+          <div class="hero-chassis-topbar">
+            <span class="hero-chassis-signal"><span class="hero-signal-ping"></span>LZ-DAEMON ONLINE</span>
+            <span class="hero-chassis-clearance">LEVEL-4 TOP SECRET</span>
           </div>
-          <div class="meta-row">
-            <span class="meta-key">NODE AFFILIATION</span>
-            <span class="meta-val">Autonomous Lab</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-key">CORE PIPELINE</span>
-            <span class="meta-val">CMS / Extension Exploit Research</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-key">SUBSYSTEM</span>
-            <span class="meta-val">Red Team &amp; Network Pentesting</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-key">LAST SYNC</span>
-            <span class="meta-val">2026-08-30 UTC</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-key">DAEMON STATE</span>
-            <span class="meta-val" style="color: var(--accent-primary); font-weight:900;">ACTIVE DISCLOSURE</span>
+          <div class="hero-chassis-radar-mini"></div>
+          <div class="hero-chassis-body">
+            <div class="chassis-row">
+              <span class="chassis-key">OPERATIVE</span>
+              <span class="chassis-val">Akinlabi [Lulztigre]</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">PRIMARY SECTOR</span>
+              <span class="chassis-val">CMS &amp; Extension Exploits</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">SUBSYSTEM</span>
+              <span class="chassis-val">Red Team &amp; Pentesting</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">DISCLOSURE STATUS</span>
+              <span class="chassis-val" style="color: var(--accent-primary);">ACTIVE &amp; COORDINATED</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">LAB ENVIRONMENT</span>
+              <span class="chassis-val">Isolated Cleanroom</span>
+            </div>
           </div>
         </aside>
       </div>
@@ -171,7 +217,7 @@
 
           <!-- Auto-generated: MEMO #008 - Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms -->
           <article class="post-card" 
-                   data-tags="OFFENSIVE SECURITY, JOOMLA, PHP, CODE INJECTION, PAYMENT TAMPERING, CVE, VARIANT ANALYSIS"
+                   data-tags="OFFENSIVE SECURITY"
                    data-bibtex="@article{lulz2026_balbooa-fo,
   author    = {Lulztigre},
   title     = {Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms},
@@ -182,9 +228,9 @@
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
                 <span class="post-id-badge">MEMO #008</span>
-                <span>DATE: 2026-08-30</span>
+                <span>DATE: 2026-01-01</span>
               </div>
-              <span>EST. TIME: ~12 MIN</span>
+              <span>EST. TIME: ~10 MIN</span>
             </div>
 
             <h3 class="post-card-title">
@@ -198,11 +244,6 @@
             <div class="post-card-footer">
               <div class="post-tags">
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
-                <span class="tag-chip">JOOMLA</span>
-                <span class="tag-chip">PHP</span>
-                <span class="tag-chip">CODE INJECTION</span>
-                <span class="tag-chip">PAYMENT TAMPERING</span>
-                <span class="tag-chip">CVE</span>
               </div>
               <div class="post-card-actions">
                 <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
@@ -213,7 +254,7 @@
 
           <!-- Auto-generated: MEMO #007 - The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino -->
           <article class="post-card" 
-                   data-tags="OFFENSIVE SECURITY, PATCH ANALYSIS, JDBC, RCE, VARIANT ANALYSIS"
+                   data-tags="OFFENSIVE SECURITY"
                    data-bibtex="@article{lulz2026_gravitino-,
   author    = {Lulztigre},
   title     = {The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino},
@@ -224,7 +265,7 @@
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
                 <span class="post-id-badge">MEMO #007</span>
-                <span>DATE: 2026-08-17</span>
+                <span>DATE: 2026-01-01</span>
               </div>
               <span>EST. TIME: ~10 MIN</span>
             </div>
@@ -240,10 +281,6 @@
             <div class="post-card-footer">
               <div class="post-tags">
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
-                <span class="tag-chip">PATCH ANALYSIS</span>
-                <span class="tag-chip">JDBC</span>
-                <span class="tag-chip">RCE</span>
-                <span class="tag-chip">VARIANT ANALYSIS</span>
               </div>
               <div class="post-card-actions">
                 <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
@@ -254,7 +291,7 @@
 
           <!-- Auto-generated: MEMO #006 - DropoutJeep: The Phishing Simulator That Refuses to Drop Out -->
           <article class="post-card" 
-                   data-tags="OFFENSIVE SECURITY, RED TEAM, PHISHING, AUTOMATION"
+                   data-tags="OFFENSIVE SECURITY"
                    data-bibtex="@article{lulz2026_dropoutjee,
   author    = {Lulztigre},
   title     = {DropoutJeep: The Phishing Simulator That Refuses to Drop Out},
@@ -265,9 +302,9 @@
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
                 <span class="post-id-badge">MEMO #006</span>
-                <span>DATE: 2026-08-15</span>
+                <span>DATE: 2026-01-01</span>
               </div>
-              <span>EST. TIME: ~12 MIN</span>
+              <span>EST. TIME: ~10 MIN</span>
             </div>
 
             <h3 class="post-card-title">
@@ -281,9 +318,6 @@
             <div class="post-card-footer">
               <div class="post-tags">
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
-                <span class="tag-chip">RED TEAM</span>
-                <span class="tag-chip">PHISHING</span>
-                <span class="tag-chip">AUTOMATION</span>
               </div>
               <div class="post-card-actions">
                 <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
@@ -294,7 +328,7 @@
 
           <!-- Auto-generated: MEMO #005 - The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda -->
           <article class="post-card" 
-                   data-tags="OFFENSIVE SECURITY, CVE RESEARCH, XSS, JOOMLA, PATCH ANALYSIS"
+                   data-tags="OFFENSIVE SECURITY"
                    data-bibtex="@article{lulz2026_icagenda-s,
   author    = {Lulztigre},
   title     = {The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda},
@@ -305,9 +339,9 @@
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
                 <span class="post-id-badge">MEMO #005</span>
-                <span>DATE: 2026-09-12</span>
+                <span>DATE: 2026-01-01</span>
               </div>
-              <span>EST. TIME: ~15 MIN</span>
+              <span>EST. TIME: ~10 MIN</span>
             </div>
 
             <h3 class="post-card-title">
@@ -321,10 +355,6 @@
             <div class="post-card-footer">
               <div class="post-tags">
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
-                <span class="tag-chip">CVE RESEARCH</span>
-                <span class="tag-chip">XSS</span>
-                <span class="tag-chip">JOOMLA</span>
-                <span class="tag-chip">PATCH ANALYSIS</span>
               </div>
               <div class="post-card-actions">
                 <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
@@ -335,7 +365,7 @@
 
           <!-- Auto-generated: MEMO #004 - GrandScream: From One Desk Phone to a Root PBX -->
           <article class="post-card" 
-                   data-tags="OFFENSIVE SECURITY, RECON, AUTOMATION, VOIP, EXPLOIT-CHAIN"
+                   data-tags="OFFENSIVE SECURITY"
                    data-bibtex="@article{lulz2026_grandscrea,
   author    = {Lulztigre},
   title     = {GrandScream: From One Desk Phone to a Root PBX},
@@ -346,9 +376,9 @@
             <div class="post-card-header">
               <div style="display:flex; align-items:center; gap:0.5rem;">
                 <span class="post-id-badge">MEMO #004</span>
-                <span>DATE: 2026-08-15</span>
+                <span>DATE: 2026-01-01</span>
               </div>
-              <span>EST. TIME: ~15 MIN</span>
+              <span>EST. TIME: ~10 MIN</span>
             </div>
 
             <h3 class="post-card-title">
@@ -362,10 +392,6 @@
             <div class="post-card-footer">
               <div class="post-tags">
                 <span class="tag-chip">OFFENSIVE SECURITY</span>
-                <span class="tag-chip">RECON</span>
-                <span class="tag-chip">AUTOMATION</span>
-                <span class="tag-chip">VOIP</span>
-                <span class="tag-chip">EXPLOIT-CHAIN</span>
               </div>
               <div class="post-card-actions">
                 <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
@@ -419,7 +445,7 @@
         <div class="footer-col">
           <h4>// DIRECTORY INDEX</h4>
           <ul class="footer-links">
-            <li><a href="index.html">/ Home & Dispatches</a></li>
+            <li><a href="index.html">/ Home &amp; Dispatches</a></li>
             <li><a href="llm-clock.html">/ LLM Peak Hours Clock</a></li>
             <li><a href="wikirun/index.html">/ WikiRun Speedrun Game</a></li>
             <li><a href="archive.html">/ Chronological Archive</a></li>
@@ -428,7 +454,7 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>// NODES & CHANNELS</h4>
+          <h4>// NODES &amp; CHANNELS</h4>
           <ul class="footer-links">
             <li><a href="https://github.com/lulztigre" target="_blank" rel="noopener">/ GitHub (@lulztigre)</a></li>
             <li><a href="mailto:omoakin749@gmail.com">/ Encrypted Email</a></li>
@@ -443,7 +469,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=1.5"></script>
+  <script src="assets/js/main.js?v=2.5"></script>
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://lulztigre.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>

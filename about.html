@@ -8,7 +8,7 @@
   <meta name="author" content="Lulztigre">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="About & Dossier // Lulztigre">
+  <meta property="og:title" content="About &amp; Dossier // Lulztigre">
   <meta property="og:description" content="Offensive security consultant. CMS exploit research, CVE variant analysis, network pentesting, and coordinated disclosure.">
   <meta property="og:type" content="profile">
   <meta property="og:url" content="https://lulztigre.pw/about.html">
@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/style.css?v=1.6">
+  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
 
   <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
   <script>
@@ -41,16 +41,20 @@
     })();
   </script>
 </head>
-<body>
+<body class="about-dossier-body">
 
-  <!-- Top Ticker -->
+  <!-- Top System Telemetry Ticker -->
   <div class="system-ticker">
     <div class="ticker-left">
       <span class="status-indicator"><span class="status-dot"></span>DOSSIER: LZ-994</span>
-      <span>STATUS: ONLINE</span>
+      <span class="ticker-security-level">CLEARANCE: LEVEL-4 // TOP SECRET</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
     </div>
     <div class="ticker-right">
-      <span>SHORTCUT: [T] THEME / [/] SEARCH</span>
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [/] SEARCH</span>
     </div>
   </div>
 
@@ -82,132 +86,1218 @@
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="container" style="padding: 3rem 1.25rem 5rem;">
+  <!-- ======================================================== -->
+  <!-- HERO DOSSIER COMMAND BANNER (RENT IS DUE DESIGN) -->
+  <!-- ======================================================== -->
+  <section class="dossier-hero">
+    <div class="container dossier-hero-grid">
+      
+      <!-- Hero Left: Operative Classification & Bio -->
+      <div class="dossier-hero-main">
+        <div class="dossier-meta-badge">
+          <span class="dossier-beacon"></span>
+          <span class="dossier-code">DOSSIER // CLASSIFIED OPERATIVE RECORD</span>
+          <span class="dossier-sub-id">LZ-994-ALPHA</span>
+        </div>
+
+        <h1 class="dossier-hero-name" data-scramble="AKINLABI">
+          AKINLABI <span class="dossier-alias" data-scramble="[LULZTIGRE]">"[LULZTIGRE]"</span>
+        </h1>
+
+        <div class="dossier-pronounce">
+          <span class="phonetic-icon">🔊</span>
+          <span class="phonetic-text">PRONUNCIATION: <code>"HACKING-LAH-BEE"</code></span>
+          <span class="phonetic-divider">//</span>
+          <span class="phonetic-role">HEAD OF RED TEAM &amp; FORENSICS OPS</span>
+        </div>
+
+        <div class="dossier-statement-box">
+          <div class="statement-corner-tl"></div>
+          <div class="statement-corner-br"></div>
+          <p class="statement-quote">
+            "I break complex systems for a living, reverse-engineer proprietary binaries, and engineer weaponized zero-day exploit chains across CMS architectures, enterprise runtimes, and hardened network perimeters. Outside client operations, I run an autonomous CVE research lab dissecting software ecosystems, diffing vendor patches, and chaining low-level primitives into deterministic Proof-of-Concepts. <strong>Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC. Document everything.</strong>"
+          </p>
+        </div>
+
+        <!-- Metric Ribbons -->
+        <div class="dossier-stats-ribbon">
+          <div class="dossier-stat-tile">
+            <span class="stat-num text-glow">15+</span>
+            <span class="stat-lbl">CVE DISCLOSURES</span>
+          </div>
+          <div class="dossier-stat-tile">
+            <span class="stat-num stat-critical">10.0</span>
+            <span class="stat-lbl">MAX CVSS CRITICAL</span>
+          </div>
+          <div class="dossier-stat-tile">
+            <span class="stat-num text-glow">100%</span>
+            <span class="stat-lbl">CLEANROOM REPRO</span>
+          </div>
+          <div class="dossier-stat-tile">
+            <span class="stat-num text-glow">5x</span>
+            <span class="stat-lbl">OFFSEC CREDS</span>
+          </div>
+        </div>
+
+        <!-- Quick Action Terminal Command Bar -->
+        <div class="dossier-actions-bar">
+          <a href="#contact" class="dossier-btn dossier-btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>SECURE TRANSMISSION</span>
+          </a>
+          <a href="#cve-ledger" class="dossier-btn dossier-btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>CVE REGISTRY (15+ LOG)</span>
+          </a>
+          <a href="#skills-section" class="dossier-btn dossier-btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>WEAPONIZED ARSENAL</span>
+          </a>
+          <button type="button" class="dossier-btn dossier-btn-outline" id="pgp-quick-trigger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>PGP KEY [4096R]</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Right: Holographic Radar Chassis Card -->
+      <div class="dossier-hero-chassis">
+        <div class="chassis-hud-box">
+          <div class="chassis-scanner-line"></div>
+          <div class="chassis-header-bar">
+            <span class="chassis-led-dot"></span>
+            <span class="chassis-node-id">CHASSIS: PHANTOM-HUD-994</span>
+            <span class="chassis-stat-tag">ACTIVE_SCAN</span>
+          </div>
+
+          <!-- Radar Reticle Graphic -->
+          <div class="chassis-radar-container">
+            <div class="radar-circle circle-outer"></div>
+            <div class="radar-circle circle-mid"></div>
+            <div class="radar-circle circle-inner"></div>
+            <div class="radar-axis axis-x"></div>
+            <div class="radar-axis axis-y"></div>
+            <div class="radar-sweep-beam"></div>
+            <div class="radar-target target-1" title="Balbooa Forms CVE-2026-67364"></div>
+            <div class="radar-target target-2" title="iCagenda CVE-2026-75948"></div>
+            <div class="radar-target target-3" title="Embargoed 0-Day Pipeline"></div>
+
+            <div class="chassis-center-sig">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="sig-svg"><polygon points="12 2 19 8.5 19 15.5 12 22 5 15.5 5 8.5 12 2"></polygon><circle cx="12" cy="12" r="3"></circle></svg>
+              <span class="sig-text">LZ-994</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Telemetry Feed -->
+          <div class="chassis-telemetry-feed">
+            <div class="feed-row">
+              <span class="feed-k">RADAR_TARGET:</span>
+              <span class="feed-v text-glow">3 VERIFIED // 15 PIPELINE</span>
+            </div>
+            <div class="feed-row">
+              <span class="feed-k">KERNEL_STATUS:</span>
+              <span class="feed-v">SE_LINUX_ENFORCING</span>
+            </div>
+            <div class="feed-row">
+              <span class="feed-k">OP_DISCIPLINE:</span>
+              <span class="feed-v">0-DAY EXPLOIT ENG.</span>
+            </div>
+            <div class="feed-row">
+              <span class="feed-k">DEPLOY_ZONE:</span>
+              <span class="feed-v">LAGOS // GLOBAL (REMOTE)</span>
+            </div>
+          </div>
+
+          <div class="chassis-footer-bar">
+            <span>TERMINAL: PHANTOM-v2.8</span>
+            <span class="text-glow">LIVE_LINK: OK</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- MAIN ARTICLE LAYOUT -->
+  <!-- ======================================================== -->
+  <main class="container" style="padding: 2.5rem 1.25rem 5rem;">
     <div class="article-layout">
 
-      <article class="prose">
-        <div class="callout callout-theorem" style="margin-top:0;">
-          <div class="callout-header">
-            <span>[ABOUT ME]</span>
+      <article class="prose dossier-article-content">
+
+        <!-- ======================================================== -->
+        <!-- 01. OPERATIONAL DIRECTIVES (UPGRADED FROM BULLETS) -->
+        <!-- ======================================================== -->
+        <section id="directives" class="dossier-section-block">
+          <div class="section-badge-bar">
+            <span class="badge-idx">[01]</span>
+            <span class="badge-title">TACTICAL DIRECTIVES</span>
           </div>
-          <p style="font-family: var(--font-sans); font-size: 1.15rem; line-height: 1.6;">
-            Hi, my name is Akinlabi (pronounced "hacking lah bee"). Glad you're here. I break things for a living and then write about it: CMS internals, network perimeters, red teaming, and the humans who click the wrong link. Outside client work, I run a solo CVE hunting lab, mostly Joomla, Apache, Jenkins and their extension ecosystems (just kidding, nothing is truly safe from me). Pull the source apart, diff the patch, chain the primitive, ship a PoC. Pwn all the things. Document everything.
+          <h2 class="dossier-heading" data-scramble="// 1. WHAT I DO // OPERATIONAL DIRECTIVES">// 1. WHAT I DO // OPERATIONAL DIRECTIVES</h2>
+          <p class="dossier-section-lead">
+            Four primary disciplines define my daily operational cycle: whitebox vulnerability research, automated AST variant analysis, enterprise adversary simulation, and low-level binary dissection.
           </p>
-        </div>
 
-        <h2>// 1. WHAT I DO</h2>
-        <ul>
-          <li>
-            <strong>CMS / Source Driven Exploit Research:</strong> I perform source-code-driven security research across Java, Python, JavaScript, and PHP applications. My work focuses on finding exploitable weaknesses in web applications, APIs, CMS platforms, frameworks, plugins, and extension ecosystems. Extensive research has focused on Joomla widely deployed third-party components, including iCagenda and Balbooa Forms. The broader focus is on uncovering source-level vulnerabilities with practical security impact, including unauthenticated file upload, arbitrary file read, and remote code execution primitives in default or commonly deployed configurations.
-          </li>
-          <li>
-            <strong>Variant Analysis:</strong> For every patched CVE, diff the fix, enumerate missed call sites and sibling code paths, and hunt for the bug the vendor almost fixed. Findings only count when they survive dedup against NVD, GitHub, and the Joomla Security Tracker.
-          </li>
-          <li>
-            <strong>Offensive Security Consulting:</strong> Web and mobile application security testing (source review, OWASP Top 10, and OWASP Mobile Top 10), internal network penetration tests, lateral movement, and post-exploitation. Physical security assessments and social engineering, from pretexting to on-site entry testing. Perimeter device research.
-          </li>
-          <li>
-            <strong>Off Duty Hunting:</strong> Active in bug bounty programs and a regular CTF participant, including winning the Fugitive of Justice CTF during my CTI days. I also enjoy reverse engineering and low-level research, particularly working with x64 and ARM architectures through both static and dynamic analysis in Ghidra.
-          </li>
-        </ul>
+          <div class="directive-grid">
+            
+            <!-- Directive Card 1 -->
+            <div class="directive-card">
+              <div class="card-reticle tl"></div>
+              <div class="card-reticle br"></div>
+              <div class="directive-card-top">
+                <span class="directive-tag">WHITEBOX // SOURCE AUDIT</span>
+                <span class="directive-hex">0x01</span>
+              </div>
+              <div class="directive-card-body">
+                <div class="directive-icon-chassis">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                </div>
+                <div class="directive-info">
+                  <h3 class="directive-title">CMS &amp; Source Driven Exploit Research</h3>
+                  <p class="directive-text">
+                    Deep source-code auditing across Java, Python, JavaScript, and PHP runtimes. Targeting high-value flaws in CMS platforms, web APIs, frameworks, and third-party plugin ecosystems. Extensive focus on widely-deployed Joomla extensions (including Balbooa Forms and iCagenda) uncovering pre-auth remote code execution (RCE), unauthenticated arbitrary file uploads, file reads, and dangerous shortcode eval primitives.
+                  </p>
+                  <div class="directive-pills">
+                    <span class="directive-pill">JAVA / PHP / PYTHON AST</span>
+                    <span class="directive-pill">UNAUTH RCE</span>
+                    <span class="directive-pill">SHORTCODE EVAL()</span>
+                    <span class="directive-pill">DESERIALIZATION</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <h2>// 2. CVE RESEARCH &amp; DISCLOSURE LOG (I have like 15 to upload, hang around)</h2>
+            <!-- Directive Card 2 -->
+            <div class="directive-card">
+              <div class="card-reticle tl"></div>
+              <div class="card-reticle br"></div>
+              <div class="directive-card-top">
+                <span class="directive-tag">RESEARCH // AST DIFFING</span>
+                <span class="directive-hex">0x02</span>
+              </div>
+              <div class="directive-card-body">
+                <div class="directive-icon-chassis">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+                </div>
+                <div class="directive-info">
+                  <h3 class="directive-title">Variant Analysis &amp; Patch Archaeology</h3>
+                  <p class="directive-text">
+                    For every vendor patch released, I deconstruct the git commit history, diff the syntax trees, and enumerate missed call sites across sibling controllers. When vendors fix one instance of a bug class, they frequently overlook sibling functions. Findings only count toward the ledger once they survive rigorous dedup against NVD, GitHub Advisories, and the Joomla Security Tracker.
+                  </p>
+                  <div class="directive-pills">
+                    <span class="directive-pill">COMMIT AUTOPSY</span>
+                    <span class="directive-pill">MISSED SINK SITES</span>
+                    <span class="directive-pill">SIBLING CODE PATHS</span>
+                    <span class="directive-pill">DEDUP GATES</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div class="callout callout-definition">
-          <div class="callout-header">
-            <span>[<a href="https://www.cve.org/CVERecord?id=CVE-2026-67364" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">CVE-2026-67364</a> // PRE-AUTH PHP CODE INJECTION — CVSS 4.0: 10.0 CRITICAL]</span>
+            <!-- Directive Card 3 -->
+            <div class="directive-card">
+              <div class="card-reticle tl"></div>
+              <div class="card-reticle br"></div>
+              <div class="directive-card-top">
+                <span class="directive-tag">ADVERSARY // EMULATION</span>
+                <span class="directive-hex">0x03</span>
+              </div>
+              <div class="directive-card-body">
+                <div class="directive-icon-chassis">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                </div>
+                <div class="directive-info">
+                  <h3 class="directive-title">Offensive Security Consulting &amp; Red Teaming</h3>
+                  <p class="directive-text">
+                    Comprehensive adversary emulation: web and mobile security audits (OWASP Top 10 / Mobile Top 10), internal Active Directory compromise, lateral movement, Kerberos ticket abuse, and post-exploitation. Full-scope physical security assessments and social engineering—from pretext crafting to on-site covert badge cloning and physical perimeter ingress.
+                  </p>
+                  <div class="directive-pills">
+                    <span class="directive-pill">ACTIVE DIRECTORY</span>
+                    <span class="directive-pill">LATERAL MOVEMENT</span>
+                    <span class="directive-pill">BADGE CLONING</span>
+                    <span class="directive-pill">PHYSICAL ENTRY</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Directive Card 4 -->
+            <div class="directive-card">
+              <div class="card-reticle tl"></div>
+              <div class="card-reticle br"></div>
+              <div class="directive-card-top">
+                <span class="directive-tag">LOW-LEVEL // RE &amp; HUNTING</span>
+                <span class="directive-hex">0x04</span>
+              </div>
+              <div class="directive-card-body">
+                <div class="directive-icon-chassis">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>
+                </div>
+                <div class="directive-info">
+                  <h3 class="directive-title">Binary RE &amp; Off-Duty CTF Dominance</h3>
+                  <p class="directive-text">
+                    Competitive CTF operator and active bug bounty hunter. Champion of the <strong>Fugitive of Justice CTF</strong> during my CTI operations tenure. Low-level systems research in Ghidra dissecting x64 and ARM assembly, dynamic process instrumentation via Frida, and static struct recovery on embedded firmware targets.
+                  </p>
+                  <div class="directive-pills">
+                    <span class="directive-pill">GHIDRA DECOMP</span>
+                    <span class="directive-pill">x64 / ARMv7/v8</span>
+                    <span class="directive-pill">CTF CHAMPION</span>
+                    <span class="directive-pill">BOUNTY HUNTING</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <p style="margin-bottom:0.25rem;"><strong>Balbooa Forms (Joomla component) &lt; 2.4.3.2: Pre-auth PHP Code Injection via eval()</strong></p>
-          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:0;">The form's optional custom-PHP post-submission handler is executed via eval(). The [URL parameter = X] shortcode is substituted with the raw, unescaped value of a query parameter, letting an unauthenticated attacker inject arbitrary PHP that executes server-side. The CSRF token is disclosed anonymously via a separate task, providing no real protection.</p>
-        </div>
+        </section>
 
-        <div class="callout callout-definition">
-          <div class="callout-header">
-            <span>[<a href="https://www.cve.org/CVERecord?id=CVE-2026-67363" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">CVE-2026-67363</a> // PRE-AUTH PAYMENT TAMPERING — CVSS 4.0: 7.7 HIGH]</span>
-          </div>
-          <p style="margin-bottom:0.25rem;"><strong>Balbooa Forms (Joomla component) &lt; 2.4.3.2: Pre-auth Payment Amount Tampering</strong></p>
-          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:0;">The stripeCharges and payAuthorize endpoints accept the charge total from a client-controlled request parameter and forward it to the payment gateway without recomputing it from configured product prices. Neither endpoint enforces authentication or CSRF checks. An unauthenticated attacker can purchase any priced item for an arbitrary amount (e.g., $0.01), and can additionally forge line items, quantities, and shipping.</p>
-        </div>
+        <!-- ======================================================== -->
+        <!-- 02. TECHNICAL SKILLS & WEAPONIZED ARSENAL (CYBER HUD) -->
+        <!-- ======================================================== -->
+        <section id="skills-section" class="cyber-arsenal-root">
+          <div class="cyber-arsenal-header">
+            <div class="hud-telemetry-badge">
+              <span class="hud-beacon-dot"></span>
+              <span class="hud-mono-code">NODE: LZ-994 // ARSENAL REGISTRY</span>
+            </div>
+            <h2 class="hud-main-heading" data-scramble="// 2. TECHNICAL SKILLS &amp; ARSENAL">// 2. TECHNICAL SKILLS &amp; ARSENAL</h2>
+            <p class="hud-sub-desc">
+              Weaponized research tooling, low-level architecture proficiencies, and offensive capabilities in active rotation. Filter the matrix or select an operational subsystem below:
+            </p>
 
-        <div class="callout callout-definition">
-          <div class="callout-header">
-            <span>[<a href="https://www.cve.org/CVERecord?id=CVE-2026-75948" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">CVE-2026-75948</a> // AUTH STORED XSS — CVSS 4.0: 8.6 HIGH]</span>
+            <!-- Real-time Arsenal Instant Filter Input -->
+            <div class="hud-search-filter-box">
+              <span class="search-box-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+              <input type="text" id="arsenal-search-input" placeholder="SCAN WEAPONIZED ARSENAL (e.g. C, x64, Ghidra, ROP, Docker, Python)..." aria-label="Filter skills and tools">
+              <button type="button" id="arsenal-search-clear" class="search-clear-btn" title="Clear filter" style="display:none;">✕</button>
+            </div>
           </div>
-          <p style="margin-bottom:0.25rem;"><strong>iCagenda (Joomla component) 4.0.8–4.0.12: Authenticated Stored XSS</strong></p>
-          <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:0;">The frontend "Submit an Event" form stores the <code>image</code> and <code>file</code> fields as raw strings with no output-side HTML-attribute escaping, allowing an authenticated attacker to inject persistent malicious scripts.</p>
-        </div>
 
-        <div class="callout callout-remark">
-          <div class="callout-header">
-            <span>[EMBARGOED // COORDINATED DISCLOSURE]</span>
+          <!-- Cyber Navigation Tabs -->
+          <div class="hud-subsystem-nav" role="tablist" aria-label="Arsenal Subsystems">
+            <button type="button" class="hud-tab-btn active" role="tab" aria-selected="true" aria-pressed="true" tabindex="0" data-domain="programming">
+              <span class="hud-tab-idx">[01]</span>
+              <span class="hud-tab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+              <span class="hud-tab-name">Programming</span>
+              <span class="hud-tab-count">07</span>
+            </button>
+            <button type="button" class="hud-tab-btn" role="tab" aria-selected="false" aria-pressed="false" tabindex="-1" data-domain="security-research">
+              <span class="hud-tab-idx">[02]</span>
+              <span class="hud-tab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+              <span class="hud-tab-name">Exploit Research</span>
+              <span class="hud-tab-count">13</span>
+            </button>
+            <button type="button" class="hud-tab-btn" role="tab" aria-selected="false" aria-pressed="false" tabindex="-1" data-domain="red-team-operations">
+              <span class="hud-tab-idx">[03]</span>
+              <span class="hud-tab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg></span>
+              <span class="hud-tab-name">Red Team Ops</span>
+              <span class="hud-tab-count">12</span>
+            </button>
+            <button type="button" class="hud-tab-btn" role="tab" aria-selected="false" aria-pressed="false" tabindex="-1" data-domain="reverse-engineering">
+              <span class="hud-tab-idx">[04]</span>
+              <span class="hud-tab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg></span>
+              <span class="hud-tab-name">Reverse Eng.</span>
+              <span class="hud-tab-count">10</span>
+            </button>
+            <button type="button" class="hud-tab-btn" role="tab" aria-selected="false" aria-pressed="false" tabindex="-1" data-domain="digital-forensics-cti">
+              <span class="hud-tab-idx">[05]</span>
+              <span class="hud-tab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M11 8v6"></path><path d="M8 11h6"></path></svg></span>
+              <span class="hud-tab-name">Forensics &amp; CTI</span>
+              <span class="hud-tab-count">08</span>
+            </button>
+            <button type="button" class="hud-tab-btn" role="tab" aria-selected="false" aria-pressed="false" tabindex="-1" data-domain="devops-lab-infra">
+              <span class="hud-tab-idx">[06]</span>
+              <span class="hud-tab-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg></span>
+              <span class="hud-tab-name">DevOps &amp; Infra</span>
+              <span class="hud-tab-count">08</span>
+            </button>
           </div>
-          <p style="margin-bottom:0;">
-            Additional novel findings in commercial extensions and softwares are currently in coordinated disclosure with vendors. Root-cause analysis, PoCs, and detection guidance land on this page the day the patches ship. No details before then. That's the deal.
+
+          <!-- Dynamic Telemetry Readout Strip -->
+          <div class="hud-telemetry-strip" aria-live="polite">
+            <div class="telemetry-col">
+              <span class="telemetry-key">ACTIVE_SUBSYSTEM</span>
+              <span class="telemetry-val text-glow" id="telemetry-domain-name">PRIMARY LANGUAGES &amp; RUNTIMES</span>
+            </div>
+            <div class="telemetry-col hidden-mobile">
+              <span class="telemetry-key">SECURITY_PROFILE</span>
+              <span class="telemetry-val" id="telemetry-domain-desc">Target environments, exploit scripting engines, and low-level architectures.</span>
+            </div>
+            <div class="telemetry-col text-right">
+              <span class="telemetry-key">DEPLOYED_MODULES</span>
+              <span class="telemetry-val text-accent" id="telemetry-count-badge">[7 CAPABILITIES]</span>
+            </div>
+          </div>
+
+          <!-- Subsystem Panels Mount -->
+          <div class="hud-panels-mount">
+            
+            <!-- [01] Programming Panel (Strict 7 items) -->
+            <div class="hud-domain-panel active" id="hud-panel-programming" role="tabpanel" data-domain="programming" data-tagline="PRIMARY LANGUAGES &amp; RUNTIMES" data-desc="Target environments, exploit scripting engines, and low-level architectures." data-count="7">
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">SYSTEMS // NATIVE</span>
+                  <span class="hud-card-hex">0x01</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M19.875 6.27a2.225 2.225 0 0 1 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z"></path><path d="M14 10a2 2 0 1 0 -4 0v4a2 2 0 1 0 4 0"></path></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">C</h3>
+                    <p class="hud-card-spec">Memory corruption &amp; exploit development</p>
+                  </div>
+                </div>
+              </article>
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">ARCH // AMD64</span>
+                  <span class="hud-card-hex">0x02</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">x64 Assembly</h3>
+                    <p class="hud-card-spec">ROP chains, shellcode &amp; stack pivoting</p>
+                  </div>
+                </div>
+              </article>
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">ARCH // AARCH64</span>
+                  <span class="hud-card-hex">0x03</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"></rect><path d="M7 2v20"></path><path d="M17 2v20"></path><path d="M2 12h20"></path><path d="M2 7h5"></path><path d="M2 17h5"></path><path d="M17 17h5"></path><path d="M17 7h5"></path></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">ARM Assembly</h3>
+                    <p class="hud-card-spec">ARMv7/ARMv8 reversing &amp; perimeter devices</p>
+                  </div>
+                </div>
+              </article>
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">SCRIPT // OFFSEC</span>
+                  <span class="hud-card-hex">0x04</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 9H6a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v-2a2 2 0 0 1 2-2h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3a2 2 0 0 0-2 2v2"></path><path d="M12 15h6a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2h-1v2a2 2 0 0 1-2 2h-4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-2"></path><circle cx="9" cy="6" r="1" fill="currentColor"></circle><circle cx="15" cy="18" r="1" fill="currentColor"></circle></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">Python</h3>
+                    <p class="hud-card-spec">PoC weaponization, parsers &amp; custom fuzzers</p>
+                  </div>
+                </div>
+              </article>
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">ENTERPRISE // JVM</span>
+                  <span class="hud-card-hex">0x05</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">Java</h3>
+                    <p class="hud-card-spec">Deserialization gadgets &amp; enterprise audits</p>
+                  </div>
+                </div>
+              </article>
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">AUTOMATION // SCRIPT</span>
+                  <span class="hud-card-hex">0x06</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon><line x1="2" y1="9" x2="22" y2="9"></line><line x1="12" y1="22" x2="7" y2="9"></line><line x1="12" y1="22" x2="17" y2="9"></line><line x1="6" y1="3" x2="10" y2="9"></line><line x1="18" y1="3" x2="14" y2="9"></line></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">Ruby</h3>
+                    <p class="hud-card-spec">Exploit prototyping, C2 scripting &amp; protocol fuzzing</p>
+                  </div>
+                </div>
+              </article>
+              <article class="hud-card">
+                <div class="hud-card-corners"></div>
+                <div class="hud-card-top">
+                  <span class="hud-card-tag">CLIENT // ENGINE</span>
+                  <span class="hud-card-hex">0x07</span>
+                </div>
+                <div class="hud-card-core">
+                  <div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M16 8v8"></path><path d="M12 16a2 2 0 0 1-2-2"></path></svg></div>
+                  <div class="hud-card-meta">
+                    <h3 class="hud-card-title">Javascript</h3>
+                    <p class="hud-card-spec">DOM XSS, prototype pollution &amp; Node.js</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- [02] Exploit Research Panel -->
+            <div class="hud-domain-panel" id="hud-panel-security-research" role="tabpanel" data-domain="security-research" data-tagline="VULNERABILITY &amp; EXPLOIT RESEARCH" data-desc="Source-code auditing, bug hunting methodology, and weaponized proof-of-concepts." data-count="13" hidden>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">RING 0 // CORE</span><span class="hud-card-hex">0x01</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Kernel Exploitation</h3><p class="hud-card-spec">Privilege escalation &amp; memory corruption</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">RING 3 // USERLAND</span><span class="hud-card-hex">0x02</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Userland Exploitation</h3><p class="hud-card-spec">Heap feng-shui, format strings &amp; ASLR/DEP bypass</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">OFFSEC // WEAPONIZED</span><span class="hud-card-hex">0x03</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="m21 2-2 2m-6 6L3 20l-1 2 2-1 10-10m3-3 2-2"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Exploit Development</h3><p class="hud-card-spec">Reliable primitive chaining &amp; arbitrary code exec</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">RESEARCH // PATTERNS</span><span class="hud-card-hex">0x04</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Variant Analysis</h3><p class="hud-card-spec">Cross-tree bug enumeration &amp; missed call sites</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">SOURCE // BINARY</span><span class="hud-card-hex">0x05</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Patch Diffing</h3><p class="hud-card-spec">Vendor patch reverse engineering &amp; bypass discovery</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">LOW-LEVEL // CFG</span><span class="hud-card-hex">0x06</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Binary Analysis</h3><p class="hud-card-spec">Static/dynamic binary triage &amp; control flow</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DYNAMIC // MUTATION</span><span class="hud-card-hex">0x07</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Fuzzing &amp; Harnesses</h3><p class="hud-card-spec">AFL++, libFuzzer &amp; protocol grammar mutation</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DISCOVERY // 0DAY</span><span class="hud-card-hex">0x08</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Bug Hunting</h3><p class="hud-card-spec">Zero-day vulnerability discovery across CMS &amp; APIs</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">TRIGGER // ZERO-PRECON</span><span class="hud-card-hex">0x09</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">PoC Weaponization</h3><p class="hud-card-spec">Deterministic exploits with zero assumptions</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">WEB // ATTACK SURFACE</span><span class="hud-card-hex">0x0A</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Web Primitives</h3><p class="hud-card-spec">RCE, auth bypass, file upload &amp; SSRF chains</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">OBJECT // INJECTION</span><span class="hud-card-hex">0x0B</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Deserialization</h3><p class="hud-card-spec">PHP unserialize, Java gadget chains &amp; JSON parsers</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">ARCHITECTURE // RISK</span><span class="hud-card-hex">0x0C</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Threat Modeling</h3><p class="hud-card-spec">Trust boundary mapping &amp; attack path modeling</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DISCLOSURE // REPORT</span><span class="hud-card-hex">0x0D</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Root Cause Analysis</h3><p class="hud-card-spec">Vendor coordination, CVSS 4.0 &amp; remediation notes</p></div></div></article>
+            </div>
+
+            <!-- [03] Red Team Ops Panel -->
+            <div class="hud-domain-panel" id="hud-panel-red-team-operations" role="tabpanel" data-domain="red-team-operations" data-tagline="ADVERSARY EMULATION &amp; POST-EXPLOITATION" data-desc="Living off the land, active directory compromise, C2 channels, and evasive operations." data-count="12" hidden>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">IDENTITY // DOMAIN</span><span class="hud-card-hex">0x01</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Active Directory</h3><p class="hud-card-spec">Kerberoasting, AS-REP roasting &amp; ACL abuse</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">ADVERSARY // TOOLING</span><span class="hud-card-hex">0x02</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">DropoutJeep &amp; MITM</h3><p class="hud-card-spec">Reverse-proxy MITM, MFA token hijack &amp; OAuth abuse</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">INFRA // COVERT</span><span class="hud-card-hex">0x03</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">C2 Frameworks</h3><p class="hud-card-spec">Sliver, Havoc &amp; Mythic operator workflows</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DEFENSE // EVASION</span><span class="hud-card-hex">0x04</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">EDR/AV Evasion</h3><p class="hud-card-spec">Syscalls, API unhooking &amp; memory obfuscation</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">WEAPONIZATION // EXEC</span><span class="hud-card-hex">0x05</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Payload Staging</h3><p class="hud-card-spec">Custom loaders, shellcode injection &amp; AppLocker bypass</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">EXPANSION // ACCESS</span><span class="hud-card-hex">0x06</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Lateral Movement</h3><p class="hud-card-spec">WMI, WinRM, PsExec &amp; token manipulation</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">STEALTH // NATIVE</span><span class="hud-card-hex">0x07</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">LOLBAS &amp; LOLBins</h3><p class="hud-card-spec">Living off the land with built-in binaries</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">CRYPTOGRAPHY // AUTH</span><span class="hud-card-hex">0x08</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Kerberos &amp; PKI Abuse</h3><p class="hud-card-spec">Golden tickets, Silver tickets &amp; AD CS ESC1-ESC8</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">NETWORK // TUNNEL</span><span class="hud-card-hex">0x09</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Pivoting &amp; SOCKS</h3><p class="hud-card-spec">Chisel, Ligolo-ng &amp; multi-tier SSH pivoting</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">GRAPH // PATHFINDING</span><span class="hud-card-hex">0x0A</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">BloodHound Analysis</h3><p class="hud-card-spec">Domain escalation pathfinding &amp; Cypher queries</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">NEURAL // JAILBREAK</span><span class="hud-card-hex">0x0B</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 2a4 4 0 0 1 4 4c0 .88-.28 1.7-.76 2.37L17 10h3a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1l-1.5 4H6.5L5 16H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h3l1.76-1.63A4 4 0 0 1 8 6a4 4 0 0 1 4-4z"></path><circle cx="9" cy="13" r="1"></circle><circle cx="15" cy="13" r="1"></circle></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">AI &amp; LLM Red Teaming</h3><p class="hud-card-spec">Prompt injection, RAG data poisoning &amp; agentic bypass</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">PHYSICAL // BADGES</span><span class="hud-card-hex">0x0C</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="12" cy="10" r="3"></circle><path d="M7 16a5 5 0 0 1 10 0"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Physical &amp; SE Kit</h3><p class="hud-card-spec">Proxmark3 RFID cloning, covert entry &amp; pretexting</p></div></div></article>
+            </div>
+
+            <!-- [04] Reverse Engineering Panel -->
+            <div class="hud-domain-panel" id="hud-panel-reverse-engineering" role="tabpanel" data-domain="reverse-engineering" data-tagline="BINARY DISSECTION &amp; ARCHITECTURE" data-desc="Static analysis, intermediate representation, dynamic debugging, and instrumentation." data-count="10" hidden>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DISASSEMBLY // NSA</span><span class="hud-card-hex">0x01</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V17a1 1 0 0 1-2 0v-.07A8 8 0 0 1 4.07 11H5a1 1 0 0 1 0-2h-.93A8 8 0 0 1 11 4.07V5a1 1 0 0 1 2 0v-.93A8 8 0 0 1 19.93 9H19a1 1 0 0 1 0 2h.93A8 8 0 0 1 13 16.93z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Ghidra</h3><p class="hud-card-spec">Decompilation, headless automation &amp; P-code</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DISASSEMBLY // INDUSTRY</span><span class="hud-card-hex">0x02</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">IDA Pro</h3><p class="hud-card-spec">Hex-Rays decompilation, IDAPython &amp; signatures</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">INSTRUMENTATION // HOOKS</span><span class="hud-card-hex">0x03</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Frida</h3><p class="hud-card-spec">Dynamic function hooking, SSL unpinning &amp; memory tracing</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">DEBUGGER // LINUX</span><span class="hud-card-hex">0x04</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">GDB / GEF</h3><p class="hud-card-spec">GNU debugger with GEF for heap &amp; stack exploit dev</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">CLI // FRAMEWORK</span><span class="hud-card-hex">0x05</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polygon points="12 2 15 8 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 8 12 2"></polygon></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Radare2 / Rizin</h3><p class="hud-card-spec">Scriptable binary dissection, patch diffing &amp; ESIL</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">IL // INTERMEDIATE</span><span class="hud-card-hex">0x06</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><polygon points="6 2 18 2 18 6 6 6"></polygon><rect x="3" y="6" width="18" height="12" rx="1"></rect><polygon points="6 18 18 18 18 22 6 22"></polygon></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Binary Ninja</h3><p class="hud-card-spec">Medium-level IL analysis &amp; automated deobfuscation</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">EXECUTION // MEMORY</span><span class="hud-card-hex">0x07</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Dynamic Debugging</h3><p class="hud-card-spec">Live process attachment, registers &amp; stack unwinding</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">CODE FLOW // STRUCTS</span><span class="hud-card-hex">0x08</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Static Analysis</h3><p class="hud-card-spec">Symbol recovery, struct reconstruction &amp; call graphs</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">EMBEDDED // ROM</span><span class="hud-card-hex">0x09</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Firmware Analysis</h3><p class="hud-card-spec">Binwalk, squashfs unpacking &amp; hardware flash dumps</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">TRIAGE // SANDBOX</span><span class="hud-card-hex">0x0A</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Malware Analysis</h3><p class="hud-card-spec">Persistence enumeration, C2 discovery &amp; unpackers</p></div></div></article>
+            </div>
+
+            <!-- [05] Digital Forensics & CTI Panel -->
+            <div class="hud-domain-panel" id="hud-panel-digital-forensics-cti" role="tabpanel" data-domain="digital-forensics-cti" data-tagline="MEMORY FORENSICS, TELEMETRY &amp; ATTRIBUTION" data-desc="CTI tradecraft, volatile memory dumps, packet inspection, and threat detection rules." data-count="8" hidden>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">RAM // VOLATILE</span><span class="hud-card-hex">0x01</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="7" y2="16"></line><line x1="11" y1="8" x2="11" y2="16"></line><line x1="15" y1="8" x2="15" y2="16"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Memory Forensics</h3><p class="hud-card-spec">Process memory extraction &amp; injected thread hunting</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">TOOLING // MEM DUMP</span><span class="hud-card-hex">0x02</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M8 12l3 3 5-6"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Volatility Framework</h3><p class="hud-card-spec">Plugin scripting, malfind, psxview &amp; vad dumps</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">STORAGE // ARTIFACTS</span><span class="hud-card-hex">0x03</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="12" x2="12" y2="8"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Disk Forensics</h3><p class="hud-card-spec">NTFS $MFT, usnJrnl carving &amp; registry forensics</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">SUITE // INVESTIGATION</span><span class="hud-card-hex">0x04</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Autopsy</h3><p class="hud-card-spec">Evidence indexing, timeline analysis &amp; keyword searching</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">PCAP // PACKETS</span><span class="hud-card-hex">0x05</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M2 12h5l3 8 4-16 3 8h5"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Wireshark</h3><p class="hud-card-spec">Deep packet dissection &amp; rogue beacon telemetry</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">ACTOR // ATTRIBUTION</span><span class="hud-card-hex">0x06</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m10 15 5-3-5-3v6z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Threat Attribution</h3><p class="hud-card-spec">Diamond Model, MITRE ATT&amp;CK &amp; actor profiling</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">FINCRIME // TELEMETRY</span><span class="hud-card-hex">0x07</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Fraud Intelligence</h3><p class="hud-card-spec">Fintech fraud telemetry, laundering infra &amp; banking syndicates</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">OSINT // SYNDICATES</span><span class="hud-card-hex">0x08</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Syndicate Tracking</h3><p class="hud-card-spec">Underground markets, BEC syndicates &amp; illicit Telegram triage</p></div></div></article>
+            </div>
+
+            <!-- [06] DevOps & Lab Infra Panel -->
+            <div class="hud-domain-panel" id="hud-panel-devops-lab-infra" role="tabpanel" data-domain="devops-lab-infra" data-tagline="SYSTEMS, CLOUD &amp; LAB REPLAY" data-desc="Infrastructure automation, cloud IAM auditing, C2 redirectors, and exploit harnesses." data-count="8" hidden>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">ISOLATION // LABS</span><span class="hud-card-hex">0x01</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Docker &amp; Containers</h3><p class="hud-card-spec">Pinned CMS versions, exploit replay &amp; fast teardowns</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">CLUSTER // CLOUD</span><span class="hud-card-hex">0x02</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Kubernetes</h3><p class="hud-card-spec">Cluster pod security, RBAC misconfigs &amp; egress checks</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">CLOUD // IAM ESC</span><span class="hud-card-hex">0x03</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Cloud Security &amp; IAM</h3><p class="hud-card-spec">AWS, Azure &amp; GCP privilege escalation &amp; IAM audit</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">PIPELINE // AUTOMATION</span><span class="hud-card-hex">0x04</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 9h6v6H9z"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Jenkins CI/CD</h3><p class="hud-card-spec">CI/CD security, script console &amp; secret hunting</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">AUDIT // STATIC</span><span class="hud-card-hex">0x05</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M8 11h6"></path><path d="M11 8v6"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Semgrep &amp; SCA Auditing</h3><p class="hud-card-spec">Custom Semgrep rules, Fortify, SonarQube &amp; static analysis</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">INFRA // RELAY</span><span class="hud-card-hex">0x06</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">C2 Infrastructure</h3><p class="hud-card-spec">Covert redirectors, reverse proxies &amp; evasive cloud relay</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">LAB // REPLAY</span><span class="hud-card-hex">0x07</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Exploit Test Harnesses</h3><p class="hud-card-spec">Cleanroom reproduction harnesses &amp; regression replay</p></div></div></article>
+              <article class="hud-card"><div class="hud-card-corners"></div><div class="hud-card-top"><span class="hud-card-tag">VCS // COMMITS</span><span class="hud-card-hex">0x08</span></div><div class="hud-card-core"><div class="hud-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hud-icon" aria-hidden="true"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 9a9 9 0 0 1 9 9"></path></svg></div><div class="hud-card-meta"><h3 class="hud-card-title">Git &amp; Code Tracking</h3><p class="hud-card-spec">Patch archaeology, git blame &amp; diff auditing</p></div></div></article>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 03. CVE DISCLOSURE LOG & REGISTRY (CLASSIFIED HARDENED LEDGER) -->
+        <!-- ======================================================== -->
+        <section id="cve-ledger" class="dossier-section-block">
+          <div class="section-badge-bar">
+            <span class="badge-idx">[03]</span>
+            <span class="badge-title">VULNERABILITY REGISTRY</span>
+          </div>
+          <h2 class="dossier-heading" data-scramble="// 3. CVE RESEARCH &amp; DISCLOSURE LOG">// 3. CVE RESEARCH &amp; DISCLOSURE LOG</h2>
+          
+          <div class="cve-lead-bar">
+            <p class="dossier-section-lead" style="margin-bottom:0;">
+              Documented novel zero-days and coordinated vulnerability disclosures. Findings are validated with deterministic 3/3 cleanroom reproduction, minimal PoC payloads, and verified vendor remediation:
+            </p>
+            <div class="cve-pipeline-badge">
+              <span class="pipeline-pulse"></span>
+              <span class="pipeline-text">PIPELINE: 15+ DISCLOSURES QUEUED</span>
+            </div>
+          </div>
+
+          <div class="cve-ledger-stack">
+
+            <!-- CVE Record 1: Critical 10.0 -->
+            <div class="cve-ledger-card cve-critical-border">
+              <div class="cve-card-header">
+                <div class="cve-id-group">
+                  <a href="https://www.cve.org/CVERecord?id=CVE-2026-67364" target="_blank" rel="noopener" class="cve-id-badge cve-critical-text">
+                    <span class="cve-prefix">CVE:</span> 2026-67364
+                    <span class="cve-external-arrow">↗</span>
+                  </a>
+                  <button type="button" class="cve-copy-btn" data-copy="CVE-2026-67364" title="Copy CVE ID">COPY ID</button>
+                  <span class="cve-vuln-class">PRE-AUTH PHP CODE INJECTION VIA EVAL()</span>
+                </div>
+                <div class="cve-cvss-meter">
+                  <div class="cvss-val-badge cvss-critical">CVSS 4.0 // 10.0 CRITICAL</div>
+                  <div class="cvss-bar-track">
+                    <div class="cvss-bar-fill cvss-fill-100"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cve-card-body">
+                <div class="cve-target-spec">
+                  <span class="spec-k">TARGET:</span>
+                  <span class="spec-v">Balbooa Forms (Joomla Component) &lt; 2.4.3.2</span>
+                </div>
+                <p class="cve-analysis-text">
+                  The form's optional custom-PHP post-submission handler executes dynamically via server-side <code>eval()</code>. The <code>[URL parameter = X]</code> shortcode token is substituted directly with the raw, unescaped value of an incoming HTTP query parameter, enabling an unauthenticated attacker to inject arbitrary PHP payloads that execute immediately under webserver privileges. The application's CSRF token is disclosed anonymously via a separate unauthenticated task endpoint, completely bypassing token protection.
+                </p>
+                <div class="cve-primitives-strip">
+                  <span class="cve-chip chip-critical">PRIMITIVE: UNAUTH RCE</span>
+                  <span class="cve-chip">VECTOR: [URL PARAM = X] EVAL()</span>
+                  <span class="cve-chip">BYPASS: ANONYMOUS CSRF DISCLOSURE</span>
+                  <span class="cve-chip chip-verified">STATUS: VENDOR PATCHED</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CVE Record 2: High 7.7 -->
+            <div class="cve-ledger-card cve-high-border">
+              <div class="cve-card-header">
+                <div class="cve-id-group">
+                  <a href="https://www.cve.org/CVERecord?id=CVE-2026-67363" target="_blank" rel="noopener" class="cve-id-badge cve-high-text">
+                    <span class="cve-prefix">CVE:</span> 2026-67363
+                    <span class="cve-external-arrow">↗</span>
+                  </a>
+                  <button type="button" class="cve-copy-btn" data-copy="CVE-2026-67363" title="Copy CVE ID">COPY ID</button>
+                  <span class="cve-vuln-class">PRE-AUTH PAYMENT AMOUNT TAMPERING</span>
+                </div>
+                <div class="cve-cvss-meter">
+                  <div class="cvss-val-badge cvss-high">CVSS 4.0 // 7.7 HIGH</div>
+                  <div class="cvss-bar-track">
+                    <div class="cvss-bar-fill cvss-fill-77"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cve-card-body">
+                <div class="cve-target-spec">
+                  <span class="spec-k">TARGET:</span>
+                  <span class="spec-v">Balbooa Forms (Joomla Component) &lt; 2.4.3.2</span>
+                </div>
+                <p class="cve-analysis-text">
+                  The <code>stripeCharges</code> and <code>payAuthorize</code> payment controller endpoints accept transaction totals directly from an untrusted client-controlled HTTP request parameter, forwarding the manipulated sum to the payment gateway without recalculating it from configured database product rates. Neither endpoint enforces user authentication or CSRF tokens. An unauthenticated attacker can purchase any priced product catalog for an arbitrary amount (e.g. $0.01), and can forge arbitrary line items, quantities, and shipping charges.
+                </p>
+                <div class="cve-primitives-strip">
+                  <span class="cve-chip chip-high">PRIMITIVE: PAYMENT INTEGRITY BYPASS</span>
+                  <span class="cve-chip">VECTOR: CLIENT PRICE FORGERY ($0.01)</span>
+                  <span class="cve-chip">ENDPOINTS: stripeCharges / payAuthorize</span>
+                  <span class="cve-chip chip-verified">STATUS: VENDOR PATCHED</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CVE Record 3: High 8.6 -->
+            <div class="cve-ledger-card cve-high-border">
+              <div class="cve-card-header">
+                <div class="cve-id-group">
+                  <a href="https://www.cve.org/CVERecord?id=CVE-2026-75948" target="_blank" rel="noopener" class="cve-id-badge cve-high-text">
+                    <span class="cve-prefix">CVE:</span> 2026-75948
+                    <span class="cve-external-arrow">↗</span>
+                  </a>
+                  <button type="button" class="cve-copy-btn" data-copy="CVE-2026-75948" title="Copy CVE ID">COPY ID</button>
+                  <span class="cve-vuln-class">AUTHENTICATED STORED CROSS-SITE SCRIPTING (XSS)</span>
+                </div>
+                <div class="cve-cvss-meter">
+                  <div class="cvss-val-badge cvss-high">CVSS 4.0 // 8.6 HIGH</div>
+                  <div class="cvss-bar-track">
+                    <div class="cvss-bar-fill cvss-fill-86"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cve-card-body">
+                <div class="cve-target-spec">
+                  <span class="spec-k">TARGET:</span>
+                  <span class="spec-v">iCagenda (Joomla Component) 4.0.8–4.0.12</span>
+                </div>
+                <p class="cve-analysis-text">
+                  The frontend "Submit an Event" submission controller stores the <code>image</code> and <code>file</code> input fields as raw strings into the database without output-side HTML-attribute context escaping. When administrators review submitted event calendars or render public schedules, the injected payload triggers arbitrary JavaScript execution within privileged administrative sessions, permitting session theft and administrative action forgery.
+                </p>
+                <div class="cve-primitives-strip">
+                  <span class="cve-chip chip-high">PRIMITIVE: STORED SCRIPT INJECTION</span>
+                  <span class="cve-chip">VECTOR: RAW ATTRIBUTE INJECTION</span>
+                  <span class="cve-chip">SINK: EVENT SUBMISSION CONTROLLER</span>
+                  <span class="cve-chip chip-verified">STATUS: VENDOR PATCHED</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Embargo Notice Card -->
+            <div class="cve-embargo-banner">
+              <div class="embargo-scanner-grid"></div>
+              <div class="embargo-header">
+                <span class="embargo-radar-dot"></span>
+                <span class="embargo-title">[EMBARGOED // 15 NOVEL ZERO-DAYS IN COORDINATED DISCLOSURE PIPELINE]</span>
+                <span class="embargo-lock-icon">🔒</span>
+              </div>
+              <p class="embargo-desc">
+                Additional novel findings across widely deployed commercial extensions, enterprise web platforms, and server runtimes are currently held under responsible coordinated disclosure agreements with vendor engineering teams. Root-cause vulnerability dissections, deterministic reproduction harnesses, and intrusion detection signatures land on this ledger the moment official vendor patches ship. Zero leaks prior to fix availability.
+              </p>
+              <div class="embargo-footer-stats">
+                <span>ESTIMATED PATCH RELEASES: ROLLING 2026</span>
+                <span>DISCLOSURE STANDARD: ISO/IEC 29147</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 04. VULNERABILITY WEAPONIZATION PROTOCOL (CVE METHOD) -->
+        <!-- ======================================================== -->
+        <section id="methodology" class="dossier-section-block">
+          <div class="section-badge-bar">
+            <span class="badge-idx">[04]</span>
+            <span class="badge-title">RESEARCH PROTOCOL</span>
+          </div>
+          <h2 class="dossier-heading" data-scramble="// 4. CVE RESEARCH METHODOLOGY">// 4. CVE RESEARCH METHODOLOGY</h2>
+          <p class="dossier-section-lead">
+            Every campaign runs through four strict verification gates. A finding is never published, submitted to a CNA, or claimed as a vulnerability until it clears every single gate:
           </p>
-        </div>
 
-   <h2>// 3. CVE METHOD</h2>
-<p>
-  Every campaign runs the same gates. A finding is not a finding until all of them pass:
-</p>
-<ul>
-  <li><strong>G1. REPRO:</strong> 3/3 anonymous reproduction against the <em>latest</em> release, default install, zero preconditions. Vulnerable-version diffs are for root-causing only, never for validation.</li>
-  <li><strong>G2. NOVELTY:</strong> Dedup against NVD, GitHub, and the Security Tracker. Duplicates are documented and discarded.</li>
-  <li><strong>G3. WEAPONIZE:</strong> A deterministic, minimized PoC that proves impact, not a scanner output screenshot.</li>
-  <li><strong>G4. REPORT:</strong> Root cause, reproduction, and detection rules, packaged for the vendor and the CVE assigner.</li>
-</ul>
-<p>
-  Dead ends get logged with the same rigor as findings. The discard pile is part of the method.
-</p>
+          <div class="methodology-stepper-grid">
 
-        <h2>// 4. THE LAB</h2>
-<ul>
-  <li><strong>CMS Bench:</strong> Self-hosted Joomla, WordPress, and Apache environments with pinned component versions and source trees for vulnerability research, patch diffing, and exploit replay.</li>
-  <li><strong>Source-First Tooling:</strong> Custom tooling for extracting extension codebases, performing vulnerability-to-patch diffs, and developing target-specific replay, bypass, and fuzzing workflows.</li>
-  <li><strong>RE Bench:</strong> Ghidra for static analysis, complemented by a lightweight x64/ARM dynamic debugging environment.</li>
-  <li><strong>Consulting &amp; Red Team Kit:</strong> Standard offsec tooling for web, mobile, and internal AD engagements, plus a physical/SE kit (pretext material, cloned badges, the usual) for on-site work.</li>
-  <li><strong>CTF Rig:</strong> Nothing exotic, mostly the same source-first and RE tooling above, pointed at a scoreboard instead of a client.</li>
-</ul>
+            <!-- Gate 1 -->
+            <div class="method-step-card">
+              <div class="method-card-header">
+                <span class="step-num-badge">G1</span>
+                <span class="step-tag">DETERMINISTIC</span>
+              </div>
+              <div class="step-content">
+                <h3 class="step-title">3/3 Cleanroom Reproduction</h3>
+                <p class="step-text">
+                  Must reproduce 3 out of 3 times anonymously against the <em>latest</em> official release in a pristine, default installation with zero custom preconditions. Vulnerable-version diffs are strictly for root-causing and hypotheses, never for validation.
+                </p>
+                <div class="step-micro-metric">VERIFICATION: 100% REPRODUCIBLE</div>
+              </div>
+            </div>
 
-        <h2>// 5. OFF THE CLOCK</h2>
-        <p>
-          Gaming (MK1, The Finals, and 1000 more games). Skateboarding, Rubik's Cubes, and 50 other things I obsess on for just a week.
-        </p>
+            <!-- Gate 2 -->
+            <div class="method-step-card">
+              <div class="method-card-header">
+                <span class="step-num-badge">G2</span>
+                <span class="step-tag">CROSS-CHECK</span>
+              </div>
+              <div class="step-content">
+                <h3 class="step-title">Novelty &amp; Variant Dedup</h3>
+                <p class="step-text">
+                  Exhaustive deduplication against the National Vulnerability Database (NVD), GitHub Advisory Database, vendor security bulletins, and security trackers. If a primitive matches an existing record or known duplicate, it is cataloged in the discard pile and discarded.
+                </p>
+                <div class="step-micro-metric">VERIFICATION: ZERO-COLLISION</div>
+              </div>
+            </div>
 
-        <h2>// 6. CONTACT &amp; COLLABORATION</h2>
-        <p>
-          Vendors, fellow researchers, CTF teams, bug bounty programs: signals welcome. Prefer encrypted mail for anything disclosure-sensitive.
-        </p>
-        <p>
-          <strong>Email:</strong> <code>omoakin749@gmail.com</code><br>
-          <strong>GitHub:</strong> <a href="https://github.com/lulztigre" target="_blank" rel="noopener">github.com/lulztigre</a><br>
-<strong>LinkedIn:</strong> <a href="https://linkedin.com/in/akinlabi-o-400893183" target="_blank" rel="noopener">LinkedIn</a><br>
-          <strong>Website:</strong> <a href="https://lulztigre.pw">https://lulztigre.pw</a>
-        </p>
+            <!-- Gate 3 -->
+            <div class="method-step-card">
+              <div class="method-card-header">
+                <span class="step-num-badge">G3</span>
+                <span class="step-tag">MINIMAL PoC</span>
+              </div>
+              <div class="step-content">
+                <h3 class="step-title">Deterministic Weaponization</h3>
+                <p class="step-text">
+                  Construct a deterministic, minimized Proof of Concept that conclusively proves operational security impact (arbitrary code execution, unauthorized data read, or state tampering). Scanner output screenshots are strictly rejected.
+                </p>
+                <div class="step-micro-metric">VERIFICATION: RAW SINGLE-REQUEST PoC</div>
+              </div>
+            </div>
+
+            <!-- Gate 4 -->
+            <div class="method-step-card">
+              <div class="method-card-header">
+                <span class="step-num-badge">G4</span>
+                <span class="step-tag">PACKAGING</span>
+              </div>
+              <div class="step-content">
+                <h3 class="step-title">Advisory Packaging &amp; Coordinated Disclosure</h3>
+                <p class="step-text">
+                  Complete technical package delivered to vendor security contacts and assigned CNAs: root cause analysis, code diffs, CVSS 4.0 vector computation, reproduction test harness, and vendor patch recommendations.
+                </p>
+                <div class="step-micro-metric">VERIFICATION: ISO/IEC 29147 COMPLIANT</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="method-callout-footer">
+            <span class="footer-icon">⚡</span>
+            <span>Dead ends are logged with the identical technical rigor as novel CVEs. The discard pile is an essential component of the scientific method.</span>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 05. THE LAB INFRASTRUCTURE (HARDWARE & SYSTEM RACKS) -->
+        <!-- ======================================================== -->
+        <section id="the-lab" class="dossier-section-block">
+          <div class="section-badge-bar">
+            <span class="badge-idx">[05]</span>
+            <span class="badge-title">SYSTEM TESTBED</span>
+          </div>
+          <h2 class="dossier-heading" data-scramble="// 5. THE RESEARCH LAB INFRASTRUCTURE">// 5. THE RESEARCH LAB INFRASTRUCTURE</h2>
+          <p class="dossier-section-lead">
+            Autonomous, air-gapped virtualization testbeds, AST tokenizers, and low-level dynamic debugging workstations configured for high-throughput vulnerability analysis:
+          </p>
+
+          <div class="lab-rack-grid">
+
+            <!-- Node 1 -->
+            <div class="lab-rack-node">
+              <div class="node-server-header">
+                <span class="rack-led-active"></span>
+                <span class="rack-title">NODE-01 // CMS BENCH</span>
+                <span class="rack-ip">10.99.4.11</span>
+              </div>
+              <div class="node-server-body">
+                <h3 class="node-name">Self-Hosted CMS Ecosystem Cluster</h3>
+                <p class="node-spec">
+                  Self-hosted Joomla, WordPress, Apache, and Nginx environments with pinned component versions, git commit branches, and live database snapshots for rapid rollback, patch diffing, and zero-day exploit replay.
+                </p>
+                <div class="node-tag-strip">
+                  <span>DOCKER-ISOLATED</span>
+                  <span>PHP 7.4 - 8.4 MATRIX</span>
+                  <span>MARIADB SNAPSHOTS</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="lab-rack-node">
+              <div class="node-server-header">
+                <span class="rack-led-active"></span>
+                <span class="rack-title">NODE-02 // SOURCE-FIRST PIPELINE</span>
+                <span class="rack-ip">10.99.4.12</span>
+              </div>
+              <div class="node-server-body">
+                <h3 class="node-name">AST Parsers &amp; Vulnerability Diffing Harnesses</h3>
+                <p class="node-spec">
+                  Bespoke Python tokenizers and AST analyzers for bulk extension extraction, automated vulnerability-to-patch git diffing, parameter sink tracking, and target-specific replay and grammar fuzzing workflows.
+                </p>
+                <div class="node-tag-strip">
+                  <span>AST SINK TRACKING</span>
+                  <span>CUSTOM FUZZERS</span>
+                  <span>GIT DIFF AUTOMATION</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="lab-rack-node">
+              <div class="node-server-header">
+                <span class="rack-led-active"></span>
+                <span class="rack-title">NODE-03 // RE WORKSTATION</span>
+                <span class="rack-ip">10.99.4.13</span>
+              </div>
+              <div class="node-server-body">
+                <h3 class="node-name">Low-Level Static &amp; Dynamic RE Rig</h3>
+                <p class="node-spec">
+                  Ghidra headless cluster for batch static decompilation, paired with a lightweight x64 and ARMv7/ARMv8 dynamic debugging environment (GDB/GEF, Frida runtime instrumentation, QEMU user emulation).
+                </p>
+                <div class="node-tag-strip">
+                  <span>GHIDRA DECOMP</span>
+                  <span>x64 / ARM EMULATION</span>
+                  <span>FRIDA HOOKS</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="lab-rack-node">
+              <div class="node-server-header">
+                <span class="rack-led-active"></span>
+                <span class="rack-title">NODE-04 // RED TEAM FIELD KIT</span>
+                <span class="rack-ip">10.99.4.14</span>
+              </div>
+              <div class="node-server-body">
+                <h3 class="node-name">Enterprise Consulting &amp; Physical SE Kit</h3>
+                <p class="node-spec">
+                  Battle-tested offensive tooling for web, mobile, and internal Active Directory engagements. Includes full physical security kit: Proxmark3 RDV4 RFID/NFC cloner, pretext dossiers, and covert drop boxes.
+                </p>
+                <div class="node-tag-strip">
+                  <span>PROXMARK3 RDV4</span>
+                  <span>AD BLOODHOUND</span>
+                  <span>COVERT HARDWARE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Node 5 -->
+            <div class="lab-rack-node">
+              <div class="node-server-header">
+                <span class="rack-led-active"></span>
+                <span class="rack-title">NODE-05 // CTF RIG</span>
+                <span class="rack-ip">10.99.4.15</span>
+              </div>
+              <div class="node-server-body">
+                <h3 class="node-name">Competitive CTF &amp; Speed Triage Rig</h3>
+                <p class="node-spec">
+                  Optimized for rapid challenge triage: pwntools, custom heap visualizers, automated deobfuscators, and scriptable protocol decoders pointed at scoreboards rather than client infrastructure.
+                </p>
+                <div class="node-tag-strip">
+                  <span>PWNTOOLS</span>
+                  <span>HEAP SOLVERS</span>
+                  <span>FUGITIVE OF JUSTICE CTF</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 06. OFF THE CLOCK (PERSONNEL TELEMETRY) -->
+        <!-- ======================================================== -->
+        <section id="off-the-clock" class="dossier-section-block">
+          <div class="section-badge-bar">
+            <span class="badge-idx">[06]</span>
+            <span class="badge-title">LEISURE TELEMETRY</span>
+          </div>
+          <h2 class="dossier-heading" data-scramble="// 6. OFF THE CLOCK // HYPERFIXATIONS">// 6. OFF THE CLOCK // HYPERFIXATIONS</h2>
+          <p class="dossier-section-lead">
+            When disconnected from target terminals, cognitive bandwidth shifts to competitive reflexes, physical momentum, and algorithmic puzzle solving:
+          </p>
+
+          <div class="off-clock-grid">
+
+            <div class="leisure-card">
+              <div class="leisure-icon">🎮</div>
+              <div class="leisure-info">
+                <h3 class="leisure-title">Competitive Gaming Rig</h3>
+                <p class="leisure-text">
+                  Mortal Kombat 1 (high-frame-data execution), The Finals, and a library of 1,000+ titles. Testing mechanical reflexes and strategic timing under competitive pressure.
+                </p>
+              </div>
+            </div>
+
+            <div class="leisure-card">
+              <div class="leisure-icon">🛹</div>
+              <div class="leisure-info">
+                <h3 class="leisure-title">Street Skateboarding</h3>
+                <p class="leisure-text">
+                  Carving street lines and working on board control. The ultimate analog reset for clearing mental cache between deep disassembly marathons.
+                </p>
+              </div>
+            </div>
+
+            <div class="leisure-card">
+              <div class="leisure-icon">🧩</div>
+              <div class="leisure-info">
+                <h3 class="leisure-title">Rubik's Cubes &amp; Speedcubing</h3>
+                <p class="leisure-text">
+                  Algorithmic pattern recognition: CFOP methods on 3x3, 4x4, and non-Euclidean polyhedra. Muscle-memory execution of permutation algorithms.
+                </p>
+              </div>
+            </div>
+
+            <div class="leisure-card">
+              <div class="leisure-icon">⚡</div>
+              <div class="leisure-info">
+                <h3 class="leisure-title">Rotating 7-Day Obsessions</h3>
+                <p class="leisure-text">
+                  Fifty other distinct disciplines hyperfocused on for exactly seven days with maniacal obsession before rotating back into research rotation.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- 07. SECURE TRANSMISSION & COLLABORATION -->
+        <!-- ======================================================== -->
+        <section id="contact" class="dossier-section-block">
+          <div class="section-badge-bar">
+            <span class="badge-idx">[07]</span>
+            <span class="badge-title">COMMUNICATION LINK</span>
+          </div>
+          <h2 class="dossier-heading" data-scramble="// 7. CONTACT &amp; SECURE TRANSMISSION">// 7. CONTACT &amp; SECURE TRANSMISSION</h2>
+          <p class="dossier-section-lead">
+            Signals welcome from vendors, fellow vulnerability researchers, CTF teammates, bug bounty triagers, and offensive security clients. Use encrypted channels for any disclosure-sensitive communication:
+          </p>
+
+          <div class="transmission-console">
+            
+            <div class="comm-channel-row">
+              <div class="channel-icon-chassis">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="channel-info">
+                <span class="channel-label">PRIMARY DISCLOSURE MAIL</span>
+                <span class="channel-value" id="copy-email-target">omoakin749@gmail.com</span>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm comm-copy-btn" data-copy="omoakin749@gmail.com">
+                <span>COPY EMAIL</span>
+              </button>
+            </div>
+
+            <div class="comm-channel-row">
+              <div class="channel-icon-chassis">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </div>
+              <div class="channel-info">
+                <span class="channel-label">SOURCE REPOSITORIES // GITHUB</span>
+                <span class="channel-value">github.com/lulztigre</span>
+              </div>
+              <a href="https://github.com/lulztigre" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                <span>OPEN REPOS ↗</span>
+              </a>
+            </div>
+
+            <div class="comm-channel-row">
+              <div class="channel-icon-chassis">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </div>
+              <div class="channel-info">
+                <span class="channel-label">PROFESSIONAL CONSULTING // LINKEDIN</span>
+                <span class="channel-value">linkedin.com/in/akinlabi-o-400893183</span>
+              </div>
+              <a href="https://linkedin.com/in/akinlabi-o-400893183" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+                <span>CONNECT ↗</span>
+              </a>
+            </div>
+
+            <div class="comm-channel-row">
+              <div class="channel-icon-chassis">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              </div>
+              <div class="channel-info">
+                <span class="channel-label">OFFICIAL DOMAIN // BLAAAG</span>
+                <span class="channel-value">https://lulztigre.pw</span>
+              </div>
+              <a href="https://lulztigre.pw" class="btn btn-outline btn-sm">
+                <span>ORIGIN ROOT</span>
+              </a>
+            </div>
+
+            <!-- PGP Interactive Drawer -->
+            <div class="pgp-transmission-box" id="pgp-drawer-box">
+              <div class="pgp-header-bar">
+                <div class="pgp-badge-title">
+                  <span class="pgp-lock-icon">🔐</span>
+                  <span>PGP PUBLIC ENCRYPTION KEY [RSA 4096-BIT]</span>
+                </div>
+                <div class="pgp-actions">
+                  <a href="/publickey.asc" download="lulztigre-publickey.asc" class="btn btn-outline btn-sm" id="pgp-download-btn">RAW KEY (.ASC)</a>
+                  <button type="button" class="btn btn-primary btn-sm" id="pgp-copy-btn">COPY PUBLIC KEY</button>
+                  <button type="button" class="btn btn-outline btn-sm" id="pgp-toggle-expand">EXPAND</button>
+                </div>
+              </div>
+              <div class="pgp-key-details collapsed" id="pgp-key-mount">
+                <div class="pgp-fingerprint-line">
+                  <span class="fp-k">FINGERPRINT:</span>
+                  <code class="fp-v">2C36 6F2D 98D5 0400 26B2 8F83 8586 899D 1C00 5542</code>
+                </div>
+                <pre class="pgp-code-block" id="pgp-public-key-block"><code>-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: Kleopatra Neo
+Comment: https://kleopatra.app
+
+xsFNBGq6KYABEAC5rxLqBftjw3QOXyt813IAZ1Upllpkxy56ql61jRbUp8EQ
+SKp5GwZBvYzR7vSSiWlNXT+ysnhdzq1pqCGwJ3TAAR9GWLAw+vsfB8i+nIdH
+RzF4eyaOMkJ89YBj8MhLehOSvKC9mzfJb8W+nOAvPxabpUkB9FXYpEj4/ZkA
+PWeAOBhRVNWKUnaI+sVKDu7UxMgyQg7g7lP3ARirI0+QUeWcrU7M2LNOJdDW
+ybd0bCMXyTnsgReeIrLWFmhY/4OScHyeUZNaujYBXbNHZfyzhY0kQoCUQR1+
+7W/c0LhsSaGT6D8JLER7urml1keqBFNgcvnXk2Ii8A5o1rUBoriGLHS9tD7t
+wbvVxqvvAjL/gop+/P8ooLj3+eLkvlfGCY4nhMd6h5HOQp7i1ClrDpIIq5b5
+Nysn199/gD9mMA1DriHylmCRyWojROYzfxDB9ripDGgiocN1efTUr5IhkOC3
+85peOmHrSfce+jW9n04voEKxVTNt15MSgaTAF4xZfKgKcxpsdKPTUxSKYD4g
+0Wirt9AVXro1sdGVcHp0pNyY33ghWxURGDVJYtI4amdxjJHn437rq4H0QvlR
+v+bid0I+i5TlV+K65B46aAgddBWA6sW3LQHKsZd4WoGHvCWL8hOM/IkhlkFL
+mFxMuPRkYOLPmad7Rdmf4N+t/OumufB0dRTpGQARAQABzSdBa2lubGFiaSBP
+bW9vZ3VuIDxvbW9ha2luNzQ5QGdtYWlsLmNvbT7CwYoEEAEIAD4Fgmq6KYAE
+CwkHCAmQhYaJnRwAVUIDFQgKBBYAAgECGQECmwMCHgEWIQQsNm8tmNUEACay
+j4OFhomdHABVQgAA1JkQAIjXcw80X5JXtUxNVmHndfEHqS1w7AWrySjPwO+Z
+5tBnWGyVrrzXYXljcZM21s/FYVLYWu1ZgFqr7ChDEbwKS9svHX1TMItu3vB+
+7ZdrjvqxsvWkL8L10hA9dkGVb5BM/dX7ZVAEwvvcIv+cAeGBZpy+xJzsUIXm
+BVf2nemjgXA+Vfl7RzfAOnxcDVJe+CSHR4GGYPYJj9t51eZBtT/819EyW7IL
+P4Q6KXCYXix8gKz+V5rpX5i2VjancA0bGpmtxq1bo4yEswUrj+gfLxedeUNX
+SXt1wIr1P49l1SnFd9J5+lSovV9iZokt0/+Y0mQvN32qRKNmMoiqdKUxAgF5
+B0nU+Dn3uMUtdT6f8b9NQNObTtih1mBwYikFKfTEtssIiNuZIVswnxAuNwoc
++N/b7c8HS6rTkqKpRHyqVnZj07HiJfOXlqweTe6M8oKUC+tcV5MDhHManVlo
+m6sIkflNehMlDb/dz2T7WIBlW0TXu9V9QoyKNRzaXLcLRn9p+pKW1YOGBJjh
+wMt/Spen9Dq9eOyfSj0ffSVHvyHFSTn5Y57Ukd0T48c7yi3j1Dn4TyOo5rYi
+FRosvuoNmMo7m187WlGmX1fddDVXO0ZfwCRAgMnpakI69B0V18W6PAqxQTYM
+PCen6PKPxkVYLZIxRJpp/6spq8mpePNy5Z6qgjw3v6bMzsFNBGq6KYABEACl
+LQcsL3htz20GWJdLCDMYNp0PJ3zKyuRcveAenA9qLY9sIwsn+TqKIblr3mK5
+fbVU3RsCkTIt+HMJGFAUm2nbIC4JcrJIqUS6DyO0TwQVPx4zwYcU7gIeRWse
+9cl7LZTvymWhVIf84XVX4O46TfwI0bEP+0kqzQpSTAbWEAt+Pv4qEggft+eC
+b9D9H6hePc5SYi6Dlwyj+2z7dhB6pSwdGhmxkZcq38AgKATUZbmhucTbZgzJ
+eXfeY4S1sAnCG6qoMmvUHtW4KTqtNy+fNafA+30DfgX1Xvhiqmbj+Jdou9vw
+/Gb5YEzlzFm1EdSe3ggUV4b7XysdoPiZQsx70kPylIg91AWqN90Lp8omjWnB
+ebnjkkgqGihWNwu+ITbcqwLWqtc9K7EjWS077Drn1N8ykyUI5RxoFyPah6p0
+DtmuCpFUpCX+uqQ5VLaX65PpJxk8qL1zd5fdYx5rSC4/mY2xsm8KwGA69Vk5
+qFoF3SyuUzdK1rGcmjEqqp5QY4zq1ncICEiXImo6CK/2uRTq0Zyhtde/U1Sa
+2TGglISU0MxJYjKI8b1rk0ZtUkaLNfaXcj0BAM+U+CsNmSYFy7GXpNOrZF4D
+B/UHmJZIfkXb7WPfyrRAKYiM6568pcOrPxMKehIvwJhr9cWpn9Epdh5ICbnT
+xMAmA7ECiR9Ry62nsd/1pwARAQABwsF2BBgBCAAqBYJquimACZCFhomdHABV
+QgKbDBYhBCw2by2Y1QQAJrKPg4WGiZ0cAFVCAACRDhAAtDwvdJYpIIG2qyqo
+zn3u+zG2bcaLIGxQKBcP1ivmYv5Z4KLHIcgmKsbfng+prVYYM2cRj5SmMCq8
+6/j2ep/uDJcd20208wtyf00BYH0S+e7ohjf15Lr+eUYhh4VlupuZulea5Tpm
+TA3mbZdqGO0qtNNU0VwHc0cxw9RtBTBECWESvXWOhuFJBP4ZoN0stXAAuHjs
+NRC/reZslu40ybXhKPeVc1vqXMGpyP/RMBaSAQ4FCvVKNdUOun1kdjCZNjTW
+R28PSxmwsvG7ML0uQaPlV7gaZIMR6cQD7qcB/CGCAH0JatlfrjWFiKF1HwM+
+NFfoe9Y+1kxKE197c20eANvILc2nHHrKqNYb1VjqfuqlwmHH6fDIuqU+AKLR
+GHu24IjK9zlwP/bMVWWvLy/3bxmmE2YV3ydxT8ALWimh23E1ZLFoTblVlZ/2
+FIJUuMXdd1lxdLtc5sxuo6o0zrItXD+Z7IIlhMeHXCFzdo86y94bEadC63af
+gt/Muk7KdT6sAUlytOz9sVsshML8VMhMBDvY8mA/ucUAzLSZBJqTOcaSuMNl
+8XA5zzhBmbTNcl27VfHliNt40AlfnleegGtPx7TUeAoX+3ctpy6FhRDvO8jB
+sjnn8u8OqznjHNF23NJeOxEFXhcS8CY7DiyDRqSd3/3fzczBymNPlgO9Vilv
+6b2GCtM=
+=5Kj7
+-----END PGP PUBLIC KEY BLOCK-----</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
       </article>
 
-      <!-- Sidebar -->
-      <aside class="article-sidebar">
-        <div class="toc-card">
-          <div class="toc-title">// RESEARCHER BIO</div>
-          <div style="font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; display: flex; flex-direction: column; gap: 0.5rem;">
-            <div><strong>HANDLE:</strong> Lulztigre</div>
-            <div><strong>ROLE:</strong> Head, Red Team and Forensics Operations</div>
-            <div><strong>FOCUS:</strong> Exploit research</div>
-            <div><strong>METHOD:</strong> Variant analysis + coordinated disclosure</div>
-    <div><strong>CREDS:</strong> LPT · CPENT · CEH · CTIA · CNSE</div>
-            <div><strong>BASE:</strong> [REDACTED]</div>
+      <!-- ======================================================== -->
+      <!-- TACTICAL SIDEBAR (OPERATIVE DOSSIER & CERTIFICATIONS) -->
+      <!-- ======================================================== -->
+      <aside class="article-sidebar dossier-sidebar-root">
+
+        <!-- Operative ID Hologram Badge Card -->
+        <div class="toc-card operative-badge-card">
+          <div class="operative-badge-top">
+            <span class="operative-beacon-dot"></span>
+            <span class="operative-badge-num">OPERATIVE // LZ-994</span>
+            <span class="operative-clearance">TS-SCI</span>
+          </div>
+
+          <div class="operative-avatar-chassis">
+            <div class="operative-reticle-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="operative-skull-svg">
+                <circle cx="9" cy="12" r="1"></circle>
+                <circle cx="15" cy="12" r="1"></circle>
+                <path d="M8 20v2h8v-2"></path>
+                <path d="m12.5 17-.5-1-.5 1h1z"></path>
+                <path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path>
+              </svg>
+            </div>
+            <div class="avatar-hud-corners"></div>
+            <span class="avatar-status-pill">AUTHENTICATED</span>
+          </div>
+
+          <div class="operative-bio-table">
+            <div class="bio-row">
+              <span class="bio-k">CODENAME:</span>
+              <span class="bio-v text-glow">Lulztigre</span>
+            </div>
+            <div class="bio-row">
+              <span class="bio-k">REAL_NAME:</span>
+              <span class="bio-v">Akinlabi</span>
+            </div>
+            <div class="bio-row">
+              <span class="bio-k">ROLE:</span>
+              <span class="bio-v">Head of Red Team &amp; Forensics</span>
+            </div>
+            <div class="bio-row">
+              <span class="bio-k">SPECIALTY:</span>
+              <span class="bio-v">0-Day Research &amp; Variant PoCs</span>
+            </div>
+            <div class="bio-row">
+              <span class="bio-k">PRIMARY_BASE:</span>
+              <span class="bio-v">[LAGOS // DISTRIBUTED]</span>
+            </div>
+            <div class="bio-row">
+              <span class="bio-k">ENGAGEMENTS:</span>
+              <span class="bio-v text-accent">OPEN // SELECT CLIENTS</span>
+            </div>
           </div>
         </div>
 
-        <div class="toc-card">
-          <div class="toc-title">// RSS &amp; SUBSCRIBE</div>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-            Subscribe to CVE writeups, exploit research, and red team dispatches via standard RSS/Atom.
+        <!-- Verified Industry Credentials & Ribbons -->
+        <div class="toc-card credentials-dossier-card">
+          <div class="toc-title">// VERIFIED CERTIFICATIONS</div>
+          <p class="credentials-lead">
+            Certified offensive security practitioner and licensed penetration tester:
           </p>
-          <a href="feed.xml" target="_blank" class="btn btn-primary btn-sm" style="width: 100%;">SUBSCRIBE (RSS)</a>
+
+          <div class="credentials-badge-list">
+
+            <div class="cert-badge-tile" title="Licensed Penetration Tester (Master)">
+              <div class="cert-ribbon-tag cert-gold">LPT</div>
+              <div class="cert-meta">
+                <span class="cert-name">Licensed Penetration Tester</span>
+                <span class="cert-level">MASTER LEVEL // OFFSEC</span>
+              </div>
+            </div>
+
+            <div class="cert-badge-tile" title="Certified Penetration Testing Professional">
+              <div class="cert-ribbon-tag cert-red">CPENT</div>
+              <div class="cert-meta">
+                <span class="cert-name">Certified Penetration Testing Pro</span>
+                <span class="cert-level">ENTERPRISE AD &amp; PIVOTING</span>
+              </div>
+            </div>
+
+            <div class="cert-badge-tile" title="Certified Ethical Hacker">
+              <div class="cert-ribbon-tag cert-cyan">CEH</div>
+              <div class="cert-meta">
+                <span class="cert-name">Certified Ethical Hacker</span>
+                <span class="cert-level">NETWORK &amp; THREAT VECTOR</span>
+              </div>
+            </div>
+
+            <div class="cert-badge-tile" title="Certified Threat Intelligence Analyst">
+              <div class="cert-ribbon-tag cert-amber">CTIA</div>
+              <div class="cert-meta">
+                <span class="cert-name">Certified Threat Intel Analyst</span>
+                <span class="cert-level">CTI &amp; THREAT ATTRIBUTION</span>
+              </div>
+            </div>
+
+            <div class="cert-badge-tile" title="Certified Network Security Specialist">
+              <div class="cert-ribbon-tag cert-blue">CNSS</div>
+              <div class="cert-meta">
+                <span class="cert-name">Certified Network Security Spec.</span>
+                <span class="cert-level">HARDENED PERIMETERS</span>
+              </div>
+            </div>
+
+          </div>
         </div>
+
+        <!-- Live Navigation Radar Index -->
+        <div class="toc-card quick-nav-radar-card">
+          <div class="toc-title">// DOSSIER INDEX</div>
+          <ul class="dossier-index-list">
+            <li><a href="#directives" class="index-nav-link"><span class="idx-n">01</span><span>OPERATIONAL DIRECTIVES</span></a></li>
+            <li><a href="#skills-section" class="index-nav-link"><span class="idx-n">02</span><span>WEAPONIZED ARSENAL</span></a></li>
+            <li><a href="#cve-ledger" class="index-nav-link"><span class="idx-n">03</span><span>CVE DISCLOSURE LOG</span></a></li>
+            <li><a href="#methodology" class="index-nav-link"><span class="idx-n">04</span><span>CVE METHODOLOGY</span></a></li>
+            <li><a href="#the-lab" class="index-nav-link"><span class="idx-n">05</span><span>THE RESEARCH LAB</span></a></li>
+            <li><a href="#off-the-clock" class="index-nav-link"><span class="idx-n">06</span><span>OFF THE CLOCK</span></a></li>
+            <li><a href="#contact" class="index-nav-link"><span class="idx-n">07</span><span>SECURE TRANSMISSION</span></a></li>
+          </ul>
+        </div>
+
+        <!-- RSS & Subscribe Card -->
+        <div class="toc-card">
+          <div class="toc-title">// RSS DISPATCH STREAM</div>
+          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.85rem; line-height: 1.5;">
+            Subscribe to novel CVE writeups, exploit primitive teardowns, and offensive security dispatches via standard RSS/Atom feeds.
+          </p>
+          <a href="feed.xml" target="_blank" class="btn btn-primary btn-sm" style="width: 100%; text-align: center;">SUBSCRIBE (RSS FEED)</a>
+        </div>
+
       </aside>
 
     </div>
@@ -217,13 +1307,13 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>© 2026 LULZTIGRE. OPEN ACCESS.</span>
-        <a href="index.html" style="color: inherit; text-decoration: underline;">← BACK TO DISPATCHES</a>
+        <span>&copy; 2026 LULZTIGRE // OPEN ACCESS RESEARCH &amp; COORDINATED DISCLOSURE</span>
+        <a href="index.html" style="color: inherit; text-decoration: underline;">&larr; BACK TO DISPATCHES</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=1.5"></script>
+  <script src="assets/js/main.js?v=2.5"></script>
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://lulztigre.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>

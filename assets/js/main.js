@@ -403,6 +403,374 @@
     });
   }
 
+  // --- 11. CYBER ARSENAL HUD INTERACTIVITY ---
+  function initSkillsSection() {
+    const container = document.getElementById('skills-section');
+    if (!container) return;
+
+    const tabButtons = Array.from(container.querySelectorAll('.hud-tab-btn, .skills-tab-btn'));
+    const panels = Array.from(container.querySelectorAll('.hud-domain-panel, .skills-panel'));
+    const telemetryName = document.getElementById('telemetry-domain-name');
+    const telemetryDesc = document.getElementById('telemetry-domain-desc');
+    const telemetryCount = document.getElementById('telemetry-count-badge');
+
+    function switchDomain(domainSlug) {
+      tabButtons.forEach(btn => {
+        const isMatch = (btn.getAttribute('data-domain') || btn.getAttribute('data-category')) === domainSlug;
+        btn.classList.toggle('active', isMatch);
+        btn.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        btn.setAttribute('tabindex', isMatch ? '0' : '-1');
+      });
+
+      panels.forEach(panel => {
+        const isMatch = (panel.getAttribute('data-domain') || panel.getAttribute('data-category')) === domainSlug;
+        if (isMatch) {
+          panel.classList.add('active');
+          panel.removeAttribute('hidden');
+
+          if (telemetryName && panel.dataset.tagline) {
+            telemetryName.textContent = panel.dataset.tagline;
+          }
+          if (telemetryDesc && panel.dataset.desc) {
+            telemetryDesc.textContent = panel.dataset.desc;
+          }
+          if (telemetryCount && panel.dataset.count) {
+            telemetryCount.textContent = `[${panel.dataset.count} CAPABILITIES]`;
+          }
+        } else {
+          panel.classList.remove('active');
+          panel.setAttribute('hidden', '');
+        }
+      });
+    }
+
+    tabButtons.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-domain') || btn.getAttribute('data-category');
+        if (slug) switchDomain(slug);
+      });
+
+      // Keyboard navigation between tabs
+      btn.addEventListener('keydown', (e) => {
+        let targetIndex = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          targetIndex = (index + 1) % tabButtons.length;
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          targetIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          targetIndex = 0;
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          targetIndex = tabButtons.length - 1;
+        }
+
+        if (targetIndex !== -1) {
+          const targetBtn = tabButtons[targetIndex];
+          targetBtn.focus();
+          const slug = targetBtn.getAttribute('data-domain') || targetBtn.getAttribute('data-category');
+          if (slug) switchDomain(slug);
+        }
+      });
+    });
+  }
+
+  // --- 12. ADVANCED DOSSIER & ARSENAL INTERACTIVITY ---
+  function initDossierEnhancements() {
+    // A. UTC Clock
+    const utcEl = document.getElementById('top-ticker-utc');
+    function updateUtc() {
+      if (utcEl) {
+        const now = new Date();
+        const hrs = String(now.getUTCHours()).padStart(2, '0');
+        const mins = String(now.getUTCMinutes()).padStart(2, '0');
+        const secs = String(now.getUTCSeconds()).padStart(2, '0');
+        utcEl.textContent = `UTC: ${hrs}:${mins}:${secs}`;
+      }
+    }
+    updateUtc();
+    setInterval(updateUtc, 1000);
+
+    // B. Web Audio API Tactical SFX
+    let audioCtx = null;
+    let sfxEnabled = localStorage.getItem('phantom_sfx') === 'on';
+    const sfxBtn = document.getElementById('audio-toggle-btn');
+
+    function updateSfxButton() {
+      if (!sfxBtn) return;
+      const textSpan = sfxBtn.querySelector('.audio-text');
+      const iconSpan = sfxBtn.querySelector('.audio-icon');
+      if (sfxEnabled) {
+        sfxBtn.classList.add('active');
+        if (textSpan) textSpan.textContent = 'SFX: ON';
+        if (iconSpan) iconSpan.textContent = '🔊';
+      } else {
+        sfxBtn.classList.remove('active');
+        if (textSpan) textSpan.textContent = 'SFX: OFF';
+        if (iconSpan) iconSpan.textContent = '🔇';
+      }
+    }
+    updateSfxButton();
+
+    if (sfxBtn) {
+      sfxBtn.addEventListener('click', () => {
+        sfxEnabled = !sfxEnabled;
+        localStorage.setItem('phantom_sfx', sfxEnabled ? 'on' : 'off');
+        updateSfxButton();
+        if (sfxEnabled) playTacticalSfx('confirm');
+      });
+    }
+
+    function playTacticalSfx(type = 'click') {
+      if (!sfxEnabled) return;
+      try {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+        if (type === 'confirm') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(1760, now + 0.08);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'hover') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1400, now);
+          osc.frequency.exponentialRampToValueAtTime(1900, now + 0.02);
+          gain.gain.setValueAtTime(0.006, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+          osc.start(now);
+          osc.stop(now + 0.02);
+        } else {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1200, now);
+          osc.frequency.exponentialRampToValueAtTime(400, now + 0.03);
+          gain.gain.setValueAtTime(0.02, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        }
+      } catch (_) {}
+    }
+
+    // Bind SFX to buttons and cards
+    document.querySelectorAll('.hud-tab-btn, .dossier-btn, .cve-copy-btn, .comm-copy-btn, .btn, .tag-btn, .theme-toggle-btn, .archive-entry-card, .post-card, .nav-link').forEach(el => {
+      el.addEventListener('mouseenter', () => playTacticalSfx('hover'));
+      el.addEventListener('click', () => playTacticalSfx('click'));
+    });
+
+    // C. Hacker Scramble Text Animation
+    const cipherChars = '01#$<>[]!/*_\\+-=&%?@~';
+    function scrambleElement(el) {
+      if (!el || el.dataset.scrambling === 'true') return;
+      el.dataset.scrambling = 'true';
+      const originalText = el.getAttribute('data-scramble') || el.textContent.trim();
+      let iteration = 0;
+      const interval = setInterval(() => {
+        el.textContent = originalText
+          .split('')
+          .map((char, index) => {
+            if (index < iteration) {
+              return originalText[index];
+            }
+            if (char === ' ' || char === '\n') return char;
+            return cipherChars[Math.floor(Math.random() * cipherChars.length)];
+          })
+          .join('');
+
+        if (iteration >= originalText.length) {
+          clearInterval(interval);
+          el.textContent = originalText;
+          el.dataset.scrambling = 'false';
+        }
+        iteration += 1;
+      }, 25);
+    }
+
+    // Trigger scramble on page load
+    document.querySelectorAll('[data-scramble]').forEach((el, idx) => {
+      setTimeout(() => scrambleElement(el), idx * 100);
+      el.addEventListener('mouseenter', () => scrambleElement(el));
+    });
+
+    // D. Real-time Arsenal Instant Filter
+    const searchInput = document.getElementById('arsenal-search-input');
+    const clearBtn = document.getElementById('arsenal-search-clear');
+    const telemetryCount = document.getElementById('telemetry-count-badge');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim().toLowerCase();
+        if (clearBtn) clearBtn.style.display = query ? 'block' : 'none';
+
+        const activePanel = document.querySelector('.hud-domain-panel.active');
+        if (!activePanel) return;
+
+        const cards = activePanel.querySelectorAll('.hud-card');
+        let matchCount = 0;
+
+        cards.forEach(card => {
+          const text = (card.textContent || '').toLowerCase();
+          if (!query) {
+            card.classList.remove('hud-card-hidden');
+            card.classList.remove('hud-card-highlight');
+            matchCount++;
+          } else if (text.includes(query)) {
+            card.classList.remove('hud-card-hidden');
+            card.classList.add('hud-card-highlight');
+            matchCount++;
+          } else {
+            card.classList.add('hud-card-hidden');
+            card.classList.remove('hud-card-highlight');
+          }
+        });
+
+        if (telemetryCount) {
+          if (query) {
+            telemetryCount.textContent = `[${matchCount} MATCHES]`;
+          } else {
+            const origCount = activePanel.dataset.count || '0';
+            telemetryCount.textContent = `[${origCount} CAPABILITIES]`;
+          }
+        }
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input'));
+          searchInput.focus();
+        });
+      }
+    }
+
+    // E. 1-Click Copy Triggers with Fallback
+    async function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (_) {}
+      }
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return true;
+      } catch (_) {}
+      return false;
+    }
+
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const textToCopy = btn.getAttribute('data-copy');
+        if (!textToCopy) return;
+        await copyText(textToCopy);
+        playTacticalSfx('confirm');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span>COPIED!</span>';
+        btn.style.borderColor = 'var(--accent-primary)';
+        btn.style.color = 'var(--accent-primary)';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 1500);
+      });
+    });
+
+    // F. PGP Drawer Toggles
+    const pgpQuickTrigger = document.getElementById('pgp-quick-trigger');
+    const pgpMount = document.getElementById('pgp-key-mount');
+    const pgpToggle = document.getElementById('pgp-toggle-expand');
+    const pgpCopyBtn = document.getElementById('pgp-copy-btn');
+    const pgpCodeBlock = document.getElementById('pgp-public-key-block');
+
+    if (pgpQuickTrigger) {
+      pgpQuickTrigger.addEventListener('click', () => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+          if (pgpMount && pgpMount.classList.contains('collapsed')) {
+            pgpMount.classList.remove('collapsed');
+            if (pgpToggle) pgpToggle.textContent = 'COLLAPSE';
+          }
+          const drawerBox = document.getElementById('pgp-drawer-box');
+          if (drawerBox) {
+            drawerBox.style.boxShadow = '0 0 20px var(--accent-glow)';
+            setTimeout(() => { drawerBox.style.boxShadow = ''; }, 2000);
+          }
+        }
+      });
+    }
+
+    if (pgpToggle && pgpMount) {
+      pgpToggle.addEventListener('click', () => {
+        const isCollapsed = pgpMount.classList.toggle('collapsed');
+        pgpToggle.textContent = isCollapsed ? 'EXPAND' : 'COLLAPSE';
+      });
+    }
+
+    if (pgpCopyBtn && pgpCodeBlock) {
+      pgpCopyBtn.addEventListener('click', async () => {
+        const keyText = pgpCodeBlock.textContent.trim();
+        await copyText(keyText);
+        playTacticalSfx('confirm');
+        const orig = pgpCopyBtn.textContent;
+        pgpCopyBtn.textContent = 'COPIED TO CLIPBOARD!';
+        setTimeout(() => { pgpCopyBtn.textContent = orig; }, 1800);
+      });
+    }
+
+    // G. Dossier Sidebar Scrollspy
+    const indexLinks = document.querySelectorAll('.index-nav-link');
+    if (indexLinks.length) {
+      const sectionTargets = [];
+      indexLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const el = document.getElementById(href.substring(1));
+          if (el) sectionTargets.push({ id: href.substring(1), el, link });
+        }
+      });
+
+      if (sectionTargets.length) {
+        window.addEventListener('scroll', () => {
+          const scrollPos = window.scrollY + 200;
+          let currentTarget = sectionTargets[0];
+          for (let i = 0; i < sectionTargets.length; i++) {
+            if (sectionTargets[i].el.offsetTop <= scrollPos) {
+              currentTarget = sectionTargets[i];
+            }
+          }
+          sectionTargets.forEach(item => {
+            item.link.classList.toggle('active', item === currentTarget);
+          });
+        }, { passive: true });
+      }
+    }
+  }
+
   // --- INITIALIZE ALL MODULES ---
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -413,6 +781,8 @@
     initMobileNav();
     initBackToTop();
     initKeyboardShortcuts();
+    initSkillsSection();
+    initDossierEnhancements();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {
