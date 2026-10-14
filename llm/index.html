@@ -131,7 +131,7 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
+      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'blush'];
       var lastTheme = localStorage.getItem(THEME_KEY) || 'void';
       var pool = themes.filter(function(t) { return t !== lastTheme; });
       if (pool.length === 0) pool = themes;
@@ -2712,7 +2712,7 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
+      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'blush'];
       var icons = {
         void: '● PHANTOM',
         amber: '▲ AMBER',
@@ -2723,7 +2723,9 @@
         phosphor: '█ PHOSPHOR',
         solar: '☀ SOLAR',
         hazard: '⚠ HAZARD',
-        cobalt: '◈ COBALT'
+        cobalt: '◈ COBALT',
+        sakura: '✿ SAKURA',
+        blush: '♡ BLUSH'
       };
 
       function updateThemeBtn(t) {

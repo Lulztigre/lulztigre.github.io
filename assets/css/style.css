@@ -334,6 +334,70 @@
   --shadow-emerald: 4px 4px 0px #ff6a00;
 }
 
+/* Sakura — Cyberpunk cherry blossom / neon pink terminal */
+[data-theme="sakura"] {
+  --bg-primary: #0d050c;
+  --bg-surface: #170915;
+  --bg-elevated: #240e21;
+  --bg-card: #1c0b1a;
+  --bg-invert: #ff3385;
+
+  --text-primary: #fde8f3;
+  --text-secondary: #cca0b9;
+  --text-muted: #8c5d78;
+  --text-invert: #ffffff;
+
+  --border-color: #4a1938;
+  --border-light: #2d0e22;
+  --border-highlight: #ff3385;
+
+  --accent-primary: #ff3385;
+  --accent-secondary: #ff75b5;
+  --accent-amber: #ffa8cc;
+  --accent-glow: rgba(255, 51, 133, 0.22);
+  --accent-tag-bg: #240e21;
+  --accent-tag-text: #ff75b5;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #ff3385;
+}
+
+/* Blush — Soft pastel rose / light pink mode */
+[data-theme="blush"] {
+  --bg-primary: #fff0f5;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffe2ed;
+  --bg-card: #ffffff;
+  --bg-invert: #d6226c;
+
+  --text-primary: #2b1020;
+  --text-secondary: #6e2a52;
+  --text-muted: #965377;
+  --text-invert: #ffffff;
+
+  --border-color: #2b1020;
+  --border-light: #f3c7dc;
+  --border-highlight: #d6226c;
+
+  --accent-primary: #d6226c;
+  --accent-secondary: #a81c5a;
+  --accent-amber: #e04b86;
+  --accent-glow: rgba(214, 34, 108, 0.14);
+  --accent-tag-bg: #ffe4ef;
+  --accent-tag-text: #b8175d;
+
+  --shadow-sm: 2px 2px 0px #2b1020;
+  --shadow-md: 4px 4px 0px #2b1020;
+  --shadow-lg: 7px 7px 0px #2b1020;
+  --shadow-hover: 5px 5px 0px #2b1020;
+  --shadow-active: 1px 1px 0px #2b1020;
+  --shadow-emerald: 4px 4px 0px #d6226c;
+}
+
 /* Reset & Base Setup */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -459,6 +523,14 @@ header.site-header {
 
 [data-theme="solar"] header.site-header {
   background: rgba(250, 246, 238, 0.95);
+}
+
+[data-theme="sakura"] header.site-header {
+  background: rgba(23, 9, 21, 0.95);
+}
+
+[data-theme="blush"] header.site-header {
+  background: rgba(255, 240, 245, 0.95);
 }
 
 .nav-wrapper {

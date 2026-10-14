@@ -7,7 +7,7 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt'];
+  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'blush'];
   
   function initTheme() {
     const savedTheme = localStorage.getItem(THEME_KEY) || 'void';
@@ -45,7 +45,9 @@
       phosphor: '█ PHOSPHOR',
       solar: '☀ SOLAR',
       hazard: '⚠ HAZARD',
-      cobalt: '◈ COBALT'
+      cobalt: '◈ COBALT',
+      sakura: '✿ SAKURA',
+      blush: '♡ BLUSH'
     };
     btn.innerHTML = `<span>${icons[theme] || '◐ THEME'}</span>`;
   }
