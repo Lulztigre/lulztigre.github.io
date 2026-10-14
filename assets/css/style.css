@@ -366,7 +366,8 @@
   --shadow-emerald: 4px 4px 0px #ff3385;
 }
 
-/* Blush — Soft pastel rose / light pink mode */
+/* Yua — Soft pastel rose / light pink mode */
+[data-theme="yua"],
 [data-theme="blush"] {
   --bg-primary: #fff0f5;
   --bg-surface: #ffffff;
@@ -529,6 +530,7 @@ header.site-header {
   background: rgba(23, 9, 21, 0.95);
 }
 
+[data-theme="yua"] header.site-header,
 [data-theme="blush"] header.site-header {
   background: rgba(255, 240, 245, 0.95);
 }
@@ -5158,4 +5160,25 @@ html, body {
   padding: 0.25rem 0.65rem;
   box-shadow: 0 0 10px rgba(255, 51, 68, 0.4);
 }
+
+/* ==========================================================================
+   SAKURA CHERRY BLOSSOMS CANVAS (SPARSELY & SCANTILY)
+   ========================================================================== */
+#sakura-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: block;
+}
+
+[data-theme="sakura"] #sakura-canvas {
+  opacity: 1;
+}
+
 

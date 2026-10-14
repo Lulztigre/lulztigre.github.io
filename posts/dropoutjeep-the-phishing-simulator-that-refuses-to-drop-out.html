@@ -30,8 +30,9 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'blush'];
+      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
       var lastTheme = localStorage.getItem(THEME_KEY) || 'void';
+      if (lastTheme === 'blush') lastTheme = 'yua';
       var pool = themes.filter(function(t) { return t !== lastTheme; });
       if (pool.length === 0) pool = themes;
       var randomTheme = pool[Math.floor(Math.random() * pool.length)] || 'void';

@@ -7,10 +7,14 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'blush'];
+  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
   
   function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'void';
+    let savedTheme = localStorage.getItem(THEME_KEY) || 'void';
+    if (savedTheme === 'blush') {
+      savedTheme = 'yua';
+      localStorage.setItem(THEME_KEY, 'yua');
+    }
     applyTheme(savedTheme);
   }
 
@@ -47,7 +51,8 @@
       hazard: '⚠ HAZARD',
       cobalt: '◈ COBALT',
       sakura: '✿ SAKURA',
-      blush: '♡ BLUSH'
+      yua: '♡ YUA',
+      blush: '♡ YUA'
     };
     btn.innerHTML = `<span>${icons[theme] || '◐ THEME'}</span>`;
   }
@@ -773,6 +778,233 @@
     }
   }
 
+  // --- 13. SAKURA CHERRY BLOSSOM PETALS & FLOWERS EFFECT ---
+  function initSakuraEffect() {
+    let canvas = document.getElementById('sakura-canvas');
+    let ctx = null;
+    let animId = null;
+    let particles = [];
+    let isRunning = false;
+    let width = 0;
+    let height = 0;
+
+    function resize() {
+      if (!canvas) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      if (ctx) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+    }
+
+    function drawSakuraPetalPath(context, size) {
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.bezierCurveTo(-size * 0.45, -size * 0.35, -size * 0.55, -size * 0.75, -size * 0.18, -size);
+      context.lineTo(0, -size * 0.84);
+      context.lineTo(size * 0.18, -size);
+      context.bezierCurveTo(size * 0.55, -size * 0.75, size * 0.45, -size * 0.35, 0, 0);
+      context.closePath();
+    }
+
+    function createParticle(isInitial) {
+      const isMobile = window.innerWidth <= 768;
+      // Sparingly and scantily: predominantly single petals with occasional whole 5-petal blossoms
+      const isFlower = Math.random() < 0.28;
+      const size = isFlower
+        ? (isMobile ? 14 + Math.random() * 8 : 18 + Math.random() * 12)
+        : (isMobile ? 9 + Math.random() * 7 : 11 + Math.random() * 9);
+
+      // Color variations for subtle natural beauty
+      const colorPalettes = [
+        { base: 'rgba(255, 51, 133, 0.95)', tip: 'rgba(255, 168, 204, 0.8)' },
+        { base: 'rgba(255, 117, 181, 0.95)', tip: 'rgba(253, 232, 243, 0.85)' },
+        { base: 'rgba(230, 0, 102, 0.95)', tip: 'rgba(255, 182, 218, 0.75)' },
+        { base: 'rgba(255, 80, 150, 0.95)', tip: 'rgba(255, 220, 238, 0.9)' }
+      ];
+      const palette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+
+      return {
+        type: isFlower ? 'flower' : 'petal',
+        size: size,
+        x: Math.random() * (width || window.innerWidth),
+        y: isInitial ? Math.random() * (height || window.innerHeight) : -40 - Math.random() * 30,
+        vx: 0.15 + Math.random() * 0.45,
+        vy: 0.45 + Math.random() * 0.65,
+        swayAmp: 0.8 + Math.random() * 1.4,
+        swayFreq: 0.012 + Math.random() * 0.018,
+        swayPhase: Math.random() * Math.PI * 2,
+        rot: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.02,
+        flip: Math.random() * Math.PI * 2,
+        vFlip: 0.015 + Math.random() * 0.025,
+        opacity: isFlower ? (0.65 + Math.random() * 0.25) : (0.45 + Math.random() * 0.35),
+        colorBase: palette.base,
+        tipColor: palette.tip
+      };
+    }
+
+    function initParticles() {
+      const isMobile = window.innerWidth <= 768;
+      // "sparringly and scantily": only 11 on desktop, 6 on mobile
+      const targetCount = isMobile ? 6 : 11;
+      particles = [];
+      for (let i = 0; i < targetCount; i++) {
+        particles.push(createParticle(true));
+      }
+    }
+
+    function render() {
+      if (!ctx || !isRunning) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.y += p.vy;
+        p.x += p.vx + Math.sin(p.swayPhase) * p.swayAmp;
+        p.swayPhase += p.swayFreq;
+        p.rot += p.vRot;
+        p.flip += p.vFlip;
+
+        // Wrap or reset if off screen
+        if (p.y > height + 45) {
+          const fresh = createParticle(false);
+          particles[i] = fresh;
+          continue;
+        }
+        if (p.x < -45) {
+          p.x = width + 20;
+        } else if (p.x > width + 45) {
+          p.x = -20;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.scale(1, Math.cos(p.flip));
+        ctx.globalAlpha = p.opacity;
+
+        if (p.type === 'flower') {
+          // 5-petaled sakura flower
+          for (let step = 0; step < 5; step++) {
+            ctx.save();
+            ctx.rotate((step * 2 * Math.PI) / 5);
+            const grad = ctx.createLinearGradient(0, 0, 0, -p.size * 0.55);
+            grad.addColorStop(0, p.colorBase);
+            grad.addColorStop(1, p.tipColor);
+            ctx.fillStyle = grad;
+            drawSakuraPetalPath(ctx, p.size * 0.55);
+            ctx.fill();
+            ctx.restore();
+          }
+          // Center pistil / stamen dots
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size * 0.1, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 245, 235, 0.95)';
+          ctx.fill();
+          for (let st = 0; st < 5; st++) {
+            const angle = (st * 2 * Math.PI) / 5 + Math.PI / 5;
+            const dist = p.size * 0.18;
+            ctx.beginPath();
+            ctx.arc(Math.cos(angle) * dist, Math.sin(angle) * dist, p.size * 0.035, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 215, 140, 0.9)';
+            ctx.fill();
+          }
+        } else {
+          // Single delicate cherry petal
+          const grad = ctx.createLinearGradient(0, 0, 0, -p.size);
+          grad.addColorStop(0, p.colorBase);
+          grad.addColorStop(1, p.tipColor);
+          ctx.fillStyle = grad;
+          drawSakuraPetalPath(ctx, p.size);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+
+      animId = requestAnimationFrame(render);
+    }
+
+    function start() {
+      if (isRunning) return;
+      if (!canvas) {
+        canvas = document.getElementById('sakura-canvas');
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          canvas.id = 'sakura-canvas';
+          canvas.setAttribute('aria-hidden', 'true');
+          document.body.appendChild(canvas);
+        }
+        ctx = canvas.getContext('2d');
+        window.addEventListener('resize', () => {
+          resize();
+          initParticles();
+        }, { passive: true });
+      }
+      resize();
+      initParticles();
+      isRunning = true;
+      if (animId) cancelAnimationFrame(animId);
+      animId = requestAnimationFrame(render);
+    }
+
+    function stop() {
+      if (!isRunning) return;
+      isRunning = false;
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+      if (ctx && canvas) {
+        ctx.clearRect(0, 0, width, height);
+      }
+    }
+
+    function checkTheme() {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'sakura') {
+        start();
+      } else {
+        stop();
+      }
+    }
+
+    window.__updateSakuraTheme = checkTheme;
+
+    // Check theme initially
+    checkTheme();
+
+    // Listen for theme attribute changes
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          checkTheme();
+        }
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // Pause when tab is not visible to save CPU/battery
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (isRunning && animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+      } else {
+        if (isRunning && !animId) {
+          animId = requestAnimationFrame(render);
+        }
+      }
+    });
+  }
+
   // --- INITIALIZE ALL MODULES ---
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -785,6 +1017,7 @@
     initKeyboardShortcuts();
     initSkillsSection();
     initDossierEnhancements();
+    initSakuraEffect();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {
