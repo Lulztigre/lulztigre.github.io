@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap');
+
 /* ==========================================================================
    PHANTOMKERNEL RESEARCH BLOG DESIGN SYSTEM
    lulztigre.pw — Stealth brutalist research terminal for systems, circuits & crypto
@@ -142,36 +144,41 @@
   --shadow-emerald: 4px 4px 0px #ff2244;
 }
 
-/* Arctic — Cool ice-blue deep space mode */
+/* Arctic — Deep Midnight Teal & Electric Blue Sci-Fi Terminal */
 [data-theme="arctic"] {
-  --bg-primary: #060a10;
-  --bg-surface: #0b1220;
-  --bg-elevated: #111c30;
-  --bg-card: #0e1728;
-  --bg-invert: #7dd3fc;
+  /* Deepest midnight teal background */
+  --bg-primary: #010d14;
+  --bg-surface: #031520;
+  --bg-elevated: #061f2f;
+  --bg-card: #02121c;
+  --bg-invert: #00f0ff;
 
-  --text-primary: #cfe2f3;
-  --text-secondary: #7ea8c9;
-  --text-muted: #4a6d8a;
-  --text-invert: #060a10;
+  /* Pure white text for crisp terminal contrast */
+  --text-primary: #ffffff;
+  --text-secondary: #c5e9f7;
+  --text-muted: #5e91a4;
+  --text-invert: #010d14;
 
-  --border-color: #1c3350;
-  --border-light: #132440;
-  --border-highlight: #38bdf8;
+  /* Deep midnight teal borders with electric cyan highlight */
+  --border-color: #0c3647;
+  --border-light: #06212d;
+  --border-highlight: #00f0ff;
 
-  --accent-primary: #38bdf8;
-  --accent-secondary: #818cf8;
-  --accent-amber: #fbbf24;
-  --accent-glow: rgba(56, 189, 248, 0.15);
-  --accent-tag-bg: #111c30;
-  --accent-tag-text: #7dd3fc;
+  /* Electric blue accents & neon glow */
+  --accent-primary: #00f0ff;
+  --accent-secondary: #38bdf8;
+  --accent-amber: #00f0ff;
+  --accent-glow: rgba(0, 240, 255, 0.45);
+  --accent-tag-bg: #052130;
+  --accent-tag-text: #00f0ff;
 
+  /* Brutalist shadows with electric blue accents */
   --shadow-sm: 2px 2px 0px #000000;
   --shadow-md: 4px 4px 0px #000000;
   --shadow-lg: 7px 7px 0px #000000;
-  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-hover: 5px 5px 0px #00f0ff;
   --shadow-active: 1px 1px 0px #000000;
-  --shadow-emerald: 4px 4px 0px #38bdf8;
+  --shadow-emerald: 4px 4px 0px #00f0ff;
 }
 
 /* Synthwave — Purple/magenta cyberpunk neon */
@@ -5399,5 +5406,257 @@ html, body {
 [data-theme="yua"] .hud-card {
   border-radius: 16px;
 }
+
+/* ==========================================================================
+   ARCTIC THEME SPECIFIC STYLING (DEEP MIDNIGHT TEAL, ELECTRIC BLUE,
+   GLOWING DARK TERMINAL EFFECT, PURE WHITE TEXT, ORBITRON/RAJDHANI HEADERS,
+   STRICT NARROW MONOSPACE BODY, & SHARP DELIBERATE QUOTE HIGHLIGHTS)
+   ========================================================================== */
+
+/* 1. Strict Narrow Monospace Body & Industrial Sci-Fi Display Variables */
+[data-theme="arctic"] {
+  --font-sans: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', 'Space Mono', monospace;
+  --font-mono: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', 'Space Mono', monospace;
+  background-image: radial-gradient(rgba(0, 240, 255, 0.15) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+[data-theme="arctic"] body {
+  font-family: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  letter-spacing: 0.015em;
+  background-image: radial-gradient(rgba(0, 240, 255, 0.15) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+/* Strict narrow monospace applied across content containers */
+[data-theme="arctic"] p,
+[data-theme="arctic"] .prose,
+[data-theme="arctic"] .hero-desc,
+[data-theme="arctic"] .post-summary,
+[data-theme="arctic"] .bio-v,
+[data-theme="arctic"] .bio-k,
+[data-theme="arctic"] .chassis-row,
+[data-theme="arctic"] .dossier-stat-desc,
+[data-theme="arctic"] .hud-card-desc,
+[data-theme="arctic"] .ticker-track span,
+[data-theme="arctic"] .credentials-lead,
+[data-theme="arctic"] .channel-value,
+[data-theme="arctic"] .channel-label,
+[data-theme="arctic"] .post-meta,
+[data-theme="arctic"] .status-indicator,
+[data-theme="arctic"] .search-input,
+[data-theme="arctic"] .dossier-index-list a,
+[data-theme="arctic"] .nav-link,
+[data-theme="arctic"] .tag-btn,
+[data-theme="arctic"] .btn {
+  font-family: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Pure White for All Primary Text */
+[data-theme="arctic"],
+[data-theme="arctic"] body,
+[data-theme="arctic"] p,
+[data-theme="arctic"] .prose,
+[data-theme="arctic"] .post-content,
+[data-theme="arctic"] .post-summary,
+[data-theme="arctic"] .bio-v,
+[data-theme="arctic"] .hero-desc,
+[data-theme="arctic"] .post-card-title a,
+[data-theme="arctic"] .post-title,
+[data-theme="arctic"] .chassis-val,
+[data-theme="arctic"] .operative-widget-role,
+[data-theme="arctic"] .footer-bottom span {
+  color: #ffffff;
+}
+
+/* 2. Glow Effect (Text Shadows) — Glowing in the Dark */
+[data-theme="arctic"] h1,
+[data-theme="arctic"] h2,
+[data-theme="arctic"] h3,
+[data-theme="arctic"] h4,
+[data-theme="arctic"] .section-title,
+[data-theme="arctic"] .brand-text,
+[data-theme="arctic"] .site-logo-text,
+[data-theme="arctic"] .operative-widget-name,
+[data-theme="arctic"] .hud-tab-idx,
+[data-theme="arctic"] .hud-tab-title,
+[data-theme="arctic"] .dossier-title-tag {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.65), 0 0 24px rgba(0, 240, 255, 0.3);
+}
+
+/* 3. The Main Header ("AKINLABI" / Hero Heading) — Sharp Cyberpunk Display */
+[data-theme="arctic"] .dossier-hero-name,
+[data-theme="arctic"] .hero-heading {
+  font-family: 'Orbitron', 'Rajdhani', 'Bebas Neue', 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.75), 0 0 28px rgba(0, 240, 255, 0.4);
+}
+
+[data-theme="arctic"] .dossier-alias {
+  font-family: 'Orbitron', monospace;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.9), 0 0 22px rgba(0, 240, 255, 0.55);
+}
+
+[data-theme="arctic"] .brand-text,
+[data-theme="arctic"] .site-logo-text,
+[data-theme="arctic"] .section-title,
+[data-theme="arctic"] .operative-widget-name {
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* 4. The "Quote" Highlights (Statement Box & Deliberate Blue Quote Text) */
+[data-theme="arctic"] .statement-quote {
+  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  color: #ffffff;
+  letter-spacing: 0.025em;
+  line-height: 1.65;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+}
+
+[data-theme="arctic"] .statement-quote strong {
+  color: #00f0ff;
+  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 0.98rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 0.75rem;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.85), 0 0 24px rgba(0, 240, 255, 0.45);
+}
+
+[data-theme="arctic"] .prose blockquote,
+[data-theme="arctic"] blockquote {
+  border-left: 3px solid #00f0ff;
+  background: #041924;
+  color: #ffffff;
+  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.06);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+}
+
+[data-theme="arctic"] mark,
+[data-theme="arctic"] .text-highlight {
+  background: rgba(0, 240, 255, 0.16);
+  color: #00f0ff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.75);
+}
+
+/* 5. Electric Blue Accents, Buttons, Badges & Hardware Indicators */
+[data-theme="arctic"] .btn-primary {
+  background: #00f0ff;
+  color: #010d14;
+  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  border: 2px solid #00f0ff;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.45), var(--shadow-sm);
+  text-shadow: none;
+}
+
+[data-theme="arctic"] .btn-primary:hover {
+  background: #ffffff;
+  color: #010d14;
+  border-color: #ffffff;
+  box-shadow: 0 0 24px rgba(0, 240, 255, 0.75);
+}
+
+[data-theme="arctic"] .btn-secondary,
+[data-theme="arctic"] .btn-outline {
+  border-color: #0c3647;
+  color: #ffffff;
+  background: #02141f;
+}
+
+[data-theme="arctic"] .btn-secondary:hover,
+[data-theme="arctic"] .btn-outline:hover {
+  border-color: #00f0ff;
+  color: #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+}
+
+[data-theme="arctic"] .brand-badge {
+  background: #00f0ff;
+  color: #010d14;
+  font-weight: 800;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+
+[data-theme="arctic"] .ticker-security-level {
+  border: 1.5px solid #00f0ff;
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
+}
+
+[data-theme="arctic"] .status-dot,
+[data-theme="arctic"] .hero-signal-ping,
+[data-theme="arctic"] .dossier-beacon,
+[data-theme="arctic"] .chassis-led-dot,
+[data-theme="arctic"] .hud-beacon-dot,
+[data-theme="arctic"] .operative-beacon-dot {
+  background-color: #00f0ff;
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.65);
+}
+
+[data-theme="arctic"] .statement-corner-tl,
+[data-theme="arctic"] .statement-corner-br,
+[data-theme="arctic"] .corner-bracket {
+  border-color: #00f0ff;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+}
+
+[data-theme="arctic"] .tag-btn.active {
+  background: #00f0ff;
+  color: #010d14;
+  border-color: #00f0ff;
+  font-weight: 800;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.55);
+}
+
+[data-theme="arctic"] a:hover,
+[data-theme="arctic"] .post-title a:hover,
+[data-theme="arctic"] .text-accent,
+[data-theme="arctic"] .text-glow {
+  color: #00f0ff;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.85), 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+[data-theme="arctic"] ::selection {
+  background: rgba(0, 240, 255, 0.35);
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.8);
+}
+
+/* Hardened borders with subtle electric luminescence */
+[data-theme="arctic"] .dossier-statement-box,
+[data-theme="arctic"] .dossier-stat-tile,
+[data-theme="arctic"] .post-card,
+[data-theme="arctic"] .hero-meta-chassis,
+[data-theme="arctic"] .toc-card,
+[data-theme="arctic"] .hud-card {
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.06), var(--shadow-md);
+}
+
+[data-theme="arctic"] .post-card:hover {
+  box-shadow: 0 0 22px rgba(0, 240, 255, 0.18), var(--shadow-hover);
+  border-color: #00f0ff;
+}
+
 
 
