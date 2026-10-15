@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="bloodmoon">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lulztigre // Bloodmoon (Uchiha Clan Anbu Mockup)</title>
+  <meta name="description" content="Offensive security research: CMS exploit research, CVE variant analysis, red team tradecraft, and coordinated disclosure.">
+  <meta name="author" content="Lulztigre">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Shippori Mincho, Noto Serif JP, Cinzel, Share Tech Mono, Space Mono, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Serif+JP:wght@600;700;900&family=Orbitron:wght@600;700;800;900&family=Oswald:wght@600;700&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=Shippori+Mincho:wght@700;800;900&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
+
+  <style>
+    /* ==========================================================================
+       UCHIHA CLAN // BLOODMOON SPECIAL REFINEMENT STYLES (MOCKUP: agy.html)
+       ========================================================================== */
+    
+    :root, [data-theme="bloodmoon"] {
+      /* Stark, pitch black background */
+      --bg-primary: #000000 !important;
+      --bg-surface: #050505 !important;
+      --bg-card: #080808 !important;
+      --bg-elevated: #0f0f0f !important;
+      --bg-invert: #ff0000 !important;
+
+      /* Pure stark white primary text & crisp silver */
+      --text-primary: #ffffff !important;
+      --text-secondary: #d4d4d8 !important;
+      --text-muted: #71717a !important;
+      --text-invert: #000000 !important;
+
+      /* Blood red primary accent and deep dried blood borders */
+      --accent-primary: #cc0000 !important;
+      --accent-secondary: #8b0000 !important;
+      --accent-amber: #ff0000 !important;
+      --accent-glow: rgba(255, 0, 0, 0.45) !important;
+      --accent-tag-bg: #140202 !important;
+      --accent-tag-text: #ff3333 !important;
+
+      /* Harsh blood red brutalist borders */
+      --border-color: #8b0000 !important;
+      --border-light: #3d0000 !important;
+      --border-highlight: #ff0000 !important;
+
+      /* Brutalist blood shadows */
+      --shadow-sm: 2px 2px 0px #000000 !important;
+      --shadow-md: 4px 4px 0px #400000 !important;
+      --shadow-lg: 7px 7px 0px #500000 !important;
+      --shadow-hover: 5px 5px 0px #cc0000 !important;
+      --shadow-active: 1px 1px 0px #000000 !important;
+      --shadow-emerald: 4px 4px 0px #ff0000 !important;
+
+      /* Font variables */
+      --font-uchiha-header: 'Shippori Mincho', 'Noto Serif JP', 'Cinzel', serif;
+      --font-anbu-body: 'Share Tech Mono', 'Space Mono', monospace;
+    }
+
+    body {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      font-family: var(--font-anbu-body) !important;
+      letter-spacing: 0.015em;
+      background-image: 
+        radial-gradient(rgba(204, 0, 0, 0.12) 1.2px, transparent 1.2px),
+        linear-gradient(rgba(255, 0, 0, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px, 100% 4px;
+    }
+
+    /* 1. The Main Header ("DISPATCHES FROM THE RESEARCH KERNEL.") */
+    .hero-heading {
+      font-family: var(--font-uchiha-header);
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      color: #ffffff !important;
+      line-height: 1.08 !important;
+      text-shadow: 
+        0 0 10px rgba(255, 0, 0, 0.6),
+        0 0 25px rgba(204, 0, 0, 0.3),
+        2px 2px 0px #8b0000 !important;
+    }
+
+    .section-title,
+    .dossier-hero-name {
+      font-family: var(--font-uchiha-header);
+      font-weight: 900 !important;
+      letter-spacing: 0.05em !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.5) !important;
+    }
+
+    /* 2. Body Text: Rigid, Squared-Off Classified Anbu Black Ops Feel */
+    p, .prose, .hero-desc, .post-abstract, .chassis-row, .ticker-track span, .post-meta, .bio-v, .bio-k {
+      font-family: var(--font-anbu-body) !important;
+      letter-spacing: 0.02em !important;
+      color: #d4d4d8;
+    }
+
+    /* 3. The Red Quote ("Pull the source apart...") — Sharingan Activation Glow */
+    .statement-quote {
+      font-family: var(--font-anbu-body) !important;
+      color: #ffffff !important;
+      line-height: 1.65 !important;
+      border-color: #8b0000 !important;
+    }
+
+    .statement-quote strong {
+      color: #ff1a1a !important;
+      font-family: var(--font-anbu-body) !important;
+      font-weight: 800 !important;
+      font-size: 1rem !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      display: block !important;
+      margin-top: 0.75rem !important;
+      text-shadow: 
+        0 0 8px rgba(255, 26, 26, 0.95),
+        0 0 20px rgba(255, 0, 0, 0.75),
+        0 0 35px rgba(204, 0, 0, 0.5),
+        0 0 60px rgba(139, 0, 0, 0.35) !important;
+      animation: sharinganActivationPulse 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes sharinganActivationPulse {
+      0% {
+        text-shadow: 
+          0 0 8px rgba(255, 26, 26, 0.9),
+          0 0 18px rgba(255, 0, 0, 0.65),
+          0 0 30px rgba(204, 0, 0, 0.4);
+      }
+      50% {
+        text-shadow: 
+          0 0 12px rgba(255, 50, 50, 1),
+          0 0 26px rgba(255, 0, 0, 0.95),
+          0 0 45px rgba(204, 0, 0, 0.75),
+          0 0 70px rgba(139, 0, 0, 0.5);
+      }
+      100% {
+        text-shadow: 
+          0 0 9px rgba(255, 26, 26, 0.9),
+          0 0 20px rgba(255, 0, 0, 0.7),
+          0 0 32px rgba(204, 0, 0, 0.45);
+      }
+    }
+
+    /* 4. The Icons & Symbols: Sharingan Eye & Status Dot */
+    .sharingan-eye-svg {
+      display: inline-block;
+      vertical-align: middle;
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.8));
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .dossier-pronounce:hover .sharingan-eye-svg {
+      transform: rotate(360deg);
+    }
+
+    /* Status Dot as a Mini Sharingan Eye */
+    .status-dot-sharingan {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      margin-right: 6px;
+      vertical-align: middle;
+      position: relative;
+    }
+
+    .status-dot-sharingan svg {
+      width: 14px;
+      height: 14px;
+      filter: drop-shadow(0 0 5px #ff0000);
+      animation: slowSharinganRotate 12s linear infinite;
+    }
+
+    @keyframes slowSharinganRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Uchiha Fan Crest */
+    .uchiha-crest-svg {
+      display: inline-block;
+      vertical-align: middle;
+      width: 18px;
+      height: 22px;
+      margin-left: 6px;
+      filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
+    }
+
+    /* Top Right Button: Uchiha / Sharingan Mode */
+    .theme-toggle-btn {
+      background: #000000 !important;
+      border: 1.5px solid #cc0000 !important;
+      color: #ff3333 !important;
+      font-family: var(--font-anbu-body) !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.08em !important;
+      box-shadow: 0 0 12px rgba(204, 0, 0, 0.45), var(--shadow-sm) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    .theme-toggle-btn:hover {
+      background: #cc0000 !important;
+      color: #ffffff !important;
+      border-color: #ff0000 !important;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.75) !important;
+    }
+
+    /* Cards, Reticles & Panels */
+    .post-card, .hero-meta-chassis, .dossier-statement-box, .dossier-stat-tile {
+      background: #080808 !important;
+      border: 1.5px solid #8b0000 !important;
+      box-shadow: 4px 4px 0px #300000 !important;
+    }
+
+    .post-card:hover {
+      border-color: #ff0000 !important;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.25), 6px 6px 0px #6b0000 !important;
+    }
+
+    .post-card-title a {
+      color: #ffffff !important;
+      font-family: var(--font-uchiha-header) !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em !important;
+    }
+
+    .post-card-title a:hover {
+      color: #ff2222 !important;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.75) !important;
+    }
+
+    .statement-corner-tl, .statement-corner-br, .card-reticle {
+      border-color: #ff0000 !important;
+      box-shadow: 0 0 8px #ff0000 !important;
+    }
+
+    .btn-primary {
+      background: #cc0000 !important;
+      border: 2px solid #ff0000 !important;
+      color: #ffffff !important;
+      font-family: var(--font-anbu-body) !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.06em !important;
+      box-shadow: 0 0 14px rgba(255, 0, 0, 0.5) !important;
+    }
+
+    .btn-primary:hover {
+      background: #ff0000 !important;
+      color: #000000 !important;
+      box-shadow: 0 0 24px rgba(255, 0, 0, 0.85) !important;
+    }
+
+    .btn-secondary {
+      background: #050505 !important;
+      border: 1.5px solid #8b0000 !important;
+      color: #ffffff !important;
+      font-family: var(--font-anbu-body) !important;
+    }
+
+    .btn-secondary:hover {
+      border-color: #ff0000 !important;
+      color: #ff2222 !important;
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.35) !important;
+    }
+
+    .tag-btn.active {
+      background: #cc0000 !important;
+      border-color: #ff0000 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.5) !important;
+    }
+
+    .brand-badge {
+      background: #cc0000 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 8px rgba(204, 0, 0, 0.6) !important;
+    }
+
+    .ticker-security-level {
+      border: 1.5px solid #8b0000 !important;
+      color: #ff3333 !important;
+      background: rgba(204, 0, 0, 0.12) !important;
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.5) !important;
+    }
+
+    .post-id-badge {
+      border: 1px solid #8b0000 !important;
+      color: #ff3333 !important;
+      background: #140202 !important;
+    }
+
+    .dossier-stat-tile .stat-num {
+      color: #ff2222 !important;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.75) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mockup Preview Banner (Exclusive to agy.html) -->
+  <div class="mockup-banner">
+    <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+      <span class="mockup-banner-badge">
+        <span id="banner-icon-slot">
+          <svg class="sharingan-eye-svg" viewBox="0 0 100 100" width="16" height="16">
+            <circle cx="50" cy="50" r="47" fill="#cc0000" stroke="#000" stroke-width="3"/>
+            <circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="2.5" opacity="0.85"/>
+            <circle cx="50" cy="50" r="10" fill="#000"/>
+            <g fill="#000">
+              <g transform="rotate(0 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(120 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(240 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+            </g>
+          </svg>
+        </span>
+        MOCKUP: agy.html
+      </span>
+      <span style="color:#ffffff; font-weight:700;">UCHIHA CLAN // BLOODMOON VISUAL OVERHAUL</span>
+    </div>
+
+    <div class="mockup-controls">
+      <div style="display:flex; align-items:center; gap:0.4rem;">
+        <span style="color:#a1a1aa;">FONT:</span>
+        <button class="mockup-btn font-btn active" onclick="setHeaderFont('Shippori Mincho')">Shippori Mincho</button>
+        <button class="mockup-btn font-btn" onclick="setHeaderFont('Noto Serif JP')">Noto Serif JP</button>
+        <button class="mockup-btn font-btn" onclick="setHeaderFont('Cinzel')">Cinzel</button>
+        <button class="mockup-btn font-btn" onclick="setHeaderFont('Oswald')">Oswald</button>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:0.4rem;">
+        <span style="color:#a1a1aa;">MARKER:</span>
+        <button class="mockup-btn marker-btn active" onclick="setMarker('sharingan')">Sharingan</button>
+        <button class="mockup-btn marker-btn" onclick="setMarker('crest')">Uchiha Fan</button>
+        <button class="mockup-btn marker-btn" onclick="setMarker('kunai')">Kunai</button>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:0.4rem;">
+        <span style="color:#a1a1aa;">BUTTON:</span>
+        <button class="mockup-btn btn-label-btn active" onclick="setButtonLabel('SHARINGAN')">SHARINGAN</button>
+        <button class="mockup-btn btn-label-btn" onclick="setButtonLabel('UCHIHA')">UCHIHA</button>
+        <button class="mockup-btn btn-label-btn" onclick="setButtonLabel('MANGEKYO')">MANGEKYO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top System Telemetry Ticker -->
+  <div class="system-ticker" style="border-bottom: 1.5px solid #8b0000; background: #000000;">
+    <div class="ticker-left">
+      <span class="status-indicator" style="border: 1px solid #8b0000; background: #080808;">
+        <!-- Status dot styled as a miniature spinning 3-Tomoe Sharingan -->
+        <span class="status-dot-sharingan" title="Sharingan Status Active">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="47" fill="#cc0000" stroke="#000000" stroke-width="3"/>
+            <circle cx="50" cy="50" r="28" fill="none" stroke="#000000" stroke-width="2.5" opacity="0.85"/>
+            <circle cx="50" cy="50" r="10" fill="#000000"/>
+            <g fill="#000000">
+              <g transform="rotate(0 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(120 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(240 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+            </g>
+          </svg>
+        </span>
+        DOSSIER: LZ-994 // ANBU
+      </span>
+      <span class="ticker-security-level">CLEARANCE: MANGEKYŌ // TOP SECRET</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
+    </div>
+    <div class="ticker-right">
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut" style="color: #a1a1aa;">CLAN: UCHIHA // ANBU PROTOCOL</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header" style="background: #000000; border-bottom: 2px solid #8b0000;">
+    <div class="container nav-wrapper">
+      <a href="agy.html" class="site-brand" style="display:flex; align-items:center; gap:8px;">
+        <span style="font-family: var(--font-uchiha-header); font-weight:900; letter-spacing:0.06em; color:#ffffff;">LULZTIGRE</span>
+        <!-- Uchiha Fan Crest SVG -->
+        <svg class="uchiha-crest-svg" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" title="Uchiha Clan Crest">
+          <!-- Top red fan semi-circle -->
+          <path d="M 12,65 A 38,38 0 0,1 88,65 Z" fill="#cc0000" stroke="#000" stroke-width="3"/>
+          <!-- Bottom white fan semi-circle -->
+          <path d="M 88,65 A 38,38 0 0,1 12,65 Z" fill="#ffffff" stroke="#000" stroke-width="3"/>
+          <!-- Fan Handle -->
+          <rect x="44" y="65" width="12" height="48" fill="#ffffff" stroke="#000" stroke-width="3"/>
+          <line x1="44" y1="113" x2="56" y2="113" stroke="#cc0000" stroke-width="3"/>
+        </svg>
+        <span class="brand-badge">id=(anbu)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="agy.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="llm-clock.html" class="nav-link">/LLM_CLOCK</a></li>
+          <li class="nav-item"><a href="wikirun/index.html" class="nav-link">/WIKIRUN</a></li>
+          <li class="nav-item"><a href="archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <!-- Top Right Button: UCHIHA / SHARINGAN -->
+        <button class="theme-toggle-btn" id="theme-toggle" title="Uchiha Bloodmoon Theme Active">
+          <!-- Miniature 3-Tomoe Sharingan in Button -->
+          <svg viewBox="0 0 100 100" width="16" height="16">
+            <circle cx="50" cy="50" r="47" fill="#cc0000" stroke="#000" stroke-width="3"/>
+            <circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="2.5" opacity="0.85"/>
+            <circle cx="50" cy="50" r="10" fill="#000"/>
+            <g fill="#000">
+              <g transform="rotate(0 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(120 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(240 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+            </g>
+          </svg>
+          <span>❂ SHARINGAN</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Tactical Research Command Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-title-area">
+          <div class="dossier-meta-badge" style="background: #080808; border: 1px solid #8b0000;">
+            <span class="status-dot-sharingan">
+              <svg viewBox="0 0 100 100" width="12" height="12">
+                <circle cx="50" cy="50" r="47" fill="#cc0000"/>
+                <circle cx="50" cy="50" r="10" fill="#000"/>
+              </svg>
+            </span>
+            <span class="dossier-code" style="color: #ff3333;">UCHIHA ARCHIVE // ANBU BLACK OPS SPECIAL KERNEL</span>
+            <span class="dossier-sub-id" style="color: #a1a1aa;">DISPATCH NODE LZ-994</span>
+          </div>
+
+          <!-- Main Header in Sharp Traditional Japanese Serif -->
+          <h1 class="hero-heading" id="hero-main-title">
+            DISPATCHES FROM THE RESEARCH KERNEL.
+          </h1>
+
+          <!-- Subsystem line with Lightning replaced by 3-Tomoe Sharingan -->
+          <div class="dossier-pronounce" style="background: #080808; border: 1.5px solid #8b0000; padding: 0.5rem 0.85rem; border-radius: 4px;">
+            <!-- Authentic 3-Tomoe Sharingan SVG replacing ⚡ -->
+            <span class="phonetic-icon" style="display:inline-flex; align-items:center; margin-right: 6px;">
+              <svg class="sharingan-eye-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="shGradMain" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ff3333"/>
+                    <stop offset="65%" stop-color="#cc0000"/>
+                    <stop offset="100%" stop-color="#660000"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="47" fill="url(#shGradMain)" stroke="#000000" stroke-width="3"/>
+                <circle cx="50" cy="50" r="28" fill="none" stroke="#000000" stroke-width="2.5" opacity="0.85"/>
+                <circle cx="50" cy="50" r="10" fill="#000000"/>
+                <g fill="#000000">
+                  <g transform="rotate(0 50 50)"><circle cx="50" cy="22" r="5.5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+                  <g transform="rotate(120 50 50)"><circle cx="50" cy="22" r="5.5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+                  <g transform="rotate(240 50 50)"><circle cx="50" cy="22" r="5.5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+                </g>
+              </svg>
+            </span>
+            <span class="phonetic-text">SUBSYSTEM: <code style="background: #140202; border: 1px solid #8b0000; color: #ff3333;">CMS ZERO-DAYS // VARIANT HUNTING // RED TEAM</code></span>
+            <span class="phonetic-divider" style="color: #8b0000;">//</span>
+            <span class="phonetic-role" style="color: #e4e4e7;">UCHIHA BLACK OPS REPO</span>
+          </div>
+
+          <!-- Statement Quote Box with Sharingan Activation Glow -->
+          <div class="dossier-statement-box">
+            <div class="statement-corner-tl"></div>
+            <div class="statement-corner-br"></div>
+            <p class="statement-quote">
+              "Source-driven exploit research, CVE variant analysis, and red team tradecraft. Diffed vendor patches, chained primitives, and the coordinated disclosure trail behind each one. 
+              <strong>Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC.</strong>"
+            </p>
+          </div>
+
+          <!-- Tactical Metric Ribbons -->
+          <div class="dossier-stats-ribbon" style="margin-top: 1rem;">
+            <div class="dossier-stat-tile">
+              <span class="stat-num text-glow">15+</span>
+              <span class="stat-lbl" style="color: #a1a1aa;">CVE DISCLOSURES</span>
+            </div>
+            <div class="dossier-stat-tile">
+              <span class="stat-num stat-critical" style="color: #ff0000; text-shadow: 0 0 12px #ff0000;">10.0</span>
+              <span class="stat-lbl" style="color: #a1a1aa;">MAX CVSS CRITICAL</span>
+            </div>
+            <div class="dossier-stat-tile">
+              <span class="stat-num text-glow">100%</span>
+              <span class="stat-lbl" style="color: #a1a1aa;">CLEANROOM REPRO</span>
+            </div>
+            <div class="dossier-stat-tile">
+              <span class="stat-num text-glow">5x</span>
+              <span class="stat-lbl" style="color: #a1a1aa;">ACTIVE DISPATCHES</span>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="hero-actions" style="margin-top: 1.5rem; display: flex; gap: 0.85rem; flex-wrap: wrap;">
+            <a href="#dispatches" class="btn btn-primary">VIEW DISPATCHES ↓</a>
+            <a href="about.html" class="btn btn-secondary">ANBU DOSSIER →</a>
+            <a href="feed.xml" class="btn btn-secondary" target="_blank">RSS [XML]</a>
+          </div>
+        </div>
+
+        <!-- Tactical Telemetry Chassis -->
+        <aside class="hero-meta-chassis">
+          <span class="card-reticle tl"></span>
+          <span class="card-reticle br"></span>
+          <div class="hero-chassis-topbar" style="border-bottom: 1.5px solid #8b0000;">
+            <span class="hero-chassis-signal">
+              <span class="status-dot-sharingan">
+                <svg viewBox="0 0 100 100" width="12" height="12">
+                  <circle cx="50" cy="50" r="47" fill="#cc0000"/>
+                  <circle cx="50" cy="50" r="10" fill="#000"/>
+                </svg>
+              </span>
+              SHARINGAN ACTIVE
+            </span>
+            <span class="hero-chassis-clearance" style="background: #140202; border: 1px solid #8b0000; color: #ff3333;">MANGEKYŌ LEVEL-4</span>
+          </div>
+          <div class="hero-chassis-radar-mini" style="background: radial-gradient(circle, #200000 0%, #000000 75%); border: 1px solid #500000;"></div>
+          <div class="hero-chassis-body">
+            <div class="chassis-row">
+              <span class="chassis-key">OPERATIVE</span>
+              <span class="chassis-val" style="color: #ffffff; font-weight:700;">Akinlabi [Lulztigre]</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">CLAN / SECTOR</span>
+              <span class="chassis-val" style="color: #ff3333;">Uchiha Clan // Anbu Ops</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">SUBSYSTEM</span>
+              <span class="chassis-val" style="color: #ffffff;">Red Team &amp; Pentesting</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">DISCLOSURE STATUS</span>
+              <span class="chassis-val" style="color: #ff2222; text-shadow: 0 0 8px rgba(255,0,0,0.6);">ACTIVE &amp; COORDINATED</span>
+            </div>
+            <div class="chassis-row">
+              <span class="chassis-key">LAB ENVIRONMENT</span>
+              <span class="chassis-val">Anbu Isolated Cleanroom</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Filter & Live Search Toolbar -->
+    <section class="feed-controls" id="dispatches">
+      <div class="container feed-controls-grid">
+        <div class="tag-filters">
+          <span class="filter-label" style="color: #a1a1aa;">CATEGORY:</span>
+          <button class="tag-btn active" data-tag="ALL">ALL (5)</button>
+          <button class="tag-btn" data-tag="OFFENSIVE SECURITY">OFFENSIVE SECURITY</button>
+        </div>
+
+        <div class="search-input-box">
+          <input type="text" id="search-input" class="search-input" placeholder="Search classified memos, theorems..." autocomplete="off" style="background: #050505; border: 1.5px solid #8b0000; color: #ffffff;">
+          <span class="search-kbd-hint" style="border: 1px solid #8b0000; color: #ff3333;">/</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Posts Feed -->
+    <section class="posts-section">
+      <div class="container">
+        <div class="section-header-bar" style="border-bottom: 2px solid #8b0000;">
+          <h2 class="section-title">
+            <span style="color: #ff0000; text-shadow: 0 0 8px #ff0000;">▶</span> RESEARCH LOG &amp; PREPRINTS
+          </h2>
+          <span class="posts-count" id="filtered-count" style="background: #140202; border: 1px solid #8b0000; color: #ff3333;">[5 RECORDS FOUND]</span>
+        </div>
+
+        <div class="posts-feed" id="posts-feed">
+
+          <!-- MEMO #008 -->
+          <article class="post-card" data-tags="OFFENSIVE SECURITY">
+            <div class="post-card-header" style="color: #a1a1aa;">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #008</span>
+                <span>DATE: 2026-01-01</span>
+              </div>
+              <span>EST. TIME: ~10 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/balbooa-forms-penny-rce-67363-67364.html">Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</a>
+            </h3>
+
+            <p class="post-abstract">
+              While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip" style="background: #140202; border: 1px solid #8b0000; color: #ff3333;">OFFENSIVE SECURITY</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="alert('BibTeX entry copied.')">BIBTEX</button>
+                <a href="posts/balbooa-forms-penny-rce-67363-67364.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- MEMO #007 -->
+          <article class="post-card" data-tags="OFFENSIVE SECURITY">
+            <div class="post-card-header" style="color: #a1a1aa;">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #007</span>
+                <span>DATE: 2026-01-01</span>
+              </div>
+              <span>EST. TIME: ~10 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/gravitino-test-connection-rce-41042.html">The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino</a>
+            </h3>
+
+            <p class="post-abstract">
+              While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip" style="background: #140202; border: 1px solid #8b0000; color: #ff3333;">OFFENSIVE SECURITY</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm">BIBTEX</button>
+                <a href="posts/gravitino-test-connection-rce-41042.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- MEMO #006 -->
+          <article class="post-card" data-tags="OFFENSIVE SECURITY">
+            <div class="post-card-header" style="color: #a1a1aa;">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #006</span>
+                <span>DATE: 2026-01-01</span>
+              </div>
+              <span>EST. TIME: ~10 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html">DropoutJeep: The Phishing Simulator That Refuses to Drop Out</a>
+            </h3>
+
+            <p class="post-abstract">
+              DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip" style="background: #140202; border: 1px solid #8b0000; color: #ff3333;">OFFENSIVE SECURITY</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm">BIBTEX</button>
+                <a href="posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" style="background: #000000; border-top: 2px solid #8b0000; margin-top: 4rem;">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="color: #ff3333; font-family: var(--font-uchiha-header); letter-spacing:0.05em;">// LULZTIGRE // UCHIHA CLAN</h4>
+          <p style="color: #a1a1aa; line-height: 1.6; margin-bottom: 0.5rem;">
+            Open notebook for offensive security research, variant hunting, and Anbu tradecraft.
+          </p>
+          <p style="color: #71717a;">Lightmare (IYKYK) // Bloodmoon Awakening.</p>
+        </div>
+        <div class="footer-col">
+          <h4 style="color: #ff3333; font-family: var(--font-uchiha-header); letter-spacing:0.05em;">// DIRECTORY INDEX</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">/ Home &amp; Dispatches</a></li>
+            <li><a href="llm-clock.html">/ LLM Peak Hours Clock</a></li>
+            <li><a href="wikirun/index.html">/ WikiRun Speedrun Game</a></li>
+            <li><a href="archive.html">/ Chronological Archive</a></li>
+            <li><a href="about.html">/ Researcher Dossier</a></li>
+            <li><a href="feed.xml">/ RSS Feed (Atom/XML)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 style="color: #ff3333; font-family: var(--font-uchiha-header); letter-spacing:0.05em;">// NODES &amp; CHANNELS</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lulztigre" target="_blank" rel="noopener">/ GitHub (@lulztigre)</a></li>
+            <li><a href="mailto:omoakin749@gmail.com">/ Encrypted Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="border-top: 1px solid #3d0000; color: #a1a1aa;">
+        <span>© 2026 LULZTIGRE // UCHIHA CLAN ANBU CLASSIFIED ARCHIVE.</span>
+        <span>PRESEARCH BLAAAG // NO TRACKERS // NO BLOAT</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const markers = {
+      sharingan: `<svg class="sharingan-eye-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="shGradM" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff3333"/><stop offset="65%" stop-color="#cc0000"/><stop offset="100%" stop-color="#660000"/></radialGradient></defs>
+        <circle cx="50" cy="50" r="47" fill="url(#shGradM)" stroke="#000" stroke-width="3"/>
+        <circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="2.5" opacity="0.85"/>
+        <circle cx="50" cy="50" r="10" fill="#000"/>
+        <g fill="#000">
+          <g transform="rotate(0 50 50)"><circle cx="50" cy="22" r="5.5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+          <g transform="rotate(120 50 50)"><circle cx="50" cy="22" r="5.5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+          <g transform="rotate(240 50 50)"><circle cx="50" cy="22" r="5.5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+        </g>
+      </svg>`,
+      crest: `<svg class="sharingan-eye-svg" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 12,65 A 38,38 0 0,1 88,65 Z" fill="#cc0000" stroke="#000" stroke-width="3"/>
+        <path d="M 88,65 A 38,38 0 0,1 12,65 Z" fill="#ffffff" stroke="#000" stroke-width="3"/>
+        <rect x="44" y="65" width="12" height="48" fill="#ffffff" stroke="#000" stroke-width="3"/>
+        <line x1="44" y1="113" x2="56" y2="113" stroke="#cc0000" stroke-width="3"/>
+      </svg>`,
+      kunai: `<svg class="sharingan-eye-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 50,4 L 64,40 L 50,50 L 36,40 Z" fill="#cc0000" stroke="#ff0000" stroke-width="2"/>
+        <line x1="50" y1="4" x2="50" y2="50" stroke="#ff5555" stroke-width="1.5"/>
+        <rect x="47" y="50" width="6" height="30" fill="#222" stroke="#8b0000" stroke-width="1.5"/>
+        <line x1="47" y1="58" x2="53" y2="58" stroke="#ffffff" stroke-width="1.2"/>
+        <line x1="47" y1="66" x2="53" y2="66" stroke="#ffffff" stroke-width="1.2"/>
+        <line x1="47" y1="74" x2="53" y2="74" stroke="#ffffff" stroke-width="1.2"/>
+        <circle cx="50" cy="88" r="8" fill="none" stroke="#cc0000" stroke-width="3"/>
+      </svg>`
+    };
+
+    function setHeaderFont(fontName) {
+      document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('.font-btn')).find(b => b.innerText.includes(fontName));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      let fontStack = `'${fontName}', serif`;
+      if (fontName === 'Oswald') fontStack = `'Oswald', sans-serif`;
+
+      // 1. Update CSS variable globally on root and body
+      document.documentElement.style.setProperty('--font-uchiha-header', fontStack, 'important');
+      document.body.style.setProperty('--font-uchiha-header', fontStack, 'important');
+
+      // 2. Set inline style with !important on all header and title elements
+      const header = document.getElementById('hero-main-title');
+      if (header) {
+        header.style.setProperty('font-family', fontStack, 'important');
+      }
+
+      document.querySelectorAll('.hero-heading, .section-title, .post-card-title a, .dossier-hero-name, .footer-col h4').forEach(el => {
+        el.style.setProperty('font-family', fontStack, 'important');
+      });
+    }
+
+    function setMarker(markerKey) {
+      document.querySelectorAll('.marker-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('.marker-btn')).find(b => b.getAttribute('onclick').includes(markerKey));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const iconSlot = document.querySelector('.phonetic-icon');
+      if (iconSlot && markers[markerKey]) {
+        iconSlot.innerHTML = markers[markerKey];
+      }
+    }
+
+    function setButtonLabel(label) {
+      document.querySelectorAll('.btn-label-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('.btn-label-btn')).find(b => b.innerText.includes(label));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        let symbol = '❂';
+        if (label === 'UCHIHA') symbol = '◆';
+        if (label === 'MANGEKYO') symbol = '✦';
+
+        themeBtn.innerHTML = `
+          <svg viewBox="0 0 100 100" width="16" height="16">
+            <circle cx="50" cy="50" r="47" fill="#cc0000" stroke="#000" stroke-width="3"/>
+            <circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="2.5" opacity="0.85"/>
+            <circle cx="50" cy="50" r="10" fill="#000"/>
+            <g fill="#000">
+              <g transform="rotate(0 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(120 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+              <g transform="rotate(240 50 50)"><circle cx="50" cy="22" r="5"/><path d="M 46.5,25 C 49,29 57,28 64,24.5 C 67,23 69,21 70,18 C 66,22 60,23 55,20 C 51,17.5 47,20.5 46.5,25 Z"/></g>
+            </g>
+          </svg>
+          <span>${symbol} ${label}</span>
+        `;
+      }
+    }
+
+    // Auto-init on load
+    function initUchihaControls() {
+      setButtonLabel('SHARINGAN');
+      setHeaderFont('Shippori Mincho');
+      
+      const themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', (e) => {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          const modes = ['SHARINGAN', 'UCHIHA', 'MANGEKYO'];
+          const current = document.querySelector('.btn-label-btn.active')?.innerText.trim() || 'SHARINGAN';
+          const next = modes[(modes.indexOf(current) + 1) % modes.length];
+          setButtonLabel(next);
+        }, true);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initUchihaControls);
+    } else {
+      initUchihaControls();
+    }
+    window.addEventListener('load', initUchihaControls);
+  </script>
+</body>
+</html>

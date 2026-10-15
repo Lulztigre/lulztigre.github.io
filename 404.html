@@ -12,27 +12,19 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/style.css?v=2.5">
 
-  <!-- Prevent Theme Flash & Randomize Theme on Load / Navigation -->
+  <!-- Prevent Theme Flash & Apply Saved Theme on Load -->
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['void', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
-      var lastTheme = localStorage.getItem(THEME_KEY) || 'void';
-      if (lastTheme === 'blush') lastTheme = 'yua';
-      if (lastTheme === 'ghost' || lastTheme === 'flora') lastTheme = 'floral';
-      var pool = themes.filter(function(t) { return t !== lastTheme; });
-      if (pool.length === 0) pool = themes;
-      var randomTheme = pool[Math.floor(Math.random() * pool.length)] || 'void';
-      localStorage.setItem(THEME_KEY, randomTheme);
-      if (randomTheme !== 'void') {
-        document.documentElement.setAttribute('data-theme', randomTheme);
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-      }
+      var saved = localStorage.getItem(THEME_KEY) || 'phantom';
+      if (saved === 'void') saved = 'phantom';
+      if (saved === 'blush') saved = 'yua';
+      if (saved === 'ghost' || saved === 'flora') saved = 'floral';
+      document.documentElement.setAttribute('data-theme', saved);
     })();
   </script>
 </head>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mimo // bloodmoon → uchiha — homepage mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700;800&family=Yuji+Boku&family=Oswald:wght@500;700&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   mimo — original mockup, homepage
+   Redesigned from scratch for the Uchiha/bloodmoon brief.
+   Body classes drive the four review modes.
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{--max:1160px}
+
+/* ---- MODE TOKENS ---- */
+body{
+  /* as-is bloodmoon baseline (matches live site) */
+  --bg:#0a0506; --surface:#140a0c; --elev:#1f1012; --card:#170c0e;
+  --txt:#f0d0d5; --txt2:#b87880; --mut:#7a4650;
+  --bdr:#4a1a22; --bdr2:#2e1015;
+  --acc:#ff2244; --acc2:#ff6b81; --deep:#c41030;
+  --invert:#ff2244;
+  --glow-quote:none;
+  --font-head:'Space Grotesk',-apple-system,'Segoe UI',sans-serif;
+  --font-body:'Space Grotesk',-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'Space Mono','JetBrains Mono','Courier New',monospace;
+  --head-track:-0.04em;
+  background:var(--bg); color:var(--txt);
+  font-family:var(--font-body);
+  line-height:1.6; min-height:100vh;
+}
+body.u{
+  --bg:#000000; --surface:#0a0202; --elev:#160304; --card:#0c0202;
+  --txt:#f1e4e4; --txt2:#ab7575; --mut:#6f3e3e;
+  --bdr:#3d0000; --bdr2:#1d0000;
+  --acc:#cc0000; --acc2:#ff0000; --deep:#8b0000;
+  --invert:#cc0000;
+  --font-head:'Shippori Mincho','Noto Serif JP',Georgia,serif;
+  --font-body:'Share Tech Mono','JetBrains Mono',monospace;
+  --font-mono:'Share Tech Mono','JetBrains Mono',monospace;
+  --head-track:0.05em;
+  --glow-quote:0 0 7px rgba(255,0,0,.55),0 0 22px rgba(204,0,0,.35),0 0 44px rgba(139,0,0,.22);
+}
+body.u.f-oswald{--font-head:'Oswald',Impact,'Arial Narrow',sans-serif;--head-track:0.015em}
+body.u.f-space{--font-body:'Space Mono','JetBrains Mono',monospace}
+
+.container{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+
+/* ---- REVIEW BAR (harness chrome, not part of the theme) ---- */
+.review-bar{
+  position:sticky;top:0;z-index:99;
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  padding:.55rem 1.25rem;background:#0b0b0b;border-bottom:1px solid #262626;
+  font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.08em;
+  text-transform:uppercase;color:#7d7d7d;
+}
+.review-bar b{color:#eee}
+.review-bar .nb{color:#e33;font-weight:700}
+.rbtn{
+  background:transparent;color:#9a9a9a;border:1px solid #333;
+  font-family:inherit;font-size:.66rem;font-weight:700;letter-spacing:.1em;
+  padding:.38rem .8rem;cursor:pointer;text-transform:uppercase;
+}
+.rbtn:hover{border-color:#666;color:#ddd}
+.rbtn.on{background:#cc0000;border-color:#ff0000;color:#fff;box-shadow:0 0 12px rgba(255,0,0,.45)}
+
+/* ---- TICKER ---- */
+.ticker{
+  background:var(--surface);border-bottom:1px solid var(--bdr);
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.4rem 1rem;font-family:var(--font-mono);font-size:.7rem;
+  font-weight:700;letter-spacing:.06em;color:var(--txt2);text-transform:uppercase;
+}
+.ticker span{white-space:nowrap}
+.ticker .sep{color:var(--mut)}
+.live{display:inline-flex;align-items:center;gap:.45rem;color:var(--txt)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:blink 2s ease-in-out infinite}
+/* uchiha: the status dot IS a tiny sharingan */
+body.u .dot{
+  width:12px;height:12px;background:radial-gradient(circle at 50% 50%,
+    #000 0 20%, var(--acc) 21% 58%, var(--acc2) 59% 72%, var(--deep) 73% 100%);
+  box-shadow:0 0 7px rgba(255,0,0,.65),0 0 16px rgba(204,0,0,.4);
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---- HEADER ---- */
+.site-header{
+  position:sticky;top:29px;z-index:90;
+  background:color-mix(in srgb,var(--bg) 94%,transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:3px solid var(--bdr);
+}
+body.u .site-header{border-bottom-color:transparent;border-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 8' preserveAspectRatio='none'><path d='M0 4 Q120 1 240 3 T480 2 T600 4 L600 7 Q470 6 360 6 T120 7 L0 6 Z' fill='%238b0000'/></svg>") 3 stretch}
+.nav-row{display:flex;justify-content:space-between;align-items:stretch;min-height:60px}
+.brand{
+  display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--txt);
+  font-family:var(--font-mono);font-weight:900;font-size:1.12rem;letter-spacing:-.02em;
+  padding:.5rem 1rem;border-right:1px solid var(--bdr);
+}
+.brand:hover{background:var(--elev);color:var(--acc)}
+body.u .brand{font-family:var(--font-head);letter-spacing:.08em;font-weight:800}
+.brand-badge{background:var(--acc);color:#fff;font-family:var(--font-mono);font-size:.62rem;padding:.15rem .45rem;font-weight:900;letter-spacing:.05em}
+.nav-menu{display:flex;list-style:none}
+.nav-link{
+  display:flex;align-items:center;padding:0 1.2rem;height:100%;
+  font-family:var(--font-mono);font-size:.8rem;font-weight:700;text-decoration:none;
+  color:var(--txt2);border-left:1px solid var(--bdr);
+}
+.nav-link:hover{color:var(--txt);background:var(--elev)}
+.nav-link.active{color:var(--acc);background:var(--elev);box-shadow:inset 0 -2px 0 var(--acc)}
+body.u .nav-link.active{color:var(--acc2);text-shadow:0 0 9px rgba(255,0,0,.65)}
+.nav-ctl{display:flex;border-left:1px solid var(--bdr)}
+.theme-btn{
+  background:transparent;border:none;cursor:pointer;color:var(--txt);
+  font-family:var(--font-mono);font-weight:700;font-size:.76rem;
+  display:flex;align-items:center;gap:.4rem;padding:0 1rem;
+}
+.theme-btn:hover{background:var(--elev);color:var(--acc)}
+body.u .theme-btn{font-family:var(--font-head);letter-spacing:.12em;color:var(--acc2);text-shadow:0 0 9px rgba(255,0,0,.5)}
+
+/* ---- HERO ---- */
+.hero{
+  position:relative;overflow:hidden;
+  padding:3.4rem 0 2.8rem;border-bottom:3px solid var(--bdr);
+  background:linear-gradient(180deg,var(--surface),var(--bg));
+}
+/* my signature piece: the blood moon itself, hanging behind the hero */
+.moon{position:absolute;top:-90px;right:-60px;width:430px;height:430px;border-radius:50%;pointer-events:none}
+body:not(.u) .moon{display:none}
+.moon::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 42% 42%,
+    rgba(255,0,0,.22) 0%, rgba(204,0,0,.16) 34%, rgba(139,0,0,.10) 55%, rgba(90,0,0,.04) 68%, transparent 74%);
+}
+.moon::after{
+  content:"";position:absolute;inset:34px;border-radius:50%;
+  border:1px solid rgba(255,0,0,.16);
+}
+/* vertical brush-kanji scroll rail */
+.scroll-rail{
+  position:absolute;left:calc(50% - 700px);top:14px;
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:'Yuji Boku',serif;font-size:5.2rem;line-height:1;
+  color:rgba(204,0,0,.09);user-select:none;pointer-events:none;
+  letter-spacing:.35rem;
+}
+body:not(.u) .scroll-rail{display:none}
+
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;gap:1.1rem}
+
+.meta-badge{
+  display:inline-flex;align-items:center;gap:.6rem;width:fit-content;
+  background:var(--card);border:1px solid var(--bdr);border-left:3px solid var(--acc);
+  padding:.35rem .85rem;box-shadow:2px 2px 0 #000;margin-bottom:1.1rem;
+}
+.meta-beacon{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);animation:blink 1.8s ease-in-out infinite}
+body.u .meta-beacon{
+  width:16px;height:16px;
+  background:radial-gradient(circle at 50% 50%,#000 0 20%,var(--acc) 21% 58%,var(--acc2) 59% 72%,var(--deep) 73% 100%);
+  box-shadow:0 0 8px rgba(255,0,0,.6),0 0 20px rgba(204,0,0,.45);
+}
+.meta-code{font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.15em;color:var(--txt)}
+.meta-sub{font-family:var(--font-mono);font-size:.66rem;font-weight:700;letter-spacing:.08em;color:var(--acc)}
+body.u .meta-sub{color:var(--acc2);text-shadow:0 0 8px rgba(255,0,0,.55)}
+
+h1.headline{
+  font-family:var(--font-head);font-weight:900;
+  font-size:clamp(2.3rem,5vw,3.8rem);line-height:1.04;
+  letter-spacing:var(--head-track);text-transform:uppercase;color:var(--txt);margin:0;
+}
+body.u h1.headline{color:#fff;text-shadow:0 0 18px rgba(255,0,0,.28),0 2px 0 #160000}
+h1.headline .red{color:var(--acc)}
+body.u h1.headline .red{color:var(--acc2);text-shadow:0 0 12px rgba(255,0,0,.55),0 0 34px rgba(204,0,0,.35)}
+
+.subline{
+  display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;
+  font-family:var(--font-mono);font-size:.78rem;color:var(--txt2);margin-bottom:1.5rem;
+}
+.subline code{color:var(--acc);font-weight:700;background:var(--card);border:1px solid var(--bdr2);padding:.12rem .45rem}
+.subline .role{color:var(--mut);font-size:.72rem;letter-spacing:.08em}
+.subline .ic{display:inline-flex;align-items:center}
+[data-bolt][hidden],[data-eye][hidden],[data-sound][hidden],[data-hex][hidden],.hide{display:none!important}
+body.u .subline .ic svg{filter:drop-shadow(0 0 6px rgba(255,0,0,.8))}
+
+/* statement box — corners + the glowing vow */
+.statement{
+  position:relative;background:var(--card);border:1px solid var(--bdr);
+  padding:1.3rem 1.6rem;margin-bottom:1.9rem;box-shadow:4px 4px 0 #000;
+}
+.statement::before,.statement::after{
+  content:"";position:absolute;width:11px;height:11px;
+}
+.statement::before{top:-2px;left:-2px;border-top:3px solid var(--acc);border-left:3px solid var(--acc)}
+.statement::after{bottom:-2px;right:-2px;border-bottom:3px solid var(--acc);border-right:3px solid var(--acc)}
+.statement p{font-size:1.05rem;line-height:1.65;color:var(--txt)}
+body.u .statement p{font-family:var(--font-body);letter-spacing:.02em}
+.statement .vow{
+  display:block;margin-top:.6rem;font-family:var(--font-mono);
+  font-size:.92rem;font-weight:700;color:var(--acc);
+}
+body.u .statement .vow{
+  color:var(--acc2);letter-spacing:.07em;text-transform:uppercase;
+  text-shadow:var(--glow-quote);
+  animation:awaken 3.6s ease-in-out infinite;
+}
+@keyframes awaken{
+  0%,100%{text-shadow:0 0 6px rgba(255,0,0,.45),0 0 18px rgba(204,0,0,.28),0 0 34px rgba(139,0,0,.18)}
+  50%{text-shadow:0 0 9px rgba(255,0,0,.8),0 0 26px rgba(204,0,0,.5),0 0 52px rgba(139,0,0,.3)}
+}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-bottom:1.8rem}
+.tile{background:var(--card);border:1px solid var(--bdr);padding:.85rem 1rem;box-shadow:2px 2px 0 #000;display:flex;flex-direction:column;gap:.15rem}
+body.u .tile{border-top:2px solid var(--deep)}
+.tile .num{font-family:var(--font-mono);font-size:1.55rem;font-weight:900;line-height:1;color:var(--txt)}
+.tile .num.hot{color:var(--acc)}
+body.u .tile .num{font-family:var(--font-head)}
+body.u .tile .num.hot{color:var(--acc2);text-shadow:0 0 11px rgba(255,0,0,.7)}
+.tile .lbl{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;color:var(--mut);text-transform:uppercase}
+
+/* ---- REVIEW PANELS ---- */
+.panel{padding:2.2rem 0;border-bottom:1px solid var(--bdr)}
+.panel h3{
+  font-family:var(--font-head);text-transform:uppercase;letter-spacing:.06em;
+  font-size:1rem;color:var(--txt);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.panel h3::after{content:"";flex:1;height:1px;background:var(--bdr)}
+.swatches{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:.5rem}
+.sw{width:148px;border:1px solid var(--bdr);background:var(--card);font-family:var(--font-mono);font-size:.6rem;letter-spacing:.05em}
+.sw i{display:block;height:50px}
+.sw span{display:block;padding:.35rem .5rem;color:var(--txt2)}
+.icons{display:flex;gap:2.2rem;align-items:flex-end;flex-wrap:wrap;margin-top:1rem}
+.ic-cell{text-align:center;font-family:var(--font-mono);font-size:.58rem;color:var(--mut);letter-spacing:.07em}
+.ic-cell>*{display:block;margin:0 auto .45rem}
+ul.notes{list-style:none;display:grid;gap:.5rem;font-family:var(--font-mono);font-size:.82rem;color:var(--txt2)}
+ul.notes li{padding-left:1.35rem;position:relative}
+ul.notes li::before{content:"忍";position:absolute;left:0;color:var(--acc);font-size:.75rem;font-family:'Yuji Boku',serif}
+ul.notes code{color:var(--acc2);background:var(--elev);padding:.05rem .3rem}
+
+/* hanko — the red seal stamp, my flourish for the uchiha pass */
+.hanko{
+  display:none;align-items:center;justify-content:center;
+  width:46px;height:46px;border:2.5px solid var(--acc);border-radius:8px;
+  color:var(--acc);font-family:'Yuji Boku',serif;font-size:1.6rem;line-height:1;
+  transform:rotate(-9deg);opacity:.9;box-shadow:0 0 14px rgba(204,0,0,.35) inset,0 0 10px rgba(204,0,0,.25);
+  flex:none;
+}
+body.u .hanko{display:inline-flex}
+
+@media(max-width:860px){
+  .nav-menu{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .scroll-rail{display:none!important}
+  .moon{width:280px;height:280px;top:-60px;right:-90px}
+}
+</style>
+</head>
+<body>
+
+<!-- review harness -->
+<div class="review-bar">
+  <b>mimo.html</b><span class="nb">uncommitted mockup</span>
+  <span>homepage — bloodmoon→uchiha</span>
+  <button class="rbtn on" data-mode="asis">as-is bloodmoon</button>
+  <button class="rbtn" data-mode="u">uchiha</button>
+  <button class="rbtn" data-mode="u f-oswald">uchiha · wanted-poster header</button>
+  <button class="rbtn" data-mode="u f-space">uchiha · space-mono body</button>
+</div>
+
+<!-- ticker -->
+<div class="ticker">
+  <div class="live"><span class="dot"></span><span>DOSSIER: LZ-994</span></div>
+  <span class="sep">//</span><span>CLEARANCE: LEVEL-4 // TOP SECRET</span>
+  <span class="sep">//</span><span>UTC: 14:22:07</span>
+  <span style="flex:1"></span>
+  <span>SHORTCUT: [T] THEME / [/] SEARCH</span>
+</div>
+
+<!-- header -->
+<header class="site-header">
+  <div class="container nav-row">
+    <a class="brand" href="#">
+      <!-- sharingan mark (uchiha) / plain diamond in as-is -->
+      <svg width="24" height="24" viewBox="0 0 48 48" aria-hidden="true" data-eye>
+        <circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/>
+        <circle cx="24" cy="24" r="18.5" fill="#cc0000"/>
+        <circle cx="24" cy="24" r="18.5" fill="none" stroke="#ff0000" stroke-width="1.4"/>
+        <circle cx="24" cy="24" r="4.4" fill="#0a0000"/>
+        <g fill="#0a0000" stroke="#0a0000">
+          <g><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+          <g transform="rotate(120 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+          <g transform="rotate(240 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+        </g>
+      </svg>
+      <svg width="24" height="24" viewBox="0 0 48 48" aria-hidden="true" data-plain class="hide">
+        <path d="M24 3 45 24 24 45 3 24Z" fill="none" stroke="currentColor" stroke-width="3"/>
+      </svg>
+      <span>LULZTIGRE</span>
+      <span class="brand-badge">id=(anbu)</span>
+    </a>
+    <nav><ul class="nav-menu">
+      <li><a class="nav-link active" href="#">/DISPATCHES</a></li>
+      <li><a class="nav-link" href="#">/LLM_CLOCK</a></li>
+      <li><a class="nav-link" href="#">/WIKIRUN</a></li>
+      <li><a class="nav-link" href="#">/ARCHIVE</a></li>
+      <li><a class="nav-link" href="#">/ABOUT_ME</a></li>
+    </ul></nav>
+    <div class="nav-ctl">
+      <button class="theme-btn" id="theme-btn"><span id="theme-label">&#9670; BLOODMOON</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- hero -->
+<section class="hero">
+  <div class="moon" aria-hidden="true"></div>
+  <div class="scroll-rail" aria-hidden="true">忍道</div>
+  <div class="container hero-inner">
+
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="meta-badge">
+        <span class="meta-beacon"></span>
+        <span class="meta-code">COMMAND // OFFENSIVE SECURITY RESEARCH KERNEL</span>
+        <span class="meta-sub">DISPATCH NODE LZ-994</span>
+      </div>
+      <span class="hanko">忍</span>
+    </div>
+
+    <h1 class="headline">Dispatches from the <span class="red">Research Kernel</span>.</h1>
+
+    <div class="subline">
+      <span class="ic" id="sub-icon">
+        <!-- as-is: lightning / uchiha: sharingan -->
+        <svg width="17" height="17" viewBox="0 0 48 48" data-bolt aria-hidden="true"><path d="M27 4 L12 27 h9 l-4 17 L36 21 h-10 z" fill="currentColor"/></svg>
+        <svg width="19" height="19" viewBox="0 0 48 48" data-eye class="hide" aria-hidden="true">
+          <circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/>
+          <circle cx="24" cy="24" r="18.5" fill="#cc0000"/>
+          <circle cx="24" cy="24" r="18.5" fill="none" stroke="#ff0000" stroke-width="1.4"/>
+          <circle cx="24" cy="24" r="4.4" fill="#0a0000"/>
+          <g fill="#0a0000" stroke="#0a0000">
+            <g><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+            <g transform="rotate(120 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+            <g transform="rotate(240 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+          </g>
+        </svg>
+      </span>
+      <span>SUBSYSTEM: <code>CMS ZERO-DAYS // VARIANT HUNTING // RED TEAM</code></span>
+      <span style="color:var(--mut)">//</span>
+      <span class="role">LZ-994 CLASSIFIED REPO</span>
+    </div>
+
+    <div class="statement">
+      <p>
+        "Source-driven exploit research, CVE variant analysis, and red team tradecraft. Diffed vendor patches, chained primitives, and the coordinated disclosure trail behind each one.
+        <strong class="vow">Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC.</strong>"
+      </p>
+    </div>
+
+    <div class="stats">
+      <div class="tile"><span class="num hot">15+</span><span class="lbl">CVE Disclosures</span></div>
+      <div class="tile"><span class="num">10.0</span><span class="lbl">Max CVSS Critical</span></div>
+      <div class="tile"><span class="num hot">100%</span><span class="lbl">Cleanroom Repro</span></div>
+      <div class="tile"><span class="num">LZ-994</span><span class="lbl">Node Designation</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- palette -->
+<div class="container panel">
+  <h3>Palette</h3>
+  <div class="swatches">
+    <div class="sw"><i style="background:#0a0506"></i><span>#0a0506 — current bg</span></div>
+    <div class="sw"><i style="background:#000000"></i><span>#000000 — pitch black bg</span></div>
+    <div class="sw"><i style="background:#ff2244"></i><span>#ff2244 — current accent</span></div>
+    <div class="sw"><i style="background:#cc0000"></i><span>#cc0000 — blood primary</span></div>
+    <div class="sw"><i style="background:#8b0000"></i><span>#8b0000 — deep blood</span></div>
+    <div class="sw"><i style="background:#ff0000"></i><span>#ff0000 — glow highlight</span></div>
+  </div>
+</div>
+
+<!-- icon sheet -->
+<div class="container panel">
+  <h3>Mark set</h3>
+  <div class="icons">
+    <div class="ic-cell">
+      <svg width="44" height="44" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/><circle cx="24" cy="24" r="18.5" fill="#cc0000"/><circle cx="24" cy="24" r="18.5" fill="none" stroke="#ff0000" stroke-width="1.4"/><circle cx="24" cy="24" r="4.4" fill="#0a0000"/><g fill="#0a0000" stroke="#0a0000"><g><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="rotate(120 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g><g transform="rotate(240 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g></g></svg>
+      SHARINGAN — 3 TOMOE
+    </div>
+    <div class="ic-cell">
+      <svg width="44" height="44" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/><circle cx="24" cy="24" r="18.5" fill="#8b0000"/><g fill="#120000"><path d="M24 24 C18 16 18.5 9 24 4 C29.5 9 30 16 24 24 Z"/><path d="M24 24 C18 16 18.5 9 24 4 C29.5 9 30 16 24 24 Z" transform="rotate(120 24 24)"/><path d="M24 24 C18 16 18.5 9 24 4 C29.5 9 30 16 24 24 Z" transform="rotate(240 24 24)"/></g><circle cx="24" cy="24" r="3.4" fill="#0a0000"/></svg>
+      MANGEKYO — 3 BLADE
+    </div>
+    <div class="ic-cell">
+      <svg width="44" height="44" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#f2eded"/><path d="M2 24 A22 22 0 0 1 46 24 Z" fill="#cc0000"/><path d="M8 24 A16 16 0 0 1 40 24 Z" fill="#8b0000" opacity=".25"/><circle cx="24" cy="24" r="22" fill="none" stroke="#8b0000" stroke-width="2"/></svg>
+      CREST — FAN (MINIMAL)
+    </div>
+    <div class="ic-cell">
+      <svg width="40" height="44" viewBox="0 0 48 48"><path d="M24 3 L30.5 20 L24 27.5 L17.5 20 Z" fill="#c9c9d4" stroke="#8b0000" stroke-width="1"/><rect x="22.3" y="26" width="3.4" height="9" fill="#737382"/><circle cx="24" cy="38.5" r="3.6" fill="none" stroke="#737382" stroke-width="2.2"/></svg>
+      KUNAI — TECH ALT
+    </div>
+    <div class="ic-cell">
+      <span style="width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#000 0 20%,#cc0000 21% 58%,#ff0000 59% 72%,#8b0000 73% 100%);box-shadow:0 0 9px rgba(255,0,0,.55),0 0 20px rgba(204,0,0,.4)"></span>
+      CSS STATUS DOT
+    </div>
+  </div>
+</div>
+
+<!-- notes -->
+<div class="container panel" style="border-bottom:none">
+  <h3>What the uchiha pass changes</h3>
+  <ul class="notes">
+    <li>Page drops to <code>#000000</code>; surfaces are near-black so red carries everything. A faint blood-moon disc hangs behind the hero.</li>
+    <li>Accent tiers: <code>#cc0000</code> primary, <code>#8b0000</code> deep tones, <code>#ff0000</code> for glows and the vow line.</li>
+    <li>Headline + brand switch to Shippori Mincho with scroll tracking; the wanted-poster toggle swaps in Oswald; body copy becomes Share Tech Mono (Space Mono alternative toggle).</li>
+    <li><code>⚡</code> becomes an inline-SVG 3-tomoe Sharingan; status dot and hero beacon become mini Sharingans; the brand wears the eye.</li>
+    <li>A vertical brush-kanji rail (忍道 — "the ninja way") frames the hero; a red hanko seal (忍) stamps the dossier badge.</li>
+    <li>Header rule becomes a rough brush stroke instead of a hard border; the vow line breathes red like an activated dōjutsu.</li>
+    <li>Theme button reads <code>MANGEKYO</code> with the eye (UCHIHA / SHARINGAN are drop-in label swaps).</li>
+  </ul>
+</div>
+
+<script>
+(function(){
+  var body=document.body, label=document.getElementById('theme-label'), sub=document.getElementById('sub-icon');
+  var bolts=document.querySelectorAll('[data-bolt]'), eyes=document.querySelectorAll('[data-eye]'), plains=document.querySelectorAll('[data-plain]');
+  var btns=document.querySelectorAll('.rbtn');
+  function apply(cls){
+    body.className=cls;
+    var u=cls.indexOf('u')===0||/^u( |$)/.test(cls);
+    btns.forEach(function(b){b.classList.toggle('on',b.dataset.mode===cls)});
+    bolts.forEach(function(s){s.classList.toggle('hide',u)});
+    eyes.forEach(function(s){s.classList.toggle('hide',!u)});
+    plains.forEach(function(s){s.classList.toggle('hide',u)});
+    label.innerHTML=u
+      ? '<svg width="15" height="15" viewBox="0 0 48 48" style="vertical-align:-2px"><circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="3"/><circle cx="24" cy="24" r="18.5" fill="#cc0000"/><circle cx="24" cy="24" r="4.6" fill="#0a0000"/><g fill="#0a0000"><circle cx="24" cy="11.5" r="3.6"/><circle cx="34.8" cy="30.3" r="3.6"/><circle cx="13.2" cy="30.3" r="3.6"/></g></svg> MANGEKYO'
+      : '&#9670; BLOODMOON';
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.mode)})});
+  apply('asis');
+})();
+</script>
+</body>
+</html>

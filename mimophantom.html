@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mimophantom // phantom → spectre — full-site mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   mimophantom — original mockup: PHANTOM VOID → SPECTRE
+   Engine: one header, six swappable pages, three modes.
+   body.void = live phantom baseline / body.spectre = proposed
+   body[data-scan="off"] disables the CRT overlay.
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--max:1160px}
+
+/* ---------- MODE TOKENS ---------- */
+body.void{
+  --bg:#07090b; --surface:#0e1115; --elev:#161b22; --card:#111419;
+  --txt:#e6edf3; --txt2:#9da7b3; --mut:#656d76;
+  --bdr:#30363d; --bdr2:#21262d;
+  --acc:#00ff88; --acc2:#38bdf8; --amber:#ffb400;
+  --invert:#f0f6fc; --on-invert:#07090b;
+  --glow:none;
+  --radius:0px; --radius-sm:0px;
+  --shadow:2px 2px 0 #000; --shadow-lg:4px 4px 0 #000;
+  --font-head:'Space Grotesk',-apple-system,'Segoe UI',sans-serif;
+  --font-body:'Space Grotesk',-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'Space Mono','JetBrains Mono','Courier New',monospace;
+  --font-disp:'Space Grotesk',sans-serif;
+  --head-track:-0.03em;
+}
+body.spectre{
+  --bg:#04060a; --surface:#080d14; --elev:#0c1420; --card:#0a1018;
+  --txt:#d7e3f2; --txt2:#8fa6c4; --mut:#5d7191;
+  --bdr:#1c2c40; --bdr2:#12202f;
+  --acc:#00ff88; --acc2:#38bdf8; --amber:#ffb400; --ion:#7dd3fc; --violet:#b388ff;
+  --invert:#00ff88; --on-invert:#02120b;
+  --glow:0 0 8px rgba(0,255,136,.55), 0 0 22px rgba(0,255,136,.22);
+  --radius:3px; --radius-sm:2px;
+  --shadow:0 0 0 1px #102033, 2px 3px 0 #000;
+  --shadow-lg:0 0 0 1px #14283d, 5px 6px 0 #000;
+  --font-head:'Orbitron','Rajdhani','Space Grotesk',sans-serif;
+  --font-body:'Share Tech Mono','Space Mono',monospace;
+  --font-mono:'Share Tech Mono','Space Mono',monospace;
+  --font-disp:'Orbitron',sans-serif;
+  --head-track:0.06em;
+  --spec-badge:"id=(wraith)";
+}
+body{background:var(--bg);color:var(--txt);font-family:var(--font-body);line-height:1.6;min-height:100vh}
+/* spectre: faint hex-grid ground + CRT scanlines + vignette */
+body.spectre{
+  background-image:
+    radial-gradient(circle at 85% 2%, rgba(56,189,248,.06), transparent 32%),
+    radial-gradient(circle at 8% 96%, rgba(0,255,136,.05), transparent 34%),
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,255,136,.014) 2px 3px);
+  background-attachment:fixed;
+}
+body.spectre::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:60;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.14) 2px 3px);
+  mix-blend-mode:multiply;opacity:.5;
+}
+body.spectre::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:59;
+  background:radial-gradient(ellipse 120% 90% at 50% 45%, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+body.spectre > *{position:relative;z-index:1}
+.container{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+
+/* ---------- HARNESS BAR ---------- */
+.harness{position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.55rem 1.25rem;background:#0a0f16;border-bottom:1px solid #1b2a3d;font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:#7f92ab}
+.harness b{color:#e6edf3}.harness .nb{color:#ff7a7a;font-weight:700}
+.hbtn{background:transparent;color:#8496ad;border:1px solid #26364a;font-family:inherit;font-size:.64rem;font-weight:700;letter-spacing:.1em;padding:.36rem .72rem;cursor:pointer;text-transform:uppercase;border-radius:2px}
+.hbtn:hover{border-color:#3d5675;color:#cfe0f2}
+.hbtn.on{background:#00ff88;border-color:#00ff88;color:#02120b;box-shadow:0 0 12px rgba(0,255,136,.45)}
+.hsep{color:#3d4f66}
+
+/* ---------- TICKER ---------- */
+.ticker{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.4rem 1rem;background:var(--surface);border-bottom:1px solid var(--bdr2);font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.06em;color:var(--txt2);text-transform:uppercase}
+.ticker .live{display:inline-flex;align-items:center;gap:.45rem;color:var(--txt)}
+.dot{width:9px;height:9px;background:var(--acc);border-radius:50%;box-shadow:0 0 7px var(--acc);animation:blink 2.2s ease-in-out infinite}
+/* spectre: the status dot is a glitching ion bar */
+body.spectre .dot{width:10px;height:10px;border-radius:1px;box-shadow:0 0 8px var(--acc);animation:glitchDot 2.6s steps(1) infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes glitchDot{0%,100%{opacity:1;transform:none;box-shadow:0 0 8px var(--acc)}44%{opacity:1;transform:translateX(1px) scaleY(.6);box-shadow:-2px 0 8px var(--acc2)}47%{opacity:.4;transform:none}52%{opacity:1;transform:translateX(-1px) scaleY(1.2);box-shadow:2px 0 8px var(--acc)}55%{opacity:1;transform:none;box-shadow:0 0 8px var(--acc)}}
+
+/* ---------- HEADER ---------- */
+.site-header{position:sticky;top:77px;z-index:90;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:2px solid var(--bdr)}
+body.spectre .site-header{border-bottom:1px solid #16283c;box-shadow:0 1px 0 rgba(0,255,136,.12), 0 8px 24px rgba(0,0,0,.5)}
+.nav-row{display:flex;justify-content:space-between;align-items:stretch;min-height:58px}
+.brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--txt);font-family:var(--font-disp);font-weight:800;font-size:1.05rem;letter-spacing:.04em;padding:.5rem 1rem;border-right:1px solid var(--bdr2)}
+body.void .brand{font-family:var(--font-mono);font-weight:900;letter-spacing:-.02em;font-size:1.15rem}
+.brand:hover{background:var(--elev);color:var(--acc)}
+.brand-badge{background:var(--acc);color:var(--on-invert);font-family:var(--font-mono);font-size:.6rem;padding:.16rem .5rem;border-radius:999px;font-weight:900;letter-spacing:.05em}
+body.void .brand-badge{border-radius:0}
+/* spectre badge reveal — id=(root) → id=(wraith) */
+body.spectre .brand-badge{background:transparent;color:var(--acc);border:1px solid var(--acc);border-radius:2px;box-shadow:var(--glow)}
+body.spectre .brand-badge{font-size:0}
+body.spectre .brand-badge::after{content:var(--spec-badge);font-size:.6rem;letter-spacing:.08em}
+body.spectre ::selection{background:rgba(0,255,136,.28);color:#eafff4}
+.nav-menu{display:flex;list-style:none}
+.nav-link{display:flex;align-items:center;padding:0 1rem;font-family:var(--font-mono);font-size:.74rem;font-weight:700;text-decoration:none;color:var(--txt2);border-left:1px solid var(--bdr2);cursor:pointer}
+.nav-link:hover{color:var(--txt);background:var(--elev)}
+.nav-link.active{color:var(--acc);background:var(--elev);box-shadow:inset 0 -2px 0 var(--acc)}
+body.spectre .nav-link.active{color:var(--acc);text-shadow:var(--glow);box-shadow:inset 0 -2px 0 var(--acc), inset 0 -8px 12px -8px rgba(0,255,136,.4)}
+.nav-ctl{display:flex;border-left:1px solid var(--bdr2)}
+.theme-btn{background:transparent;border:none;cursor:pointer;color:var(--txt);font-family:var(--font-mono);font-weight:700;font-size:.76rem;display:flex;align-items:center;gap:.45rem;padding:0 1rem;letter-spacing:.06em}
+.theme-btn:hover{background:var(--elev);color:var(--acc)}
+/* phantom wisp mark — brand + button (spectre only) */
+.wisp{display:none}
+body.spectre .wisp{display:inline-block;vertical-align:middle;animation:wispFloat 3.6s ease-in-out infinite}
+body.spectre .theme-btn .wisp{filter:drop-shadow(0 0 5px rgba(0,255,136,.7))}
+@keyframes wispFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+
+/* ---------- PAGE SECTIONS ---------- */
+.page{display:none}
+.page.active{display:block}
+
+.hero{position:relative;overflow:hidden;padding:2.6rem 0 2.2rem;border-bottom:1px solid var(--bdr2);background:linear-gradient(180deg,var(--surface),var(--bg))}
+/* spectre: drifting phantom wisp in the corner + scan shimmer */
+body.spectre .hero::before{
+  content:"";position:absolute;top:-70px;right:-40px;width:420px;height:420px;pointer-events:none;z-index:0;opacity:.16;
+  background:radial-gradient(circle at 60% 40%, rgba(0,255,136,.5), rgba(0,255,136,.08) 42%, transparent 66%);
+  filter:blur(2px);animation:wispDrift 14s ease-in-out infinite;
+}
+@keyframes wispDrift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-18px,14px) scale(1.05)}66%{transform:translate(10px,-10px) scale(.97)}}
+body.spectre .hero::after{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.5;
+  animation:scanSweep 7s linear infinite;
+}
+@keyframes scanSweep{0%{transform:translateY(0)}100%{transform:translateY(420px)}}
+/* spectre: slowly-rotating ward ring + violet depth bloom in the far corner */
+body.spectre .hero-inner::before{
+  content:"";position:absolute;top:-120px;right:-90px;width:440px;height:440px;pointer-events:none;z-index:0;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0,255,136,.09), transparent 60%),
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 34px, rgba(0,255,136,.14) 34px 35px),
+    conic-gradient(from 0deg, transparent 0 300deg, rgba(56,189,248,.10) 340deg, transparent 360deg);
+  -webkit-mask:radial-gradient(circle, transparent 30%, #000 31%, #000 100%);
+          mask:radial-gradient(circle, transparent 30%, #000 31%, #000 100%);
+  opacity:.55;animation:wardSpin 90s linear infinite;
+}
+@keyframes wardSpin{to{transform:rotate(360deg)}}
+body.spectre .hero-inner::after{
+  content:"";position:absolute;top:-40px;left:-70px;width:360px;height:360px;pointer-events:none;z-index:0;
+  background:radial-gradient(circle, rgba(179,136,255,.10), transparent 62%);filter:blur(6px);
+}
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem}
+.hero-grid{display:grid;grid-template-columns:1.65fr 1fr;gap:1.5rem;align-items:start;position:relative;z-index:2}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.nav-menu{display:none}}
+
+/* HUD tag (the meta badge) */
+.hud-tag{display:inline-flex;align-items:center;gap:.6rem;width:fit-content;background:var(--card);border:1px solid var(--bdr);border-left:3px solid var(--acc);padding:.42rem .9rem;box-shadow:var(--shadow);border-radius:var(--radius-sm)}
+body.void .hud-tag{border-radius:0}
+body.spectre .hud-tag{border:1px solid #17304a;border-left:3px solid var(--acc);background:linear-gradient(180deg,var(--card),var(--surface));box-shadow:var(--shadow)}
+.hud-code{font-family:var(--font-disp);font-size:.7rem;font-weight:700;letter-spacing:.14em;color:var(--txt)}
+body.spectre .hud-code{color:var(--acc);text-shadow:var(--glow)}
+.hud-sub{font-family:var(--font-mono);font-size:.64rem;font-weight:700;letter-spacing:.08em;color:var(--txt2)}
+body.spectre .hud-sub{color:var(--ion)}
+/* spectre seal stamp — the round-3 hanko analog */
+.seal{display:none;align-items:center;justify-content:center;width:46px;height:46px;flex:none;border:1.5px solid var(--acc);border-radius:50%;color:var(--acc);font-family:var(--font-disp);font-size:1.15rem;font-weight:800;line-height:1;transform:rotate(-8deg);box-shadow:var(--glow), inset 0 0 12px rgba(0,255,136,.15)}
+body.spectre .seal{display:inline-flex}
+/* spectre: séance-console readout strip */
+.console{display:none;gap:1.4rem;flex-wrap:wrap;padding:.55rem .9rem;margin-bottom:1.4rem;background:linear-gradient(180deg,var(--card),var(--surface));border:1px solid #17304a;border-left:3px solid var(--acc);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;box-shadow:var(--shadow)}
+body.spectre .console{display:flex}
+.console b{color:var(--acc);font-weight:700}
+.console .v{color:var(--violet)}
+.console .a{color:var(--amber)}
+body.void .console{display:none}
+
+h1.headline{font-family:var(--font-head);font-weight:900;font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.05;color:var(--txt);margin:0}
+body.void h1.headline{text-transform:uppercase;letter-spacing:-.03em}
+body.spectre h1.headline{letter-spacing:var(--head-track);text-transform:uppercase;color:#eaf3ff;text-shadow:0 0 18px rgba(0,255,136,.18)}
+h1.headline .accent{color:var(--acc)}
+body.spectre h1.headline .accent{
+  color:var(--acc);
+  text-shadow:0 0 14px rgba(0,255,136,.55), 2px 0 0 rgba(56,189,248,.45), -1.5px 0 0 rgba(179,136,255,.4);
+  animation:chromaFlicker 7s infinite alternate;
+}
+@keyframes chromaFlicker{
+  0%,92%,100%{text-shadow:0 0 14px rgba(0,255,136,.55), 2px 0 0 rgba(56,189,248,.45), -1.5px 0 0 rgba(179,136,255,.4)}
+  93%{text-shadow:0 0 22px rgba(0,255,136,.85), 4px 0 0 rgba(56,189,248,.85), -3px 0 0 rgba(179,136,255,.75)}
+  95%{text-shadow:0 0 8px rgba(0,255,136,.4), -2px 0 0 rgba(56,189,248,.3), 2px 0 0 rgba(179,136,255,.3)}
+}
+
+.subline{display:flex;align-items:center;flex-wrap:wrap;gap:.55rem;font-family:var(--font-mono);font-size:.76rem;color:var(--txt2);margin-bottom:1.3rem}
+.subline code{color:var(--acc);font-weight:700;background:var(--elev);border:1px solid var(--bdr2);padding:.1rem .45rem;border-radius:var(--radius-sm)}
+body.void .subline code{border-radius:0}
+.subline .role{color:var(--mut);font-size:.7rem;letter-spacing:.08em}
+/* icon swap: bolt (void) / wisp (spectre) */
+.icon-wisp{display:none}
+body .icon-wisp{display:none}
+body.spectre .icon-wisp{display:inline-flex}
+body.spectre .icon-bolt{display:none}
+
+/* statement box — terminal field note */
+.statement{position:relative;background:var(--card);border:1px solid var(--bdr);padding:1.3rem 1.5rem;margin-bottom:1.7rem;box-shadow:var(--shadow-lg);border-radius:var(--radius)}
+body.void .statement{border-radius:0}
+body.spectre .statement{border:1px solid #17304a;background:
+  linear-gradient(180deg, rgba(0,255,136,.03), transparent 40%), var(--card)}
+body.spectre .statement::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--acc),transparent)}
+.statement p{font-size:1rem;line-height:1.7;color:var(--txt)}
+.statement .vow{display:block;margin-top:.6rem;font-family:var(--font-mono);font-weight:700;color:var(--acc);font-size:.9rem}
+body.spectre .statement .vow{color:var(--acc);text-shadow:var(--glow);letter-spacing:.03em}
+body.spectre .statement .vow .cur{display:inline-block;width:.6ch;height:1em;background:var(--acc);vertical-align:-2px;margin-left:2px;box-shadow:var(--glow);animation:caretBlink 1.1s steps(1) infinite}
+@keyframes caretBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:1.6rem}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--card);border:1px solid var(--bdr);padding:.8rem .95rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.1rem;border-radius:var(--radius)}
+body.void .tile{border-radius:0}
+body.spectre .tile{border-top:2px solid var(--acc)}
+.tile .num{font-family:var(--font-disp);font-size:1.45rem;font-weight:800;line-height:1;color:var(--txt)}
+body.spectre .tile .num{color:var(--acc);text-shadow:0 0 10px rgba(0,255,136,.35)}
+.tile .num.hot{color:var(--acc)}
+body.spectre .tile .num.hot{color:var(--amber);text-shadow:0 0 10px rgba(255,180,0,.35)}
+.tile .lbl{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;color:var(--mut);text-transform:uppercase}
+
+/* buttons */
+.actions{display:flex;gap:.55rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1rem;font-family:var(--font-mono);font-size:.72rem;font-weight:700;text-decoration:none;border:1px solid var(--bdr);color:var(--txt);background:var(--card);box-shadow:var(--shadow);cursor:pointer;border-radius:var(--radius-sm)}
+body.void .btn{border-radius:0}
+.btn:hover{background:var(--elev);color:var(--acc)}
+.btn.primary{background:var(--invert);border-color:var(--invert);color:var(--on-invert)}
+body.spectre .btn.primary{background:transparent;color:var(--acc);border-color:var(--acc);box-shadow:var(--glow)}
+body.spectre .btn.primary:hover{background:rgba(0,255,136,.1)}
+
+/* search + chips */
+.searchbar{display:flex;gap:.6rem;align-items:center;margin-bottom:1.1rem;flex-wrap:wrap}
+.search-input{flex:1;min-width:220px;padding:.6rem .9rem;font-family:var(--font-mono);font-size:.78rem;background:var(--card);border:1px solid var(--bdr);color:var(--txt);border-radius:var(--radius-sm)}
+body.void .search-input{border-radius:0}
+body.spectre .search-input{border-color:#17304a;box-shadow:inset 0 0 0 1px rgba(0,255,136,.04)}
+.chip{font-family:var(--font-mono);font-size:.64rem;font-weight:700;background:var(--surface);border:1px solid var(--bdr2);color:var(--txt2);padding:.3rem .65rem;border-radius:999px;cursor:pointer}
+body.void .chip{border-radius:0}
+.chip.on{background:var(--acc);color:var(--on-invert);border-color:var(--acc)}
+body.spectre .chip.on{background:rgba(0,255,136,.14);color:var(--acc);border-color:var(--acc);box-shadow:var(--glow)}
+
+/* dispatch cards */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:2rem}
+@media(max-width:980px){.card-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.card-grid{grid-template-columns:1fr}}
+.dcard{background:var(--card);border:1px solid var(--bdr);box-shadow:var(--shadow);border-radius:var(--radius);padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.5rem;position:relative;overflow:hidden}
+body.void .dcard{border-radius:0}
+body.spectre .dcard::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,136,.5),transparent)}
+.dcard-top{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.cve{font-family:var(--font-mono);font-weight:900;font-size:.8rem;color:var(--acc);background:var(--elev);border:1px solid var(--bdr2);padding:.12rem .45rem;border-radius:var(--radius-sm)}
+body.spectre .cve{color:var(--acc);text-shadow:0 0 8px rgba(0,255,136,.4);border-color:#17304a}
+.sev{font-family:var(--font-mono);font-size:.58rem;font-weight:900;letter-spacing:.08em;padding:.14rem .45rem;border-radius:999px;background:var(--amber);color:#1a1200}
+body.void .sev{border-radius:0}
+body.spectre .sev{background:transparent;color:var(--amber);border:1px solid var(--amber);box-shadow:0 0 8px rgba(255,180,0,.25)}
+.dcard h3{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--txt);line-height:1.3}
+body.void .dcard h3{text-transform:uppercase;font-size:.92rem}
+body.spectre .dcard h3{letter-spacing:.02em;font-size:.95rem;color:#eaf3ff}
+.dcard p{font-size:.76rem;color:var(--txt2);line-height:1.55;flex:1}
+.dmeta{display:flex;gap:.4rem;flex-wrap:wrap}
+.mchip{font-family:var(--font-mono);font-size:.58rem;font-weight:700;color:var(--mut);border:1px solid var(--bdr2);padding:.1rem .4rem;border-radius:999px}
+body.spectre .mchip{border-color:#17304a;color:var(--txt2)}
+
+/* ---------- DOSSIER: SPECTROMETER CHASSIS ---------- */
+.chassis{background:var(--card);border:1px solid var(--bdr);box-shadow:var(--shadow-lg);border-radius:var(--radius);overflow:hidden}
+body.void .chassis{border-radius:0}
+body.spectre .chassis{border-color:#17304a}
+.chassis-top{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;border-bottom:1px solid var(--bdr2);font-family:var(--font-mono);font-size:.64rem;font-weight:700;letter-spacing:.08em;color:var(--txt2)}
+body.spectre .chassis-top{border-bottom-color:#12283d}
+.chassis-led{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 7px var(--acc);animation:blink 1.8s infinite}
+.chassis-tag{margin-left:auto;color:var(--acc);font-size:.58rem}
+body.spectre .chassis-tag{color:var(--acc);text-shadow:var(--glow)}
+.spectro{position:relative;width:200px;height:200px;margin:1.15rem auto}
+.sring{position:absolute;border-radius:50%;border:1px dashed var(--bdr2)}
+body.spectre .sring{border-color:#17304a}
+.sring.o{inset:0}.sring.m{inset:30px}.sring.i{inset:64px}
+.saxis{position:absolute;background:var(--bdr2)}
+.saxis.x{left:0;right:0;top:50%;height:1px}
+.saxis.y{top:0;bottom:0;left:50%;width:1px}
+body.spectre .saxis{background:#12283d}
+/* spectre: a sweeping ion beam replaces the radar */
+.sbeam{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg, transparent 0deg 300deg, rgba(0,255,136,.28) 358deg, var(--acc) 360deg);animation:sweep 5s linear infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+.starget{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:blink 2.4s ease-in-out infinite}
+.starget.st2{background:var(--violet);box-shadow:0 0 8px var(--violet)}
+.starget.st3{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.st1{top:24%;left:62%}.st2{top:58%;left:26%}.st3{top:70%;left:69%}
+.scenter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;color:var(--txt)}
+.feed{padding:0 .9rem .7rem}
+.frow{display:flex;justify-content:space-between;gap:.5rem;border-bottom:1px dashed var(--bdr2);padding:.38rem 0;font-family:var(--font-mono);font-size:.64rem}
+body.spectre .frow{border-bottom-color:#0f2233}
+.fk{color:var(--mut)}.fv{color:var(--txt);font-weight:700}.fv.hot{color:var(--acc)}
+body.spectre .fv.hot{color:var(--acc);text-shadow:0 0 8px rgba(0,255,136,.4)}
+.chassis-foot{display:flex;justify-content:space-between;padding:.5rem .8rem;border-top:1px solid var(--bdr2);font-family:var(--font-mono);font-size:.6rem;color:var(--mut)}
+
+/* section bars + directive cards */
+main{padding:2rem 0 3.5rem}
+.secbar{display:flex;align-items:center;gap:.6rem;font-family:var(--font-disp);font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--txt2);border-bottom:1px solid var(--bdr2);padding-bottom:.5rem;margin-bottom:1rem;text-transform:uppercase}
+.secbar .idx{background:var(--acc);color:var(--on-invert);padding:.08rem .5rem;border-radius:999px}
+body.spectre .secbar .idx{background:transparent;color:var(--acc);border:1px solid var(--acc);border-radius:2px;box-shadow:var(--glow)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.4rem}
+@media(max-width:820px){.dgrid{grid-template-columns:1fr}}
+.dir{background:var(--card);border:1px solid var(--bdr);box-shadow:var(--shadow);padding:1rem 1.1rem;border-radius:var(--radius)}
+body.void .dir{border-radius:0}
+body.spectre .dir{border-color:#17304a}
+.dirtop{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;color:var(--acc);margin-bottom:.55rem}
+.dirtop .hex{color:var(--mut)}
+.dir h3{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:.35rem}
+body.void .dir h3{text-transform:uppercase;font-size:.9rem}
+body.spectre .dir h3{letter-spacing:.02em;color:#eaf3ff}
+.dir p{font-size:.74rem;line-height:1.55;color:var(--txt2);margin-bottom:.6rem}
+
+/* ---------- ARCHIVE ---------- */
+.tl-year{display:flex;align-items:center;gap:.7rem;margin:1.6rem 0 .9rem}
+.tl-year .yr{font-family:var(--font-disp);font-size:1.5rem;font-weight:800;color:var(--acc)}
+body.spectre .tl-year .yr{color:var(--acc);text-shadow:var(--glow)}
+body.void .tl-year .yr{font-family:var(--font-head);color:var(--txt)}
+.tl-year .line{flex:1;height:1.5px;background:repeating-linear-gradient(90deg,var(--bdr) 0 8px,transparent 8px 14px)}
+.tl{display:grid;gap:.7rem}
+.tentry{display:grid;grid-template-columns:110px 1fr auto;gap:.8rem;align-items:center;background:var(--card);border:1px solid var(--bdr);box-shadow:var(--shadow);padding:.7rem .9rem;border-radius:var(--radius-sm)}
+body.void .tentry{border-radius:0}
+body.spectre .tentry:hover{border-color:var(--acc);box-shadow:var(--glow)}
+.tdate{font-family:var(--font-mono);font-size:.66rem;font-weight:700;color:var(--mut)}
+.tentry h4{font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--txt)}
+body.void .tentry h4{text-transform:uppercase;font-size:.82rem}
+body.spectre .tentry h4{letter-spacing:.02em;color:#eaf3ff}
+.tscore{font-family:var(--font-mono);font-weight:900;font-size:.76rem;color:var(--amber)}
+body.spectre .tscore{color:var(--amber);text-shadow:0 0 8px rgba(255,180,0,.3)}
+
+/* ---------- MEMO (article) ---------- */
+.prose{max-width:760px}
+.prose h2{font-family:var(--font-head);font-size:1.4rem;font-weight:700;color:var(--txt);margin:1.8rem 0 .7rem}
+body.void .prose h2{text-transform:uppercase}
+body.spectre .prose h2{letter-spacing:.03em;color:#eaf3ff}
+.prose p{font-size:.9rem;line-height:1.8;color:var(--txt);margin-bottom:1rem}
+.prose code{font-family:var(--font-mono);background:var(--elev);border:1px solid var(--bdr2);padding:.05rem .3rem;font-size:.85em;border-radius:var(--radius-sm)}
+body.spectre .prose code{border-color:#17304a;color:var(--acc)}
+.prose pre{background:#050a0f;color:#b9ffdb;border:1px solid #17304a;padding:1rem;border-radius:var(--radius-sm);overflow-x:auto;margin-bottom:1.1rem;font-family:var(--font-mono);font-size:.76rem;line-height:1.5}
+body.void .prose pre{background:#0d1117;color:#c9d1d9;border-color:#30363d;border-radius:0}
+.callout{background:var(--card);border:1px solid #17304a;border-left:3px solid var(--acc);padding:.9rem 1.1rem;border-radius:var(--radius-sm);margin-bottom:1.2rem;box-shadow:var(--shadow)}
+body.void .callout{border-radius:0;border-color:var(--bdr);border-left-color:var(--acc)}
+.callout .chead{font-family:var(--font-disp);font-size:.64rem;font-weight:700;letter-spacing:.12em;color:var(--acc);margin-bottom:.3rem}
+body.spectre .callout .chead{color:var(--acc);text-shadow:var(--glow)}
+body.void .callout .chead{color:var(--acc)}
+.callout p{font-size:.8rem;color:var(--txt2);margin:0}
+.mnote{font-family:var(--font-mono);font-size:.74rem;color:var(--ion);transform:rotate(-.5deg);display:inline-block;margin-top:.4rem;letter-spacing:.04em}
+body.void .mnote{display:none}
+.tele{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin:1.1rem 0 1.6rem}
+@media(max-width:760px){.tele{grid-template-columns:repeat(2,1fr)}}
+.tcol{background:var(--card);border:1px solid var(--bdr2);padding:.6rem .75rem;border-radius:var(--radius-sm)}
+body.spectre .tcol{border-color:#17304a}
+.tlbl{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.1em;color:var(--mut);display:block;margin-bottom:.1rem}
+.tval{font-family:var(--font-mono);font-size:.74rem;font-weight:700;color:var(--acc)}
+body.spectre .tval{color:var(--acc);text-shadow:0 0 8px rgba(0,255,136,.35)}
+body.void .tval{color:var(--acc)}
+
+/* ---------- LLM CLOCK ---------- */
+.clockwrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.6rem}
+@media(max-width:820px){.clockwrap{grid-template-columns:1fr}}
+.crow{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.65rem .9rem;border-bottom:1px dashed var(--bdr2);font-family:var(--font-mono);font-size:.76rem}
+.crow:last-child{border-bottom:none}
+body.spectre .crow{border-bottom-color:#0f2233}
+.cname{font-weight:700;color:var(--txt)}
+.pill{font-size:.58rem;font-weight:900;letter-spacing:.08em;padding:.16rem .55rem;border-radius:999px}
+body.void .pill{border-radius:0}
+.pill.off{background:var(--acc);color:var(--on-invert)}
+.pill.on{background:var(--elev);color:var(--mut);border:1px solid var(--bdr2)}
+body.spectre .pill.off{background:transparent;color:var(--acc);border:1px solid var(--acc);box-shadow:var(--glow)}
+.bigtime{font-family:var(--font-disp);font-size:2.5rem;font-weight:800;color:var(--acc);text-align:center;padding:1rem 0 .3rem}
+body.spectre .bigtime{color:var(--acc);text-shadow:var(--glow);letter-spacing:.04em}
+body.void .bigtime{font-family:var(--font-mono);color:var(--txt)}
+
+/* ---------- WIKIRUN ---------- */
+.wr-hero{text-align:center;padding:2.4rem 0 2rem}
+.wr-title{font-family:var(--font-head);font-size:2.9rem;font-weight:900;color:var(--txt);letter-spacing:.02em}
+body.void .wr-title{text-transform:uppercase}
+body.spectre .wr-title{color:#eaf3ff;text-shadow:0 0 20px rgba(0,255,136,.2)}
+.wr-title span{color:var(--acc)}
+body.spectre .wr-title span{color:var(--acc);text-shadow:var(--glow)}
+.wr-desc{max-width:560px;margin:.6rem auto 1.2rem;font-size:.86rem;color:var(--txt2)}
+
+/* ---------- FOOTER ---------- */
+.site-footer{border-top:1px solid var(--bdr2);padding:1.2rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.64rem;color:var(--mut);letter-spacing:.06em}
+body.spectre .site-footer{border-top:1px solid #16283c}
+</style>
+</head>
+<body class="spectre" data-scan="on">
+
+<!-- ================= HARNESS ================= -->
+<div class="harness">
+  <b>mimophantom.html</b><span class="nb">uncommitted mockup</span><span class="hsep">//</span>
+  <span>page:</span>
+  <button class="hbtn on" data-page="dispatches">dispatches</button>
+  <button class="hbtn" data-page="dossier">dossier</button>
+  <button class="hbtn" data-page="archive">archive</button>
+  <button class="hbtn" data-page="memo">memo</button>
+  <button class="hbtn" data-page="clock">llm_clock</button>
+  <button class="hbtn" data-page="wikirun">wikirun</button>
+  <span class="hsep">//</span>
+  <span>theme:</span>
+  <button class="hbtn" data-mode="void">as-is phantom</button>
+  <button class="hbtn on" data-mode="spectre">spectre</button>
+</div>
+
+<!-- ================= TICKER ================= -->
+<div class="ticker">
+  <span class="live"><span class="dot"></span>DOSSIER: LZ-994</span>
+  <span style="color:var(--mut)">//</span><span>CLEARANCE: LEVEL-4 // TOP SECRET</span>
+  <span style="color:var(--mut)">//</span><span>UTC: 14:22:07</span>
+  <span style="flex:1"></span>
+  <span>SHORTCUT: [T] THEME / [/] SEARCH</span>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container nav-row">
+    <a class="brand" href="#">
+      <svg class="wisp" width="18" height="22" viewBox="0 0 40 48" aria-hidden="true">
+        <defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#baffdb"/><stop offset="1" stop-color="#00ff88"/></linearGradient></defs>
+        <path d="M24 3 C 33 10 34 21 30 30 C 28 35 29 40 26 45 C 22 41 20 44 16 45 C 13 39 14 34 11 29 C 6 20 9 9 18 4 C 20 2 22 2 24 3 Z" fill="url(#wg)" opacity="0.9"/>
+        <circle cx="18" cy="20" r="2.4" fill="#04140c"/><circle cx="28" cy="20" r="2.4" fill="#04140c"/>
+        <path d="M19 27 C 22 30 25 30 28 27" stroke="#04140c" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span>LULZTIGRE</span>
+      <span class="brand-badge">id=(root)</span>
+    </a>
+    <nav><ul class="nav-menu">
+      <li><a class="nav-link active" data-nav="dispatches">/DISPATCHES</a></li>
+      <li><a class="nav-link" data-nav="clock">/LLM_CLOCK</a></li>
+      <li><a class="nav-link" data-nav="wikirun">/WIKIRUN</a></li>
+      <li><a class="nav-link" data-nav="archive">/ARCHIVE</a></li>
+      <li><a class="nav-link" data-nav="dossier">/ABOUT_ME</a></li>
+      <li><a class="nav-link">/RSS</a></li>
+    </ul></nav>
+    <div class="nav-ctl">
+      <button class="theme-btn" id="theme-btn">
+        <svg class="wisp" width="13" height="16" viewBox="0 0 40 48" aria-hidden="true"><path d="M24 3 C 33 10 34 21 30 30 C 28 35 29 40 26 45 C 22 41 20 44 16 45 C 13 39 14 34 11 29 C 6 20 9 9 18 4 C 20 2 22 2 24 3 Z" fill="#00ff88" opacity="0.92"/><circle cx="18" cy="20" r="2.4" fill="#04140c"/><circle cx="28" cy="20" r="2.4" fill="#04140c"/><path d="M19 27 C 22 30 25 30 28 27" stroke="#04140c" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        <span id="theme-label">SPECTRE</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PAGE: DISPATCHES ================= -->
+<section class="page active" id="page-dispatches">
+  <div class="hero">
+    <div class="container hero-inner">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="hud-tag">
+          <span class="dot"></span>
+          <span class="hud-code">GHOST LOG // OFFENSIVE SECURITY RESEARCH KERNEL</span>
+          <span class="hud-sub">DISPATCH NODE LZ-994</span>
+        </div>
+        <span class="seal">◈</span>
+      </div>
+
+      <h1 class="headline">Dispatches from the <span class="accent">Research Kernel</span>.</h1>
+
+      <div class="subline">
+        <span class="icon-wisp" style="font-size:.9rem">
+          <svg width="15" height="18" viewBox="0 0 40 48" aria-hidden="true"><path d="M24 3 C 33 10 34 21 30 30 C 28 35 29 40 26 45 C 22 41 20 44 16 45 C 13 39 14 34 11 29 C 6 20 9 9 18 4 C 20 2 22 2 24 3 Z" fill="#00ff88" opacity="0.92"/><circle cx="18" cy="20" r="2.6" fill="#04140c"/><circle cx="28" cy="20" r="2.6" fill="#04140c"/><path d="M19 27 C 22 30 25 30 28 27" stroke="#04140c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </span>
+        <span class="icon-bolt" style="font-size:1rem">⚡</span>
+        <span>SUBSYSTEM: <code>CMS ZERO-DAYS // VARIANT HUNTING // RED TEAM</code></span>
+        <span style="color:var(--mut)">//</span>
+        <span class="role">LZ-994 CLASSIFIED REPO</span>
+      </div>
+
+      <div class="statement">
+        <p>"Source-driven exploit research, CVE variant analysis, and red team tradecraft. Diffed vendor patches, chained primitives, and the coordinated disclosure trail behind each one.
+        <strong class="vow">Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC.<span class="cur"></span></strong></p>
+      </div>
+
+      <div class="console">
+        <span>SÉANCE CONSOLE</span>
+        <span><b>UPLINK</b> STABLE</span>
+        <span class="v">ECTOPLASM 0.42</span>
+        <span class="a">WARD integrity 100%</span>
+        <span><b>WRAITHS</b> 3 BOUND</span>
+      </div>
+
+      <div class="stats">
+        <div class="tile"><span class="num hot">15+</span><span class="lbl">CVE Disclosures</span></div>
+        <div class="tile"><span class="num">10.0</span><span class="lbl">Max CVSS Critical</span></div>
+        <div class="tile"><span class="num hot">100%</span><span class="lbl">Cleanroom Repro</span></div>
+        <div class="tile"><span class="num">LZ-994</span><span class="lbl">Node Designation</span></div>
+      </div>
+
+      <div class="searchbar">
+        <input class="search-input" placeholder="/ query the ghost log…" readonly>
+        <span class="chip on">ALL</span><span class="chip">RCE</span><span class="chip">XSS</span><span class="chip">VARIANT</span><span class="chip">DISCLOSURE</span>
+      </div>
+
+      <div class="card-grid">
+        <article class="dcard">
+          <div class="dcard-top"><span class="cve">CVE-2026-67363</span><span class="sev">CRITICAL 9.8</span></div>
+          <h3>Pay a Penny, Run Code: Balbooa Forms</h3>
+          <p>Eval-query injection behind a mintable CSRF token; two primitives, one cleanroom chain, coordinated disclosure.</p>
+          <div class="dmeta"><span class="mchip">PRE-AUTH RCE</span><span class="mchip">PHP</span><span class="mchip">2026-08-30</span></div>
+        </article>
+        <article class="dcard">
+          <div class="dcard-top"><span class="cve">CVE-2026-75948</span><span class="sev">HIGH 8.1</span></div>
+          <h3>The String the Fix Stopped Watching: iCagenda</h3>
+          <p>A partial patch guarded the obvious sink and left the sibling controller running the same flaw.</p>
+          <div class="dmeta"><span class="mchip">STORED XSS</span><span class="mchip">JOOMLA</span><span class="mchip">2026-07-12</span></div>
+        </article>
+        <article class="dcard">
+          <div class="dcard-top"><span class="cve">CVE-2026-41042</span><span class="sev">CRITICAL 9.1</span></div>
+          <h3>The Test Connection That Executes Code: Gravitino</h3>
+          <p>Server-side expression evaluation in the connection-test path; unauthenticated, deterministic, fully documented.</p>
+          <div class="dmeta"><span class="mchip">SSTI</span><span class="mchip">JAVA</span><span class="mchip">2026-05-03</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE: DOSSIER ================= -->
+<section class="page" id="page-dossier">
+  <div class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <div class="hud-tag">
+            <span class="dot"></span>
+            <span class="hud-code">GHOST RECORD // CLASSIFIED OPERATIVE</span>
+            <span class="hud-sub">LZ-994-ALPHA</span>
+          </div>
+          <span class="seal">◈</span>
+        </div>
+
+        <h1 class="headline" style="margin-bottom:.6rem">AKINLABI</h1>
+
+        <div class="subline">
+          <span class="icon-wisp" style="font-size:.9rem">
+            <svg width="15" height="18" viewBox="0 0 40 48" aria-hidden="true"><path d="M24 3 C 33 10 34 21 30 30 C 28 35 29 40 26 45 C 22 41 20 44 16 45 C 13 39 14 34 11 29 C 6 20 9 9 18 4 C 20 2 22 2 24 3 Z" fill="#00ff88" opacity="0.92"/><circle cx="18" cy="20" r="2.6" fill="#04140c"/><circle cx="28" cy="20" r="2.6" fill="#04140c"/><path d="M19 27 C 22 30 25 30 28 27" stroke="#04140c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </span>
+          <span class="icon-bolt" style="font-size:1rem">⚡</span>
+          <span>PRONUNCIATION: <code>"HACKING-LAH-BEE"</code></span>
+          <span style="color:var(--mut)">//</span>
+          <span class="role">HEAD OF RED TEAM &amp; FORENSICS OPS</span>
+        </div>
+
+        <div class="statement">
+          <p>"I break complex systems for a living, reverse-engineer proprietary binaries, and engineer weaponized zero-day exploit chains across CMS architectures, enterprise runtimes, and hardened network perimeters.
+          <strong class="vow">Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC. Document everything.<span class="cur"></span></strong></p>
+        </div>
+
+        <div class="stats">
+          <div class="tile"><span class="num hot">15+</span><span class="lbl">CVE Disclosures</span></div>
+          <div class="tile"><span class="num">10.0</span><span class="lbl">Max CVSS Critical</span></div>
+          <div class="tile"><span class="num hot">100%</span><span class="lbl">Cleanroom Repro</span></div>
+          <div class="tile"><span class="num hot">5x</span><span class="lbl">OffSec Creds</span></div>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="#">✉ SECURE TRANSMISSION</a>
+          <a class="btn" href="#">◉ CVE REGISTRY (15+ LOG)</a>
+          <a class="btn" href="#">⬡ WEAPONIZED ARSENAL</a>
+          <a class="btn" href="#">⚿ PGP KEY [4096R]</a>
+        </div>
+      </div>
+
+      <div class="chassis">
+        <div class="chassis-top"><span class="chassis-led"></span><span>CHASSIS: PHANTOM-HUD-994</span><span class="chassis-tag">ACTIVE_SCAN</span></div>
+        <div class="spectro">
+          <div class="sring o"></div><div class="sring m"></div><div class="sring i"></div>
+          <div class="saxis x"></div><div class="saxis y"></div>
+          <div class="sbeam"></div>
+          <div class="starget st1"></div><div class="starget st2"></div><div class="starget st3"></div>
+          <div class="scenter"><span style="font-size:1.1rem">◈</span><span style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.15em;color:var(--mut)">LZ-994</span></div>
+        </div>
+        <div class="feed">
+          <div class="frow"><span class="fk">RADAR_TARGET:</span><span class="fv hot">3 VERIFIED // 15 PIPELINE</span></div>
+          <div class="frow"><span class="fk">KERNEL_STATUS:</span><span class="fv">SE_LINUX_ENFORCING</span></div>
+          <div class="frow"><span class="fk">OP_DISCIPLINE:</span><span class="fv">0-DAY EXPLOIT ENG.</span></div>
+          <div class="frow"><span class="fk">DEPLOY_ZONE:</span><span class="fv">LAGOS // GLOBAL</span></div>
+        </div>
+        <div class="chassis-foot"><span>TERMINAL: PHANTOM-v2.8</span><span style="color:var(--acc)">LIVE_LINK: OK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="secbar"><span class="idx">[01]</span><span>Tactical Directives</span></div>
+    <div class="dgrid">
+      <div class="dir">
+        <div class="dirtop"><span>WHITEBOX // SOURCE AUDIT</span><span class="hex">0x01</span></div>
+        <h3>CMS &amp; Source Driven Exploit Research</h3>
+        <p>Deep source-code auditing across Java, Python, JavaScript and PHP runtimes — pre-auth RCE, arbitrary upload, file read, shortcode eval() primitives in widely-deployed CMS plugins.</p>
+        <div class="dmeta"><span class="mchip">AST</span><span class="mchip">UNAUTH RCE</span><span class="mchip">DESERIALIZATION</span></div>
+      </div>
+      <div class="dir">
+        <div class="dirtop"><span>RESEARCH // AST DIFFING</span><span class="hex">0x02</span></div>
+        <h3>Variant Analysis &amp; Patch Archaeology</h3>
+        <p>Every vendor patch gets its commit history deconstructed and its syntax trees diffed; missed sibling call sites are catalogued, deduped against NVD and advisories.</p>
+        <div class="dmeta"><span class="mchip">COMMIT AUTOPSY</span><span class="mchip">SIBLING SINKS</span><span class="mchip">DEDUP GATES</span></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================= PAGE: ARCHIVE ================= -->
+<section class="page" id="page-archive">
+  <div class="hero">
+    <div class="container hero-inner">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="hud-tag">
+          <span class="dot"></span>
+          <span class="hud-code">LEDGER // CLASSIFIED CHRONICLE</span>
+          <span class="hud-sub">ARCHIVE NODE LZ-994</span>
+        </div>
+        <span class="seal">◈</span>
+      </div>
+      <h1 class="headline">Chronological research <span class="accent">ledger</span>.</h1>
+      <p style="font-family:var(--font-mono);font-size:.82rem;color:var(--txt2);max-width:780px">Every logged specimen: zero-day disclosures, CVE variant hunts, exploit chains, and coordinated vendor disclosure trails — cleanroom reproducible, dated and labelled.</p>
+
+      <div class="tl-year"><span class="yr">2026</span><span class="line"></span></div>
+      <div class="tl">
+        <div class="tentry"><span class="tdate">2026-08-30</span><h4>Pay a Penny, Run Code — Balbooa Forms RCE</h4><span class="tscore">CVSS 9.8</span></div>
+        <div class="tentry"><span class="tdate">2026-07-12</span><h4>The String the Fix Stopped Watching — iCagenda</h4><span class="tscore">CVSS 8.1</span></div>
+        <div class="tentry"><span class="tdate">2026-05-03</span><h4>The Test Connection That Executes Code — Gravitino</h4><span class="tscore">CVSS 9.1</span></div>
+      </div>
+      <div class="tl-year"><span class="yr">2025</span><span class="line"></span></div>
+      <div class="tl">
+        <div class="tentry"><span class="tdate">2025-11-18</span><h4>GrandScream — Desk Phone to Root PBX</h4><span class="tscore">CVSS 9.6</span></div>
+        <div class="tentry"><span class="tdate">2025-09-02</span><h4>DropoutJeep — The Phishing Simulator</h4><span class="tscore">DISPATCH</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE: MEMO ================= -->
+<section class="page" id="page-memo">
+  <div class="hero" style="padding-bottom:1.4rem">
+    <div class="container hero-inner">
+      <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--mut);margin-bottom:.6rem">ROOT <span style="color:var(--bdr2)">/</span> DISPATCHES <span style="color:var(--bdr2)">/</span> MEMO #008</div>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="hud-tag">
+          <span class="dot"></span>
+          <span class="hud-code">DISPATCH // FIELD INTELLIGENCE MEMO</span>
+          <span class="hud-sub">CVSS 9.8 CRITICAL</span>
+        </div>
+        <span class="seal">◈</span>
+      </div>
+      <h1 class="headline">Pay a Penny, Run Code: CVE-2026-67363 / 67364 in Balbooa Forms</h1>
+      <span class="mnote">// LOGGED 2026-08-30 · LAGOS FIELD STATION</span>
+      <div class="tele">
+        <div class="tcol"><span class="tlbl">CVE IDENTIFIERS</span><span class="tval">67363 / 67364</span></div>
+        <div class="tcol"><span class="tlbl">TARGET RUNTIME</span><span class="tval">Balbooa 2.4.3.1</span></div>
+        <div class="tcol"><span class="tlbl">VULN PRIMITIVE</span><span class="tval">Eval Query Injection</span></div>
+        <div class="tcol"><span class="tlbl">DISCLOSURE</span><span class="tval">2026-08-30</span></div>
+      </div>
+    </div>
+  </div>
+  <main class="container">
+    <article class="prose">
+      <h2>// Abstract &amp; Core Thesis</h2>
+      <p>While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine surfaced two separate flaws. The custom-PHP handler <code>eval()</code>s an unescaped query parameter behind a CSRF token that anyone can mint — the payment task trusts a signature it never validates.</p>
+      <pre>GET /?p=task&amp;sig=MINTED&amp;q=system('id') HTTP/1.1
+Host: target.tld</pre>
+      <div class="callout">
+        <div class="chead">◈ FIELD NOTE</div>
+        <p>The vendor patch guarded the obvious sink and left the sibling controller running the same flaw. Patch archaeology, not patch worship.</p>
+      </div>
+      <h2>// Reproduction (Cleanroom)</h2>
+      <p>Fresh Joomla instance, stock plugin version, one curl. No authentication, no plugin configuration, no user interaction beyond a GET request with a self-minted signature parameter.</p>
+      <p><strong style="color:var(--acc)">Disclosure timeline:</strong> report sent, vendor acknowledged in 36h, fix shipped in 2.4.3.2, CVEs reserved and published after coordinated embargo.</p>
+    </article>
+  </main>
+</section>
+
+<!-- ================= PAGE: LLM CLOCK ================= -->
+<section class="page" id="page-clock">
+  <div class="hero">
+    <div class="container hero-inner">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="hud-tag">
+          <span class="dot"></span>
+          <span class="hud-code">ALMANAC // OFF-PEAK DISCOUNT CLOCK</span>
+          <span class="hud-sub">LIVE TELEMETRY</span>
+        </div>
+        <span class="seal">◈</span>
+      </div>
+      <h1 class="headline">LLM off-peak <span class="accent">almanac</span>.</h1>
+      <div class="clockwrap">
+        <div class="chassis">
+          <div class="chassis-top"><span class="chassis-led"></span><span>PROVIDER STATUS</span><span class="chassis-tag">LIVE</span></div>
+          <div class="crow"><span class="cname">GLM</span><span class="pill off">OFF-PEAK −50%</span></div>
+          <div class="crow"><span class="cname">DeepSeek</span><span class="pill off">OFF-PEAK −75%</span></div>
+          <div class="crow"><span class="cname">Qwen</span><span class="pill on">PEAK RATE</span></div>
+          <div class="crow"><span class="cname">MiMo</span><span class="pill off">OFF-PEAK −50%</span></div>
+        </div>
+        <div class="chassis">
+          <div class="chassis-top"><span class="chassis-led"></span><span>NEXT WINDOW</span><span class="chassis-tag">UTC+1</span></div>
+          <div class="bigtime">02:14:36</div>
+          <div style="text-align:center;font-family:var(--font-mono);font-size:.64rem;color:var(--mut);padding-bottom:1rem">UNTIL QWEN OFF-PEAK BEGINS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE: WIKIRUN ================= -->
+<section class="page" id="page-wikirun">
+  <div class="hero">
+    <div class="container wr-hero">
+      <div style="display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1rem">
+        <div class="hud-tag" style="margin:0">
+          <span class="dot"></span>
+          <span class="hud-code">HYPERTEXT SPEEDRUN PROTOCOL</span>
+        </div>
+      </div>
+      <h1 class="wr-title">WIKI<span>RUN</span></h1>
+      <p class="wr-desc">Navigate from <strong>Origin</strong> to <strong>Target</strong> using only internal Wikipedia links. The clock only starts once the origin article renders.</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn primary icon-wisp" href="#">◈ INITIALIZE RUN</a>
+        <a class="btn primary icon-bolt" href="#">⚡ INITIALIZE RUN</a>
+      </div>
+      <div class="dgrid" style="margin-top:1.8rem;text-align:left">
+        <div class="dir">
+          <div class="dirtop"><span>1. ZERO-LATENCY ENGINE</span><span class="hex">0x01</span></div>
+          <h3>Runs Entirely In-Browser</h3>
+          <p>Official Wikipedia REST API with hover prefetch; articles render in an isolated sandbox — no ads, no trackers.</p>
+        </div>
+        <div class="dir">
+          <div class="dirtop"><span>2. ANTI-CHEAT LEDGER</span><span class="hex">0x02</span></div>
+          <h3>Click Integrity Tracking</h3>
+          <p>Every navigation is logged; search-bar shortcuts and off-wiki hops get flagged in the share card.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <span>© 2026 LULZTIGRE // OPEN ACCESS RESEARCH &amp; COORDINATED DISCLOSURE</span>
+  <span>MOCKUP — UNCOMMITTED</span>
+</footer>
+
+<script>
+(function(){
+  var body=document.body, label=document.getElementById('theme-label');
+  var state={page:'dispatches',mode:'spectre',naming:0};
+  var NAMING=[{badge:'"id=(wraith)"',label:'SPECTRE'},{badge:'"id=(echo)"',label:'PHANTOM'},{badge:'"id=(null)"',label:'SPECTER'}];
+
+  function render(){
+    document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('active',p.id==='page-'+state.page)});
+    document.querySelectorAll('[data-nav]').forEach(function(a){a.classList.toggle('active',a.dataset.nav===state.page)});
+    document.querySelectorAll('[data-page]').forEach(function(b){b.classList.toggle('on',b.dataset.page===state.page)});
+    body.className=state.mode;
+    body.style.setProperty('--spec-badge',NAMING[state.naming].badge);
+    document.querySelectorAll('[data-mode]').forEach(function(b){b.classList.toggle('on',b.dataset.mode===state.mode)});
+    label.textContent=state.mode==='spectre'?NAMING[state.naming].label:'PHANTOM';
+  }
+  document.querySelectorAll('[data-page]').forEach(function(b){b.addEventListener('click',function(){state.page=b.dataset.page;render()})});
+  document.querySelectorAll('[data-nav]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();state.page=a.dataset.nav;render()})});
+  document.querySelectorAll('[data-mode]').forEach(function(b){b.addEventListener('click',function(){state.mode=b.dataset.mode;render()})});
+  document.getElementById('theme-btn').addEventListener('click',function(){
+    if(state.mode==='spectre'){state.naming=(state.naming+1)%NAMING.length;render()}
+    else{state.mode='spectre';render()}
+  });
+  render();
+})();
+</script>
+</body>
+</html>

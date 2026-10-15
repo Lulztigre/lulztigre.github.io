@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mimo_about // bloodmoon → uchiha — about page mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700;800&family=Yuji+Boku&family=Oswald:wght@500;700&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   mimo_about — original mockup, about/dossier page
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--max:1160px}
+
+body{
+  --bg:#0a0506; --surface:#140a0c; --elev:#1f1012; --card:#170c0e;
+  --txt:#f0d0d5; --txt2:#b87880; --mut:#7a4650;
+  --bdr:#4a1a22; --bdr2:#2e1015;
+  --acc:#ff2244; --acc2:#ff6b81; --deep:#c41030;
+  --invert:#ff2244; --on-invert:#fff;
+  --glow-quote:none;
+  --font-head:'Space Grotesk',-apple-system,'Segoe UI',sans-serif;
+  --font-body:'Space Grotesk',-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'Space Mono','JetBrains Mono','Courier New',monospace;
+  --head-track:-0.03em;
+  background:var(--bg);color:var(--txt);font-family:var(--font-body);
+  line-height:1.6;min-height:100vh;
+}
+body.u{
+  --bg:#000000; --surface:#0a0202; --elev:#160304; --card:#0c0202;
+  --txt:#f1e4e4; --txt2:#ab7575; --mut:#6f3e3e;
+  --bdr:#3d0000; --bdr2:#1d0000;
+  --acc:#cc0000; --acc2:#ff0000; --deep:#8b0000;
+  --invert:#cc0000;
+  --font-head:'Shippori Mincho','Noto Serif JP',Georgia,serif;
+  --font-body:'Share Tech Mono','JetBrains Mono',monospace;
+  --font-mono:'Share Tech Mono','JetBrains Mono',monospace;
+  --head-track:0.05em;
+  --glow-quote:0 0 7px rgba(255,0,0,.55),0 0 22px rgba(204,0,0,.35),0 0 44px rgba(139,0,0,.22);
+}
+body.u.f-oswald{--font-head:'Oswald',Impact,'Arial Narrow',sans-serif;--head-track:0.015em}
+body.u.f-space{--font-body:'Space Mono','JetBrains Mono',monospace}
+
+.container{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+
+/* review harness chrome */
+.review-bar{
+  position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  padding:.55rem 1.25rem;background:#0b0b0b;border-bottom:1px solid #262626;
+  font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.08em;
+  text-transform:uppercase;color:#7d7d7d;
+}
+.review-bar b{color:#eee}.review-bar .nb{color:#e33;font-weight:700}
+.rbtn{background:transparent;color:#9a9a9a;border:1px solid #333;font-family:inherit;font-size:.66rem;font-weight:700;letter-spacing:.1em;padding:.38rem .8rem;cursor:pointer;text-transform:uppercase}
+.rbtn:hover{border-color:#666;color:#ddd}
+.rbtn.on{background:#cc0000;border-color:#ff0000;color:#fff;box-shadow:0 0 12px rgba(255,0,0,.45)}
+
+/* ticker + header (same language as mimo.html) */
+.ticker{background:var(--surface);border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.4rem 1rem;font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.06em;color:var(--txt2);text-transform:uppercase}
+.ticker .sep{color:var(--mut)}
+.live{display:inline-flex;align-items:center;gap:.45rem;color:var(--txt)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:blink 2s ease-in-out infinite}
+body.u .dot{width:12px;height:12px;background:radial-gradient(circle at 50% 50%,#000 0 20%,var(--acc) 21% 58%,var(--acc2) 59% 72%,var(--deep) 73% 100%);box-shadow:0 0 7px rgba(255,0,0,.65),0 0 16px rgba(204,0,0,.4)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+.site-header{position:sticky;top:29px;z-index:90;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);border-bottom:3px solid var(--bdr)}
+body.u .site-header{border-bottom-color:transparent;border-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 8' preserveAspectRatio='none'><path d='M0 4 Q120 1 240 3 T480 2 T600 4 L600 7 Q470 6 360 6 T120 7 L0 6 Z' fill='%238b0000'/></svg>") 3 stretch}
+.nav-row{display:flex;justify-content:space-between;align-items:stretch;min-height:60px}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--txt);font-family:var(--font-mono);font-weight:900;font-size:1.12rem;padding:.5rem 1rem;border-right:1px solid var(--bdr)}
+.brand:hover{background:var(--elev);color:var(--acc)}
+body.u .brand{font-family:var(--font-head);letter-spacing:.08em;font-weight:800}
+.brand-badge{background:var(--acc);color:#fff;font-family:var(--font-mono);font-size:.62rem;padding:.15rem .45rem;font-weight:900}
+.nav-menu{display:flex;list-style:none}
+.nav-link{display:flex;align-items:center;padding:0 1.2rem;font-family:var(--font-mono);font-size:.8rem;font-weight:700;text-decoration:none;color:var(--txt2);border-left:1px solid var(--bdr)}
+.nav-link:hover{color:var(--txt);background:var(--elev)}
+.nav-link.active{color:var(--acc);background:var(--elev);box-shadow:inset 0 -2px 0 var(--acc)}
+body.u .nav-link.active{color:var(--acc2);text-shadow:0 0 9px rgba(255,0,0,.65)}
+.nav-ctl{display:flex;border-left:1px solid var(--bdr)}
+.theme-btn{background:transparent;border:none;cursor:pointer;color:var(--txt);font-family:var(--font-mono);font-weight:700;font-size:.76rem;display:flex;align-items:center;gap:.4rem;padding:0 1rem}
+.theme-btn:hover{background:var(--elev);color:var(--acc)}
+body.u .theme-btn{font-family:var(--font-head);letter-spacing:.12em;color:var(--acc2);text-shadow:0 0 9px rgba(255,0,0,.5)}
+
+/* dossier hero */
+.dossier-hero{position:relative;overflow:hidden;padding:3rem 0 2.8rem;border-bottom:3px solid var(--bdr);background:linear-gradient(180deg,var(--surface),var(--bg))}
+.moon{position:absolute;top:-100px;right:-70px;width:430px;height:430px;border-radius:50%;pointer-events:none}
+body:not(.u) .moon{display:none}
+.moon::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 42% 42%,rgba(255,0,0,.22) 0%,rgba(204,0,0,.16) 34%,rgba(139,0,0,.10) 55%,rgba(90,0,0,.04) 68%,transparent 74%)}
+.moon::after{content:"";position:absolute;inset:34px;border-radius:50%;border:1px solid rgba(255,0,0,.16)}
+.scroll-rail{position:absolute;left:calc(50% - 700px);top:14px;writing-mode:vertical-rl;text-orientation:upright;font-family:'Yuji Boku',serif;font-size:5.2rem;line-height:1;color:rgba(204,0,0,.09);user-select:none;pointer-events:none;letter-spacing:.35rem}
+body:not(.u) .scroll-rail{display:none}
+
+.dossier-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.6fr 1fr;gap:1.6rem;align-items:start}
+@media(max-width:900px){.dossier-grid{grid-template-columns:1fr}.scroll-rail{display:none!important}}
+
+.meta-badge{display:inline-flex;align-items:center;gap:.6rem;width:fit-content;background:var(--card);border:1px solid var(--bdr);border-left:3px solid var(--acc);padding:.35rem .85rem;box-shadow:2px 2px 0 #000;margin-bottom:1.1rem}
+.meta-beacon{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);animation:blink 1.8s ease-in-out infinite}
+body.u .meta-beacon{width:16px;height:16px;background:radial-gradient(circle at 50% 50%,#000 0 20%,var(--acc) 21% 58%,var(--acc2) 59% 72%,var(--deep) 73% 100%);box-shadow:0 0 8px rgba(255,0,0,.6),0 0 20px rgba(204,0,0,.45)}
+.meta-code{font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.15em;color:var(--txt)}
+.meta-sub{font-family:var(--font-mono);font-size:.66rem;font-weight:700;letter-spacing:.08em;color:var(--acc)}
+body.u .meta-sub{color:var(--acc2);text-shadow:0 0 8px rgba(255,0,0,.55)}
+
+.name-row{display:flex;align-items:center;gap:1rem}
+h1.hero-name{font-family:var(--font-head);font-weight:900;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1.05;letter-spacing:var(--head-track);text-transform:uppercase;color:var(--txt)}
+body.u h1.hero-name{color:#fff;text-shadow:0 0 18px rgba(255,0,0,.28),0 2px 0 #160000}
+h1.hero-name .alias{color:var(--acc)}
+body.u h1.hero-name .alias{color:var(--acc2);text-shadow:0 0 12px rgba(255,0,0,.55)}
+
+.hanko{display:none;align-items:center;justify-content:center;width:48px;height:48px;border:2.5px solid var(--acc);border-radius:8px;color:var(--acc);font-family:'Yuji Boku',serif;font-size:1.7rem;line-height:1;transform:rotate(-9deg);box-shadow:0 0 14px rgba(204,0,0,.35) inset,0 0 10px rgba(204,0,0,.25);flex:none}
+body.u .hanko{display:inline-flex}
+
+.subline{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;font-family:var(--font-mono);font-size:.78rem;color:var(--txt2);margin:0 0 1.4rem}
+.subline code{color:var(--acc);font-weight:700;background:var(--card);border:1px solid var(--bdr2);padding:.12rem .45rem}
+.subline .role{color:var(--mut);font-size:.72rem;letter-spacing:.08em}
+body.u .subline .ic svg{filter:drop-shadow(0 0 6px rgba(255,0,0,.8))}
+[data-bolt][hidden],[data-eye][hidden],[data-sound][hidden],[data-hex][hidden],.hide{display:none!important}
+
+.statement{position:relative;background:var(--card);border:1px solid var(--bdr);padding:1.3rem 1.6rem;margin-bottom:1.7rem;box-shadow:4px 4px 0 #000}
+.statement::before,.statement::after{content:"";position:absolute;width:11px;height:11px}
+.statement::before{top:-2px;left:-2px;border-top:3px solid var(--acc);border-left:3px solid var(--acc)}
+.statement::after{bottom:-2px;right:-2px;border-bottom:3px solid var(--acc);border-right:3px solid var(--acc)}
+.statement p{font-size:1rem;line-height:1.65;color:var(--txt)}
+body.u .statement p{font-family:var(--font-body);letter-spacing:.02em}
+.statement .vow{display:block;margin-top:.6rem;font-family:var(--font-mono);font-size:.9rem;font-weight:700;color:var(--acc)}
+body.u .statement .vow{color:var(--acc2);letter-spacing:.07em;text-transform:uppercase;text-shadow:var(--glow-quote);animation:awaken 3.6s ease-in-out infinite}
+@keyframes awaken{0%,100%{text-shadow:0 0 6px rgba(255,0,0,.45),0 0 18px rgba(204,0,0,.28),0 0 34px rgba(139,0,0,.18)}50%{text-shadow:0 0 9px rgba(255,0,0,.8),0 0 26px rgba(204,0,0,.5),0 0 52px rgba(139,0,0,.3)}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-bottom:1.6rem}
+.tile{background:var(--card);border:1px solid var(--bdr);padding:.8rem .9rem;box-shadow:2px 2px 0 #000;display:flex;flex-direction:column;gap:.15rem}
+body.u .tile{border-top:2px solid var(--deep)}
+.tile .num{font-family:var(--font-mono);font-size:1.45rem;font-weight:900;line-height:1;color:var(--txt)}
+.tile .num.hot{color:var(--acc)}
+body.u .tile .num{font-family:var(--font-head)}
+body.u .tile .num.hot{color:var(--acc2);text-shadow:0 0 11px rgba(255,0,0,.7)}
+.tile .lbl{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;color:var(--mut);text-transform:uppercase}
+
+.actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.dbtn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1rem;font-family:var(--font-mono);font-size:.74rem;font-weight:700;text-decoration:none;border:1px solid var(--bdr);color:var(--txt);background:var(--card);box-shadow:2px 2px 0 #000;cursor:pointer}
+.dbtn:hover{background:var(--elev)}
+.dbtn.primary{background:var(--invert);border-color:var(--invert);color:var(--on-invert)}
+body.u .dbtn.primary{box-shadow:0 0 16px rgba(255,0,0,.35),2px 2px 0 #000}
+.dbtn svg{flex:none}
+
+/* chassis HUD — rethemed as a sharingan scanner */
+.chassis{background:var(--card);border:1px solid var(--bdr);box-shadow:4px 4px 0 #000;position:relative;overflow:hidden}
+.chassis-top{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;border-bottom:1px solid var(--bdr);font-family:var(--font-mono);font-size:.66rem;font-weight:700;letter-spacing:.08em;color:var(--txt2)}
+.chassis-led{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:blink 1.6s infinite}
+.chassis-tag{margin-left:auto;color:var(--acc);font-size:.6rem}
+.radar{position:relative;width:210px;height:210px;margin:1.3rem auto}
+.ring{position:absolute;border-radius:50%;border:1px solid var(--bdr)}
+.ring.o{inset:0}.ring.m{inset:28px}.ring.i{inset:62px}
+.axis{position:absolute;background:var(--bdr2)}
+.axis.x{left:0;right:0;top:50%;height:1px}
+.axis.y{top:0;bottom:0;left:50%;width:1px}
+.sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,transparent 300deg,var(--acc) 358deg,transparent 360deg);opacity:.5;animation:sweep 4s linear infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+.target{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--acc2);box-shadow:0 0 9px var(--acc2)}
+body:not(.u) .target{background:var(--acc);box-shadow:0 0 9px var(--acc)}
+.t1{top:22%;left:63%}.t2{top:58%;left:24%}.t3{top:70%;left:70%}
+.radar-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;color:var(--txt)}
+.radar-center .sig{font-family:var(--font-mono);font-size:.6rem;font-weight:700;letter-spacing:.15em;color:var(--txt2)}
+.feed{padding:0 .9rem .7rem}
+.frow{display:flex;justify-content:space-between;gap:.5rem;border-bottom:1px dashed var(--bdr2);padding:.4rem 0;font-family:var(--font-mono);font-size:.66rem}
+.fk{color:var(--mut)}.fv{color:var(--txt);font-weight:700}.fv.hot{color:var(--acc)}
+body.u .fv.hot{color:var(--acc2);text-shadow:0 0 8px rgba(255,0,0,.5)}
+.chassis-foot{display:flex;justify-content:space-between;padding:.5rem .8rem;border-top:1px solid var(--bdr);font-family:var(--font-mono);font-size:.62rem;color:var(--mut)}
+
+/* directives */
+main{padding:2.4rem 0 4rem}
+.section-bar{display:flex;align-items:center;gap:.6rem;font-family:var(--font-mono);font-size:.7rem;font-weight:900;letter-spacing:.08em;color:var(--txt2);border-bottom:1px solid var(--bdr);padding-bottom:.5rem;margin-bottom:1rem}
+.section-bar .idx{background:var(--acc);color:var(--on-invert);padding:.1rem .45rem}
+body.u .section-bar .idx{background:var(--deep);color:#fff}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:820px){.dgrid{grid-template-columns:1fr}}
+.dcard{position:relative;background:var(--card);border:1px solid var(--bdr);box-shadow:3px 3px 0 #000;padding:1rem 1.1rem}
+.dcard::before,.dcard::after{content:"";position:absolute;width:10px;height:10px}
+.dcard::before{top:-1px;left:-1px;border-top:3px solid var(--acc);border-left:3px solid var(--acc)}
+.dcard::after{bottom:-1px;right:-1px;border-bottom:3px solid var(--acc);border-right:3px solid var(--acc)}
+.dtop{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.62rem;font-weight:700;letter-spacing:.08em;color:var(--acc);margin-bottom:.7rem}
+.dtop .hex{color:var(--mut)}
+.dtitle{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--txt);margin:0 0 .4rem;letter-spacing:var(--head-track)}
+.dtext{font-family:var(--font-mono);font-size:.74rem;line-height:1.55;color:var(--txt2);margin-bottom:.7rem}
+.dpills{display:flex;gap:.4rem;flex-wrap:wrap}
+.dpill{font-family:var(--font-mono);font-size:.58rem;font-weight:700;color:var(--mut);border:1px solid var(--bdr2);padding:.12rem .4rem}
+body.u .dpill{border-color:var(--deep)}
+.more{border:1px dashed var(--bdr);color:var(--mut);font-family:var(--font-mono);font-size:.7rem;text-align:center;padding:.9rem;letter-spacing:.1em}
+
+/* palette + notes panels */
+.panel{padding:2rem 0;border-top:1px solid var(--bdr)}
+.panel h3{font-family:var(--font-head);text-transform:uppercase;letter-spacing:.06em;font-size:1rem;color:var(--txt);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.panel h3::after{content:"";flex:1;height:1px;background:var(--bdr)}
+.swatches{display:flex;gap:.7rem;flex-wrap:wrap}
+.sw{width:148px;border:1px solid var(--bdr);background:var(--card);font-family:var(--font-mono);font-size:.6rem}
+.sw i{display:block;height:50px}
+.sw span{display:block;padding:.35rem .5rem;color:var(--txt2)}
+ul.notes{list-style:none;display:grid;gap:.5rem;font-family:var(--font-mono);font-size:.82rem;color:var(--txt2)}
+ul.notes li{padding-left:1.35rem;position:relative}
+ul.notes li::before{content:"忍";position:absolute;left:0;color:var(--acc);font-size:.75rem;font-family:'Yuji Boku',serif}
+ul.notes code{color:var(--acc2);background:var(--elev);padding:.05rem .3rem}
+</style>
+</head>
+<body>
+
+<div class="review-bar">
+  <b>mimo_about.html</b><span class="nb">uncommitted mockup</span>
+  <span>about page — bloodmoon→uchiha</span>
+  <button class="rbtn on" data-mode="asis">as-is bloodmoon</button>
+  <button class="rbtn" data-mode="u">uchiha</button>
+  <button class="rbtn" data-mode="u f-oswald">uchiha · wanted-poster header</button>
+  <button class="rbtn" data-mode="u f-space">uchiha · space-mono body</button>
+</div>
+
+<div class="ticker">
+  <div class="live"><span class="dot"></span><span>DOSSIER: LZ-994-ALPHA</span></div>
+  <span class="sep">//</span><span>CLEARANCE: LEVEL-4 // TOP SECRET</span>
+  <span class="sep">//</span><span>UTC: 14:22:07</span>
+  <span style="flex:1"></span>
+  <span>SHORTCUT: [T] THEME / [/] SEARCH</span>
+</div>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a class="brand" href="#">
+      <svg width="24" height="24" viewBox="0 0 48 48" data-eye aria-hidden="true">
+        <circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/>
+        <circle cx="24" cy="24" r="18.5" fill="#cc0000"/>
+        <circle cx="24" cy="24" r="18.5" fill="none" stroke="#ff0000" stroke-width="1.4"/>
+        <circle cx="24" cy="24" r="4.4" fill="#0a0000"/>
+        <g fill="#0a0000" stroke="#0a0000">
+          <g><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+          <g transform="rotate(120 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+          <g transform="rotate(240 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+        </g>
+      </svg>
+      <span>LULZTIGRE</span>
+      <span class="brand-badge">id=(anbu)</span>
+    </a>
+    <nav><ul class="nav-menu">
+      <li><a class="nav-link" href="#">/DISPATCHES</a></li>
+      <li><a class="nav-link" href="#">/LLM_CLOCK</a></li>
+      <li><a class="nav-link" href="#">/WIKIRUN</a></li>
+      <li><a class="nav-link" href="#">/ARCHIVE</a></li>
+      <li><a class="nav-link active" href="#">/ABOUT_ME</a></li>
+    </ul></nav>
+    <div class="nav-ctl"><button class="theme-btn" id="theme-btn"><span id="theme-label">&#9670; BLOODMOON</span></button></div>
+  </div>
+</header>
+
+<section class="dossier-hero">
+  <div class="moon" aria-hidden="true"></div>
+  <div class="scroll-rail" aria-hidden="true">忍具</div>
+  <div class="container dossier-grid">
+
+    <div>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="meta-badge">
+          <span class="meta-beacon"></span>
+          <span class="meta-code">DOSSIER // CLASSIFIED OPERATIVE RECORD</span>
+          <span class="meta-sub">LZ-994-ALPHA</span>
+        </div>
+        <span class="hanko">忍</span>
+      </div>
+
+      <div class="name-row">
+        <h1 class="hero-name">AKINLABI <span class="alias">[LULZTIGRE]</span></h1>
+      </div>
+
+      <div class="subline" style="margin-top:.7rem">
+        <span class="ic" id="sub-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" data-sound aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+          <svg width="19" height="19" viewBox="0 0 48 48" data-eye class="hide" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/>
+            <circle cx="24" cy="24" r="18.5" fill="#cc0000"/>
+            <circle cx="24" cy="24" r="18.5" fill="none" stroke="#ff0000" stroke-width="1.4"/>
+            <circle cx="24" cy="24" r="4.4" fill="#0a0000"/>
+            <g fill="#0a0000" stroke="#0a0000">
+              <g><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+              <g transform="rotate(120 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+              <g transform="rotate(240 24 24)"><circle cx="24" cy="11.5" r="3.4"/><path d="M21.4 13.4C19.2 16.2 19.1 19.3 21.1 21.5" stroke-width="2.6" fill="none" stroke-linecap="round"/></g>
+            </g>
+          </svg>
+        </span>
+        <span>PRONUNCIATION: <code>"HACKING-LAH-BEE"</code></span>
+        <span style="color:var(--mut)">//</span>
+        <span class="role">HEAD OF RED TEAM &amp; FORENSICS OPS</span>
+      </div>
+
+      <div class="statement">
+        <p>
+          "I break complex systems for a living, reverse-engineer proprietary binaries, and engineer weaponized zero-day exploit chains across CMS architectures, enterprise runtimes, and hardened network perimeters. Outside client operations, I run an autonomous CVE research lab dissecting software ecosystems, diffing vendor patches, and chaining low-level primitives into deterministic Proof-of-Concepts.
+          <strong class="vow">Pull the source apart. Diff the patch. Chain the primitive. Ship the PoC. Document everything.</strong>"
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="tile"><span class="num hot">15+</span><span class="lbl">CVE Disclosures</span></div>
+        <div class="tile"><span class="num">10.0</span><span class="lbl">Max CVSS Critical</span></div>
+        <div class="tile"><span class="num hot">100%</span><span class="lbl">Cleanroom Repro</span></div>
+        <div class="tile"><span class="num hot">5x</span><span class="lbl">OffSec Creds</span></div>
+      </div>
+
+      <div class="actions">
+        <a class="dbtn primary" href="#">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          SECURE TRANSMISSION
+        </a>
+        <a class="dbtn" href="#">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5m0 3v.5"/></svg>
+          CVE REGISTRY (15+ LOG)
+        </a>
+        <a class="dbtn" href="#">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v10l9 5 9-5V7z"/><circle cx="12" cy="12" r="3"/></svg>
+          WEAPONIZED ARSENAL
+        </a>
+        <a class="dbtn" href="#">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          PGP KEY [4096R]
+        </a>
+      </div>
+    </div>
+
+    <!-- chassis: the radar becomes a dōjutsu scanner in uchiha mode -->
+    <div class="chassis">
+      <div class="chassis-top">
+        <span class="chassis-led"></span>
+        <span>CHASSIS: PHANTOM-HUD-994</span>
+        <span class="chassis-tag">ACTIVE_SCAN</span>
+      </div>
+      <div class="radar">
+        <div class="ring o"></div><div class="ring m"></div><div class="ring i"></div>
+        <div class="axis x"></div><div class="axis y"></div>
+        <div class="sweep"></div>
+        <div class="target t1" title="Balbooa Forms CVE-2026-67364"></div>
+        <div class="target t2" title="iCagenda CVE-2026-75948"></div>
+        <div class="target t3" title="Embargoed 0-Day Pipeline"></div>
+        <div class="radar-center">
+          <!-- as-is: hex reticle / uchiha: mangekyo -->
+          <svg width="36" height="36" viewBox="0 0 48 48" data-hex aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M24 3 42 13v22L24 45 6 35V13z"/><circle cx="24" cy="24" r="6"/></svg>
+          <svg width="44" height="44" viewBox="0 0 48 48" data-eye class="hide" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="2"/>
+            <circle cx="24" cy="24" r="18.5" fill="#8b0000"/>
+            <g fill="#120000">
+              <path d="M24 24 C18 16 18.5 9 24 4 C29.5 9 30 16 24 24 Z"/>
+              <path d="M24 24 C18 16 18.5 9 24 4 C29.5 9 30 16 24 24 Z" transform="rotate(120 24 24)"/>
+              <path d="M24 24 C18 16 18.5 9 24 4 C29.5 9 30 16 24 24 Z" transform="rotate(240 24 24)"/>
+            </g>
+            <circle cx="24" cy="24" r="3.4" fill="#0a0000"/>
+          </svg>
+          <span class="sig">LZ-994</span>
+        </div>
+      </div>
+      <div class="feed">
+        <div class="frow"><span class="fk">RADAR_TARGET:</span><span class="fv hot">3 VERIFIED // 15 PIPELINE</span></div>
+        <div class="frow"><span class="fk">KERNEL_STATUS:</span><span class="fv">SE_LINUX_ENFORCING</span></div>
+        <div class="frow"><span class="fk">OP_DISCIPLINE:</span><span class="fv">0-DAY EXPLOIT ENG.</span></div>
+        <div class="frow"><span class="fk">DEPLOY_ZONE:</span><span class="fv">LAGOS // GLOBAL (REMOTE)</span></div>
+      </div>
+      <div class="chassis-foot"><span>TERMINAL: PHANTOM-v2.8</span><span class="fv hot">LIVE_LINK: OK</span></div>
+    </div>
+
+  </div>
+</section>
+
+<main class="container">
+  <div class="section-bar"><span class="idx">[01]</span><span>TACTICAL DIRECTIVES</span></div>
+  <div class="dgrid">
+    <div class="dcard">
+      <div class="dtop"><span>WHITEBOX // SOURCE AUDIT</span><span class="hex">0x01</span></div>
+      <h3 class="dtitle">CMS &amp; Source Driven Exploit Research</h3>
+      <p class="dtext">Deep source-code auditing across Java, Python, JavaScript, and PHP runtimes. Targeting high-value flaws in CMS platforms, web APIs, frameworks, and third-party plugin ecosystems — pre-auth RCE, arbitrary file upload, file read, and dangerous shortcode eval() primitives.</p>
+      <div class="dpills"><span class="dpill">JAVA / PHP / PYTHON AST</span><span class="dpill">UNAUTH RCE</span><span class="dpill">SHORTCODE EVAL()</span><span class="dpill">DESERIALIZATION</span></div>
+    </div>
+    <div class="dcard">
+      <div class="dtop"><span>RESEARCH // AST DIFFING</span><span class="hex">0x02</span></div>
+      <h3 class="dtitle">Variant Analysis &amp; Patch Archaeology</h3>
+      <p class="dtext">For every vendor patch released: deconstruct the commit history, diff the syntax trees, enumerate missed call sites across sibling controllers. Findings count toward the ledger only once they survive dedup against NVD, GitHub Advisories, and the Joomla Security Tracker.</p>
+      <div class="dpills"><span class="dpill">COMMIT AUTOPSY</span><span class="dpill">MISSED SINK SITES</span><span class="dpill">SIBLING CODE PATHS</span><span class="dpill">DEDUP GATES</span></div>
+    </div>
+  </div>
+  <div class="more">+ 02 MORE DIRECTIVE CARDS — SAME TREATMENT (OMITTED FROM MOCKUP)</div>
+
+  <div class="panel">
+    <h3>What the uchiha pass changes here</h3>
+    <ul class="notes">
+      <li>Same token set as <code>mimo.html</code>: <code>#000000</code> bg, <code>#cc0000</code>/<code>#8b0000</code>/<code>#ff0000</code> tiers — both mockups drop into <code>style.css</code> as one theme block.</li>
+      <li>Name headline takes Shippori Mincho (or Oswald in the wanted-poster toggle); the <code>[LULZTIGRE]</code> alias glows <code>#ff0000</code>.</li>
+      <li><code>🔊</code> pronunciation icon becomes a mini Sharingan; the hanko seal (忍) stamps the dossier badge.</li>
+      <li>Chassis radar is rethemed as a dōjutsu scanner: red sweep, Sharingan targets, Mangekyo replaces the hex reticle at center.</li>
+      <li>Vow line breathes red; stats tiles gain a deep-blood top edge; action bar primary button is blood red with glow.</li>
+      <li>Directive cards keep corner reticles but in <code>#cc0000</code>, titles move to the display serif, pills outline in deep blood.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+(function(){
+  var body=document.body,label=document.getElementById('theme-label');
+  var eyes=document.querySelectorAll('[data-eye]'),others=document.querySelectorAll('[data-sound],[data-hex]');
+  var btns=document.querySelectorAll('.rbtn');
+  function apply(cls){
+    body.className=cls;
+    var u=cls.indexOf('u')===0;
+    btns.forEach(function(b){b.classList.toggle('on',b.dataset.mode===cls)});
+    eyes.forEach(function(s){s.classList.toggle('hide',!u)});
+    others.forEach(function(s){s.classList.toggle('hide',u)});
+    label.innerHTML=u
+      ? '<svg width="15" height="15" viewBox="0 0 48 48" style="vertical-align:-2px"><circle cx="24" cy="24" r="22" fill="#0a0000" stroke="#8b0000" stroke-width="3"/><circle cx="24" cy="24" r="18.5" fill="#cc0000"/><circle cx="24" cy="24" r="4.6" fill="#0a0000"/><g fill="#0a0000"><circle cx="24" cy="11.5" r="3.6"/><circle cx="34.8" cy="30.3" r="3.6"/><circle cx="13.2" cy="30.3" r="3.6"/></g></svg> MANGEKYO'
+      : '&#9670; BLOODMOON';
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){apply(b.dataset.mode)})});
+  apply('asis');
+})();
+</script>
+</body>
+</html>
