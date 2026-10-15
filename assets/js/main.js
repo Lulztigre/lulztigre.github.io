@@ -1419,6 +1419,31 @@
       } catch (e) {}
     }
 
+    let lastBlipTime = 0;
+    function playTargetBlipBeep(freq = 1760) {
+      if (!isAudioActive()) return;
+      const nowMs = Date.now();
+      if (nowMs - lastBlipTime < 220) return;
+      lastBlipTime = nowMs;
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.25, now + 0.05);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.08, now + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.14);
+      } catch (e) {}
+    }
+
     function fireSonarPing() {
       playRelayClick(800);
       if (isAudioActive()) {
@@ -1426,6 +1451,8 @@
           const ctx = getAudioCtx();
           if (ctx) {
             const now = ctx.currentTime;
+
+            // 1. Primary outbound chirped sonar pulse: 880Hz -> 1760Hz
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'sine';
@@ -1442,6 +1469,32 @@
 
             osc.start(now);
             osc.stop(now + 1.25);
+
+            // 2. Doppler frequency shift return echo (+4.2 Hz UP at 1,420 YDS)
+            const echoTime = now + 0.38;
+            const echoOsc = ctx.createOscillator();
+            const echoGain = ctx.createGain();
+            const echoFilter = ctx.createBiquadFilter();
+
+            echoOsc.type = 'sine';
+            // Doppler shifted frequency: 880 + 4.2 = 884.2 Hz
+            echoOsc.frequency.setValueAtTime(884.2, echoTime);
+            echoOsc.frequency.exponentialRampToValueAtTime(1764.2, echoTime + 0.09);
+            echoOsc.frequency.exponentialRampToValueAtTime(1104.2, echoTime + 0.28);
+
+            echoFilter.type = 'lowpass';
+            echoFilter.frequency.setValueAtTime(2200, echoTime);
+
+            echoGain.gain.setValueAtTime(0.0001, echoTime);
+            echoGain.gain.linearRampToValueAtTime(0.22, echoTime + 0.035);
+            echoGain.gain.exponentialRampToValueAtTime(0.0001, echoTime + 0.95);
+
+            echoOsc.connect(echoFilter);
+            echoFilter.connect(echoGain);
+            echoGain.connect(ctx.destination);
+
+            echoOsc.start(echoTime);
+            echoOsc.stop(echoTime + 1.0);
           }
         } catch (e) {}
       }
@@ -1449,8 +1502,23 @@
       if (window.triggerSonarRipple) {
         window.triggerSonarRipple();
       }
+
+      // Highlight live telemetry readouts
+      ['telBearing', 'telRange', 'telDoppler', 'telBearingAbout', 'telRangeAbout', 'telDopplerAbout'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.style.transition = 'color 0.1s ease, text-shadow 0.1s ease';
+          el.style.color = '#00e5ff';
+          el.style.textShadow = '0 0 10px #00e5ff';
+          setTimeout(() => {
+            el.style.color = '';
+            el.style.textShadow = '';
+          }, 850);
+        }
+      });
+
       if (window.showToast) {
-        window.showToast('⚡ HYDRO-ACOUSTIC SONAR PING EMITTED // 1,420 YDS');
+        window.showToast('⚡ HYDRO-ACOUSTIC PING // BRG 042.8° TRUE · RNG 1,420 YDS · DOPPLER +4.2 Hz UP');
       }
     }
     window.fireSonarPing = fireSonarPing;
@@ -1560,13 +1628,56 @@
       document.getElementById('sonarCanvasAbout')
     ].filter(Boolean);
 
-    let sweepAngle = 0;
+    let sweepAngle = 0; // Clockwise azimuth in radians from North
     let pingRipples = [];
+    let targetEchoRings = [];
+
+    const sonarTargets = [
+      {
+        id: 'cve-41042',
+        bearingDeg: 42.8,
+        angle: (42.8 - 90) * Math.PI / 180, // Nautical 042.8° TRUE
+        rangeYds: 1420,
+        dist: 1420 / 1600, // 0.8875
+        label: 'CVE-2026-41042 [JDBC]',
+        tag: '042.8° T · 1,420 YDS · +4.2 Hz',
+        doppler: '+4.2 Hz UP',
+        freq: 1760,
+        isPrimary: true,
+        lastHit: false
+      },
+      {
+        id: 'cve-67363',
+        bearingDeg: 140.4,
+        angle: (140.4 - 90) * Math.PI / 180, // Nautical 140.4° TRUE
+        rangeYds: 980,
+        dist: 980 / 1600, // 0.6125
+        label: 'CVE-2026-67363 [PHP]',
+        tag: '140.4° T · 980 YDS · -1.8 Hz',
+        doppler: '-1.8 Hz DN',
+        freq: 1440,
+        isPrimary: false,
+        lastHit: false
+      },
+      {
+        id: 'beacon-443',
+        bearingDeg: 277.9,
+        angle: (277.9 - 90) * Math.PI / 180, // Nautical 277.9° TRUE
+        rangeYds: 1280,
+        dist: 1280 / 1600, // 0.80
+        label: 'BEACON: HTTPS:443',
+        tag: '277.9° T · 1,280 YDS · SYNC',
+        doppler: '0.0 Hz SYNC',
+        freq: 1280,
+        isPrimary: false,
+        lastHit: false
+      }
+    ];
 
     window.triggerSonarRipple = function () {
       sonarCanvases.forEach(canvas => {
         pingRipples.push({
-          r: 10,
+          r: 8,
           alpha: 1.0,
           maxR: Math.min(canvas.width, canvas.height) * 0.48
         });
@@ -1597,21 +1708,77 @@
           if (w === 0 || h === 0) return;
           const cx = w / 2;
           const cy = h / 2;
-          const maxRadius = Math.min(cx, cy) * 0.88;
+          const maxRadius = Math.min(cx, cy) * 0.82;
 
           ctx.clearRect(0, 0, w, h);
 
-          // Concentric range rings
-          ctx.strokeStyle = 'rgba(77, 141, 255, 0.25)';
-          ctx.lineWidth = 1;
+          // Deep sonar background radial glow
+          const bgGrad = ctx.createRadialGradient(cx, cy, 2, cx, cy, maxRadius * 1.1);
+          bgGrad.addColorStop(0, 'rgba(6, 42, 85, 0.4)');
+          bgGrad.addColorStop(0.8, 'rgba(2, 11, 24, 0.95)');
+          bgGrad.addColorStop(1, '#020b18');
+          ctx.fillStyle = bgGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Concentric Range Rings with distance markings
+          const ringDistances = ['400 YDS', '800 YDS', '1,200 YDS', '1,600 YDS'];
           for (let i = 1; i <= 4; i++) {
+            const r = (maxRadius / 4) * i;
+            ctx.strokeStyle = i === 4 ? 'rgba(77, 141, 255, 0.45)' : 'rgba(77, 141, 255, 0.22)';
+            ctx.lineWidth = i === 4 ? 1.5 : 1;
+            ctx.setLineDash(i === 4 ? [] : [3, 4]);
             ctx.beginPath();
-            ctx.arc(cx, cy, (maxRadius / 4) * i, 0, Math.PI * 2);
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Yard label along North-South axis
+            ctx.font = '8px "Roboto Mono", monospace';
+            ctx.fillStyle = 'rgba(125, 175, 255, 0.65)';
+            ctx.textAlign = 'center';
+            ctx.fillText(ringDistances[i - 1], cx, cy - r + 9);
           }
 
+          // Azimuth Compass Ring & Cardinal Ticks
+          for (let deg = 0; deg < 360; deg += 30) {
+            const rad = (deg - 90) * Math.PI / 180;
+            const isCardinal = deg % 90 === 0;
+            const tickLen = isCardinal ? 8 : 4;
+            const x1 = cx + Math.cos(rad) * maxRadius;
+            const y1 = cy + Math.sin(rad) * maxRadius;
+            const x2 = cx + Math.cos(rad) * (maxRadius + tickLen);
+            const y2 = cy + Math.sin(rad) * (maxRadius + tickLen);
+
+            ctx.strokeStyle = isCardinal ? 'rgba(77, 141, 255, 0.7)' : 'rgba(77, 141, 255, 0.35)';
+            ctx.lineWidth = isCardinal ? 1.5 : 1;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Cardinal letters
+            ctx.font = isCardinal ? 'bold 8.5px "Roboto Mono", monospace' : '7.5px "Roboto Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            if (deg === 0) {
+              ctx.fillStyle = '#ff8c1a';
+              ctx.fillText('N 000°', cx, cy - maxRadius - 10);
+            } else if (deg === 90) {
+              ctx.fillStyle = 'rgba(180, 215, 255, 0.85)';
+              ctx.fillText('E 090°', cx + maxRadius + 18, cy);
+            } else if (deg === 180) {
+              ctx.fillStyle = 'rgba(180, 215, 255, 0.85)';
+              ctx.fillText('S 180°', cx, cy + maxRadius + 11);
+            } else if (deg === 270) {
+              ctx.fillStyle = 'rgba(180, 215, 255, 0.85)';
+              ctx.fillText('W 270°', cx - maxRadius - 18, cy);
+            }
+          }
+          ctx.textBaseline = 'alphabetic';
+
           // Crosshairs
-          ctx.strokeStyle = 'rgba(77, 141, 255, 0.3)';
+          ctx.strokeStyle = 'rgba(77, 141, 255, 0.25)';
+          ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(cx - maxRadius, cy);
           ctx.lineTo(cx + maxRadius, cy);
@@ -1619,7 +1786,7 @@
           ctx.lineTo(cx, cy + maxRadius);
           ctx.stroke();
 
-          // Expanding ping ripples
+          // Expanding Sonar Ping Wavefronts
           for (let i = pingRipples.length - 1; i >= 0; i--) {
             const p = pingRipples[i];
             ctx.save();
@@ -1630,17 +1797,46 @@
             ctx.stroke();
             ctx.restore();
 
-            p.r += 2.2;
+            // Check collision with targets to spawn echo ring
+            sonarTargets.forEach(t => {
+              const targetR = maxRadius * t.dist;
+              if (Math.abs(p.r - targetR) < 3.5 && !p['hit_' + t.id]) {
+                p['hit_' + t.id] = true;
+                const bx = cx + Math.cos(t.angle) * targetR;
+                const by = cy + Math.sin(t.angle) * targetR;
+                targetEchoRings.push({ x: bx, y: by, r: 4, maxR: 26, alpha: 1.0 });
+              }
+            });
+
+            p.r += 2.8;
             p.alpha -= 0.012;
             if (p.alpha <= 0 || p.r >= p.maxR) {
               pingRipples.splice(i, 1);
             }
           }
 
-          // Sweeping beam
+          // Target Echo Flash Rings
+          for (let i = targetEchoRings.length - 1; i >= 0; i--) {
+            const er = targetEchoRings[i];
+            ctx.save();
+            ctx.strokeStyle = `rgba(255, 140, 26, ${er.alpha})`;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(er.x, er.y, er.r, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            er.r += 1.6;
+            er.alpha -= 0.035;
+            if (er.alpha <= 0 || er.r >= er.maxR) {
+              targetEchoRings.splice(i, 1);
+            }
+          }
+
+          // Sweeping Vector Beam (360° sweeping fan)
           ctx.save();
           ctx.translate(cx, cy);
-          ctx.rotate(sweepAngle);
+          ctx.rotate(sweepAngle - Math.PI / 2);
 
           const sweepGrad = ctx.createLinearGradient(0, 0, maxRadius, 0);
           sweepGrad.addColorStop(0, 'rgba(0, 229, 255, 0.45)');
@@ -1650,50 +1846,103 @@
           ctx.fillStyle = sweepGrad;
           ctx.beginPath();
           ctx.moveTo(0, 0);
-          ctx.arc(0, 0, maxRadius, -0.28, 0);
+          ctx.arc(0, 0, maxRadius, -0.32, 0);
           ctx.closePath();
           ctx.fill();
 
           ctx.strokeStyle = '#00e5ff';
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1.6;
           ctx.beginPath();
           ctx.moveTo(0, 0);
           ctx.lineTo(maxRadius, 0);
           ctx.stroke();
           ctx.restore();
 
-          // Detected targets
-          const targets = [
-            { angle: 0.74, dist: 0.65, label: 'CVE-2026-41042 [JDBC]' },
-            { angle: 2.45, dist: 0.45, label: 'CVE-2026-67363 [PHP]' },
-            { angle: 4.85, dist: 0.78, label: 'BEACON: HTTPS:443' }
-          ];
-
-          targets.forEach(t => {
+          // Active CVE Target Blips
+          sonarTargets.forEach(t => {
             const bx = cx + Math.cos(t.angle) * (maxRadius * t.dist);
             const by = cy + Math.sin(t.angle) * (maxRadius * t.dist);
-            const diff = (sweepAngle - t.angle + Math.PI * 2) % (Math.PI * 2);
+            const targetAzimuth = (t.bearingDeg * Math.PI) / 180;
+            const diff = (sweepAngle - targetAzimuth + Math.PI * 2) % (Math.PI * 2);
 
-            let intensity = 0.2;
-            if (diff < 0.6) {
-              intensity = 1.0 - (diff / 0.6) * 0.7;
+            // Audio beep trigger on beam intercept
+            if (diff < 0.04 && !t.lastHit) {
+              t.lastHit = true;
+              playTargetBlipBeep(t.freq);
+            } else if (diff >= 0.04) {
+              t.lastHit = false;
             }
 
-            ctx.fillStyle = `rgba(255, 140, 26, ${intensity})`;
+            let intensity = 0.25;
+            const inWake = diff < 0.55;
+            if (inWake) {
+              intensity = 1.0 - (diff / 0.55) * 0.7;
+            }
+
+            // Target core dot
+            ctx.fillStyle = t.isPrimary ? `rgba(255, 140, 26, ${intensity})` : `rgba(0, 229, 255, ${intensity})`;
             ctx.beginPath();
-            ctx.arc(bx, by, 4, 0, Math.PI * 2);
+            ctx.arc(bx, by, t.isPrimary ? 4.5 : 3.5, 0, Math.PI * 2);
             ctx.fill();
 
-            if (diff < 0.25) {
-              ctx.font = '9px "Roboto Mono", monospace';
-              ctx.fillStyle = '#ff8c1a';
-              ctx.fillText(t.label, bx + 8, by + 3);
+            // Reticle brackets [ + ] and tags when illuminated
+            if (inWake) {
+              ctx.strokeStyle = t.isPrimary ? '#ff8c1a' : '#00e5ff';
+              ctx.lineWidth = 1;
+              const bsz = 7;
+              // bracket corners
+              ctx.beginPath();
+              ctx.moveTo(bx - bsz, by - bsz + 3); ctx.lineTo(bx - bsz, by - bsz); ctx.lineTo(bx - bsz + 3, by - bsz);
+              ctx.moveTo(bx + bsz - 3, by - bsz); ctx.lineTo(bx + bsz, by - bsz); ctx.lineTo(bx + bsz, by - bsz + 3);
+              ctx.moveTo(bx - bsz, by + bsz - 3); ctx.lineTo(bx - bsz, by + bsz); ctx.lineTo(bx - bsz + 3, by + bsz);
+              ctx.moveTo(bx + bsz - 3, by + bsz); ctx.lineTo(bx + bsz, by + bsz); ctx.lineTo(bx + bsz, by + bsz - 3);
+              ctx.stroke();
+
+              // Vector range ray back to center
+              ctx.strokeStyle = t.isPrimary ? 'rgba(255, 140, 26, 0.35)' : 'rgba(0, 229, 255, 0.25)';
+              ctx.setLineDash([2, 3]);
+              ctx.beginPath();
+              ctx.moveTo(cx, cy);
+              ctx.lineTo(bx, by);
+              ctx.stroke();
+              ctx.setLineDash([]);
+
+              // Labels
+              ctx.font = 'bold 8.5px "Roboto Mono", monospace';
+              ctx.fillStyle = t.isPrimary ? '#ff8c1a' : '#00e5ff';
+              ctx.textAlign = 'left';
+              ctx.fillText(t.label, bx + 10, by - 2);
+
+              ctx.font = '7.5px "Roboto Mono", monospace';
+              ctx.fillStyle = 'rgba(180, 215, 255, 0.85)';
+              ctx.fillText(t.tag, bx + 10, by + 9);
             }
           });
+
+          // Corner Vector Sonar HUD Telemetry Overlays
+          ctx.textAlign = 'left';
+          ctx.font = '8px "Roboto Mono", monospace';
+          ctx.fillStyle = 'rgba(180, 215, 255, 0.7)';
+          ctx.fillText('BRG: 042.8° TRUE', 8, 14);
+          ctx.fillText('RNG: 1,420 YDS', 8, 25);
+
+          ctx.textAlign = 'right';
+          ctx.fillStyle = '#ff8c1a';
+          ctx.fillText('DOPPLER: +4.2 Hz UP', w - 8, 14);
+          ctx.fillStyle = 'rgba(180, 215, 255, 0.7)';
+          ctx.fillText('CHIRP: 880→1760 Hz', w - 8, 25);
+
+          ctx.textAlign = 'left';
+          ctx.fillStyle = 'rgba(125, 175, 255, 0.55)';
+          ctx.fillText('MODE: ACTIVE HYDRO-ACOUSTIC', 8, h - 8);
+
+          ctx.textAlign = 'right';
+          ctx.fillStyle = '#ff8c1a';
+          ctx.fillText('TGT: CVE-2026-41042 [JDBC]', w - 8, h - 8);
         });
 
-        sweepAngle += 0.024;
-        if (sweepAngle >= Math.PI * 2) sweepAngle = 0;
+        sweepAngle += 0.022;
+        if (sweepAngle >= Math.PI * 2) sweepAngle -= Math.PI * 2;
       }
       requestAnimationFrame(renderSonarLoop);
     }
