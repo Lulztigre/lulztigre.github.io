@@ -2865,57 +2865,57 @@ body.degauss-active {
 }
 
 [data-theme="cobalt"] {
-  /* DeepSeek Cyanotype Light Blue Sheet — Authentic light blue print stock */
-  --paper: #b8d7f2;
-  --bg-primary: #b8d7f2;
-  --bg-surface: #cee3f8;
-  --bg-card: #c4ddf6;
-  --bg-card-hover: #b4d3f2;
-  --bg-elevated: #a5cbf0;
-  --bg-invert: #062a55;
+  /* DeepSeek Cyanotype Deep Blue Sheet — Authentic Prussian blue blueprint stock */
+  --paper: #062a55;
+  --bg-primary: #062a55;
+  --bg-surface: #0a3767;
+  --bg-card: #082f5c;
+  --bg-card-hover: #0c3c70;
+  --bg-elevated: #0e4478;
+  --bg-invert: #eaf4ff;
 
-  --border-color: #5587ba;
-  --border-light: #7da5ce;
+  --border-color: #2c6299;
+  --border-light: #17416e;
   --border-highlight: #ff8c1a;
 
-  /* DeepSeek Cobalt Linework Inks */
-  --ink: #062a55;             /* deep prussian blue text/titles */
-  --ink-soft: #0e3e70;        /* architectural blue secondary */
-  --ink-muted: #245892;       /* soft engineering annotation */
-  --ink-faint: rgba(6, 42, 85, 0.22);
-  --ink-dim: rgba(6, 42, 85, 0.12);
+  /* DeepSeek Cobalt Linework Inks & Typography */
+  --ink: #eaf4ff;             /* white/cyan plotted linework */
+  --ink-soft: rgba(234, 244, 255, 0.42);
+  --ink-muted: #6f96bf;
+  --ink-faint: rgba(234, 244, 255, 0.16);
+  --ink-dim: rgba(234, 244, 255, 0.08);
 
-  --text-primary: #062a55;
-  --text-secondary: #0e3e70;
-  --text-muted: #245892;
-  --text-invert: #ffffff;
+  --text-primary: #e8f2ff;
+  --text-secondary: #a9c9ea;
+  --text-muted: #6f96bf;
+  --text-invert: #062a55;
 
   /* Accent Palette */
-  --accent-primary: #0f4c8a;
-  --accent-secondary: #0284c7;
-  --accent-cyan: #0284c7;
-  --accent-amber: #d66000;
-  --accent-glow: rgba(15, 76, 138, 0.25);
-  --cyan-glow: rgba(2, 132, 199, 0.25);
-  --accent-tag-bg: #c4ddf6;
-  --accent-tag-text: #062a55;
+  --accent-primary: #ff8c1a;          /* DeepSeek redline pen */
+  --accent-secondary: #ffb257;
+  --accent-cyan: #38bdf8;
+  --accent-amber: #ffd166;
+  --accent-glow: rgba(255, 140, 26, 0.22);
+  --cyan-glow: rgba(56, 189, 248, 0.25);
+  --accent-tag-bg: #0e4478;
+  --accent-tag-text: #ffb257;
 
   /* DeepSeek Redline Pen (Terracotta / Vermilion Marker) */
-  --pen: #d66000;
-  --pen-soft: rgba(214, 96, 0, 0.45);
-  --pen-glow: rgba(214, 96, 0, 0.25);
+  --pen: #ff8c1a;
+  --pen-soft: rgba(255, 140, 26, 0.42);
+  --pen-glow: rgba(255, 140, 26, 0.28);
 
   /* GLM Boil & Reactor Optics */
-  --cob-boil: rgba(6, 42, 85, 0.22);
-  --cob-glow: 0 0 12px rgba(6, 42, 85, 0.2);
+  --cob-boil: rgba(180, 215, 255, 0.35);
+  --cob-glow: 0 0 14px rgba(77, 141, 255, 0.35);
 
   /* Shadows */
-  --shadow-sm: 2px 2px 0px rgba(6, 42, 85, 0.18);
-  --shadow-md: 3px 3px 0px rgba(6, 42, 85, 0.18);
-  --shadow-lg: 5px 5px 0px rgba(6, 42, 85, 0.22);
-  --shadow-hover: 4px 4px 0px rgba(6, 42, 85, 0.22);
-  --shadow-active: 1px 1px 0px rgba(6, 42, 85, 0.22);
-  --shadow-emerald: 4px 4px 0px #0f4c8a;
+  --shadow-sm: 2px 2px 0px rgba(0, 0, 0, 0.35);
+  --shadow-md: 4px 4px 0px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 7px 7px 0px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 5px 5px 0px rgba(0, 0, 0, 0.35);
+  --shadow-active: 1px 1px 0px rgba(0, 0, 0, 0.35);
+  --shadow-emerald: 4px 4px 0px #ff8c1a;
 
   /* Typography Families */
   --font-brand: 'Chakra Petch', 'Share Tech Mono', sans-serif;
@@ -2924,12 +2924,17 @@ body.degauss-active {
   --font-hand: 'Architects Daughter', cursive, sans-serif;
 
   background-color: var(--paper) !important;
-  color: var(--ink) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="cobalt"] body {
+  background-color: var(--paper) !important;
+  color: var(--text-primary) !important;
   font-family: var(--font-mono) !important;
   background-image: 
-    linear-gradient(rgba(6, 42, 85, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(6, 42, 85, 0.09) 1px, transparent 1px) !important;
-  background-size: 28px 28px !important;
+    linear-gradient(rgba(180, 215, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 215, 255, 0.08) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
   background-position: -1px -1px !important;
 }
 
@@ -2966,30 +2971,30 @@ body.degauss-active {
 
 /* Header & Nav in Cobalt */
 [data-theme="cobalt"] header.site-header {
-  background: rgba(184, 215, 242, 0.94) !important;
+  background: rgba(6, 42, 85, 0.94) !important;
   backdrop-filter: blur(8px) !important;
   border-bottom: 1px solid var(--border-color) !important;
 }
 [data-theme="cobalt"] .nav-link {
-  color: var(--ink-soft) !important;
+  color: var(--text-secondary) !important;
   font-family: var(--font-mono) !important;
   border-left: 1px solid var(--border-light) !important;
 }
 [data-theme="cobalt"] .nav-link:hover {
   color: var(--ink) !important;
-  background: rgba(15, 76, 138, 0.08) !important;
+  background: rgba(234, 244, 255, 0.08) !important;
 }
 [data-theme="cobalt"] .nav-link.active {
-  color: var(--accent-primary) !important;
-  background: rgba(15, 76, 138, 0.12) !important;
-  border-bottom: 2px solid var(--accent-primary) !important;
+  color: var(--pen) !important;
+  background: rgba(255, 140, 26, 0.12) !important;
+  border-bottom: 2px solid var(--pen) !important;
   font-weight: 700 !important;
 }
 [data-theme="cobalt"] .theme-toggle-btn {
   background: var(--bg-surface) !important;
   border: 1px solid var(--border-color) !important;
   color: var(--ink) !important;
-  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.15) !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25) !important;
 }
 [data-theme="cobalt"] .theme-toggle-btn:hover {
   border-color: var(--pen) !important;
@@ -3001,7 +3006,7 @@ body.degauss-active {
   display: inline-block !important;
   vertical-align: middle !important;
   margin-right: 0.5rem !important;
-  color: var(--accent-primary) !important;
+  color: var(--pen) !important;
   animation: cobRotateTrefoil 60s linear infinite !important;
 }
 @keyframes cobRotateTrefoil {
@@ -3012,7 +3017,7 @@ body.degauss-active {
 /* id=(co29) Badge */
 [data-theme="cobalt"] .brand-badge {
   font-size: 0 !important;
-  background: rgba(214, 96, 0, 0.12) !important;
+  background: rgba(255, 140, 26, 0.12) !important;
   color: var(--pen) !important;
   border: 1px solid var(--pen) !important;
   border-radius: 0 !important;
@@ -3029,9 +3034,9 @@ body.degauss-active {
 
 /* Top System Ticker */
 [data-theme="cobalt"] .system-ticker {
-  background: #a8caf0 !important;
+  background: #041d3d !important;
   border-bottom: 1px solid var(--border-color) !important;
-  color: var(--ink-soft) !important;
+  color: var(--text-secondary) !important;
   height: 32px !important;
 }
 [data-theme="cobalt"] .ticker-security-level {
@@ -3041,7 +3046,7 @@ body.degauss-active {
   background: var(--bg-surface) !important;
   border: 1px solid var(--border-color) !important;
   color: var(--ink) !important;
-  box-shadow: 1px 1px 0px rgba(6, 42, 85, 0.12) !important;
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.25) !important;
 }
 [data-theme="cobalt"] .ticker-audio-toggle:hover {
   border-color: var(--pen) !important;
@@ -3063,7 +3068,7 @@ body.degauss-active {
   gap: 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.62rem;
-  color: var(--ink-soft);
+  color: var(--text-secondary);
   font-weight: 600;
 }
 .cobalt-diode-item.warn {
@@ -3073,8 +3078,8 @@ body.degauss-active {
   display: inline-block;
   width: 6px;
   height: 6px;
-  background: var(--accent-primary);
-  box-shadow: 0 0 5px var(--accent-primary);
+  background: #38bdf8;
+  box-shadow: 0 0 5px #38bdf8;
   border-radius: 1px;
 }
 .cob-led.amber {
@@ -3092,21 +3097,21 @@ body.degauss-active {
   color: var(--ink);
   cursor: pointer;
   transition: all 0.15s ease;
-  box-shadow: 1px 1px 0px rgba(6, 42, 85, 0.12);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.25);
 }
 .cobalt-ticker-btn:hover {
   background: var(--pen);
   border-color: var(--pen);
-  color: #ffffff;
+  color: #04142b;
 }
 .cobalt-ticker-btn.scram {
   border-color: var(--pen);
-  background: rgba(214, 96, 0, 0.12);
+  background: rgba(255, 140, 26, 0.15);
   color: var(--pen);
 }
 .cobalt-ticker-btn.scram:hover {
   background: var(--pen);
-  color: #ffffff;
+  color: #04142b;
 }
 [data-theme="cobalt"] .cobalt-hero-ping {
   display: inline-flex !important;
@@ -3119,8 +3124,8 @@ body.degauss-active {
   inset: 0 !important;
   z-index: 2 !important;
   pointer-events: none !important;
-  opacity: 0.12 !important;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='420' viewBox='0 0 640 420'><g fill='none' stroke='%230f4c8a' stroke-opacity='0.48' stroke-width='1.25'><path d='M-20 40 Q 60 32 140 44 T 320 40 T 500 32 T 680 44'/><path d='M-20 96 Q 60 83 140 102 T 320 96 T 500 83 T 680 102'/><path d='M-20 158 Q 60 140 140 167 T 320 158 T 500 140 T 680 167'/><path d='M-20 208 Q 60 200 140 212 T 320 208 T 500 200 T 680 212'/><path d='M-20 268 Q 60 255 140 274 T 320 268 T 500 255 T 680 274'/><path d='M-20 330 Q 60 312 140 339 T 320 330 T 500 312 T 680 339'/><path d='M-20 384 Q 60 376 140 388 T 320 384 T 500 376 T 680 388'/></g><g fill='%230f4c8a' fill-opacity='0.06'><ellipse cx='84' cy='66' rx='40' ry='9'/><ellipse cx='300' cy='130' rx='52' ry='11'/><ellipse cx='170' cy='226' rx='34' ry='8'/><ellipse cx='430' cy='300' rx='58' ry='12'/><ellipse cx='250' cy='356' rx='44' ry='9'/></g></svg>") !important;
+  opacity: 0.18 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='420' viewBox='0 0 640 420'><g fill='none' stroke='%235ba0ff' stroke-opacity='0.42' stroke-width='1.25'><path d='M-20 40 Q 60 32 140 44 T 320 40 T 500 32 T 680 44'/><path d='M-20 96 Q 60 83 140 102 T 320 96 T 500 83 T 680 102'/><path d='M-20 158 Q 60 140 140 167 T 320 158 T 500 140 T 680 167'/><path d='M-20 208 Q 60 200 140 212 T 320 208 T 500 200 T 680 212'/><path d='M-20 268 Q 60 255 140 274 T 320 268 T 500 255 T 680 274'/><path d='M-20 330 Q 60 312 140 339 T 320 330 T 500 312 T 680 339'/><path d='M-20 384 Q 60 376 140 388 T 320 384 T 500 376 T 680 388'/></g><g fill='%235ba0ff' fill-opacity='0.08'><ellipse cx='84' cy='66' rx='40' ry='9'/><ellipse cx='300' cy='130' rx='52' ry='11'/><ellipse cx='170' cy='226' rx='34' ry='8'/><ellipse cx='430' cy='300' rx='58' ry='12'/><ellipse cx='250' cy='356' rx='44' ry='9'/></g></svg>") !important;
   background-size: 640px 420px !important;
   animation: cobaltWash 34s linear infinite !important;
 }
@@ -3141,16 +3146,16 @@ body.degauss-active {
 .caustic-plane-a {
   position: absolute;
   inset: -50px;
-  opacity: 0.10;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='220' viewBox='0 0 340 220'><g fill='none' stroke='%230f4c8a' stroke-opacity='0.4' stroke-width='1.1'><path d='M-20 40 Q 30 18 80 42 T 180 40 T 280 44 T 380 38'/><path d='M-20 96 Q 40 70 96 98 T 200 94 T 300 100 T 396 92'/><path d='M-20 158 Q 34 134 88 160 T 190 154 T 292 162 T 388 152'/><path d='M-20 208 Q 46 188 100 210 T 205 206 T 305 212 T 398 204'/></g><g fill='%230f4c8a' fill-opacity='0.05'><ellipse cx='70' cy='66' rx='34' ry='7'/><ellipse cx='238' cy='128' rx='42' ry='8'/><ellipse cx='130' cy='190' rx='30' ry='6'/></g></svg>");
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='220' viewBox='0 0 340 220'><g fill='none' stroke='%235ba0ff' stroke-opacity='0.42' stroke-width='1.1'><path d='M-20 40 Q 30 18 80 42 T 180 40 T 280 44 T 380 38'/><path d='M-20 96 Q 40 70 96 98 T 200 94 T 300 100 T 396 92'/><path d='M-20 158 Q 34 134 88 160 T 190 154 T 292 162 T 388 152'/><path d='M-20 208 Q 46 188 100 210 T 205 206 T 305 212 T 398 204'/></g><g fill='%235ba0ff' fill-opacity='0.06'><ellipse cx='70' cy='66' rx='34' ry='7'/><ellipse cx='238' cy='128' rx='42' ry='8'/><ellipse cx='130' cy='190' rx='30' ry='6'/></g></svg>");
   background-size: 340px 220px;
   animation: cobCausticA 28s linear infinite;
 }
 .caustic-plane-b {
   position: absolute;
   inset: -50px;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='480' height='300' viewBox='0 0 480 300'><g fill='none' stroke='%230f4c8a' stroke-opacity='0.3' stroke-width='1.3'><path d='M-20 70 Q 60 40 140 74 T 300 68 T 460 76 T 620 66'/><path d='M-20 170 Q 70 136 150 174 T 310 166 T 470 176 T 630 164'/><path d='M-20 262 Q 64 236 148 266 T 308 258 T 468 268 T 628 256'/></g></svg>");
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='480' height='300' viewBox='0 0 480 300'><g fill='none' stroke='%235ba0ff' stroke-opacity='0.35' stroke-width='1.3'><path d='M-20 70 Q 60 40 140 74 T 300 68 T 460 76 T 620 66'/><path d='M-20 170 Q 70 136 150 174 T 310 166 T 470 176 T 630 164'/><path d='M-20 262 Q 64 236 148 266 T 308 258 T 468 268 T 628 256'/></g></svg>");
   background-size: 480px 300px;
   animation: cobCausticB 44s linear infinite reverse;
 }
@@ -3171,7 +3176,7 @@ body.degauss-active {
   bottom: -20px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), var(--cob-boil) 60%, transparent 85%);
-  box-shadow: 0 1px 4px rgba(15, 76, 138, 0.15);
+  box-shadow: 0 0 6px rgba(77, 141, 255, 0.4);
   animation: cobRise linear infinite;
 }
 .cobalt-boil span:nth-child(1) { left: 14%; width: 5px; height: 5px; animation-duration: 22s; animation-delay: -3s; }
@@ -3239,7 +3244,7 @@ body.degauss-active {
   z-index: 9985 !important;
   border: 1px solid var(--border-color) !important;
   background: var(--bg-surface) !important;
-  box-shadow: 2px 2px 0px rgba(15, 76, 138, 0.18), 0 4px 18px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.35) !important;
   font-family: var(--font-mono) !important;
   font-size: 0.52rem !important;
   letter-spacing: 0.1em !important;
@@ -3253,7 +3258,7 @@ body.degauss-active {
 }
 .cobalt-titleblock div:nth-last-child(-n+2) { border-bottom: 0; }
 .cobalt-titleblock .k {
-  color: var(--ink-muted);
+  color: var(--text-muted);
   border-right: 1px solid var(--border-light);
   text-transform: uppercase;
   font-weight: 600;
@@ -3278,7 +3283,7 @@ body.degauss-active {
   border: 1px solid var(--border-color) !important;
   border-left: 3.5px solid var(--pen) !important;
   background: var(--bg-surface) !important;
-  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.12), inset 0 0 0 1px var(--ink-faint) !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3), inset 0 0 0 1px var(--ink-faint) !important;
 }
 [data-theme="cobalt"] .dossier-statement-box::after {
   content: "GENERAL NOTES — READ BEFORE USE";
@@ -3329,11 +3334,11 @@ body.degauss-active {
   background: var(--bg-card) !important;
   background-image: repeating-linear-gradient(45deg, var(--ink-faint) 0 1px, transparent 1px 7px) !important;
   padding: 0.85rem 0.75rem !important;
-  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.1) !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25) !important;
   transition: all 0.2s ease;
 }
 [data-theme="cobalt"] .dossier-stat-tile:hover {
-  border-color: var(--accent-primary) !important;
+  border-color: var(--pen) !important;
   background-image: repeating-linear-gradient(45deg, var(--ink-faint) 0 1px, transparent 1px 4px) !important;
 }
 [data-theme="cobalt"] .dossier-stat-tile .stat-num {
@@ -3350,7 +3355,7 @@ body.degauss-active {
   font-family: var(--font-mono) !important;
   font-size: 0.58rem !important;
   letter-spacing: 0.12em !important;
-  color: var(--ink-soft) !important;
+  color: var(--text-secondary) !important;
   text-transform: uppercase !important;
   font-weight: 600 !important;
 }
@@ -3413,7 +3418,7 @@ body.degauss-active {
   position: relative !important;
   border: 1px solid var(--border-color) !important;
   background: var(--bg-surface) !important;
-  box-shadow: 3px 3px 0px rgba(6, 42, 85, 0.14), 0 8px 24px rgba(6, 42, 85, 0.06) !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* Hide Phosphor / Default radar elements in Cobalt mode */
@@ -3473,20 +3478,20 @@ body.degauss-active {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border: 1px solid var(--border-color);
-  background: #f4f8fd;
-  color: var(--ink-soft);
+  background: var(--bg-card);
+  color: var(--text-secondary);
   text-align: center;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .inst-tab-btn:hover {
   color: var(--ink);
-  border-color: var(--accent-primary);
+  border-color: var(--pen);
 }
 .inst-tab-btn.active {
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
-  color: #ffffff;
+  border-color: var(--pen);
+  background: var(--pen);
+  color: #04142b;
 }
 
 /* Radar Display Box */
@@ -3623,11 +3628,11 @@ body.degauss-active {
 .tele-cell {
   display: flex;
   justify-content: space-between;
-  color: var(--ink-soft);
+  color: var(--text-secondary);
   font-family: var(--font-mono);
 }
 .tele-cell span:last-child {
-  color: var(--accent-primary);
+  color: #38bdf8;
   font-weight: 700;
 }
 
@@ -3639,14 +3644,14 @@ body.degauss-active {
   border: 1px solid var(--border-color) !important;
   background: var(--bg-surface) !important;
   padding: 1.5rem 1.6rem 2.2rem !important;
-  box-shadow: 3px 3px 0px rgba(6, 42, 85, 0.12), inset 0 0 0 1px var(--ink-faint) !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3), inset 0 0 0 1px var(--ink-faint) !important;
   transition: all 0.2s ease !important;
 }
 [data-theme="cobalt"] .post-card:hover,
 [data-theme="cobalt"] .article-card:hover,
 [data-theme="cobalt"] .dossier-card:hover {
-  border-color: var(--accent-primary) !important;
-  box-shadow: 4px 4px 0px rgba(6, 42, 85, 0.18), 0 6px 20px rgba(6, 42, 85, 0.08) !important;
+  border-color: var(--pen) !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3) !important;
   background: var(--bg-card-hover) !important;
 }
 [data-theme="cobalt"] .post-card::after {
@@ -3660,7 +3665,7 @@ body.degauss-active {
   font-family: var(--font-mono);
   font-size: 0.52rem;
   letter-spacing: 0.16em;
-  color: var(--ink-muted);
+  color: var(--text-muted);
   text-transform: uppercase;
   pointer-events: none;
   background: var(--bg-card);
@@ -3668,39 +3673,66 @@ body.degauss-active {
 
 /* Buttons & Tags in Cobalt Mode */
 [data-theme="cobalt"] .btn-primary {
-  background: var(--accent-primary) !important;
-  border-color: var(--accent-primary) !important;
-  color: #ffffff !important;
-  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.25) !important;
+  background: var(--pen) !important;
+  border-color: var(--pen) !important;
+  color: #04142b !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.35) !important;
+  font-weight: 700 !important;
 }
 [data-theme="cobalt"] .btn-primary:hover {
-  background: #093460 !important;
-  border-color: #093460 !important;
+  background: var(--accent-secondary) !important;
+  border-color: var(--accent-secondary) !important;
+  color: #04142b !important;
 }
 [data-theme="cobalt"] .btn-secondary {
   background: var(--bg-surface) !important;
   border-color: var(--border-color) !important;
   color: var(--ink) !important;
-  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.1) !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25) !important;
 }
 [data-theme="cobalt"] .btn-secondary:hover {
   border-color: var(--pen) !important;
   color: var(--pen) !important;
-  background: rgba(214, 96, 0, 0.08) !important;
+  background: rgba(255, 140, 26, 0.12) !important;
 }
 [data-theme="cobalt"] .tag-btn.active {
-  background: var(--accent-primary) !important;
-  border-color: var(--accent-primary) !important;
-  color: #ffffff !important;
+  background: var(--pen) !important;
+  border-color: var(--pen) !important;
+  color: #04142b !important;
+  font-weight: 700 !important;
 }
 [data-theme="cobalt"] .tag-btn {
   border-color: var(--border-color) !important;
   background: var(--bg-card) !important;
-  color: var(--ink-soft) !important;
+  color: var(--text-secondary) !important;
 }
 [data-theme="cobalt"] .tag-btn:hover {
-  border-color: var(--accent-primary) !important;
-  color: var(--accent-primary) !important;
+  border-color: var(--pen) !important;
+  color: var(--pen) !important;
+}
+
+/* Links, Code, Selection in Cobalt Mode */
+[data-theme="cobalt"] a {
+  color: var(--ink);
+  text-decoration-color: var(--ink-faint);
+  text-underline-offset: 3px;
+}
+[data-theme="cobalt"] a:hover {
+  color: var(--pen);
+}
+[data-theme="cobalt"] code {
+  background: rgba(234, 244, 255, 0.08);
+  border: 1px solid var(--border-light);
+  color: var(--ink);
+}
+[data-theme="cobalt"] pre {
+  background: #031833 !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--ink) !important;
+}
+[data-theme="cobalt"] ::selection {
+  background: var(--pen);
+  color: #04142b;
 }
 
 /* Responsive queries for cobalt frame & titleblock */
