@@ -1469,13 +1469,11 @@
     window.triggerScreenWavePing = triggerScreenWavePing;
 
     function fireSonarPing() {
-      playRelayClick(800);
-
       // Auto-switch chassis to Sonar HUD so the vector radar canvas is visible on screen
       const hasAbout = !!document.getElementById('sonarCanvasDisplayAbout');
       setInstrument('sonar', hasAbout);
 
-      // Trigger full-screen expanding hydro-acoustic sonar wave pulse
+      // Trigger full-screen expanding hydro-acoustic sonar wave pulse (single soft wave)
       triggerScreenWavePing();
 
       if (isAudioActive()) {
@@ -1484,49 +1482,23 @@
           if (ctx) {
             const now = ctx.currentTime;
 
-            // 1. Primary outbound chirped sonar pulse: 880Hz -> 1760Hz
+            // Single soft hydro-acoustic sonar ping (gentle pure sine wave with smooth attack/decay)
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(880, now);
-            osc.frequency.exponentialRampToValueAtTime(1760, now + 0.12);
-            osc.frequency.exponentialRampToValueAtTime(1100, now + 0.35);
+            osc.frequency.setValueAtTime(960, now);
+            osc.frequency.exponentialRampToValueAtTime(1180, now + 0.18);
+            osc.frequency.exponentialRampToValueAtTime(960, now + 0.45);
 
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.35, now + 0.04);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.linearRampToValueAtTime(0.08, now + 0.035);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
 
             osc.connect(gain);
             gain.connect(ctx.destination);
 
             osc.start(now);
-            osc.stop(now + 1.25);
-
-            // 2. Doppler frequency shift return echo (+4.2 Hz UP at 1,420 YDS)
-            const echoTime = now + 0.38;
-            const echoOsc = ctx.createOscillator();
-            const echoGain = ctx.createGain();
-            const echoFilter = ctx.createBiquadFilter();
-
-            echoOsc.type = 'sine';
-            // Doppler shifted frequency: 880 + 4.2 = 884.2 Hz
-            echoOsc.frequency.setValueAtTime(884.2, echoTime);
-            echoOsc.frequency.exponentialRampToValueAtTime(1764.2, echoTime + 0.09);
-            echoOsc.frequency.exponentialRampToValueAtTime(1104.2, echoTime + 0.28);
-
-            echoFilter.type = 'lowpass';
-            echoFilter.frequency.setValueAtTime(2200, echoTime);
-
-            echoGain.gain.setValueAtTime(0.0001, echoTime);
-            echoGain.gain.linearRampToValueAtTime(0.22, echoTime + 0.035);
-            echoGain.gain.exponentialRampToValueAtTime(0.0001, echoTime + 0.95);
-
-            echoOsc.connect(echoFilter);
-            echoFilter.connect(echoGain);
-            echoGain.connect(ctx.destination);
-
-            echoOsc.start(echoTime);
-            echoOsc.stop(echoTime + 1.0);
+            osc.stop(now + 0.9);
           }
         } catch (e) {}
       }
@@ -1535,62 +1507,25 @@
         window.triggerSonarRipple();
       }
 
-      // Highlight live telemetry readouts
+      // Highlight live telemetry readouts softly
       ['telBearing', 'telRange', 'telDoppler', 'telBearingAbout', 'telRangeAbout', 'telDopplerAbout'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
-          el.style.transition = 'color 0.1s ease, text-shadow 0.1s ease';
-          el.style.color = '#00e5ff';
-          el.style.textShadow = '0 0 10px #00e5ff';
+          el.style.transition = 'color 0.2s ease, text-shadow 0.2s ease';
+          el.style.color = '#7dc5ff';
+          el.style.textShadow = '0 0 8px rgba(100, 185, 255, 0.4)';
           setTimeout(() => {
             el.style.color = '';
             el.style.textShadow = '';
-          }, 850);
+          }, 700);
         }
       });
 
       if (window.showToast) {
-        window.showToast('⚡ HYDRO-ACOUSTIC PING // BRG 042.8° TRUE · RNG 1,420 YDS · DOPPLER +4.2 Hz UP');
+        window.showToast('⚡ HYDRO-ACOUSTIC PING // BRG 042.8° TRUE · RNG 1,420 YDS');
       }
     }
     window.fireSonarPing = fireSonarPing;
-
-    function triggerScram() {
-      if (isAudioActive()) {
-        try {
-          const ctx = getAudioCtx();
-          if (ctx) {
-            const now = ctx.currentTime;
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(120, now);
-            osc.frequency.exponentialRampToValueAtTime(32, now + 0.6);
-            gain.gain.setValueAtTime(0.4, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.85);
-          }
-        } catch (e) {}
-      }
-
-      document.querySelectorAll('.core-cell').forEach(c => {
-        c.classList.remove('hot', 'warm');
-      });
-      if (window.showToast) {
-        window.showToast('☢ EMERGENCY SCRAM INITIATED // CONTROL RODS DROPPED');
-      }
-
-      setTimeout(() => {
-        updateCoreCellState();
-        if (window.showToast) {
-          window.showToast('REACTOR AUTO-RECOVERY // CORE RE-STABILIZED');
-        }
-      }, 1400);
-    }
-    window.triggerScram = triggerScram;
 
     // 2. GLM 7x5 Core Map Lattice
     const coreRows = 5;
@@ -2046,11 +1981,6 @@
     ['cobalt-ping-btn', 'cobalt-ping-btn-about', 'cobalt-hero-ping-btn'].forEach(id => {
       const btn = document.getElementById(id);
       if (btn) btn.addEventListener('click', fireSonarPing);
-    });
-
-    ['cobalt-scram-btn', 'cobalt-scram-btn-about'].forEach(id => {
-      const btn = document.getElementById(id);
-      if (btn) btn.addEventListener('click', triggerScram);
     });
   }
 

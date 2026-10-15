@@ -3104,15 +3104,6 @@ body.degauss-active {
   border-color: var(--pen);
   color: #04142b;
 }
-.cobalt-ticker-btn.scram {
-  border-color: var(--pen);
-  background: rgba(255, 140, 26, 0.15);
-  color: var(--pen);
-}
-.cobalt-ticker-btn.scram:hover {
-  background: var(--pen);
-  color: #04142b;
-}
 [data-theme="cobalt"] .cobalt-hero-ping {
   display: inline-flex !important;
 }
@@ -3504,7 +3495,7 @@ body.degauss-active {
   background: rgba(255, 140, 26, 0.16);
 }
 
-/* Full-Screen Hydro-Acoustic Sonar Wave Pulse Overlay (Soft, Gossamer Wave) */
+/* Full-Screen Hydro-Acoustic Sonar Wave Pulse Overlay (Single Soft Gossamer Wave) */
 .cobalt-screen-ping {
   position: fixed;
   inset: 0;
@@ -3512,13 +3503,12 @@ body.degauss-active {
   pointer-events: none;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.2s ease-out;
+  transition: opacity 0.25s ease-out;
 }
 .cobalt-screen-ping.active {
   opacity: 1;
 }
-.cobalt-screen-ping::before,
-.cobalt-screen-ping::after {
+.cobalt-screen-ping::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -3528,36 +3518,31 @@ body.degauss-active {
   margin-top: -50px;
   margin-left: -50px;
   border-radius: 50%;
-  border: 1px solid rgba(120, 200, 255, 0.42);
-  box-shadow: 0 0 12px rgba(77, 141, 255, 0.15);
+  border: 1px solid rgba(100, 185, 255, 0.25);
+  box-shadow: 0 0 6px rgba(77, 141, 255, 0.08);
   transform: scale(0.05);
   opacity: 0;
 }
 .cobalt-screen-ping.active::before {
-  animation: softAcousticWave 2.0s cubic-bezier(0.12, 0.45, 0.25, 1) forwards;
-}
-.cobalt-screen-ping.active::after {
-  animation: softAcousticWave 2.0s cubic-bezier(0.12, 0.45, 0.25, 1) 0.28s forwards;
-  border-color: rgba(90, 165, 255, 0.28);
-  box-shadow: 0 0 8px rgba(90, 165, 255, 0.1);
+  animation: singleSoftAcousticWave 2.2s cubic-bezier(0.12, 0.45, 0.25, 1) forwards;
 }
 
-@keyframes softAcousticWave {
+@keyframes singleSoftAcousticWave {
   0% {
     transform: scale(0.05);
     opacity: 0;
-    border-width: 1.5px;
+    border-width: 1px;
   }
-  15% {
-    opacity: 0.38;
-    border-width: 1.2px;
+  18% {
+    opacity: 0.16;
+    border-width: 1px;
   }
   55% {
-    opacity: 0.18;
+    opacity: 0.07;
     border-width: 1px;
   }
   100% {
-    transform: scale(28);
+    transform: scale(30);
     opacity: 0;
     border-width: 1px;
   }
