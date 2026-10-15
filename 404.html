@@ -20,7 +20,7 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+      var themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'phosphor', 'solar', 'cobalt', 'sakura', 'yua'];
       var lastTheme = localStorage.getItem(THEME_KEY);
       var pool = themes.filter(function(t) { return t !== lastTheme; });
       if (pool.length === 0) pool = themes;
