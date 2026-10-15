@@ -10,7 +10,7 @@
   const themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
   
   function initTheme() {
-    let savedTheme = localStorage.getItem(THEME_KEY) || 'phantom';
+    let savedTheme = localStorage.getItem(THEME_KEY) || 'floral';
     if (savedTheme === 'void') {
       savedTheme = 'phantom';
       localStorage.setItem(THEME_KEY, 'phantom');
@@ -28,6 +28,11 @@
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'floral' || theme === 'flora' || theme === 'ghost') {
+      document.documentElement.setAttribute('data-palette', 'sage');
+    } else {
+      document.documentElement.removeAttribute('data-palette');
+    }
     localStorage.setItem(THEME_KEY, theme);
     updateThemeButtonLabel(theme);
   }
@@ -43,16 +48,16 @@
   function updateThemeButtonLabel(theme) {
     const btn = document.getElementById('theme-toggle');
     if (!btn) return;
-    const FLORAL_FLOWER = '<svg class="flora-flower-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="margin-right:0.38rem;vertical-align:-2px;filter:drop-shadow(0 1px 2px rgba(232,140,158,0.55));"><g fill="#e88c9e" stroke="#8b4513" stroke-width="0.8"><circle cx="12" cy="5.4" r="3.7"/><circle cx="18.3" cy="10.2" r="3.7"/><circle cx="15.9" cy="17.5" r="3.7"/><circle cx="8.1" cy="17.5" r="3.7"/><circle cx="5.7" cy="10.2" r="3.7"/></g><circle cx="12" cy="12" r="2.8" fill="#e8c547" stroke="#8b4513" stroke-width="0.6"/></svg>';
+    const FLORA_ICON = '<span class="flora-btn-leaf" style="margin-right:0.35rem;vertical-align:-1px;font-size:1.05rem;">🌿</span>';
     const PHANTOM_SPECTER = '<span class="phantom-theme-specter" style="margin-right:0.35rem;vertical-align:-1px;font-size:1.05rem;filter:drop-shadow(0 0 6px rgba(0,255,136,0.6));">👻</span>';
     const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
     const icons = {
       phantom: PHANTOM_SPECTER + 'PHANTOM',
       void: PHANTOM_SPECTER + 'PHANTOM',
       amber: '▲ AMBER',
-      floral: FLORAL_FLOWER + 'FLORA',
-      flora: FLORAL_FLOWER + 'FLORA',
-      ghost: FLORAL_FLOWER + 'FLORA',
+      floral: FLORA_ICON + 'FLORA',
+      flora: FLORA_ICON + 'FLORA',
+      ghost: FLORA_ICON + 'FLORA',
       uchiha: THEME_EYE + 'UCHIHA',
       arctic: '◇ ARCTIC',
       synthwave: '♦ SYNTHWAVE',
@@ -68,7 +73,7 @@
     if (theme === 'uchiha') {
       label = THEME_EYE + 'UCHIHA';
     } else if (theme === 'floral' || theme === 'flora' || theme === 'ghost') {
-      label = FLORAL_FLOWER + 'FLORA';
+      label = FLORA_ICON + 'FLORA';
     } else if (theme === 'phantom' || theme === 'void') {
       label = PHANTOM_SPECTER + 'PHANTOM';
     }
@@ -90,7 +95,7 @@
 
   window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
-      const saved = localStorage.getItem(THEME_KEY) || 'phantom';
+      const saved = localStorage.getItem(THEME_KEY) || 'floral';
       applyTheme(saved);
     }
   });
@@ -1009,7 +1014,7 @@
 
     function checkTheme() {
       const theme = document.documentElement.getAttribute('data-theme');
-      if (theme === 'sakura' || theme === 'floral' || theme === 'flora') {
+      if (theme === 'sakura') {
         start();
       } else {
         stop();
@@ -1078,7 +1083,7 @@
     // 4. Icons in phonetic flasher
     const phoneticIcons = document.querySelectorAll('.dossier-pronounce .phonetic-icon');
     phoneticIcons.forEach(icon => {
-      if (!icon.querySelector('.floral-leaf-icon')) {
+      if (!icon.querySelector('.floral-leaf-icon') && !icon.querySelector('.flasher-symbol')) {
         const leaf = document.createElement('span');
         leaf.className = 'floral-leaf-icon';
         leaf.setAttribute('aria-hidden', 'true');

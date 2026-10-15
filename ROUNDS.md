@@ -9,7 +9,7 @@ This document tracks all design competition rounds, winners, component lineage, 
 | Round | Theme / Concept | Winner | Core Lineage & Contributions | Mockup File | Live Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **R1** | **Uchiha / Bloodmoon** | **Mimo** | • **Header font & typography base**: Agy (`Shippori Mincho`, `Crimson Pro`)<br>• **Visual layout & crimson palette**: Mimo<br>• **Giant Mangekyō Sharingan background**: Agy (custom SVG overlay) | [`mimo.html`](file:///C:/Users/moyoo/lulztigre.pw/mimo.html)<br>[`agy.html`](file:///C:/Users/moyoo/lulztigre.pw/agy.html) | **Active in production** (`[data-theme="uchiha"]`) |
-| **R2** | **Ghost → Floral (Ecosystem)** | **Agy** | • **Field Notes & Botanical Architecture**: Agy (`agyghost.html`)<br>• **Canvas**: Creamy warm parchment (`#faf6ec`) with active drifting petals (`🌸 PETALS: ON`) and gentle botanical petal motion<br>• **Typography**: Classical serif `Merriweather` (headers), typewriter `Courier Prime` (body), and `Special Elite` (stamps)<br>• **Organic elements**: Leaf flasher (🌿), `id=(seed)` badge, pressed fern frond across all pages<br>• **Greenhouse Radar**: Adapted from Mimo (`mimoghost.html` greenhouse radar with seed targets) | [`agyghost.html`](file:///C:/Users/moyoo/lulztigre.pw/agyghost.html)<br>[`mimoghost.html`](file:///C:/Users/moyoo/lulztigre.pw/mimoghost.html) | **Active in production** (`[data-theme="floral"]`) |
+| **R2** | **Ghost → Floral (Flora Ecosystem)** | **Agy** | • **Field Notes & Botanical Architecture**: Agy (`agyghost.html`)<br>• **Canvas**: Crisp botanical parchment (`#fcfaf5`), pure white card surfaces (`#ffffff`), hunter green headings (`#1B4D3E`), moss green borders (`#8A9A5B`), and sage drop shadows (`#c3d2ab`)<br>• **Typography**: Classical serif `Playfair Display` (700 headers), typewriter `Courier Prime` (body), and `Special Elite` (stamps)<br>• **Organic elements**: Leaf emoji toggle (`🌿 FLORA`), circular botanical crest (`.flora-crest-svg`), `id=(flora)` badge, leaf-vein watermark statement box with corner stem flourishes and wavy vow underline, and subtle pollen pattern | [`agyghost.html`](file:///C:/Users/moyoo/lulztigre.pw/agyghost.html) | **Active in production** (`[data-theme="floral"]`) |
 | **R3** | **Phantom (Spectral Wraith)** | **DeepSeek** | • **Winner**: DeepSeek (`deepseekphantom.html`)<br>• **Fonts, borders & boxes**: Mimo (`mimophantom.html` Orbitron headers, layered tactical boxes, sharp borders)<br>• **Motes & Beam**: Agy (`agyphantom.html` floating motes and laser sweep beam)<br>• **Sigil**: Specter from Agy (👻)<br>• **Badge**: `id=(phantom)` | [`deepseekphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphantom.html)<br>[`agyphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphantom.html)<br>[`mimophantom.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophantom.html) | Ready for deployment / production theme rollout |
 
 ---
@@ -30,20 +30,23 @@ This document tracks all design competition rounds, winners, component lineage, 
 
 ---
 
-### Round 2: Ghost → Floral (Botanical Field Notes)
+### Round 2: Ghost → Floral (Flora Ecosystem / Botanical Field Notes)
 - **Prompt & Concept**: Transition the austere black-and-white Ghost terminal theme into an organic, living ecosystem resembling scientific botanical field notes.
 - **Winning Implementation**: `Agy` (`agyghost.html`)
 - **Key Component Attribution**:
-  - **Typography**: Classical serif *Merriweather* for botanical headers and titles, typewriter serif *Courier Prime* for scientific field notes body text, and *Special Elite* for classified herbarium stamps.
-  - **Canvas & Palette**: Warm creamy parchment ground (`#faf6ec`), deep Forest Green text (`#2e8b57`), Moss Green borders/accents (`#8a9a5b`), Fern Green secondary accents (`#4f7942`), and terracotta earth tones (`#c0724a`).
+  - **Typography**: Classical serif *Playfair Display* (700) for botanical headers and titles, italic serif for quote blocks and terracotta heading accents (`.accent-terra-italic`), typewriter monospace *Courier Prime* for scientific field notes body text, and *Special Elite* for classified herbarium stamps.
+  - **Canvas & Palette**: Crisp botanical parchment ground (`#fcfaf5`), pure white card surfaces (`#ffffff`), Hunter Green text (`#1B4D3E`), Sea Green highlights (`#2E8B57`), Moss Green borders (`#8A9A5B`), Sage Green drop shadows (`rgba(138, 154, 91, 0.28)`), and terracotta earth accents (`#944E38`).
   - **Iconography & Badges**:
-    - Lightning icon replaced with a leaf sprig and flower blossom (🌿 🌸), and theme selection toggle styled with the blooming botanical flower sigil (`FLORA`).
-    - System root tag updated to `id=(seed)`.
-    - Status indicator converted into a budding seed with an organic pulse animation.
+    - Header brand crest: Circular botanical crest SVG (`.flora-crest-svg`) with dark green stem, leaves, and berry bud.
+    - Theme selection toggle: Clean white button with green border (`#2E8B57`) and leaf emoji (`🌿 FLORA`).
+    - System root tag updated to `id=(flora)` in sage-tinted pill badge (`#eaf2eb` / `#8A9A5B`).
+    - Flasher and pronounce line: Botanical leaf marker (`🌿`).
+    - Herbarium certified specimen rotating seal SVG stamp (`HERBARIUM • LZ-994 • SPECIMEN •`).
+    - Statement box: Pressed leaf-vein watermark SVG background, berry stem corner flourishes (`.statement-corner-tl` / `.statement-corner-br`), italic quote, and pink border with wavy underline on the vow line.
     - Header and footer separated by organic vine-like SVG line borders.
-    - Pressed fern frond pinned in the left gutter across all pages (Dispatches, About, Archive, Posts).
-    - Drifting blossoms and golden pollen pattern active across parchment canvas (`🌸 PETALS: ON`), paired with delicate floating botanical petal animation.
-  - **Radar**: Adapted from Mimo (`mimoghost.html`) featuring concentric dashed garden rings, rotated seed targets (`.gtarget`), and central sprout icon (`🌱 LZ-994`).
+    - Corner watermark branch: Low-opacity top-right branch (`opacity: 0.09`) in Hero section.
+    - Canvas background: Subtle repeating blossom and pollen SVG pattern in `body::before` (detaching from the heavy falling sakura petal canvas).
+  - **Radar Integration**: Mimo's greenhouse telemetry radar (`.garden` from `mimoghost.html`) featuring concentric dashed rings (`.gring.o`, `.gring.m`, `.gring.i`), crosshairs (`.gaxis.x`, `.gaxis.y`), breathing teardrop seed targets (`.gtarget` with `@keyframes seedPulse`), and center core insignia (`🌱 LZ-994`), integrated directly into Agy's botanical chassis.
 - **Associated Mockup Files**:
   - Agy: [`agyghost.html`](file:///C:/Users/moyoo/lulztigre.pw/agyghost.html)
   - Mimo: [`mimoghost.html`](file:///C:/Users/moyoo/lulztigre.pw/mimoghost.html)

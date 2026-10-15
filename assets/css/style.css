@@ -118,42 +118,55 @@
   --shadow-emerald: 4px 4px 0px #ffb700;
 }
 
-/* Floral — Warm Botanical Herbarium / Scientific Field Notes (Mimo Floral Design) */
+/* Floral — Botanical Ecosystem / Scientific Field Notes (Pale Sage Canvas Variant — agyghost.html) */
 [data-theme="floral"],
 [data-theme="flora"],
-[data-theme="ghost"] {
-  --bg-primary: #faf6ec;
-  --bg-surface: #f3ede0;
-  --bg-elevated: #ede5d2;
-  --bg-card: #f7f1e2;
-  --bg-invert: #2e8b57;
-  
-  --text-primary: #1e4d34;
-  --text-secondary: #6e473b;
-  --text-muted: #8c6d62;
-  --text-invert: #fdfaf2;
-  
-  --border-color: #d9cfb4;
-  --border-light: #e8e0c9;
-  --border-highlight: #4f7942;
-  
-  --accent-primary: #2e8b57;
-  --accent-secondary: #4f7942;
+[data-theme="ghost"],
+[data-palette="sage"] {
+  /* Pale Sage Green Canvas */
+  --bg-primary: #eef4f0;
+  --bg-surface: #f7faf8;
+  --bg-card: #e5ece6;
+  --bg-elevated: #dbe5dc;
+  --bg-invert: #1B4D3E;
+
+  /* Deep hunter green main text & terracotta earth tones */
+  --text-primary: #1B4D3E;
+  --text-secondary: #6E473B;
+  --text-muted: #8C6D62;
+  --text-invert: #ffffff;
+
+  /* Ecosystem Green Palette */
+  --accent-primary: #2E8B57;   /* Forest Green */
+  --accent-secondary: #4F7942; /* Fern Green */
+  --accent-moss: #8A9A5B;      /* Moss Green */
+  --accent-earth: #A0522D;     /* Terracotta */
+  --accent-floral: #E88C9E;    /* Blush Pink Floral Accent */
+  --accent-sun: #E8B838;       /* Buttercup Yellow Accent */
   --accent-amber: #e9c46a;
-  --accent-glow: rgba(46, 139, 87, 0.18);
-  --accent-tag-bg: #ede5d2;
-  --accent-tag-text: #2e8b57;
+  --accent-glow: rgba(46, 139, 87, 0.16);
+  --accent-tag-bg: #eaf2eb;
+  --accent-tag-text: #2E8B57;
 
-  --shadow-sm: 2px 2px 0px #e2dcc4;
-  --shadow-md: 4px 4px 0px #ddd6ba;
-  --shadow-lg: 6px 6px 0px #ddd6ba;
-  --shadow-hover: 4px 4px 0px #cfd8b4;
-  --shadow-active: 1px 1px 0px #cfd8b4;
-  --shadow-emerald: 4px 4px 0px #8a9a5b;
+  /* Soft sage/moss brutalist shadows */
+  --border-color: #7a9477;
+  --border-light: #d8e2d4;
+  --border-highlight: #2E8B57;
 
-  --font-mono: 'Courier Prime', 'Courier New', monospace;
-  --font-sans: 'Courier Prime', 'Courier New', monospace;
+  --shadow-sm: 2px 2px 0px #b8c8ba;
+  --shadow-md: 4px 4px 0px #b8c8ba;
+  --shadow-lg: 6px 6px 0px #a4b8a7;
+  --shadow-hover: 5px 5px 0px #7a9477;
+  --shadow-active: 1px 1px 0px #b8c8ba;
+  --shadow-emerald: 4px 4px 0px #2E8B57;
+
+  /* Typography Variables */
+  --font-botanical-head: 'Playfair Display', Georgia, serif;
+  --font-typewriter-body: 'Courier Prime', 'Special Elite', monospace;
+  --font-mono: 'Courier Prime', 'Special Elite', monospace;
+  --font-sans: 'Courier Prime', 'Special Elite', monospace;
 }
+
 
 /* Uchiha — pitch-black + blood-red dōjutsu / Anbu Black Ops aesthetic */
 [data-theme="uchiha"] {
@@ -258,6 +271,7 @@
 
 /* Sharingan worn next to LULZTIGRE — uchiha only, slow spin */
 .brand-sharingan { display: none; }
+.brand-sprig, .flora-crest-svg, .botanical-herbarium-stamp, .statement-curve-flourish, .garden, .flasher-symbol { display: none; }
 [data-theme="uchiha"] .brand-sharingan {
   display: inline-block; vertical-align: middle;
   animation: uchihaSlowRotate 12s linear infinite;
@@ -384,82 +398,268 @@ body[data-theme="uchiha"]::before,
 }
 
 /* ==========================================================================
-   FLORAL THEME — BOTANICAL HERBARIUM & SCIENTIFIC FIELD NOTES (AGY R2 WINNER)
-   Warm creamy parchment ground (#faf6ec), Forest green (#2e8b57),
-   Moss (#8a9a5b), Fern (#4f7942), Terracotta (#c0724a), Pollen (#e9c46a),
-   Merriweather classical serif headlines, typewriter Courier Prime body,
-   sprout seed status dot, organic rounded curves, vine borders, and Mimo garden radar.
+   FLORAL THEME — BOTANICAL ECOSYSTEM & SCIENTIFIC FIELD NOTES (AGY R2 WINNER)
+   Direct 1:1 implementation matching agyghost.html
+   Parchment creamy off-white canvas (#fcfaf5), surface (#ffffff), card (#f8f5ed),
+   Hunter green text (#1B4D3E), Earth brown (#6E473B, #8B4513), Forest green (#2E8B57),
+   Moss green borders & shadows (#8A9A5B, #c3d2ab), Terracotta (#944E38, #A0522D),
+   Blush pink accents (#E88C9E), Playfair Display classical serif headlines,
+   Courier Prime scientific field notes body, rounded pill buttons & chips,
+   wavy botanical underline, leaf-vein watermark statement box, and herbarium stamp.
    ========================================================================== */
 
-/* Floral Typography */
+/* 1. Body Ground Canvas, Petals Pattern & Ambient Blooms */
+body[data-theme="floral"],
+body[data-theme="flora"],
+body[data-theme="ghost"],
+[data-theme="floral"] body,
+[data-theme="flora"] body,
+[data-theme="ghost"] body,
+[data-palette="sage"] body {
+  background-color: #eef4f0 !important;
+  color: #1B4D3E !important;
+  font-family: 'Courier Prime', 'Special Elite', monospace !important;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  background-image: 
+    radial-gradient(circle at 12% 8%, rgba(138, 154, 91, 0.15), transparent 42%),
+    radial-gradient(circle at 88% 5%, rgba(233, 196, 106, 0.14), transparent 38%),
+    radial-gradient(circle at 82% 88%, rgba(232, 160, 191, 0.12), transparent 36%),
+    radial-gradient(rgba(46, 139, 87, 0.07) 1.2px, transparent 1.2px),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 105 Q45 75 105 15 M45 75 Q68 62 90 72 M30 90 Q52 102 75 92 M60 58 Q82 42 102 48' stroke='rgba(46,139,87,0.035)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-attachment: fixed, fixed, fixed, scroll, scroll !important;
+  background-size: auto, auto, auto, 32px 32px, 240px 240px !important;
+  transition: background-color 0.3s ease;
+  position: relative !important;
+}
+
+/* Drifting blossoms & golden pollen across the ground (PETALS: ON) */
+body[data-theme="floral"]::before,
+body[data-theme="flora"]::before,
+body[data-theme="ghost"]::before,
+[data-theme="floral"] body::before,
+[data-theme="flora"] body::before,
+[data-theme="ghost"] body::before,
+[data-palette="sage"] body::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  opacity: 0.15 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none'><g fill='%23e8a0bf'><circle cx='28' cy='24' r='3.5'/><circle cx='36' cy='30' r='3.5'/><circle cx='31' cy='38' r='3.5'/><circle cx='23' cy='33' r='3.5'/></g><circle cx='29.5' cy='31' r='2' fill='%23e9c46a'/><g fill='%23e9c46a'><circle cx='100' cy='86' r='2.8'/><circle cx='106' cy='91' r='2.8'/><circle cx='102' cy='97' r='2.8'/><circle cx='96' cy='92' r='2.8'/></g><circle cx='101' cy='91.5' r='1.5' fill='%23c77b58'/><path d='M65 110 Q75 105 85 115' stroke='%238a9a5b' stroke-width='1' stroke-linecap='round'/></g></svg>") !important;
+  background-repeat: repeat !important;
+  transition: opacity 0.3s !important;
+}
+body[data-theme="floral"].no-petals::before,
+body[data-theme="flora"].no-petals::before,
+[data-theme="floral"] body.no-petals::before {
+  display: none !important;
+}
+
+/* Ensure Sakura Canvas does not render in Floral theme */
+[data-theme="floral"] #sakura-canvas,
+[data-theme="flora"] #sakura-canvas,
+[data-theme="ghost"] #sakura-canvas {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 2. Sticky Header with Organic Vine Rule Border */
+[data-theme="floral"] .site-header,
+[data-theme="flora"] .site-header,
+[data-theme="ghost"] .site-header,
+[data-palette="sage"] .site-header {
+  background: rgba(238, 244, 240, 0.94) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 4px solid transparent !important;
+  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 10' preserveAspectRatio='none'><path d='M0 5 Q75 1 150 5 T300 5 T450 5 T600 5' stroke='%238a9a5b' stroke-width='1.8' fill='none'/><circle cx='90' cy='3' r='2.2' fill='%234f7942'/><circle cx='210' cy='7' r='2.2' fill='%234f7942'/><circle cx='330' cy='3' r='2.2' fill='%234f7942'/><circle cx='450' cy='7' r='2.2' fill='%234f7942'/><circle cx='560' cy='4' r='2.2' fill='%234f7942'/></svg>") 4 stretch !important;
+}
+
+/* 3. Hero Corner Watermark Branch (Top-Right Watermark) */
+[data-theme="floral"] .hero-section,
+[data-theme="flora"] .hero-section,
+[data-theme="ghost"] .hero-section {
+  position: relative !important;
+  overflow: hidden !important;
+}
+[data-theme="floral"] .hero-section::after,
+[data-theme="flora"] .hero-section::after,
+[data-theme="ghost"] .hero-section::after {
+  content: "" !important;
+  position: absolute !important;
+  top: -30px !important;
+  right: -20px !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: 380px !important;
+  height: 380px !important;
+  pointer-events: none !important;
+  opacity: 0.09 !important;
+  z-index: 0 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 95 C 50 60 50 30 50 8' stroke='%234f7942' stroke-width='2.2' fill='none'/><path d='M50 70 C 26 68 14 54 14 38 C 38 38 50 51 50 70 Z' fill='%234f7942'/><path d='M50 52 C 74 50 86 36 86 20 C 62 20 50 33 50 52 Z' fill='%238a9a5b'/><path d='M50 34 C 31 32 22 21 22 9 C 41 9 50 20 50 34 Z' fill='%232e8b57'/></svg>") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  display: block !important;
+}
+
+/* Remove giant pinned left gutter frond on other pages */
+[data-theme="floral"] .dossier-hero::after,
+[data-theme="floral"] .archive-ledger-banner::after,
+[data-theme="floral"] .article-header::after,
+[data-theme="floral"] .game-hero::after,
+[data-theme="flora"] .dossier-hero::after,
+[data-theme="flora"] .archive-ledger-banner::after,
+[data-theme="flora"] .article-header::after,
+[data-theme="ghost"] .dossier-hero::after,
+[data-theme="ghost"] .archive-ledger-banner::after,
+[data-theme="ghost"] .article-header::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 4. Classical Serif Field Notes Headlines (Playfair Display) */
+[data-theme="floral"] .hero-heading,
+[data-theme="floral"] .dossier-hero-name,
+[data-theme="floral"] .section-title,
+[data-theme="floral"] .dossier-heading,
+[data-theme="floral"] .site-brand,
+[data-theme="floral"] .site-brand span,
+[data-theme="floral"] .post-card-title a,
+[data-theme="floral"] .post-title,
+[data-theme="floral"] .directive-title,
+[data-theme="floral"] .weapon-title,
+[data-theme="floral"] .toc-title,
+[data-theme="floral"] .hud-main-heading,
+[data-theme="floral"] .article-title,
+[data-theme="floral"] .hud-card-title,
 [data-theme="floral"] h1,
 [data-theme="floral"] h2,
 [data-theme="floral"] h3,
-[data-theme="floral"] .hero-heading,
-[data-theme="floral"] .dossier-hero-name,
-[data-theme="floral"] .dossier-heading,
-[data-theme="floral"] .hud-main-heading,
-[data-theme="floral"] .article-title,
-[data-theme="floral"] .site-brand,
-[data-theme="floral"] .site-brand span,
-[data-theme="floral"] .post-title,
-[data-theme="floral"] .hud-card-title,
+[data-theme="floral"] h4,
+[data-theme="flora"] .hero-heading,
+[data-theme="flora"] .dossier-hero-name,
+[data-theme="flora"] .section-title,
+[data-theme="flora"] .dossier-heading,
+[data-theme="flora"] .site-brand,
+[data-theme="flora"] .post-card-title a,
+[data-theme="flora"] .directive-title,
+[data-theme="flora"] .weapon-title,
+[data-theme="flora"] .toc-title,
 [data-theme="flora"] h1,
 [data-theme="flora"] h2,
 [data-theme="flora"] h3,
-[data-theme="flora"] .hero-heading,
-[data-theme="flora"] .dossier-hero-name,
-[data-theme="flora"] .dossier-heading,
-[data-theme="flora"] .hud-main-heading,
-[data-theme="flora"] .article-title,
-[data-theme="flora"] .site-brand,
+[data-theme="flora"] h4,
+[data-theme="ghost"] .hero-heading,
+[data-theme="ghost"] .dossier-hero-name,
+[data-theme="ghost"] .section-title,
+[data-theme="ghost"] .dossier-heading,
+[data-theme="ghost"] .site-brand,
+[data-theme="ghost"] .post-card-title a,
+[data-theme="ghost"] .directive-title,
+[data-theme="ghost"] .weapon-title,
+[data-theme="ghost"] .toc-title,
 [data-theme="ghost"] h1,
 [data-theme="ghost"] h2,
 [data-theme="ghost"] h3,
-[data-theme="ghost"] .hero-heading,
-[data-theme="ghost"] .dossier-hero-name,
-[data-theme="ghost"] .dossier-heading,
-[data-theme="ghost"] .hud-main-heading,
-[data-theme="ghost"] .article-title,
-[data-theme="ghost"] .site-brand {
-  font-family: 'Merriweather', Georgia, 'Times New Roman', serif !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.01em !important;
-  color: #1a4229 !important;
+[data-theme="ghost"] h4 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  color: #1B4D3E !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  text-shadow: none !important;
   text-transform: none !important;
-  text-shadow: none !important;
-}
-[data-theme="floral"] .hero-heading .accent-word,
-[data-theme="floral"] .dossier-hero-name .dossier-alias,
-[data-theme="flora"] .hero-heading .accent-word,
-[data-theme="flora"] .dossier-hero-name .dossier-alias,
-[data-theme="ghost"] .hero-heading .accent-word,
-[data-theme="ghost"] .dossier-hero-name .dossier-alias {
-  color: #c0724a !important;
-  font-style: italic !important;
-  text-shadow: none !important;
 }
 
-/* Scientific typewriter body font */
+[data-theme="floral"] .hero-heading,
+[data-theme="flora"] .hero-heading,
+[data-theme="ghost"] .hero-heading {
+  font-size: 2.4rem !important;
+  line-height: 1.18 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+[data-theme="floral"] .accent-terra-italic,
+[data-theme="floral"] .hero-heading .accent-word,
+[data-theme="flora"] .accent-terra-italic,
+[data-theme="flora"] .hero-heading .accent-word,
+[data-theme="ghost"] .accent-terra-italic,
+[data-theme="ghost"] .hero-heading .accent-word {
+  color: #944E38 !important;
+  font-style: italic !important;
+}
+
+[data-theme="floral"] .dossier-hero-name,
+[data-theme="flora"] .dossier-hero-name,
+[data-theme="ghost"] .dossier-hero-name {
+  font-size: 2.8rem !important;
+  line-height: 1.1 !important;
+}
+
+[data-theme="floral"] .dossier-hero-name .dossier-alias,
+[data-theme="flora"] .dossier-hero-name .dossier-alias,
+[data-theme="ghost"] .dossier-hero-name .dossier-alias {
+  color: #8B4513 !important;
+  font-weight: 600 !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-size: 1.5rem !important;
+}
+
+/* 5. Scientific Field Typewriter Body Text */
 [data-theme="floral"] p,
+[data-theme="floral"] .prose,
+[data-theme="floral"] .hero-desc,
+[data-theme="floral"] .post-abstract,
 [data-theme="floral"] .post-summary,
+[data-theme="floral"] .chassis-row,
+[data-theme="floral"] .ticker-track span,
+[data-theme="floral"] .post-meta,
+[data-theme="floral"] .directive-text,
+[data-theme="floral"] .weapon-summary,
+[data-theme="floral"] .spec-note,
+[data-theme="floral"] .methodology-desc,
+[data-theme="floral"] .contact-card-sub,
 [data-theme="floral"] .bio-v,
 [data-theme="floral"] .bio-k,
-[data-theme="floral"] .chassis-row,
+[data-theme="floral"] .dossier-section-lead,
 [data-theme="floral"] .dossier-stat-desc,
 [data-theme="floral"] .hud-card-desc,
 [data-theme="floral"] .credentials-lead,
 [data-theme="floral"] .channel-value,
 [data-theme="floral"] .channel-label,
-[data-theme="floral"] .post-meta,
-[data-theme="floral"] .prose,
-[data-theme="floral"] .hero-desc,
-[data-theme="floral"] body,
 [data-theme="flora"] p,
-[data-theme="flora"] body,
+[data-theme="flora"] .prose,
+[data-theme="flora"] .hero-desc,
+[data-theme="flora"] .post-abstract,
 [data-theme="ghost"] p,
-[data-theme="ghost"] body {
-  font-family: 'Courier Prime', 'Courier New', monospace !important;
+[data-theme="ghost"] .prose {
+  font-family: 'Courier Prime', 'Special Elite', monospace !important;
+  color: #2D3D32 !important;
+  line-height: 1.68 !important;
+}
+
+/* Secondary earth tone metadata */
+[data-theme="floral"] .post-card-header,
+[data-theme="floral"] .post-id-badge,
+[data-theme="floral"] .post-tags,
+[data-theme="floral"] .ticker-security-level, 
+[data-theme="floral"] .ticker-shortcut,
+[data-theme="floral"] .chassis-key,
+[data-theme="floral"] .feed-k,
+[data-theme="floral"] .directive-hex,
+[data-theme="floral"] .badge-idx,
+[data-theme="floral"] .idx-n,
+[data-theme="floral"] .dossier-stat-tile .stat-lbl,
+[data-theme="floral"] .archive-stat-lbl,
+[data-theme="floral"] .ticker-utc-clock,
+[data-theme="flora"] .post-card-header,
+[data-theme="flora"] .chassis-key,
+[data-theme="flora"] .feed-k,
+[data-theme="ghost"] .post-card-header {
+  color: #8B4513 !important;
+  font-family: 'Courier Prime', monospace !important;
 }
 
 /* Pollen text selection */
@@ -467,105 +667,480 @@ body[data-theme="uchiha"]::before,
 [data-theme="flora"] ::selection,
 [data-theme="ghost"] ::selection {
   background: rgba(233, 196, 106, 0.45) !important;
-  color: #1a4229 !important;
+  color: #1B4D3E !important;
 }
 
-/* Background: Drifting blossoms & golden pollen across the parchment (PETALS: ON) */
-body[data-theme="floral"]::before,
-[data-theme="floral"] body::before,
-body[data-theme="flora"]::before,
-[data-theme="flora"] body::before,
-body[data-theme="ghost"]::before,
-[data-theme="ghost"] body::before {
-  content: "" !important;
-  display: block !important;
-  position: fixed !important;
-  inset: 0 !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-  opacity: 0.22 !important;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none'><g fill='%23e8a0bf'><circle cx='28' cy='24' r='3.5'/><circle cx='36' cy='30' r='3.5'/><circle cx='31' cy='38' r='3.5'/><circle cx='23' cy='33' r='3.5'/></g><circle cx='29.5' cy='31' r='2' fill='%23e9c46a'/><g fill='%23e9c46a'><circle cx='100' cy='86' r='2.8'/><circle cx='106' cy='91' r='2.8'/><circle cx='102' cy='97' r='2.8'/><circle cx='96' cy='92' r='2.8'/></g><circle cx='101' cy='91.5' r='1.5' fill='%23c77b58'/><path d='M65 110 Q75 105 85 115' stroke='%238a9a5b' stroke-width='1.2' stroke-linecap='round'/></g></svg>") !important;
-  background-repeat: repeat !important;
+/* 6. Botanical Herbarium Field Stamp (Rotating Seal) */
+[data-theme="floral"] .floral-stamp,
+[data-theme="flora"] .floral-stamp,
+[data-theme="ghost"] .floral-stamp,
+[data-theme="floral"] .botanical-herbarium-stamp,
+[data-theme="flora"] .botanical-herbarium-stamp,
+[data-theme="ghost"] .botanical-herbarium-stamp {
+  display: inline-flex !important;
+  vertical-align: middle !important;
+  margin-left: 8px !important;
+  transform: rotate(-7deg) !important;
+  opacity: 0.88 !important;
+  transition: transform 0.3s ease !important;
+}
+[data-theme="floral"] .floral-stamp:hover,
+[data-theme="flora"] .floral-stamp:hover,
+[data-theme="floral"] .botanical-herbarium-stamp:hover,
+[data-theme="flora"] .botanical-herbarium-stamp:hover {
+  transform: rotate(0deg) scale(1.08) !important;
 }
 
-/* Canopy lighting in hero sections */
-[data-theme="floral"] .hero-section::before,
-[data-theme="floral"] .dossier-hero::before,
-[data-theme="floral"] .archive-ledger-banner::before,
-[data-theme="flora"] .hero-section::before,
-[data-theme="ghost"] .hero-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(circle at 88% -10%, rgba(233, 196, 106, 0.20), transparent 42%),
-    radial-gradient(circle at 4% -4%, rgba(138, 154, 91, 0.16), transparent 44%);
-}
-
-/* Container positioning for botanical fern frond anchor */
-[data-theme="floral"] .hero-section,
-[data-theme="floral"] .dossier-hero,
-[data-theme="floral"] .archive-ledger-banner,
-[data-theme="floral"] .article-header,
-[data-theme="floral"] .game-hero,
-[data-theme="flora"] .hero-section,
-[data-theme="flora"] .dossier-hero,
-[data-theme="flora"] .archive-ledger-banner,
-[data-theme="flora"] .article-header {
+/* 7. Statement Box: Pressed Leaf Observation with Wavy Underline & Corner Flourishes */
+[data-theme="floral"] .dossier-statement-box,
+[data-theme="floral"] .statement-box,
+[data-theme="flora"] .dossier-statement-box,
+[data-theme="flora"] .statement-box,
+[data-theme="ghost"] .dossier-statement-box,
+[data-theme="ghost"] .statement-box {
+  background-color: var(--bg-card) !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: 20px !important;
+  box-shadow: 4px 4px 0px rgba(122, 148, 119, 0.28), 0 8px 24px rgba(46, 139, 87, 0.08) !important;
+  padding: 1.5rem 1.75rem !important;
   position: relative !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(6px) !important;
+  background-image:
+    linear-gradient(125deg, rgba(247, 250, 248, 0.95) 0%, rgba(238, 244, 240, 0.6) 45%, rgba(219, 229, 220, 0.7) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='210' viewBox='0 0 200 210'><g fill='none' stroke='%232e8b57' stroke-linecap='round'><path d='M14 196 C14 128 68 50 158 12 C166 108 112 186 14 196 Z' stroke-width='2' stroke-opacity='0.22'/><path d='M14 196 C70 154 122 80 158 12' stroke-width='2.2' stroke-opacity='0.26'/><g stroke-width='1.2' stroke-opacity='0.18'><path d='M36 172 C56 152 70 140 78 124'/><path d='M60 146 C78 124 92 110 102 92'/><path d='M84 118 C100 96 112 80 122 60'/><path d='M108 88 C122 66 132 50 140 30'/></g></g></svg>") !important;
+  background-size: auto, 180px 190px !important;
+  background-position: 0 0, right 12px bottom 8px !important;
+  background-repeat: no-repeat, no-repeat !important;
 }
 
-/* Pressed fern frond pinned in the left gutter across all pages in Floral */
-[data-theme="floral"] .hero-section::after,
-[data-theme="floral"] .dossier-hero::after,
-[data-theme="floral"] .archive-ledger-banner::after,
-[data-theme="floral"] .article-header::after,
-[data-theme="floral"] .game-hero::after,
-[data-theme="flora"] .hero-section::after,
-[data-theme="flora"] .dossier-hero::after,
-[data-theme="flora"] .archive-ledger-banner::after,
-[data-theme="flora"] .article-header::after,
-[data-theme="ghost"] .hero-section::after,
-[data-theme="ghost"] .dossier-hero::after,
-[data-theme="ghost"] .archive-ledger-banner::after,
-[data-theme="ghost"] .article-header::after {
-  content: "" !important;
+[data-theme="floral"] .statement-quote,
+[data-theme="floral"] .statement-quote p,
+[data-theme="flora"] .statement-quote,
+[data-theme="ghost"] .statement-quote {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-style: italic !important;
+  font-size: 1.08rem !important;
+  color: #1B4D3E !important;
+  line-height: 1.75 !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+[data-theme="floral"] .statement-quote strong,
+[data-theme="floral"] .dossier-statement-box .statement-quote strong,
+[data-theme="flora"] .statement-quote strong,
+[data-theme="ghost"] .statement-quote strong {
+  font-style: normal !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  color: #2E8B57 !important;
   display: block !important;
+  margin-top: 0.95rem !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  border-left: 3.5px solid #E88C9E !important;
+  padding-left: 0.85rem !important;
+  padding-bottom: 0.45rem !important;
+  background-repeat: repeat-x !important;
+  background-position: 0 100% !important;
+  background-size: 12px 5px !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='5' viewBox='0 0 12 5'><path d='M0 3.4 C2 1.2 4 1.2 6 3.4 C8 5 10 5 12 3.2' fill='none' stroke='%238a9a5b' stroke-width='1.2' stroke-opacity='0.85'/></svg>") !important;
+  text-shadow: none !important;
+  animation: none !important;
+}
+
+/* Corner flourishes on statement box — direct from agyghost.html */
+[data-theme="floral"] .statement-curve-flourish,
+[data-theme="flora"] .statement-curve-flourish,
+[data-theme="ghost"] .statement-curve-flourish {
   position: absolute !important;
-  left: 6px !important;
-  top: 10px !important;
-  width: 56px !important;
-  height: min(46%, 320px) !important;
   pointer-events: none !important;
+  display: block !important;
   z-index: 2 !important;
-  opacity: 0.55 !important;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 320'><path d='M28 316 C 28 230 28 120 28 8' stroke='%234f7942' stroke-width='2' fill='none' stroke-linecap='round'/><g stroke='%238a9a5b' stroke-width='1.6' fill='none' stroke-linecap='round'><path d='M28 292 C 16 287 8 277 5 264 M28 292 C 40 287 48 277 51 264 M28 258 C 16 253 8 243 5 230 M28 258 C 40 253 48 243 51 230 M28 224 C 16 219 8 209 5 196 M28 224 C 40 219 48 209 51 196 M28 190 C 17 185 10 176 7 164 M28 190 C 39 185 46 176 49 164 M28 156 C 18 151 11 142 8 131 M28 156 C 38 151 45 142 48 131 M28 122 C 19 117 13 109 10 98 M28 122 C 37 117 43 109 46 98 M28 88 C 20 84 15 76 12 66 M28 88 C 36 84 41 76 44 66 M28 58 C 21 54 17 47 14 38 M28 58 C 35 54 39 47 42 38'/></g></svg>") no-repeat center/contain !important;
-}
-@media (max-width: 1100px) {
-  [data-theme="floral"] .hero-section::after,
-  [data-theme="floral"] .dossier-hero::after,
-  [data-theme="floral"] .archive-ledger-banner::after,
-  [data-theme="floral"] .article-header::after,
-  [data-theme="flora"] .hero-section::after,
-  [data-theme="flora"] .dossier-hero::after,
-  [data-theme="flora"] .archive-ledger-banner::after,
-  [data-theme="ghost"] .hero-section::after,
-  [data-theme="ghost"] .dossier-hero::after,
-  [data-theme="ghost"] .archive-ledger-banner::after { display: none; }
 }
 
-/* Vine rule replacing hard header border */
-[data-theme="floral"] .site-header,
-[data-theme="flora"] .site-header,
-[data-theme="ghost"] .site-header {
-  background: rgba(243, 237, 224, 0.95);
-  border-bottom: 4px solid transparent !important;
-  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 10' preserveAspectRatio='none'><path d='M0 5 Q75 1 150 5 T300 5 T450 5 T600 5' stroke='%238a9a5b' stroke-width='1.8' fill='none'/><circle cx='90' cy='3' r='2.1' fill='%234f7942'/><circle cx='210' cy='7' r='2.1' fill='%234f7942'/><circle cx='330' cy='3' r='2.1' fill='%234f7942'/><circle cx='450' cy='7' r='2.1' fill='%234f7942'/><circle cx='560' cy='4' r='2.1' fill='%234f7942'/></svg>") 4 stretch !important;
+[data-theme="floral"] .statement-curve-flourish.tl,
+[data-theme="flora"] .statement-curve-flourish.tl,
+[data-theme="ghost"] .statement-curve-flourish.tl {
+  top: 8px !important;
+  left: 8px !important;
 }
 
-/* Status dot & beacon: tiny budding seed sprout with pulse */
+[data-theme="floral"] .statement-curve-flourish.br,
+[data-theme="flora"] .statement-curve-flourish.br,
+[data-theme="ghost"] .statement-curve-flourish.br {
+  bottom: 8px !important;
+  right: 8px !important;
+}
+
+[data-theme="floral"] .card-reticle,
+[data-theme="floral"] .statement-corner-tl,
+[data-theme="floral"] .statement-corner-br,
+[data-theme="flora"] .card-reticle,
+[data-theme="flora"] .statement-corner-tl,
+[data-theme="flora"] .statement-corner-br,
+[data-theme="ghost"] .card-reticle,
+[data-theme="ghost"] .statement-corner-tl,
+[data-theme="ghost"] .statement-corner-br {
+  display: none !important;
+}
+
+/* Botanical Flasher & Pronounce / Subsystem line */
+[data-theme="floral"] .flasher-symbol,
+[data-theme="flora"] .flasher-symbol,
+[data-theme="ghost"] .flasher-symbol {
+  display: inline-block !important;
+  font-size: 1.25rem !important;
+  vertical-align: -2px !important;
+}
+
+[data-theme="floral"] .flasher-symbol ~ .floral-leaf-icon,
+[data-theme="flora"] .flasher-symbol ~ .floral-leaf-icon,
+[data-theme="ghost"] .flasher-symbol ~ .floral-leaf-icon {
+  display: none !important;
+}
+
+[data-theme="floral"] .dossier-pronounce,
+[data-theme="flora"] .dossier-pronounce,
+[data-theme="ghost"] .dossier-pronounce {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-size: 0.78rem !important;
+}
+
+[data-theme="floral"] .dossier-pronounce code,
+[data-theme="flora"] .dossier-pronounce code,
+[data-theme="ghost"] .dossier-pronounce code {
+  background: #eaf2eb !important;
+  border: 1px solid rgba(138, 154, 91, 0.4) !important;
+  color: #2E8B57 !important;
+  border-radius: 4px !important;
+  padding: 0.15rem 0.5rem !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-size: 0.78rem !important;
+}
+
+[data-theme="floral"] .phonetic-divider,
+[data-theme="floral"] .phonetic-role,
+[data-theme="flora"] .phonetic-divider,
+[data-theme="flora"] .phonetic-role,
+[data-theme="ghost"] .phonetic-divider,
+[data-theme="ghost"] .phonetic-role {
+  color: #8C6D62 !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-size: 0.78rem !important;
+}
+
+/* 8. Organic Shapes & Rounded Cards */
+[data-theme="floral"] .post-card, 
+[data-theme="floral"] .directive-card, 
+[data-theme="floral"] .weapon-card, 
+[data-theme="floral"] .hero-meta-chassis, 
+[data-theme="floral"] .chassis-hud-box, 
+[data-theme="floral"] .dossier-stat-tile, 
+[data-theme="floral"] .lab-spec-card, 
+[data-theme="floral"] .cert-badge-tile, 
+[data-theme="floral"] .toc-card, 
+[data-theme="floral"] .contact-card, 
+[data-theme="floral"] .pgp-terminal, 
+[data-theme="floral"] .cve-table-container, 
+[data-theme="floral"] .methodology-step, 
+[data-theme="floral"] .archive-ledger-banner, 
+[data-theme="floral"] .stat-card, 
+[data-theme="floral"] .hud-card, 
+[data-theme="floral"] .tactical-memo-card, 
+[data-theme="floral"] .article-tactical-header-card, 
+[data-theme="floral"] .dossier-radar-card, 
+[data-theme="floral"] .dossier-index-card, 
+[data-theme="floral"] .dossier-contact-card, 
+[data-theme="flora"] .post-card, 
+[data-theme="flora"] .directive-card, 
+[data-theme="flora"] .weapon-card, 
+[data-theme="flora"] .hero-meta-chassis, 
+[data-theme="flora"] .chassis-hud-box, 
+[data-theme="flora"] .dossier-stat-tile, 
+[data-theme="flora"] .lab-spec-card, 
+[data-theme="flora"] .cert-badge-tile, 
+[data-theme="flora"] .toc-card, 
+[data-theme="flora"] .contact-card, 
+[data-theme="flora"] .pgp-terminal, 
+[data-theme="flora"] .cve-table-container, 
+[data-theme="flora"] .methodology-step, 
+[data-theme="flora"] .archive-ledger-banner, 
+[data-theme="ghost"] .post-card, 
+[data-theme="ghost"] .directive-card, 
+[data-theme="ghost"] .weapon-card, 
+[data-theme="ghost"] .hero-meta-chassis, 
+[data-theme="ghost"] .chassis-hud-box, 
+[data-theme="ghost"] .dossier-stat-tile, 
+[data-theme="ghost"] .lab-spec-card, 
+[data-theme="ghost"] .cert-badge-tile, 
+[data-theme="ghost"] .toc-card, 
+[data-theme="ghost"] .contact-card, 
+[data-theme="ghost"] .pgp-terminal, 
+[data-theme="ghost"] .cve-table-container, 
+[data-theme="ghost"] .methodology-step, 
+[data-theme="ghost"] .archive-ledger-banner {
+  background: var(--bg-surface) !important;
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: 18px !important;
+  box-shadow: 4px 4px 0px var(--shadow-md, rgba(122, 148, 119, 0.28)) !important;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+[data-theme="floral"] .post-card:hover, 
+[data-theme="floral"] .directive-card:hover, 
+[data-theme="floral"] .weapon-card:hover, 
+[data-theme="floral"] .lab-spec-card:hover, 
+[data-theme="floral"] .cert-badge-tile:hover, 
+[data-theme="floral"] .toc-card:hover, 
+[data-theme="flora"] .post-card:hover, 
+[data-theme="flora"] .directive-card:hover, 
+[data-theme="flora"] .weapon-card:hover, 
+[data-theme="flora"] .lab-spec-card:hover, 
+[data-theme="flora"] .cert-badge-tile:hover, 
+[data-theme="flora"] .toc-card:hover, 
+[data-theme="ghost"] .post-card:hover, 
+[data-theme="ghost"] .directive-card:hover, 
+[data-theme="ghost"] .weapon-card:hover, 
+[data-theme="ghost"] .lab-spec-card:hover, 
+[data-theme="ghost"] .cert-badge-tile:hover, 
+[data-theme="ghost"] .toc-card:hover {
+  border-color: #2E8B57 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 5px 5px 0px #4F7942, 0 10px 25px rgba(46, 139, 87, 0.12) !important;
+}
+
+/* Stat numbers and tiles */
+[data-theme="floral"] .dossier-stat-tile .stat-num,
+[data-theme="floral"] .archive-stat-val,
+[data-theme="flora"] .dossier-stat-tile .stat-num,
+[data-theme="flora"] .archive-stat-val,
+[data-theme="ghost"] .dossier-stat-tile .stat-num {
+  color: #2E8B57 !important;
+  text-shadow: none !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="floral"] .stat-critical,
+[data-theme="floral"] .cvss-critical,
+[data-theme="floral"] .post-severity-tag,
+[data-theme="floral"] .severity-critical,
+[data-theme="floral"] .severity-high,
+[data-theme="flora"] .stat-critical,
+[data-theme="flora"] .cvss-critical,
+[data-theme="ghost"] .stat-critical,
+[data-theme="ghost"] .cvss-critical {
+  background: #fdf3f5 !important;
+  color: #c42d4a !important;
+  border: 1px solid #E88C9E !important;
+  border-radius: 6px !important;
+  padding: 0.1rem 0.4rem !important;
+}
+
+/* 9. Rounded Pill Buttons */
+[data-theme="floral"] .btn, 
+[data-theme="floral"] .btn-primary, 
+[data-theme="floral"] .btn-secondary, 
+[data-theme="floral"] .dossier-btn, 
+[data-theme="floral"] .dossier-btn-primary, 
+[data-theme="floral"] .dossier-btn-secondary, 
+[data-theme="floral"] .dossier-btn-ghost, 
+[data-theme="floral"] .dossier-btn-outline,
+[data-theme="floral"] .brutal-btn,
+[data-theme="floral"] .theme-toggle-btn,
+[data-theme="flora"] .btn, 
+[data-theme="flora"] .btn-primary, 
+[data-theme="flora"] .btn-secondary, 
+[data-theme="flora"] .dossier-btn, 
+[data-theme="flora"] .dossier-btn-primary, 
+[data-theme="flora"] .dossier-btn-secondary, 
+[data-theme="flora"] .dossier-btn-ghost, 
+[data-theme="flora"] .dossier-btn-outline,
+[data-theme="flora"] .theme-toggle-btn,
+[data-theme="ghost"] .btn, 
+[data-theme="ghost"] .btn-primary, 
+[data-theme="ghost"] .btn-secondary,
+[data-theme="ghost"] .theme-toggle-btn {
+  border-radius: 9999px !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  padding: 0.45rem 1.25rem !important;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+[data-theme="floral"] .btn-primary,
+[data-theme="floral"] .dossier-btn-primary,
+[data-theme="flora"] .btn-primary,
+[data-theme="flora"] .dossier-btn-primary,
+[data-theme="ghost"] .btn-primary {
+  background: #2E8B57 !important;
+  border: 1.5px solid #1B4D3E !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(46, 139, 87, 0.25), 2px 2px 0px #c3d2ab !important;
+}
+
+[data-theme="floral"] .btn-primary:hover,
+[data-theme="floral"] .dossier-btn-primary:hover,
+[data-theme="flora"] .btn-primary:hover,
+[data-theme="flora"] .dossier-btn-primary:hover,
+[data-theme="ghost"] .btn-primary:hover {
+  background: #1B4D3E !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(46, 139, 87, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+[data-theme="floral"] .btn-secondary,
+[data-theme="floral"] .dossier-btn-secondary,
+[data-theme="floral"] .dossier-btn-ghost,
+[data-theme="floral"] .dossier-btn-outline,
+[data-theme="flora"] .btn-secondary,
+[data-theme="flora"] .dossier-btn-secondary,
+[data-theme="flora"] .dossier-btn-ghost,
+[data-theme="flora"] .dossier-btn-outline,
+[data-theme="ghost"] .btn-secondary {
+  background: #fcfaf5 !important;
+  border: 1.5px solid #8A9A5B !important;
+  color: #1B4D3E !important;
+  box-shadow: 2px 2px 0px #c3d2ab !important;
+}
+
+[data-theme="floral"] .btn-secondary:hover,
+[data-theme="floral"] .dossier-btn-secondary:hover,
+[data-theme="floral"] .dossier-btn-ghost:hover,
+[data-theme="flora"] .btn-secondary:hover,
+[data-theme="flora"] .dossier-btn-secondary:hover,
+[data-theme="ghost"] .btn-secondary:hover {
+  background: #eaf2eb !important;
+  border-color: #2E8B57 !important;
+  color: #1B4D3E !important;
+}
+
+/* 10. Tags, Pills, and Badges (id=(flora)) */
+[data-theme="floral"] .brand-badge,
+[data-theme="flora"] .brand-badge,
+[data-theme="ghost"] .brand-badge {
+  background: #eaf2eb !important;
+  color: #2E8B57 !important;
+  border: 1px solid #8A9A5B !important;
+  border-radius: 9999px !important;
+  padding: 0.2rem 0.65rem !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-weight: 700 !important;
+  font-size: 0 !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+[data-theme="floral"] .brand-badge::after,
+[data-theme="flora"] .brand-badge::after,
+[data-theme="ghost"] .brand-badge::after {
+  content: "id=(spore)" !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 700 !important;
+  font-family: 'Courier Prime', monospace !important;
+}
+
+[data-theme="floral"] .tag-btn,
+[data-theme="flora"] .tag-btn,
+[data-theme="ghost"] .tag-btn {
+  border-radius: 9999px !important;
+  border: 1.5px solid #8A9A5B !important;
+  background: var(--bg-surface) !important;
+  color: #2E8B57 !important;
+  font-family: 'Courier Prime', monospace !important;
+  padding: 0.35rem 0.9rem !important;
+  transition: all 0.2s !important;
+}
+
+[data-theme="floral"] .tag-btn.active,
+[data-theme="floral"] .tag-btn:hover,
+[data-theme="floral"] .filter-chip.active,
+[data-theme="flora"] .tag-btn.active,
+[data-theme="flora"] .tag-btn:hover,
+[data-theme="ghost"] .tag-btn.active {
+  background: #2E8B57 !important;
+  border-color: #1B4D3E !important;
+  color: #ffffff !important;
+  box-shadow: 0 3px 10px rgba(46, 139, 87, 0.25) !important;
+}
+
+[data-theme="floral"] .tag-chip,
+[data-theme="floral"] .directive-pill,
+[data-theme="floral"] .directive-tag,
+[data-theme="floral"] .weapon-badge,
+[data-theme="floral"] .spec-badge,
+[data-theme="floral"] .post-meta-tag,
+[data-theme="floral"] .cve-badge,
+[data-theme="flora"] .tag-chip,
+[data-theme="flora"] .cve-badge,
+[data-theme="ghost"] .tag-chip,
+[data-theme="ghost"] .cve-badge {
+  border-radius: 9999px !important;
+  background: #eaf2eb !important;
+  color: #2E8B57 !important;
+  border: 1px solid #8A9A5B !important;
+  font-family: 'Courier Prime', monospace !important;
+}
+
+[data-theme="floral"] .post-id-badge,
+[data-theme="flora"] .post-id-badge,
+[data-theme="ghost"] .post-id-badge {
+  border-radius: 9999px !important;
+  background: #fbf5ee !important;
+  color: #8B4513 !important;
+  border: 1px solid #c9b19e !important;
+}
+
+[data-theme="floral"] .search-input,
+[data-theme="flora"] .search-input,
+[data-theme="ghost"] .search-input {
+  border-radius: 9999px !important;
+  border: 1.5px solid #8A9A5B !important;
+  background: #ffffff !important;
+  color: #1B4D3E !important;
+  font-family: 'Courier Prime', monospace !important;
+  padding: 0.55rem 1.25rem !important;
+}
+
+[data-theme="floral"] .search-input:focus,
+[data-theme="flora"] .search-input:focus,
+[data-theme="ghost"] .search-input:focus {
+  border-color: #2E8B57 !important;
+  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.15) !important;
+  outline: none !important;
+}
+
+/* 11. Top Telemetry Ticker & Navigation Links */
+[data-theme="floral"] .system-ticker,
+[data-theme="flora"] .system-ticker,
+[data-theme="ghost"] .system-ticker {
+  background: #f4efe4 !important;
+  border-bottom: 1.5px solid #8A9A5B !important;
+  color: #6E473B !important;
+  font-family: 'Courier Prime', monospace !important;
+}
+
+[data-theme="floral"] .status-indicator,
+[data-theme="flora"] .status-indicator,
+[data-theme="ghost"] .status-indicator {
+  background: #ffffff !important;
+  border: 1px solid #8A9A5B !important;
+  border-radius: 9999px !important;
+  padding: 0.2rem 0.75rem !important;
+  color: #1B4D3E !important;
+  font-weight: 700 !important;
+}
+
 [data-theme="floral"] .status-dot,
 [data-theme="floral"] .dossier-beacon,
 [data-theme="floral"] .hero-signal-ping,
@@ -573,197 +1148,295 @@ body[data-theme="ghost"]::before,
 [data-theme="flora"] .dossier-beacon,
 [data-theme="ghost"] .status-dot,
 [data-theme="ghost"] .dossier-beacon {
-  width: 10px;
-  height: 10px;
-  border-radius: 50% 50% 50% 0 !important;
-  transform: rotate(-45deg);
-  background: radial-gradient(circle at 35% 35%, #6fae7f 0%, #2e8b57 55%, #4f7942 100%) !important;
-  box-shadow: 0 0 7px rgba(79, 121, 66, 0.55) !important;
-  animation: floralSeedPulse 3s ease-in-out infinite !important;
-}
-@keyframes floralSeedPulse {
-  0%, 100% { transform: rotate(-45deg) scale(1); }
-  50% { transform: rotate(-45deg) scale(0.82); }
-}
-
-/* Brand badge reveals id=(seed) */
-[data-theme="floral"] .brand-badge,
-[data-theme="flora"] .brand-badge,
-[data-theme="ghost"] .brand-badge {
-  font-size: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  border-radius: 999px !important;
-  background: #ede5d2 !important;
-  color: #2e8b57 !important;
-  border: 1.5px dashed #8a9a5b !important;
-  padding: 0.15rem 0.55rem !important;
-  box-shadow: 1px 1px 0 #cfd8b4 !important;
-}
-[data-theme="floral"] .brand-badge::after,
-[data-theme="flora"] .brand-badge::after,
-[data-theme="ghost"] .brand-badge::after {
-  content: "id=(seed)" !important;
-  font-size: 0.62rem !important;
-  letter-spacing: 0.05em !important;
-  font-weight: 700 !important;
-  font-family: 'Special Elite', 'Courier Prime', monospace !important;
-}
-
-.brand-sprig, .floral-leaf-icon, .floral-stamp, .floral-radar-seed {
-  display: none;
-}
-
-.flora-flower-icon, .floral-theme-sprig {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='rgba(46,139,87,0.18)' stroke='%238A9A5B' stroke-width='3'/><ellipse cx='50' cy='62' rx='14' ry='18' fill='%238B4513' stroke='%234F7942' stroke-width='2'/><path d='M 47,52 C 45,36 30,30 24,32 C 26,45 37,53 47,53 Z' fill='%232E8B57' stroke='%231B4D3E' stroke-width='2'/><path d='M 51,51 C 56,33 70,26 77,29 C 75,44 62,51 50,52 Z' fill='%234F7942' stroke='%231B4D3E' stroke-width='2'/><circle cx='49' cy='48' r='4' fill='%23E8B838'/></svg>") no-repeat center/contain !important;
+  border: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  animation: sproutBreathing 3.5s ease-in-out infinite alternate !important;
   display: inline-block !important;
-  vertical-align: middle;
+  vertical-align: middle !important;
+  margin-right: 6px !important;
 }
 
-/* MIMO'S GREENHOUSE RADAR SYSTEM ADAPTED FOR FLORAL (AGY R2 WINNER) */
-[data-theme="floral"] .chassis-radar-container {
-  background: radial-gradient(circle at 50% 50%, rgba(138, 154, 91, 0.12), transparent 70%), #faf6ec !important;
-  border: 1.5px dashed #8a9a5b !important;
-  border-radius: 16px !important;
-  box-shadow: 3px 3px 0 #cfd8b4 !important;
+@keyframes sproutBreathing {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1.08); filter: drop-shadow(0 0 5px rgba(46, 139, 87, 0.4)); }
 }
-[data-theme="floral"] .radar-circle {
-  border: 1.5px dashed #8a9a5b !important;
+
+[data-theme="floral"] .ticker-security-level,
+[data-theme="flora"] .ticker-security-level,
+[data-theme="ghost"] .ticker-security-level {
+  border: 1px solid #8A9A5B !important;
+  border-radius: 9999px !important;
+  background: #eaf2eb !important;
+  color: #2E8B57 !important;
+  padding: 0.2rem 0.65rem !important;
+}
+
+[data-theme="floral"] .ticker-audio-toggle,
+[data-theme="flora"] .ticker-audio-toggle,
+[data-theme="ghost"] .ticker-audio-toggle {
+  border-radius: 9999px !important;
+  border: 1px solid #8A9A5B !important;
+  background: #ffffff !important;
+  color: #1B4D3E !important;
+  padding: 0.2rem 0.65rem !important;
+}
+
+[data-theme="floral"] .ticker-shortcut,
+[data-theme="flora"] .ticker-shortcut,
+[data-theme="ghost"] .ticker-shortcut {
+  color: #8B4513 !important;
+}
+
+/* Nav Links: smooth pill shape */
+[data-theme="floral"] .nav-link,
+[data-theme="flora"] .nav-link,
+[data-theme="ghost"] .nav-link {
+  color: #6E473B !important;
+  font-family: 'Courier Prime', monospace !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  padding: 0.4rem 0.95rem !important;
+  margin: 0 0.15rem !important;
+  transition: all 0.2s !important;
+  border: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+[data-theme="floral"] .nav-link:hover,
+[data-theme="flora"] .nav-link:hover,
+[data-theme="ghost"] .nav-link:hover {
+  color: #1B4D3E !important;
+  background: #eaf2eb !important;
+}
+
+[data-theme="floral"] .nav-link.active,
+[data-theme="flora"] .nav-link.active,
+[data-theme="ghost"] .nav-link.active {
+  color: #ffffff !important;
+  background: #2E8B57 !important;
+  box-shadow: 0 2px 8px rgba(46, 139, 87, 0.25) !important;
+}
+
+/* 12. Radar, Chassis & Botanical Telemetry */
+[data-theme="floral"] .radar-circle,
+[data-theme="flora"] .radar-circle,
+[data-theme="ghost"] .radar-circle {
+  border-color: rgba(46, 139, 87, 0.25) !important;
+  border-style: solid !important;
+  opacity: 1 !important;
+}
+
+[data-theme="floral"] .radar-axis,
+[data-theme="flora"] .radar-axis,
+[data-theme="ghost"] .radar-axis {
+  background: rgba(46, 139, 87, 0.25) !important;
+}
+
+[data-theme="floral"] .radar-sweep-beam,
+[data-theme="flora"] .radar-sweep-beam,
+[data-theme="ghost"] .radar-sweep-beam {
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(46, 139, 87, 0.25) 60deg, transparent 61deg) !important;
+  opacity: 1 !important;
+}
+
+[data-theme="floral"] .radar-target,
+[data-theme="flora"] .radar-target,
+[data-theme="ghost"] .radar-target {
+  background: #E88C9E !important;
+  box-shadow: 0 0 8px #E88C9E !important;
+  border-radius: 50% !important;
+  transform: none !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+/* Mimo Greenhouse Radar Integration (.garden) */
+[data-theme="floral"] .hero-chassis-radar-mini,
+[data-theme="flora"] .hero-chassis-radar-mini,
+[data-theme="ghost"] .hero-chassis-radar-mini,
+[data-palette="sage"] .hero-chassis-radar-mini {
+  background: var(--bg-card, #e5ece6) !important;
+  border: 1.5px solid var(--border-color, #7a9477) !important;
+  border-radius: 14px !important;
+  box-shadow: 2px 2px 0 var(--shadow-sm, #b8c8ba) !important;
+  height: auto !important;
+  min-height: 220px !important;
+  position: relative !important;
+  padding: 0.5rem 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+[data-theme="floral"] .hero-chassis-radar-mini::before,
+[data-theme="floral"] .hero-chassis-radar-mini::after,
+[data-theme="flora"] .hero-chassis-radar-mini::before,
+[data-theme="flora"] .hero-chassis-radar-mini::after,
+[data-theme="ghost"] .hero-chassis-radar-mini::before,
+[data-theme="ghost"] .hero-chassis-radar-mini::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Hide brutalist radar elements in Dossier radar container on about.html */
+[data-theme="floral"] .chassis-radar-container .radar-circle,
+[data-theme="floral"] .chassis-radar-container .radar-axis,
+[data-theme="floral"] .chassis-radar-container .radar-sweep-beam,
+[data-theme="floral"] .chassis-radar-container .radar-target,
+[data-theme="floral"] .chassis-radar-container .chassis-center-sig,
+[data-theme="flora"] .chassis-radar-container .radar-circle,
+[data-theme="flora"] .chassis-radar-container .radar-axis,
+[data-theme="flora"] .chassis-radar-container .radar-sweep-beam,
+[data-theme="flora"] .chassis-radar-container .radar-target,
+[data-theme="flora"] .chassis-radar-container .chassis-center-sig,
+[data-theme="ghost"] .chassis-radar-container .radar-circle,
+[data-theme="ghost"] .chassis-radar-container .radar-axis,
+[data-theme="ghost"] .chassis-radar-container .radar-sweep-beam,
+[data-theme="ghost"] .chassis-radar-container .radar-target,
+[data-theme="ghost"] .chassis-radar-container .chassis-center-sig {
+  display: none !important;
+}
+
+[data-theme="floral"] .chassis-radar-container,
+[data-theme="flora"] .chassis-radar-container,
+[data-theme="ghost"] .chassis-radar-container,
+[data-palette="sage"] .chassis-radar-container {
+  height: auto !important;
+  min-height: 220px !important;
+  background: var(--bg-card, #e5ece6) !important;
+  border: 1.5px solid var(--border-color, #7a9477) !important;
+  border-radius: 14px !important;
+  box-shadow: 2px 2px 0 var(--shadow-sm, #b8c8ba) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.5rem 0 !important;
+}
+
+/* Mimo .garden Greenhouse Radar markup styles */
+[data-theme="floral"] .garden,
+[data-theme="flora"] .garden,
+[data-theme="ghost"] .garden {
+  position: relative !important;
+  width: 200px !important;
+  height: 200px !important;
+  margin: 0.5rem auto !important;
+  display: block !important;
+}
+
+[data-theme="floral"] .gring,
+[data-theme="flora"] .gring,
+[data-theme="ghost"] .gring {
+  position: absolute !important;
+  border-radius: 50% !important;
+  border: 1.5px dashed var(--border-color, #7a9477) !important;
   opacity: 0.75 !important;
 }
-[data-theme="floral"] .radar-axis {
-  background: #d9cfb4 !important;
-}
-[data-theme="floral"] .radar-target {
-  width: 12px !important;
-  height: 12px !important;
-  border-radius: 50% 50% 50% 0 !important;
-  transform: rotate(-45deg) !important;
-  background: #2e8b57 !important;
-  box-shadow: 0 0 10px rgba(79, 121, 66, 0.6) !important;
-  animation: seedPulse 3.4s ease-in-out infinite !important;
-  border: none !important;
-}
-[data-theme="floral"] .radar-target::before,
-[data-theme="floral"] .radar-target::after {
-  display: none !important;
-}
-@keyframes seedPulse {
-  0%, 100% { transform: rotate(-45deg) scale(1); opacity: 0.95; }
-  50% { transform: rotate(-45deg) scale(0.78); opacity: 0.6; }
+
+[data-theme="floral"] .gring.o, [data-theme="flora"] .gring.o, [data-theme="ghost"] .gring.o { inset: 0 !important; }
+[data-theme="floral"] .gring.m, [data-theme="flora"] .gring.m, [data-theme="ghost"] .gring.m { inset: 30px !important; }
+[data-theme="floral"] .gring.i, [data-theme="flora"] .gring.i, [data-theme="ghost"] .gring.i { inset: 64px !important; }
+
+[data-theme="floral"] .gaxis,
+[data-theme="flora"] .gaxis,
+[data-theme="ghost"] .gaxis {
+  position: absolute !important;
+  background: rgba(138, 154, 91, 0.4) !important;
 }
 
-[data-theme="floral"] .chassis-center-sig .sig-svg,
-[data-theme="flora"] .chassis-center-sig .sig-svg,
-[data-theme="ghost"] .chassis-center-sig .sig-svg {
-  display: none !important;
+[data-theme="floral"] .gaxis.x, [data-theme="flora"] .gaxis.x, [data-theme="ghost"] .gaxis.x { left: 0 !important; right: 0 !important; top: 50% !important; height: 1px !important; }
+[data-theme="floral"] .gaxis.y, [data-theme="flora"] .gaxis.y, [data-theme="ghost"] .gaxis.y { top: 0 !important; bottom: 0 !important; left: 50% !important; width: 1px !important; }
+
+[data-theme="floral"] .gtarget,
+[data-theme="flora"] .gtarget,
+[data-theme="ghost"] .gtarget {
+  position: absolute !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% 50% 50% 0 !important;
+  transform: rotate(-45deg) !important;
+  background: #2E8B57 !important;
+  box-shadow: 0 0 8px rgba(79, 121, 66, 0.5) !important;
+  animation: seedPulse 3.4s ease-in-out infinite !important;
 }
-[data-theme="floral"] .chassis-center-sig {
+
+[data-theme="floral"] .gt1, [data-theme="flora"] .gt1, [data-theme="ghost"] .gt1 { top: 24% !important; left: 62% !important; }
+[data-theme="floral"] .gt2, [data-theme="flora"] .gt2, [data-theme="ghost"] .gt2 { top: 58% !important; left: 26% !important; }
+[data-theme="floral"] .gt3, [data-theme="flora"] .gt3, [data-theme="ghost"] .gt3 { top: 70% !important; left: 69% !important; }
+
+[data-theme="floral"] .gcenter,
+[data-theme="flora"] .gcenter,
+[data-theme="ghost"] .gcenter {
+  position: absolute !important;
+  inset: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-[data-theme="floral"] .chassis-center-sig::after {
-  content: "LZ-994";
-  display: block;
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #8c6d62;
-  margin-top: 2px;
-}
-[data-theme="floral"] .floral-radar-seed,
-[data-theme="flora"] .floral-radar-seed,
-[data-theme="ghost"] .floral-radar-seed {
-  display: inline-block !important;
-  font-size: 1.6rem !important;
-  line-height: 1 !important;
-  animation: sproutBounce 3.4s ease-in-out infinite !important;
-}
-@keyframes sproutBounce {
-  0%, 100% { transform: scale(1) translateY(0); }
-  50% { transform: scale(1.12) translateY(-3px); }
+  gap: 0.15rem !important;
+  color: #1B4D3E !important;
 }
 
-[data-theme="floral"] .radar-sweep-beam {
-  background: conic-gradient(from 0deg, rgba(138, 154, 91, 0.28) 0deg, transparent 55deg, transparent 360deg) !important;
-  opacity: 0.7 !important;
+@keyframes seedPulse {
+  0%, 100% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(0.82); }
 }
 
-/* Mini Chassis Radar on Index */
-[data-theme="floral"] .hero-chassis-radar-mini {
-  background: #faf6ec !important;
-  border: 1.5px dashed #8a9a5b !important;
+/* Dossier Meta Badge in Hero */
+[data-theme="floral"] .dossier-meta-badge,
+[data-theme="flora"] .dossier-meta-badge,
+[data-theme="ghost"] .dossier-meta-badge,
+[data-palette="sage"] .dossier-meta-badge {
+  background: var(--bg-surface, #f7faf8) !important;
+  border: 1.5px solid var(--border-color, #7a9477) !important;
   border-radius: 12px !important;
-  box-shadow: 2px 2px 0 #cfd8b4 !important;
-  overflow: hidden;
-  position: relative;
+  box-shadow: 2px 2px 0px var(--shadow-sm, #b8c8ba) !important;
+  padding: 0.35rem 0.85rem !important;
+  color: #1B4D3E !important;
 }
-[data-theme="floral"] .hero-chassis-radar-mini::before {
-  content: "" !important;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70px;
-  height: 70px;
-  margin-top: -35px;
-  margin-left: -35px;
-  border-radius: 50%;
-  border: 1px dashed #8a9a5b;
-  background: conic-gradient(from 0deg, rgba(138, 154, 91, 0.28) 0deg, transparent 60deg, transparent 360deg);
-  animation: radarRotate 4s linear infinite;
-  pointer-events: none;
-}
-[data-theme="floral"] .hero-chassis-radar-mini::after {
-  content: "🌱 LZ-994" !important;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+[data-theme="floral"] .dossier-code,
+[data-theme="flora"] .dossier-code {
+  color: #1B4D3E !important;
   font-family: 'Courier Prime', monospace !important;
-  font-size: 0.72rem !important;
   font-weight: 700 !important;
-  color: #2e8b57 !important;
-  letter-spacing: 0.08em;
-  background: #f7f1e2;
-  padding: 2px 8px;
-  border-radius: 999px;
-  border: 1px dashed #8a9a5b;
-  pointer-events: none;
+}
+[data-theme="floral"] .dossier-sub-id,
+[data-theme="flora"] .dossier-sub-id {
+  color: #8B4513 !important;
+  font-family: 'Courier Prime', monospace !important;
 }
 
+/* Botanical Crest & Flasher Icons */
 [data-theme="floral"] .brand-sprig,
 [data-theme="flora"] .brand-sprig,
-[data-theme="ghost"] .brand-sprig {
-  display: inline-block;
-  vertical-align: middle;
-  filter: drop-shadow(0 1px 2px rgba(79, 121, 66, 0.35));
-}
-[data-theme="floral"] .flora-flower-icon,
-[data-theme="flora"] .flora-flower-icon,
-[data-theme="ghost"] .flora-flower-icon {
+[data-theme="ghost"] .brand-sprig,
+[data-theme="floral"] .flora-crest-svg,
+[data-theme="flora"] .flora-crest-svg {
   display: inline-block !important;
-  vertical-align: middle;
-  filter: drop-shadow(0 1px 2px rgba(232, 140, 158, 0.55));
+  vertical-align: middle !important;
+  filter: drop-shadow(0 1px 2px rgba(79, 121, 66, 0.35)) !important;
 }
+
 [data-theme="floral"] .floral-leaf-icon,
 [data-theme="flora"] .floral-leaf-icon,
 [data-theme="ghost"] .floral-leaf-icon {
   display: inline-block !important;
-  font-size: 1.15rem !important;
+  font-size: 1.25rem !important;
   vertical-align: -1px !important;
 }
 [data-theme="floral"] .floral-leaf-icon::after,
 [data-theme="flora"] .floral-leaf-icon::after,
 [data-theme="ghost"] .floral-leaf-icon::after {
-  content: " 🌸";
-  font-size: 0.95rem;
-  vertical-align: 0px;
+  content: none !important;
 }
+
 [data-theme="floral"] .legacy-bolt,
 [data-theme="floral"] .phantom-wisp-icon,
 [data-theme="floral"] .uchiha-subsystem-icon,
@@ -771,187 +1444,37 @@ body[data-theme="ghost"]::before,
 [data-theme="ghost"] .legacy-bolt {
   display: none !important;
 }
-[data-theme="floral"] .floral-stamp,
-[data-theme="flora"] .floral-stamp,
-[data-theme="ghost"] .floral-stamp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  flex: none;
-  border: 2.5px double #8a9a5b;
-  border-radius: 50%;
-  color: #4f7942;
-  font-family: 'Special Elite', 'Courier Prime', monospace;
-  font-size: 1.3rem;
-  line-height: 1;
-  transform: rotate(-8deg);
-  opacity: 0.85;
-}
 
-/* Statement Box: Leaf-vein field note */
-[data-theme="floral"] .statement-box,
-[data-theme="floral"] .dossier-statement-box,
-[data-theme="flora"] .statement-box,
-[data-theme="flora"] .dossier-statement-box,
-[data-theme="ghost"] .statement-box,
-[data-theme="ghost"] .dossier-statement-box {
-  border: 1.5px solid #8a9a5b;
-  background-color: #f7f1e2;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><path d='M60 0 V120 M60 24 C 44 31 34 44 28 60 M60 24 C 76 31 86 44 92 60 M60 64 C 49 71 41 82 36 93 M60 64 C 71 71 79 82 84 93' stroke='%234f7942' stroke-opacity='0.09' stroke-width='1' fill='none'/></svg>");
-  background-blend-mode: multiply;
-  border-radius: 16px;
-}
-[data-theme="floral"] .statement-quote,
-[data-theme="floral"] .statement-quote p,
-[data-theme="flora"] .statement-quote,
-[data-theme="ghost"] .statement-quote {
-  color: #1a4229;
-}
-[data-theme="floral"] .statement-quote strong,
-[data-theme="floral"] .dossier-statement-box .statement-quote strong,
-[data-theme="flora"] .statement-quote strong,
-[data-theme="ghost"] .statement-quote strong {
-  font-style: italic;
-  color: #4f7942;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  text-shadow: none;
-  background: none;
-  animation: none;
-}
-
-/* Organic Rounded Shapes */
-[data-theme="floral"] .post-card,
-[data-theme="floral"] .hero-meta-chassis,
-[data-theme="floral"] .dossier-statement-box,
-[data-theme="floral"] .dossier-stat-tile,
-[data-theme="floral"] .stat-card,
-[data-theme="floral"] .hud-card,
-[data-theme="floral"] .archive-ledger-banner,
-[data-theme="floral"] .directive-card,
-[data-theme="floral"] .tactical-memo-card,
-[data-theme="floral"] .article-tactical-header-card,
-[data-theme="floral"] .dossier-radar-card,
-[data-theme="floral"] .dossier-index-card,
-[data-theme="floral"] .dossier-contact-card,
-[data-theme="flora"] .post-card,
-[data-theme="ghost"] .post-card {
-  border-radius: 16px;
-}
-[data-theme="floral"] .dossier-stat-tile,
-[data-theme="floral"] .stat-box,
-[data-theme="flora"] .dossier-stat-tile,
-[data-theme="ghost"] .dossier-stat-tile {
-  border-top: 3px solid #8a9a5b !important;
-}
-[data-theme="floral"] .btn,
-[data-theme="floral"] .btn-primary,
-[data-theme="floral"] .btn-secondary,
-[data-theme="floral"] .brutal-btn,
-[data-theme="floral"] .theme-toggle-btn,
-[data-theme="floral"] .tag-btn,
-[data-theme="floral"] .search-input,
-[data-theme="floral"] .dossier-meta-badge,
-[data-theme="floral"] .tag-chip,
-[data-theme="floral"] .post-id-badge,
-[data-theme="floral"] .posts-count,
-[data-theme="floral"] .ticker-security-level,
-[data-theme="floral"] .filter-label,
-[data-theme="flora"] .btn,
-[data-theme="ghost"] .btn {
-  border-radius: 999px;
-}
-[data-theme="floral"] .dossier-meta-badge,
-[data-theme="flora"] .dossier-meta-badge,
-[data-theme="ghost"] .dossier-meta-badge {
-  background: linear-gradient(135deg, #f7f1e2 0%, #f3ede0 100%);
-  border: 1.5px dashed #8a9a5b;
-  border-left: 4px solid #2e8b57;
-  padding: 0.35rem 0.95rem;
-}
-[data-theme="floral"] .btn-primary,
-[data-theme="flora"] .btn-primary,
-[data-theme="ghost"] .btn-primary {
-  background: #2e8b57 !important;
-  border: 1.5px solid #4f7942 !important;
-  color: #fdfaf2 !important;
-  box-shadow: 3px 3px 0 #cfd8b4 !important;
-}
-[data-theme="floral"] .btn-primary:hover,
-[data-theme="flora"] .btn-primary:hover,
-[data-theme="ghost"] .btn-primary:hover {
-  background: #4f7942 !important;
-  color: #fdfaf2 !important;
-}
-[data-theme="floral"] .btn-secondary,
-[data-theme="flora"] .btn-secondary,
-[data-theme="ghost"] .btn-secondary {
-  background: #f7f1e2 !important;
-  border: 1.5px solid #d9cfb4 !important;
-  color: #1e4d34 !important;
-  box-shadow: 2px 2px 0 #e2dcc4 !important;
-}
-[data-theme="floral"] .btn-secondary:hover,
-[data-theme="flora"] .btn-secondary:hover,
-[data-theme="ghost"] .btn-secondary:hover {
-  background: #ede5d2 !important;
-}
-
-/* Vine rule on site footer */
+/* 13. Vine Rule on Site Footer */
 [data-theme="floral"] .site-footer,
 [data-theme="flora"] .site-footer,
 [data-theme="ghost"] .site-footer {
   border-top: 4px solid transparent !important;
-  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 10' preserveAspectRatio='none'><path d='M0 5 Q75 9 150 5 T300 5 T450 5 T600 5' stroke='%23c9d2ae' stroke-width='1.8' fill='none'/></svg>") 4 stretch !important;
+  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 10' preserveAspectRatio='none'><path d='M0 5 Q75 1 150 5 T300 5 T450 5 T600 5' stroke='%238a9a5b' stroke-width='1.8' fill='none'/><circle cx='90' cy='3' r='2.2' fill='%234f7942'/><circle cx='210' cy='7' r='2.2' fill='%234f7942'/><circle cx='330' cy='3' r='2.2' fill='%234f7942'/><circle cx='450' cy='7' r='2.2' fill='%234f7942'/><circle cx='560' cy='4' r='2.2' fill='%234f7942'/></svg>") 4 stretch !important;
 }
 
-/* Tag buttons / chips in Floral */
-[data-theme="floral"] .tag-btn.active,
-[data-theme="floral"] .filter-chip.active,
-[data-theme="flora"] .tag-btn.active,
-[data-theme="ghost"] .tag-btn.active {
-  background: #8a9a5b !important;
-  color: #fdfaf2 !important;
-  border-color: #4f7942 !important;
+/* 14. CVE Table Field Notes Styling */
+[data-theme="floral"] .cve-table th,
+[data-theme="flora"] .cve-table th,
+[data-theme="ghost"] .cve-table th {
+  background: #eef4f0 !important;
+  color: #1B4D3E !important;
+  border-bottom: 2px solid #8A9A5B !important;
+  font-family: 'Courier Prime', monospace !important;
+}
+[data-theme="floral"] .cve-table td,
+[data-theme="flora"] .cve-table td,
+[data-theme="ghost"] .cve-table td {
+  border-bottom: 1px solid #d8e2d4 !important;
+  font-family: 'Courier Prime', monospace !important;
+  color: #2D3D32 !important;
+}
+[data-theme="floral"] .cve-table tr:hover td,
+[data-theme="flora"] .cve-table tr:hover td,
+[data-theme="ghost"] .cve-table tr:hover td {
+  background: rgba(46, 139, 87, 0.05) !important;
 }
 
-/* CVE badges & metadata in Floral */
-[data-theme="floral"] .post-severity-tag,
-[data-theme="floral"] .severity-critical,
-[data-theme="floral"] .severity-high,
-[data-theme="flora"] .post-severity-tag,
-[data-theme="ghost"] .post-severity-tag {
-  background: #c0724a !important;
-  color: #ffffff !important;
-  border: 1px solid #c0724a !important;
-  border-radius: 999px !important;
-  font-weight: 800 !important;
-}
-[data-theme="floral"] .post-id-badge,
-[data-theme="floral"] .archive-stat-val,
-[data-theme="flora"] .post-id-badge {
-  color: #4f7942 !important;
-  border: 1px dashed #8a9a5b !important;
-  background: #ede5d2 !important;
-  border-radius: 6px !important;
-}
-[data-theme="floral"] .tag-chip,
-[data-theme="floral"] .post-meta-tag,
-[data-theme="flora"] .tag-chip,
-[data-theme="ghost"] .tag-chip {
-  border: 1px dashed #8a9a5b !important;
-  background: #ede5d2 !important;
-  color: #6e473b !important;
-  border-radius: 999px !important;
-}
-[data-theme="floral"] .cve-badge,
-[data-theme="flora"] .cve-badge,
-[data-theme="ghost"] .cve-badge {
-  color: #4f7942 !important;
-  border-style: dashed !important;
-}
 
 /* ==========================================================================
    ROUND 3 WINNER: PHANTOM (THE SPECTRAL WRAITH & SUMMONING RADAR — DEEPSEEK)
@@ -1825,7 +2348,7 @@ header.site-header {
 [data-theme="floral"] header.site-header,
 [data-theme="flora"] header.site-header,
 [data-theme="ghost"] header.site-header {
-  background: rgba(243, 237, 224, 0.95);
+  background: rgba(252, 250, 245, 0.94);
 }
 
 [data-theme="solar"] header.site-header {
@@ -6483,9 +7006,7 @@ html, body {
   display: block;
 }
 
-[data-theme="sakura"] #sakura-canvas,
-[data-theme="floral"] #sakura-canvas,
-[data-theme="flora"] #sakura-canvas {
+[data-theme="sakura"] #sakura-canvas {
   opacity: 0.95;
 }
 

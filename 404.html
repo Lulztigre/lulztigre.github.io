@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="floral" data-palette="sage">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,11 +20,14 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var saved = localStorage.getItem(THEME_KEY) || 'phantom';
+      var saved = localStorage.getItem(THEME_KEY) || 'floral';
       if (saved === 'void') saved = 'phantom';
       if (saved === 'blush') saved = 'yua';
       if (saved === 'ghost' || saved === 'flora') saved = 'floral';
       document.documentElement.setAttribute('data-theme', saved);
+      if (saved === 'floral' || saved === 'flora' || saved === 'ghost') {
+        document.documentElement.setAttribute('data-palette', 'sage');
+      }
     })();
   </script>
 </head>
