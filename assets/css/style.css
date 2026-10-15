@@ -271,7 +271,7 @@
 
 /* Sharingan worn next to LULZTIGRE — uchiha only, slow spin */
 .brand-sharingan { display: none; }
-.brand-sprig, .flora-crest-svg, .botanical-herbarium-stamp, .statement-curve-flourish, .garden, .flasher-symbol { display: none; }
+.brand-sprig, .flora-crest-svg, .botanical-herbarium-stamp, .statement-curve-flourish, .garden, .flasher-symbol, .floral-radar-seed { display: none !important; }
 [data-theme="uchiha"] .brand-sharingan {
   display: inline-block; vertical-align: middle;
   animation: uchihaSlowRotate 12s linear infinite;
