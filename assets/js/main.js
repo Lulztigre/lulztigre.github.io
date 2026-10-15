@@ -10,7 +10,9 @@
   const themes = ['phantom', 'floral', 'uchiha', 'arctic', 'phosphor', 'solar', 'cobalt', 'sakura', 'yua'];
   
   function initTheme() {
-    let savedTheme = localStorage.getItem(THEME_KEY) || 'floral';
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTheme = urlParams.get('theme');
+    let savedTheme = (urlTheme && themes.includes(urlTheme)) ? urlTheme : (localStorage.getItem(THEME_KEY) || 'floral');
     if (savedTheme === 'void') {
       savedTheme = 'phantom';
       localStorage.setItem(THEME_KEY, 'phantom');
@@ -1419,9 +1421,12 @@
       } catch (e) {}
     }
 
+    // Continuous target blip audio gating (muted by default to avoid repetitive background sound)
+    let sonarContinuousAudio = localStorage.getItem('cobalt_sonar_blips') === 'on';
+
     let lastBlipTime = 0;
     function playTargetBlipBeep(freq = 1760) {
-      if (!isAudioActive()) return;
+      if (!isAudioActive() || !sonarContinuousAudio) return;
       const nowMs = Date.now();
       if (nowMs - lastBlipTime < 220) return;
       lastBlipTime = nowMs;
@@ -1444,8 +1449,35 @@
       } catch (e) {}
     }
 
+    // Full-Screen Hydro-Acoustic Sonar Wave Pulse
+    function triggerScreenWavePing() {
+      let screenPing = document.getElementById('cobaltScreenPing');
+      if (!screenPing) {
+        screenPing = document.createElement('div');
+        screenPing.id = 'cobaltScreenPing';
+        screenPing.className = 'cobalt-screen-ping';
+        screenPing.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(screenPing);
+      }
+      screenPing.classList.remove('active');
+      void screenPing.offsetWidth; // Force reflow to re-trigger animations
+      screenPing.classList.add('active');
+      setTimeout(() => {
+        if (screenPing) screenPing.classList.remove('active');
+      }, 2400);
+    }
+    window.triggerScreenWavePing = triggerScreenWavePing;
+
     function fireSonarPing() {
       playRelayClick(800);
+
+      // Auto-switch chassis to Sonar HUD so the vector radar canvas is visible on screen
+      const hasAbout = !!document.getElementById('sonarCanvasDisplayAbout');
+      setInstrument('sonar', hasAbout);
+
+      // Trigger full-screen expanding hydro-acoustic sonar wave pulse
+      triggerScreenWavePing();
+
       if (isAudioActive()) {
         try {
           const ctx = getAudioCtx();
@@ -1971,6 +2003,29 @@
       }
     }
 
+    function updateBlipToggleButtons() {
+      ['tabSonarBlipsToggle', 'tabSonarBlipsToggleAbout'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.textContent = sonarContinuousAudio ? 'BLIPS: ON' : 'BLIPS: OFF';
+          btn.classList.toggle('blips-live', sonarContinuousAudio);
+        }
+      });
+    }
+
+    function toggleSonarContinuousAudio() {
+      playRelayClick(1300);
+      sonarContinuousAudio = !sonarContinuousAudio;
+      localStorage.setItem('cobalt_sonar_blips', sonarContinuousAudio ? 'on' : 'off');
+      updateBlipToggleButtons();
+      if (window.showToast) {
+        window.showToast(sonarContinuousAudio 
+          ? '🔊 SONAR HUD: CONTINUOUS TARGET BLIPS UNMUTED' 
+          : '🔇 SONAR HUD: CONTINUOUS TARGET BLIPS MUTED');
+      }
+    }
+    window.toggleSonarContinuousAudio = toggleSonarContinuousAudio;
+
     const tabCore = document.getElementById('tabCoreMap');
     const tabSonar = document.getElementById('tabSonarHud');
     if (tabCore) tabCore.addEventListener('click', () => setInstrument('core', false));
@@ -1980,6 +2035,12 @@
     const tabSonarAbout = document.getElementById('tabSonarHudAbout');
     if (tabCoreAbout) tabCoreAbout.addEventListener('click', () => setInstrument('core', true));
     if (tabSonarAbout) tabSonarAbout.addEventListener('click', () => setInstrument('sonar', true));
+
+    ['tabSonarBlipsToggle', 'tabSonarBlipsToggleAbout'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', toggleSonarContinuousAudio);
+    });
+    updateBlipToggleButtons();
 
     // Button event listeners
     ['cobalt-ping-btn', 'cobalt-ping-btn-about', 'cobalt-hero-ping-btn'].forEach(id => {
