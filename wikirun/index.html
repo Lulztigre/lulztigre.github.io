@@ -13,19 +13,23 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Share+Tech+Mono&family=Shippori+Mincho:wght@700;800&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
 
   <!-- Core Phantom Blog Stylesheet -->
-  <link rel="stylesheet" href="../assets/css/style.css?v=2.5">
+  <link rel="stylesheet" href="../assets/css/style.css?v=2.6">
 
-  <!-- Prevent Theme Flash & Apply Saved Theme on Load -->
+  <!-- Prevent Theme Flash & Randomize Theme on Visit, Reload & Navigation -->
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var saved = localStorage.getItem(THEME_KEY) || 'floral';
-      if (saved === 'void') saved = 'phantom';
-      if (saved === 'blush') saved = 'yua';
-      if (saved === 'ghost' || saved === 'flora') saved = 'floral';
-      document.documentElement.setAttribute('data-theme', saved);
-      if (saved === 'floral' || saved === 'flora' || saved === 'ghost') {
+      var themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+      var lastTheme = localStorage.getItem(THEME_KEY);
+      var pool = themes.filter(function(t) { return t !== lastTheme; });
+      if (pool.length === 0) pool = themes;
+      var chosen = pool[Math.floor(Math.random() * pool.length)] || 'floral';
+      localStorage.setItem(THEME_KEY, chosen);
+      document.documentElement.setAttribute('data-theme', chosen);
+      if (chosen === 'floral' || chosen === 'flora' || chosen === 'ghost') {
         document.documentElement.setAttribute('data-palette', 'sage');
+      } else {
+        document.documentElement.removeAttribute('data-palette');
       }
     })();
   </script>

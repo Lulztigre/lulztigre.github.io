@@ -24,19 +24,23 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
           onload="renderMathInElement(document.body);"></script>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2.5">
+  <link rel="stylesheet" href="../assets/css/style.css?v=2.6">
 
-  <!-- Prevent Theme Flash & Apply Saved Theme on Load -->
+  <!-- Prevent Theme Flash & Randomize Theme on Visit, Reload & Navigation -->
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var saved = localStorage.getItem(THEME_KEY) || 'floral';
-      if (saved === 'void') saved = 'phantom';
-      if (saved === 'blush') saved = 'yua';
-      if (saved === 'ghost' || saved === 'flora') saved = 'floral';
-      document.documentElement.setAttribute('data-theme', saved);
-      if (saved === 'floral' || saved === 'flora' || saved === 'ghost') {
+      var themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+      var lastTheme = localStorage.getItem(THEME_KEY);
+      var pool = themes.filter(function(t) { return t !== lastTheme; });
+      if (pool.length === 0) pool = themes;
+      var chosen = pool[Math.floor(Math.random() * pool.length)] || 'floral';
+      localStorage.setItem(THEME_KEY, chosen);
+      document.documentElement.setAttribute('data-theme', chosen);
+      if (chosen === 'floral' || chosen === 'flora' || chosen === 'ghost') {
         document.documentElement.setAttribute('data-palette', 'sage');
+      } else {
+        document.documentElement.removeAttribute('data-palette');
       }
     })();
   </script>

@@ -125,19 +125,23 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
 
   <!-- Core Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=2.5">
+  <link rel="stylesheet" href="assets/css/style.css?v=2.6">
 
-  <!-- Prevent Theme Flash & Apply Saved Theme on Load -->
+  <!-- Prevent Theme Flash & Randomize Theme on Visit, Reload & Navigation -->
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var saved = localStorage.getItem(THEME_KEY) || 'floral';
-      if (saved === 'void') saved = 'phantom';
-      if (saved === 'blush') saved = 'yua';
-      if (saved === 'ghost' || saved === 'flora') saved = 'floral';
-      document.documentElement.setAttribute('data-theme', saved);
-      if (saved === 'floral' || saved === 'flora' || saved === 'ghost') {
+      var themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+      var lastTheme = localStorage.getItem(THEME_KEY);
+      var pool = themes.filter(function(t) { return t !== lastTheme; });
+      if (pool.length === 0) pool = themes;
+      var chosen = pool[Math.floor(Math.random() * pool.length)] || 'floral';
+      localStorage.setItem(THEME_KEY, chosen);
+      document.documentElement.setAttribute('data-theme', chosen);
+      if (chosen === 'floral' || chosen === 'flora' || chosen === 'ghost') {
         document.documentElement.setAttribute('data-palette', 'sage');
+      } else {
+        document.documentElement.removeAttribute('data-palette');
       }
     })();
   </script>
@@ -2764,16 +2768,20 @@
 
       function applyTheme(theme) {
         if (theme === 'void') {
-          document.documentElement.removeAttribute('data-theme');
+          theme = 'phantom';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'floral' || theme === 'flora' || theme === 'ghost') {
+          document.documentElement.setAttribute('data-palette', 'sage');
         } else {
-          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.removeAttribute('data-palette');
         }
         localStorage.setItem(THEME_KEY, theme);
         updateThemeBtn(theme);
       }
 
       function cycleTheme() {
-        var current = localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'void';
+        var current = localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'floral';
         var nextIdx = (themes.indexOf(current) + 1) % themes.length;
         var nextTheme = themes[nextIdx];
         applyTheme(nextTheme);
@@ -2781,10 +2789,10 @@
       }
 
       function pickRandomTheme(excludeTheme) {
-        var current = excludeTheme || localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'void';
+        var current = excludeTheme || localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'floral';
         var pool = themes.filter(function(t) { return t !== current; });
         if (pool.length === 0) pool = themes;
-        var nextTheme = pool[Math.floor(Math.random() * pool.length)] || 'void';
+        var nextTheme = pool[Math.floor(Math.random() * pool.length)] || 'floral';
         applyTheme(nextTheme);
         showToast('THEME: [' + nextTheme.toUpperCase() + ']');
         return nextTheme;
@@ -2792,7 +2800,7 @@
       window.pickRandomTheme = pickRandomTheme;
 
       // Initialize theme and label
-      var saved = localStorage.getItem(THEME_KEY) || 'void';
+      var saved = localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'floral';
       if (saved === 'blush') {
         saved = 'yua';
         localStorage.setItem(THEME_KEY, 'yua');
@@ -3031,8 +3039,7 @@
 
       window.addEventListener('pageshow', function(e) {
         if (e.persisted) {
-          var saved = localStorage.getItem(THEME_KEY) || 'floral';
-          applyTheme(saved);
+          pickRandomTheme();
         }
       });
 

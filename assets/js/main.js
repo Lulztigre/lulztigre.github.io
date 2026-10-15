@@ -81,10 +81,10 @@
   }
 
   function pickRandomTheme(excludeTheme, silent) {
-    const currentTheme = excludeTheme || localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'void';
+    const currentTheme = excludeTheme || localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute('data-theme') || 'floral';
     let pool = themes.filter(t => t !== currentTheme);
     if (pool.length === 0) pool = themes;
-    const nextTheme = pool[Math.floor(Math.random() * pool.length)] || 'void';
+    const nextTheme = pool[Math.floor(Math.random() * pool.length)] || 'floral';
     applyTheme(nextTheme);
     if (!silent) {
       showToast(`THEME: [${nextTheme.toUpperCase()}]`);
@@ -95,8 +95,7 @@
 
   window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
-      const saved = localStorage.getItem(THEME_KEY) || 'floral';
-      applyTheme(saved);
+      pickRandomTheme(null, true);
     }
   });
 

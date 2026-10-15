@@ -1329,6 +1329,22 @@ body[data-theme="flora"].no-petals::before,
   height: 200px !important;
   margin: 0.5rem auto !important;
   display: block !important;
+  border-radius: 50% !important;
+}
+
+/* Floral Radar Active Rotating Sweep Beam */
+[data-theme="floral"] .garden::before,
+[data-theme="flora"] .garden::before,
+[data-theme="ghost"] .garden::before,
+[data-palette="sage"] .garden::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 50% !important;
+  background: conic-gradient(from 0deg, rgba(46, 139, 87, 0.35) 0deg, rgba(79, 121, 66, 0.12) 40deg, transparent 65deg, transparent 360deg) !important;
+  animation: radarRotate 4s linear infinite !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
 }
 
 [data-theme="floral"] .gring,
@@ -1338,17 +1354,27 @@ body[data-theme="flora"].no-petals::before,
   border-radius: 50% !important;
   border: 1.5px dashed var(--border-color, #7a9477) !important;
   opacity: 0.75 !important;
+  pointer-events: none !important;
 }
 
-[data-theme="floral"] .gring.o, [data-theme="flora"] .gring.o, [data-theme="ghost"] .gring.o { inset: 0 !important; }
-[data-theme="floral"] .gring.m, [data-theme="flora"] .gring.m, [data-theme="ghost"] .gring.m { inset: 30px !important; }
-[data-theme="floral"] .gring.i, [data-theme="flora"] .gring.i, [data-theme="ghost"] .gring.i { inset: 64px !important; }
+[data-theme="floral"] .gring.o, [data-theme="flora"] .gring.o, [data-theme="ghost"] .gring.o {
+  inset: 0 !important;
+  animation: radarRotate 40s linear infinite !important;
+}
+[data-theme="floral"] .gring.m, [data-theme="flora"] .gring.m, [data-theme="ghost"] .gring.m {
+  inset: 30px !important;
+  animation: radarRotateCounter 26s linear infinite !important;
+}
+[data-theme="floral"] .gring.i, [data-theme="flora"] .gring.i, [data-theme="ghost"] .gring.i {
+  inset: 64px !important;
+}
 
 [data-theme="floral"] .gaxis,
 [data-theme="flora"] .gaxis,
 [data-theme="ghost"] .gaxis {
   position: absolute !important;
   background: rgba(138, 154, 91, 0.4) !important;
+  pointer-events: none !important;
 }
 
 [data-theme="floral"] .gaxis.x, [data-theme="flora"] .gaxis.x, [data-theme="ghost"] .gaxis.x { left: 0 !important; right: 0 !important; top: 50% !important; height: 1px !important; }
@@ -1365,6 +1391,7 @@ body[data-theme="flora"].no-petals::before,
   background: #2E8B57 !important;
   box-shadow: 0 0 8px rgba(79, 121, 66, 0.5) !important;
   animation: seedPulse 3.4s ease-in-out infinite !important;
+  z-index: 2 !important;
 }
 
 [data-theme="floral"] .gt1, [data-theme="flora"] .gt1, [data-theme="ghost"] .gt1 { top: 24% !important; left: 62% !important; }
@@ -1382,6 +1409,17 @@ body[data-theme="flora"].no-petals::before,
   justify-content: center !important;
   gap: 0.15rem !important;
   color: #1B4D3E !important;
+  z-index: 2 !important;
+}
+
+@keyframes radarRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes radarRotateCounter {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
 
 @keyframes seedPulse {
