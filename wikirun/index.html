@@ -7,6 +7,11 @@
   <meta name="description" content="Wikipedia Speedrun Game: Race from Start to Target article in minimum time and clicks.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 
+  <!-- Google Fonts: Shippori Mincho (uchiha headers), Yuji Boku (kanji rail/hanko) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Share+Tech+Mono&family=Shippori+Mincho:wght@700;800&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Yuji+Boku&display=swap" rel="stylesheet">
+
   <!-- Core Phantom Blog Stylesheet -->
   <link rel="stylesheet" href="../assets/css/style.css?v=2.5">
 
@@ -14,7 +19,7 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+      var themes = ['void', 'amber', 'ghost', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
       var lastTheme = localStorage.getItem(THEME_KEY) || 'void';
       if (lastTheme === 'blush') lastTheme = 'yua';
       var pool = themes.filter(function(t) { return t !== lastTheme; });
@@ -413,9 +418,14 @@
     }
     .about-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 16px;
       margin-bottom: 28px;
+    }
+    @media (min-width: 900px) {
+      .about-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
     .about-card {
       background: var(--bg-surface);
@@ -1304,6 +1314,7 @@
   <header class="site-header" id="main-site-header">
     <div class="container nav-wrapper">
       <a href="../index.html" class="site-brand">
+        <svg class="brand-sharingan" viewBox="0 0 40 40" width="22" height="22" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.2"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>
         <span>LULZTIGRE</span>
         <span class="brand-badge">id=(root)</span>
       </a>
@@ -1336,8 +1347,8 @@
       <div class="badge-sub">WIKIPEDIA HYPERTEXT SPEEDRUN</div>
       <h1 class="hero-title">WIKI<span>RUN</span></h1>
       <p class="hero-desc">
-        Navigate from <strong>Origin</strong> to <strong>Target</strong> using only internal Wikipedia links. 
-        Clock only starts once the origin article is rendered!
+        Race from <strong>Start</strong> to <strong>Target</strong> using only the links inside each article. 
+        No search bars, no Ctrl+F, no shortcuts.
       </p>
     </div>
 
@@ -1410,57 +1421,58 @@
     <!-- About WikiRun Protocol Section -->
     <section class="about-wikirun" aria-labelledby="about-wikirun-heading">
       <div class="about-header">
-        <span class="about-badge">// PROTOCOL SPECIFICATION</span>
+        <span class="about-badge">// GAMEPLAY BRIEF</span>
         <h2 id="about-wikirun-heading" class="about-title">WHAT IS WIKIRUN?</h2>
         <p class="about-lead">
-          <strong>WikiRun</strong> is a client-side hypertext speedrunning game inspired by the classic <em>"Six Degrees of Wikipedia"</em>.
-          Your objective is simple yet mentally demanding: race from an <strong>Origin Article [A]</strong> to a <strong>Target Article [B]</strong> 
-          using <em>exclusively</em> the internal blue hypertext links embedded within each article.
+          <strong>WikiRun</strong> turns Wikipedia into a race. 
+          You start on <strong>Page A</strong> (like <em>Pizza</em>), get a destination on <strong>Page B</strong> (like <em>Moon landing</em>), 
+          and navigate between them using <em>only</em> the blue links inside the text. 
+          No search box, no Google, just quick reading and smart pathfinding.
         </p>
       </div>
 
       <div class="about-grid">
         <div class="about-card">
           <div class="about-icon">🧭</div>
-          <h3 class="about-card-title">1. Six Degrees of Wikipedia</h3>
+          <h3 class="about-card-title">1. Six Degrees</h3>
           <p class="about-card-text">
-            Virtually every concept in human knowledge is linked within an average of 3 to 6 hops. Master speedrunners navigate by finding conceptual bridges: pivoting through countries, historical eras, scientific fields, or international organizations.
+            Nearly every topic on Wikipedia links to any other in <strong>3 to 6 clicks</strong>. The fastest routes pass through broad hubs: major countries, historical eras, or scientific fields.
           </p>
         </div>
 
         <div class="about-card">
           <div class="about-icon">⚡</div>
-          <h3 class="about-card-title">2. Zero-Latency REST Engine</h3>
+          <h3 class="about-card-title">2. Zero Clutter</h3>
           <p class="about-card-text">
-            Runs 100% in your browser using the official Wikipedia REST API with hover prefetching. Articles render instantly inside an isolated sandbox with zero ads, tracking scripts, or visual clutter.
+            Articles pull straight from the Wikipedia API with zero ads, tracking scripts, or sidebars. Pages load immediately so nothing slows down your run.
           </p>
         </div>
 
         <div class="about-card">
           <div class="about-icon">🛡️</div>
-          <h3 class="about-card-title">3. Anti-Cheat Protocol</h3>
+          <h3 class="about-card-title">3. Anti-Cheat</h3>
           <p class="about-card-text">
-            No Ctrl+F shortcuts allowed! Built-in heuristic listeners intercept in-page search attempts (<kbd>Ctrl+F</kbd>, <kbd>Cmd+F</kbd>, <kbd>F3</kbd>), sounding a diagnostic buzzer and serving hacker insults. Your eyes and memory do the hunting.
+            In-page search (<kbd>Ctrl+F</kbd>, <kbd>Cmd+F</kbd>, <kbd>F3</kbd>) is intercepted and blocked with a warning buzzer. You have to find the links with your own eyes.
           </p>
         </div>
 
         <div class="about-card">
           <div class="about-icon">⏱️</div>
-          <h3 class="about-card-title">4. Fair Timing Architecture</h3>
+          <h3 class="about-card-title">4. Fair Clock</h3>
           <p class="about-card-text">
-            Unlike naive timer implementations, the stopwatch only begins <em>after</em> the origin article has fully parsed and painted in the DOM. Network fetch latency is automatically subtracted so connection speeds never penalize your run.
+            The stopwatch only runs while you read and navigate. Network fetch time is automatically paused so a slow connection never hurts your final score.
           </p>
         </div>
       </div>
 
       <div class="rules-box">
         <div class="rules-header">
-          <span>RUNNER DIRECTIVE &amp; RULES OF ENGAGEMENT</span>
+          <span>HOW TO PLAY</span>
         </div>
         <ul class="rules-list">
-          <li><strong>Forward Traversal Only:</strong> Click internal links inside the article text. External references, edit markers, and Wikipedia navigation templates are stripped for speed.</li>
-          <li><strong>Target Radar:</strong> When the Destination page's link appears anywhere on your current article, the HUD displays a pulsing target badge so you can make your final dash.</li>
-          <li><strong>Telemetry &amp; Sharing:</strong> Reaching Target [B] stops the clock, tracks your total clicks and unique article path, and generates a clean, shareable run score.</li>
+          <li><strong>1. Pick Your Matchup:</strong> Choose a preset pair or roll a random start and target article above, then hit <strong>INITIALIZE RUN</strong>.</li>
+          <li><strong>2. Navigate by Link:</strong> Skim the text and click any link that points toward your destination. Every jump adds one click to your path.</li>
+          <li><strong>3. Watch the Radar:</strong> As soon as your target page is linked on the screen, a <strong>🎯 TARGET ON THIS PAGE!</strong> alert appears. Click it to stop the clock.</li>
         </ul>
       </div>
     </section>

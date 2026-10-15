@@ -17,7 +17,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -30,7 +30,7 @@
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
-      var themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+      var themes = ['void', 'amber', 'ghost', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
       var lastTheme = localStorage.getItem(THEME_KEY) || 'void';
       if (lastTheme === 'blush') lastTheme = 'yua';
       var pool = themes.filter(function(t) { return t !== lastTheme; });
@@ -67,6 +67,7 @@
   <header class="site-header">
     <div class="container nav-wrapper">
       <a href="../index.html" class="site-brand">
+        <svg class="brand-sharingan" viewBox="0 0 40 40" width="22" height="22" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.2"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>
         <span>LULZTIGRE</span>
         <span class="brand-badge">id=(root)</span>
       </a>
@@ -93,6 +94,8 @@
 
   <header class="article-header" style="background: transparent; border-bottom: none; padding: 2rem 0 0.5rem;">
     <div class="container">
+      <div class="uchiha-moon" aria-hidden="true"></div>
+
       <div class="article-tactical-header-card">
         <span class="card-reticle tl"></span>
         <span class="card-reticle br"></span>
@@ -107,6 +110,8 @@
           <span class="dossier-beacon"></span>
           <span class="dossier-code">DISPATCH // FIELD INTELLIGENCE MEMO</span>
           <span class="dossier-sub-id" style="color: #ff9900;">CVSS 7.2 HIGH</span>
+        
+          <span class="uchiha-hanko" aria-hidden="true">忍</span>
         </div>
 
         <h1 class="article-title" data-scramble="The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda" style="margin-bottom: 1rem;">

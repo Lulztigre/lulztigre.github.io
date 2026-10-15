@@ -7,7 +7,7 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['void', 'amber', 'ghost', 'bloodmoon', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+  const themes = ['void', 'amber', 'ghost', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
   
   function initTheme() {
     let savedTheme = localStorage.getItem(THEME_KEY) || 'void';
@@ -43,7 +43,7 @@
       void: '● PHANTOM',
       amber: '▲ AMBER',
       ghost: '○ GHOST',
-      bloodmoon: '◆ BLOODMOON',
+      uchiha: '◆ UCHIHA',
       arctic: '◇ ARCTIC',
       synthwave: '♦ SYNTHWAVE',
       phosphor: '█ PHOSPHOR',
@@ -54,7 +54,9 @@
       yua: '♡ YUA',
       blush: '♡ YUA'
     };
-    btn.innerHTML = `<span>${icons[theme] || '◐ THEME'}</span>`;
+    const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
+    const label = theme === 'uchiha' ? THEME_EYE + 'UCHIHA' : (icons[theme] || '◐ THEME');
+    btn.innerHTML = `<span>${label}</span>`;
   }
 
   function pickRandomTheme(excludeTheme, silent) {
@@ -581,37 +583,52 @@
       el.addEventListener('click', () => playTacticalSfx('click'));
     });
 
-    // C. Hacker Scramble Text Animation
+    // C. Hacker Scramble Text Animation (markup-preserving, snappy)
     const cipherChars = '01#$<>[]!/*_\\+-=&%?@~';
     function scrambleElement(el) {
       if (!el || el.dataset.scrambling === 'true') return;
       el.dataset.scrambling = 'true';
-      const originalText = el.getAttribute('data-scramble') || el.textContent.trim();
-      let iteration = 0;
-      const interval = setInterval(() => {
-        el.textContent = originalText
-          .split('')
-          .map((char, index) => {
-            if (index < iteration) {
-              return originalText[index];
-            }
-            if (char === ' ' || char === '\n') return char;
-            return cipherChars[Math.floor(Math.random() * cipherChars.length)];
-          })
-          .join('');
 
-        if (iteration >= originalText.length) {
+      // Walk text nodes so nested markup (spans, <code>, strong) is preserved.
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      const texts = nodes.map(n => n.nodeValue);
+      const total = texts.reduce((sum, t) => sum + t.length, 0);
+      if (total === 0) { el.dataset.scrambling = 'false'; return; }
+
+      let revealed = 0;
+      const interval = setInterval(() => {
+        revealed += Math.max(3, Math.ceil(total / 18)); // ~18 frames, quick flicker
+        let budget = revealed;
+        for (let i = 0; i < nodes.length; i++) {
+          const original = texts[i];
+          const len = original.length;
+          if (budget <= 0) {
+            nodes[i].nodeValue = '';
+            continue;
+          }
+          const solid = Math.min(len, budget);
+          let out = original.slice(0, solid);
+          for (let j = solid; j < len; j++) {
+            const ch = original[j];
+            out += (ch === ' ' || ch === '\n') ? ch : cipherChars[Math.floor(Math.random() * cipherChars.length)];
+          }
+          nodes[i].nodeValue = out;
+          budget -= len;
+        }
+
+        if (revealed >= total) {
           clearInterval(interval);
-          el.textContent = originalText;
+          for (let i = 0; i < nodes.length; i++) nodes[i].nodeValue = texts[i];
           el.dataset.scrambling = 'false';
         }
-        iteration += 1;
-      }, 25);
+      }, 22);
     }
 
-    // Trigger scramble on page load
-    document.querySelectorAll('[data-scramble]').forEach((el, idx) => {
-      setTimeout(() => scrambleElement(el), idx * 100);
+    // Trigger scramble on page load (no stagger — everything flickers together)
+    document.querySelectorAll('[data-scramble]').forEach((el) => {
+      setTimeout(() => scrambleElement(el), 60);
       el.addEventListener('mouseenter', () => scrambleElement(el));
     });
 

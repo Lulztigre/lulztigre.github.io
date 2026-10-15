@@ -112,36 +112,232 @@
   --shadow-emerald: 4px 4px 0px #058241;
 }
 
-/* Bloodmoon — Deep crimson terminal / red-team aesthetic */
-[data-theme="bloodmoon"] {
-  --bg-primary: #0a0506;
-  --bg-surface: #140a0c;
-  --bg-elevated: #1f1012;
-  --bg-card: #170c0e;
-  --bg-invert: #ff2244;
+/* Uchiha — pitch-black + blood-red dōjutsu / Anbu Black Ops aesthetic */
+[data-theme="uchiha"] {
+  --bg-primary: #000000;
+  --bg-surface: #0a0202;
+  --bg-elevated: #160304;
+  --bg-card: #0c0202;
+  --bg-invert: #cc0000;
 
-  --text-primary: #f0d0d5;
-  --text-secondary: #b87880;
-  --text-muted: #7a4650;
+  --text-primary: #f1e4e4;
+  --text-secondary: #ab7575;
+  --text-muted: #6f3e3e;
   --text-invert: #ffffff;
 
-  --border-color: #4a1a22;
-  --border-light: #2e1015;
-  --border-highlight: #ff2244;
+  --border-color: #3d0000;
+  --border-light: #1d0000;
+  --border-highlight: #ff0000;
 
-  --accent-primary: #ff2244;
-  --accent-secondary: #ff6b81;
-  --accent-amber: #ff8c42;
-  --accent-glow: rgba(255, 34, 68, 0.18);
-  --accent-tag-bg: #1f1012;
-  --accent-tag-text: #ff6b81;
+  --accent-primary: #cc0000;
+  --accent-secondary: #ff0000;
+  --accent-amber: #ff0000;
+  --accent-glow: rgba(255, 0, 0, 0.22);
+  --accent-tag-bg: #160304;
+  --accent-tag-text: #ff0000;
 
   --shadow-sm: 2px 2px 0px #000000;
   --shadow-md: 4px 4px 0px #000000;
   --shadow-lg: 7px 7px 0px #000000;
   --shadow-hover: 5px 5px 0px #000000;
   --shadow-active: 1px 1px 0px #000000;
-  --shadow-emerald: 4px 4px 0px #ff2244;
+  --shadow-emerald: 4px 4px 0px #cc0000;
+
+  /* Uchiha token: squared mono body (Anbu report) */
+  --font-mono: 'Share Tech Mono', 'Space Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  background-image: radial-gradient(rgba(204, 0, 0, 0.05) 1.1px, transparent 1.1px);
+  background-size: 34px 34px;
+}
+
+/* Uchiha typography & dōjutsu flourishes */
+[data-theme="uchiha"] .hero-heading,
+[data-theme="uchiha"] .dossier-hero-name,
+[data-theme="uchiha"] .dossier-heading,
+[data-theme="uchiha"] .hud-main-heading,
+[data-theme="uchiha"] .article-title,
+[data-theme="uchiha"] .site-brand {
+  font-family: 'Shippori Mincho', 'Noto Serif JP', Georgia, serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  line-height: 1.08 !important;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 0, 0.65),
+    0 0 25px rgba(204, 0, 0, 0.35),
+    0 0 45px rgba(139, 0, 0, 0.2),
+    2px 2px 0px #8b0000 !important;
+}
+[data-theme="uchiha"] .hero-heading .accent-word,
+[data-theme="uchiha"] .dossier-hero-name .dossier-alias {
+  color: #ff0000 !important;
+  text-shadow: 
+    0 0 14px rgba(255, 0, 0, 0.8),
+    0 0 35px rgba(204, 0, 0, 0.5),
+    0 0 60px rgba(139, 0, 0, 0.3) !important;
+}
+/* Vow line — Sharingan activation breathing glow */
+[data-theme="uchiha"] .statement-quote strong,
+[data-theme="uchiha"] .dossier-statement-box .statement-quote strong {
+  color: #ff0000;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 0 7px rgba(255, 0, 0, 0.55), 0 0 22px rgba(204, 0, 0, 0.35), 0 0 44px rgba(139, 0, 0, 0.22);
+  animation: uchihaAwaken 3.6s ease-in-out infinite;
+}
+@keyframes uchihaAwaken {
+  0%, 100% { text-shadow: 0 0 6px rgba(255, 0, 0, 0.45), 0 0 18px rgba(204, 0, 0, 0.28), 0 0 34px rgba(139, 0, 0, 0.18); }
+  50% { text-shadow: 0 0 9px rgba(255, 0, 0, 0.8), 0 0 26px rgba(204, 0, 0, 0.5), 0 0 52px rgba(139, 0, 0, 0.3); }
+}
+/* Mini Sharingan status dot + beacon — spins slowly, conic tomoe */
+[data-theme="uchiha"] .status-dot,
+[data-theme="uchiha"] .dossier-beacon {
+  width: 14px; height: 14px;
+  background:
+    radial-gradient(circle at 50% 50%, #000 0 22%, transparent 23%),
+    conic-gradient(#000 0 24deg, #cc0000 24deg 144deg, #000 144deg 168deg, #cc0000 168deg 288deg, #000 288deg 312deg, #cc0000 312deg);
+  box-shadow: 0 0 7px rgba(255, 0, 0, 0.65), 0 0 16px rgba(204, 0, 0, 0.4);
+  animation: uchihaSlowRotate 12s linear infinite, uchihaBeaconPulse 2.6s ease-in-out infinite;
+}
+@keyframes uchihaBeaconPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+/* Icon sizing so inline SVGs sit inline with text */
+[data-theme="uchiha"] .phonetic-icon svg { display: inline-block; vertical-align: middle; }
+
+/* Crest / bolt icon swap — crest shows only in uchiha, legacy bolt otherwise */
+.uchiha-subsystem-icon, .uchiha-crest { display: none; }
+.legacy-bolt { display: inline; }
+[data-theme="uchiha"] .uchiha-subsystem-icon { display: inline-block; vertical-align: middle; animation: uchihaSlowRotate 12s linear infinite; transform-origin: 50% 50%; }
+[data-theme="uchiha"] .legacy-bolt { display: none; }
+[data-theme="uchiha"] .site-brand .uchiha-crest { display: inline-block; vertical-align: middle; }
+
+/* Slow-rotating Sharingan flourish (from agy) */
+@keyframes uchihaSlowRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Sharingan worn next to LULZTIGRE — uchiha only, slow spin */
+.brand-sharingan { display: none; }
+[data-theme="uchiha"] .brand-sharingan {
+  display: inline-block; vertical-align: middle;
+  animation: uchihaSlowRotate 12s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.55));
+}
+
+/* id=(root)/id=(anbu) — the anbu badge is a uchiha-theme reveal */
+.brand-badge { font-size: 0.65rem; }
+[data-theme="uchiha"] .brand-badge { font-size: 0; }
+[data-theme="uchiha"] .brand-badge::after {
+  content: "id=(anbu)";
+  font-size: 0.65rem; letter-spacing: 0.05em; font-weight: 900;
+}
+[data-theme="uchiha"] .brand-badge.brand-badge-panic { font-size: 0.65rem; }
+[data-theme="uchiha"] .brand-badge.brand-badge-panic::after { content: none; }
+
+/* ---- Uchiha hero decoration: blood-moon arc + brush-kanji scroll rail ---- */
+[data-theme="uchiha"] .hero-section,
+[data-theme="uchiha"] .dossier-hero,
+[data-theme="uchiha"] .article-header,
+[data-theme="uchiha"] .archive-ledger-banner { overflow: hidden; }
+.uchiha-moon, .uchiha-rail, .uchiha-hanko { display: none; }
+[data-theme="uchiha"] .uchiha-moon {
+  display: block; position: absolute; top: -110px; right: -70px;
+  width: 550px; height: 550px; border-radius: 50%; pointer-events: none; z-index: 0;
+  background-image: url("../mangekyo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.5));
+  animation: uchihaMangekyoSpin 40s linear infinite;
+  opacity: 0.92;
+}
+[data-theme="uchiha"] .uchiha-moon::before,
+[data-theme="uchiha"] .uchiha-moon::after {
+  content: none !important;
+}
+@keyframes uchihaMangekyoSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@media (max-width: 900px) {
+  [data-theme="uchiha"] .uchiha-moon {
+    width: 340px; height: 340px; top: -60px; right: -40px; opacity: 0.75;
+  }
+}
+
+/* Giant ambient Mangekyo watermark in the background void */
+body[data-theme="uchiha"]::before,
+[data-theme="uchiha"] body::before {
+  content: "";
+  position: fixed;
+  top: 55%;
+  right: -140px;
+  transform: translateY(-50%);
+  width: 740px;
+  height: 740px;
+  background-image: url("../mangekyo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.085;
+  filter: drop-shadow(0 0 60px rgba(255, 0, 0, 0.45));
+  animation: uchihaMangekyoSpin 60s linear infinite;
+}
+[data-theme="uchiha"] .uchiha-rail {
+  display: block; position: absolute; left: max(6px, calc(50% - 706px)); top: 16px;
+  writing-mode: vertical-rl; text-orientation: upright;
+  font-family: 'Yuji Boku', serif; font-size: 5.4rem; line-height: 1;
+  color: rgba(204, 0, 0, 0.09); user-select: none; pointer-events: none;
+  letter-spacing: 0.35rem; z-index: 0;
+}
+@media (max-width: 900px) { [data-theme="uchiha"] .uchiha-rail { display: none; } }
+
+/* Hanko seal (忍) — stamped beside the dossier badge */
+[data-theme="uchiha"] .uchiha-hanko {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; flex: none;
+  border: 2.5px solid var(--accent-primary); border-radius: 8px;
+  color: var(--accent-primary); font-family: 'Yuji Boku', serif;
+  font-size: 1.6rem; line-height: 1; transform: rotate(-9deg);
+  box-shadow: inset 0 0 14px rgba(204, 0, 0, 0.35), 0 0 10px rgba(204, 0, 0, 0.25);
+}
+
+/* Brush-stroke header rule replaces the hard border */
+[data-theme="uchiha"] .site-header {
+  border-bottom-color: transparent;
+  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 8' preserveAspectRatio='none'><path d='M0 4 Q120 1 240 3 T480 2 T600 4 L600 7 Q470 6 360 6 T120 7 L0 6 Z' fill='%238b0000'/></svg>") 3 stretch;
+}
+
+/* Stat tiles get a deep-blood top edge */
+[data-theme="uchiha"] .dossier-stat-tile { border-top: 2px solid #8b0000; }
+
+/* Post pages — moon anchors to the article header, no vertical rail (cards are full-bleed) */
+[data-theme="uchiha"] .article-header { position: relative; }
+[data-theme="uchiha"] .article-header .uchiha-moon { top: -140px; right: -60px; width: 380px; height: 380px; }
+[data-theme="uchiha"] .article-tactical-header-card { position: relative; z-index: 1; }
+[data-theme="uchiha"] .archive-ledger-banner .uchiha-moon { top: -150px; right: -70px; }
+[data-theme="uchiha"] .archive-ledger-banner h1,
+[data-theme="uchiha"] .archive-ledger-banner p,
+[data-theme="uchiha"] .archive-stats-strip {
+  position: relative;
+  z-index: 2;
+}
+
+/* Sharingan seated at the radar / HUD reticle center */
+.chassis-center-sig, .radar-center { position: relative; }
+.uchiha-radar-eye { display: none; }
+[data-theme="uchiha"] .chassis-center-sig .sig-svg,
+[data-theme="uchiha"] .radar-center .sig-svg { display: none; }
+[data-theme="uchiha"] .uchiha-radar-eye {
+  display: inline-block; animation: uchihaSlowRotate 14s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.75));
+}
+
+/* Sharingan badge in front of the ◆ UCHIHA theme label */
+.uchiha-theme-eye { display: none; vertical-align: middle; }
+[data-theme="uchiha"] .uchiha-theme-eye {
+  display: inline-block; margin-right: 0.3rem; vertical-align: -3px;
+  animation: uchihaSlowRotate 12s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6));
 }
 
 /* Arctic — Deep Midnight Teal & Electric Blue Sci-Fi Terminal */
