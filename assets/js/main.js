@@ -7,13 +7,17 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['void', 'amber', 'ghost', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
+  const themes = ['void', 'amber', 'floral', 'uchiha', 'arctic', 'synthwave', 'phosphor', 'solar', 'hazard', 'cobalt', 'sakura', 'yua'];
   
   function initTheme() {
     let savedTheme = localStorage.getItem(THEME_KEY) || 'void';
     if (savedTheme === 'blush') {
       savedTheme = 'yua';
       localStorage.setItem(THEME_KEY, 'yua');
+    }
+    if (savedTheme === 'ghost' || savedTheme === 'flora') {
+      savedTheme = 'floral';
+      localStorage.setItem(THEME_KEY, 'floral');
     }
     applyTheme(savedTheme);
   }
@@ -39,10 +43,13 @@
   function updateThemeButtonLabel(theme) {
     const btn = document.getElementById('theme-toggle');
     if (!btn) return;
+    const FLORAL_SPRIG = '<svg class="floral-theme-sprig" width="14" height="14" viewBox="0 0 48 48" aria-hidden="true" style="margin-right:0.35rem;vertical-align:-2px;"><path d="M24 44 C 24 32 24 20 24 7" stroke="#4f7942" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M24 35 C 15 34 10 28 10 21 C 19 21 24 27 24 35 Z" fill="#8a9a5b"/><path d="M24 27 C 33 26 38 20 38 13 C 29 13 24 19 24 27 Z" fill="#2e8b57"/><path d="M24 18 C 17 17 13 12 13 6 C 20 6 24 11 24 18 Z" fill="#4f7942"/></svg>';
     const icons = {
       void: '● PHANTOM',
       amber: '▲ AMBER',
-      ghost: '○ GHOST',
+      floral: FLORAL_SPRIG + 'FLORAL',
+      flora: FLORAL_SPRIG + 'FLORAL',
+      ghost: FLORAL_SPRIG + 'FLORAL',
       uchiha: '◆ UCHIHA',
       arctic: '◇ ARCTIC',
       synthwave: '♦ SYNTHWAVE',
@@ -55,7 +62,12 @@
       blush: '♡ YUA'
     };
     const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
-    const label = theme === 'uchiha' ? THEME_EYE + 'UCHIHA' : (icons[theme] || '◐ THEME');
+    let label = icons[theme] || '◐ THEME';
+    if (theme === 'uchiha') {
+      label = THEME_EYE + 'UCHIHA';
+    } else if (theme === 'floral' || theme === 'flora' || theme === 'ghost') {
+      label = FLORAL_SPRIG + 'FLORAL';
+    }
     btn.innerHTML = `<span>${label}</span>`;
   }
 

@@ -80,36 +80,41 @@
   --shadow-emerald: 4px 4px 0px #ffb700;
 }
 
-/* Ghost Paper Light Mode */
+/* Floral — Warm Botanical Herbarium / Scientific Field Notes (Mimo Floral Design) */
+[data-theme="floral"],
+[data-theme="flora"],
 [data-theme="ghost"] {
-  --bg-primary: #f0f2f5;
-  --bg-surface: #ffffff;
-  --bg-elevated: #e4e7eb;
-  --bg-card: #ffffff;
-  --bg-invert: #08090a;
+  --bg-primary: #faf6ec;
+  --bg-surface: #f3ede0;
+  --bg-elevated: #ede5d2;
+  --bg-card: #f7f1e2;
+  --bg-invert: #2e8b57;
   
-  --text-primary: #0d1117;
-  --text-secondary: #343a40;
-  --text-muted: #57606a;
-  --text-invert: #f0f6fc;
+  --text-primary: #1e4d34;
+  --text-secondary: #6e473b;
+  --text-muted: #8c6d62;
+  --text-invert: #fdfaf2;
   
-  --border-color: #0d1117;
-  --border-light: #d0d7de;
-  --border-highlight: #0969da;
+  --border-color: #d9cfb4;
+  --border-light: #e8e0c9;
+  --border-highlight: #4f7942;
   
-  --accent-primary: #058241;
-  --accent-secondary: #0969da;
-  --accent-amber: #b25000;
-  --accent-glow: rgba(5, 130, 65, 0.12);
-  --accent-tag-bg: #e4e7eb;
-  --accent-tag-text: #058241;
+  --accent-primary: #2e8b57;
+  --accent-secondary: #4f7942;
+  --accent-amber: #e9c46a;
+  --accent-glow: rgba(46, 139, 87, 0.18);
+  --accent-tag-bg: #ede5d2;
+  --accent-tag-text: #2e8b57;
 
-  --shadow-sm: 2px 2px 0px #0d1117;
-  --shadow-md: 4px 4px 0px #0d1117;
-  --shadow-lg: 7px 7px 0px #0d1117;
-  --shadow-hover: 5px 5px 0px #0d1117;
-  --shadow-active: 1px 1px 0px #0d1117;
-  --shadow-emerald: 4px 4px 0px #058241;
+  --shadow-sm: 2px 2px 0px #e2dcc4;
+  --shadow-md: 4px 4px 0px #ddd6ba;
+  --shadow-lg: 6px 6px 0px #ddd6ba;
+  --shadow-hover: 4px 4px 0px #cfd8b4;
+  --shadow-active: 1px 1px 0px #cfd8b4;
+  --shadow-emerald: 4px 4px 0px #8a9a5b;
+
+  --font-mono: 'Courier Prime', 'Courier New', monospace;
+  --font-sans: 'Courier Prime', 'Courier New', monospace;
 }
 
 /* Uchiha — pitch-black + blood-red dōjutsu / Anbu Black Ops aesthetic */
@@ -338,6 +343,399 @@ body[data-theme="uchiha"]::before,
   display: inline-block; margin-right: 0.3rem; vertical-align: -3px;
   animation: uchihaSlowRotate 12s linear infinite;
   filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6));
+}
+
+/* ==========================================================================
+   FLORAL THEME — BOTANICAL HERBARIUM & SCIENTIFIC FIELD NOTES (MIMOGHOST)
+   Warm creamy parchment ground (#faf6ec), Forest green (#2e8b57),
+   Moss (#8a9a5b), Fern (#4f7942), Terracotta (#c0724a), Pollen (#e9c46a),
+   Playfair Display serif headlines, typewriter Courier Prime body,
+   sprout seed status dot, organic rounded curves, vine borders, and blossoms.
+   ========================================================================== */
+
+/* Floral Typography */
+[data-theme="floral"] .hero-heading,
+[data-theme="floral"] .dossier-hero-name,
+[data-theme="floral"] .dossier-heading,
+[data-theme="floral"] .hud-main-heading,
+[data-theme="floral"] .article-title,
+[data-theme="floral"] .site-brand,
+[data-theme="flora"] .hero-heading,
+[data-theme="flora"] .dossier-hero-name,
+[data-theme="flora"] .dossier-heading,
+[data-theme="flora"] .hud-main-heading,
+[data-theme="flora"] .article-title,
+[data-theme="flora"] .site-brand,
+[data-theme="ghost"] .hero-heading,
+[data-theme="ghost"] .dossier-hero-name,
+[data-theme="ghost"] .dossier-heading,
+[data-theme="ghost"] .hud-main-heading,
+[data-theme="ghost"] .article-title,
+[data-theme="ghost"] .site-brand {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.01em !important;
+  color: #1a4229 !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+}
+[data-theme="floral"] .hero-heading .accent-word,
+[data-theme="floral"] .dossier-hero-name .dossier-alias,
+[data-theme="flora"] .hero-heading .accent-word,
+[data-theme="flora"] .dossier-hero-name .dossier-alias,
+[data-theme="ghost"] .hero-heading .accent-word,
+[data-theme="ghost"] .dossier-hero-name .dossier-alias {
+  color: #c0724a !important;
+  font-style: italic !important;
+  text-shadow: none !important;
+}
+
+/* Scientific typewriter body font */
+[data-theme="floral"] p,
+[data-theme="floral"] .post-summary,
+[data-theme="floral"] .bio-v,
+[data-theme="floral"] .bio-k,
+[data-theme="floral"] .chassis-row,
+[data-theme="floral"] .dossier-stat-desc,
+[data-theme="floral"] .hud-card-desc,
+[data-theme="floral"] .credentials-lead,
+[data-theme="floral"] .channel-value,
+[data-theme="floral"] .channel-label,
+[data-theme="floral"] .post-meta,
+[data-theme="floral"] .prose,
+[data-theme="floral"] .hero-desc,
+[data-theme="floral"] body,
+[data-theme="flora"] p,
+[data-theme="flora"] body,
+[data-theme="ghost"] p,
+[data-theme="ghost"] body {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+}
+
+/* Pollen text selection */
+[data-theme="floral"] ::selection,
+[data-theme="flora"] ::selection,
+[data-theme="ghost"] ::selection {
+  background: rgba(233, 196, 106, 0.45) !important;
+  color: #1a4229 !important;
+}
+
+/* Background: faint blossoms drifting across the parchment */
+body[data-theme="floral"]::before,
+[data-theme="floral"] body::before,
+body[data-theme="flora"]::before,
+[data-theme="flora"] body::before,
+body[data-theme="ghost"]::before,
+[data-theme="ghost"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.14;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><g fill='none'><g fill='%23e8a0bf'><circle cx='24' cy='20' r='3.4'/><circle cx='31' cy='25' r='3.4'/><circle cx='27' cy='32' r='3.4'/><circle cx='20' cy='28' r='3.4'/></g><circle cx='25.5' cy='26' r='1.8' fill='%23e9c46a'/><g fill='%23e9c46a'><circle cx='86' cy='74' r='2.6'/><circle cx='91' cy='78' r='2.6'/><circle cx='88' cy='83' r='2.6'/><circle cx='83' cy='79' r='2.6'/></g><circle cx='87' cy='78.5' r='1.4' fill='%23c77b58'/></g></svg>");
+}
+
+/* Canopy lighting in hero sections */
+[data-theme="floral"] .hero-section::before,
+[data-theme="floral"] .dossier-hero::before,
+[data-theme="floral"] .archive-ledger-banner::before,
+[data-theme="flora"] .hero-section::before,
+[data-theme="ghost"] .hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 88% -10%, rgba(233, 196, 106, 0.20), transparent 42%),
+    radial-gradient(circle at 4% -4%, rgba(138, 154, 91, 0.16), transparent 44%);
+}
+
+/* Pressed fern frond pinned in the left gutter of hero */
+[data-theme="floral"] .hero-section::after,
+[data-theme="flora"] .hero-section::after,
+[data-theme="ghost"] .hero-section::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  width: 56px;
+  height: min(46%, 320px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 320'><path d='M28 316 C 28 230 28 120 28 8' stroke='%234f7942' stroke-width='2' fill='none' stroke-linecap='round'/><g stroke='%238a9a5b' stroke-width='1.6' fill='none' stroke-linecap='round'><path d='M28 292 C 16 287 8 277 5 264 M28 292 C 40 287 48 277 51 264 M28 258 C 16 253 8 243 5 230 M28 258 C 40 253 48 243 51 230 M28 224 C 16 219 8 209 5 196 M28 224 C 40 219 48 209 51 196 M28 190 C 17 185 10 176 7 164 M28 190 C 39 185 46 176 49 164 M28 156 C 18 151 11 142 8 131 M28 156 C 38 151 45 142 48 131 M28 122 C 19 117 13 109 10 98 M28 122 C 37 117 43 109 46 98 M28 88 C 20 84 15 76 12 66 M28 88 C 36 84 41 76 44 66 M28 58 C 21 54 17 47 14 38 M28 58 C 35 54 39 47 42 38'/></g></svg>") no-repeat center/contain;
+}
+@media (max-width: 1100px) {
+  [data-theme="floral"] .hero-section::after,
+  [data-theme="flora"] .hero-section::after,
+  [data-theme="ghost"] .hero-section::after { display: none; }
+}
+
+/* Vine rule replacing hard header border */
+[data-theme="floral"] .site-header,
+[data-theme="flora"] .site-header,
+[data-theme="ghost"] .site-header {
+  background: rgba(243, 237, 224, 0.95);
+  border-bottom: 4px solid transparent !important;
+  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 10' preserveAspectRatio='none'><path d='M0 5 Q75 1 150 5 T300 5 T450 5 T600 5' stroke='%238a9a5b' stroke-width='1.8' fill='none'/><circle cx='90' cy='3' r='2.1' fill='%234f7942'/><circle cx='210' cy='7' r='2.1' fill='%234f7942'/><circle cx='330' cy='3' r='2.1' fill='%234f7942'/><circle cx='450' cy='7' r='2.1' fill='%234f7942'/><circle cx='560' cy='4' r='2.1' fill='%234f7942'/></svg>") 4 stretch !important;
+}
+
+/* Status dot & beacon: tiny budding seed sprout with pulse */
+[data-theme="floral"] .status-dot,
+[data-theme="floral"] .dossier-beacon,
+[data-theme="floral"] .hero-signal-ping,
+[data-theme="flora"] .status-dot,
+[data-theme="flora"] .dossier-beacon,
+[data-theme="ghost"] .status-dot,
+[data-theme="ghost"] .dossier-beacon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50% 50% 50% 0 !important;
+  transform: rotate(-45deg);
+  background: radial-gradient(circle at 35% 35%, #6fae7f 0%, #2e8b57 55%, #4f7942 100%) !important;
+  box-shadow: 0 0 7px rgba(79, 121, 66, 0.55) !important;
+  animation: floralSeedPulse 3s ease-in-out infinite !important;
+}
+@keyframes floralSeedPulse {
+  0%, 100% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(0.82); }
+}
+
+/* Brand badge reveals id=(seed) */
+[data-theme="floral"] .brand-badge,
+[data-theme="flora"] .brand-badge,
+[data-theme="ghost"] .brand-badge {
+  font-size: 0;
+  border-radius: 999px;
+  background: #2e8b57;
+  color: #fdfaf2;
+  padding: 0.16rem 0.55rem;
+}
+[data-theme="floral"] .brand-badge::after,
+[data-theme="flora"] .brand-badge::after,
+[data-theme="ghost"] .brand-badge::after {
+  content: "id=(seed)";
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+}
+
+.brand-sprig, .floral-theme-sprig, .floral-leaf-icon, .floral-stamp, .floral-radar-seed {
+  display: none;
+}
+[data-theme="floral"] .chassis-center-sig .sig-svg,
+[data-theme="flora"] .chassis-center-sig .sig-svg,
+[data-theme="ghost"] .chassis-center-sig .sig-svg {
+  display: none !important;
+}
+[data-theme="floral"] .floral-radar-seed,
+[data-theme="flora"] .floral-radar-seed,
+[data-theme="ghost"] .floral-radar-seed {
+  display: inline-block;
+  font-size: 1.6rem;
+  line-height: 1;
+  animation: floralSeedPulse 3.4s ease-in-out infinite;
+}
+[data-theme="floral"] .brand-sprig,
+[data-theme="flora"] .brand-sprig,
+[data-theme="ghost"] .brand-sprig {
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 1px 2px rgba(79, 121, 66, 0.35));
+}
+[data-theme="floral"] .floral-leaf-icon,
+[data-theme="flora"] .floral-leaf-icon,
+[data-theme="ghost"] .floral-leaf-icon {
+  display: inline;
+}
+[data-theme="floral"] .legacy-bolt,
+[data-theme="flora"] .legacy-bolt,
+[data-theme="ghost"] .legacy-bolt {
+  display: none;
+}
+[data-theme="floral"] .floral-stamp,
+[data-theme="flora"] .floral-stamp,
+[data-theme="ghost"] .floral-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 2.5px double #8a9a5b;
+  border-radius: 50%;
+  color: #4f7942;
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+  font-size: 1.3rem;
+  line-height: 1;
+  transform: rotate(-8deg);
+  opacity: 0.85;
+}
+
+/* Statement Box: Leaf-vein field note */
+[data-theme="floral"] .statement-box,
+[data-theme="floral"] .dossier-statement-box,
+[data-theme="flora"] .statement-box,
+[data-theme="flora"] .dossier-statement-box,
+[data-theme="ghost"] .statement-box,
+[data-theme="ghost"] .dossier-statement-box {
+  border: 1.5px solid #8a9a5b;
+  background-color: #f7f1e2;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><path d='M60 0 V120 M60 24 C 44 31 34 44 28 60 M60 24 C 76 31 86 44 92 60 M60 64 C 49 71 41 82 36 93 M60 64 C 71 71 79 82 84 93' stroke='%234f7942' stroke-opacity='0.09' stroke-width='1' fill='none'/></svg>");
+  background-blend-mode: multiply;
+  border-radius: 16px;
+}
+[data-theme="floral"] .statement-quote,
+[data-theme="floral"] .statement-quote p,
+[data-theme="flora"] .statement-quote,
+[data-theme="ghost"] .statement-quote {
+  color: #1a4229;
+}
+[data-theme="floral"] .statement-quote strong,
+[data-theme="floral"] .dossier-statement-box .statement-quote strong,
+[data-theme="flora"] .statement-quote strong,
+[data-theme="ghost"] .statement-quote strong {
+  font-style: italic;
+  color: #4f7942;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-shadow: none;
+  background: none;
+  animation: none;
+}
+
+/* Organic Rounded Shapes */
+[data-theme="floral"] .post-card,
+[data-theme="floral"] .hero-meta-chassis,
+[data-theme="floral"] .dossier-statement-box,
+[data-theme="floral"] .dossier-stat-tile,
+[data-theme="floral"] .stat-card,
+[data-theme="floral"] .hud-card,
+[data-theme="floral"] .archive-ledger-banner,
+[data-theme="floral"] .directive-card,
+[data-theme="floral"] .tactical-memo-card,
+[data-theme="floral"] .article-tactical-header-card,
+[data-theme="floral"] .dossier-radar-card,
+[data-theme="floral"] .dossier-index-card,
+[data-theme="floral"] .dossier-contact-card,
+[data-theme="flora"] .post-card,
+[data-theme="ghost"] .post-card {
+  border-radius: 16px;
+}
+[data-theme="floral"] .dossier-stat-tile,
+[data-theme="floral"] .stat-box,
+[data-theme="flora"] .dossier-stat-tile,
+[data-theme="ghost"] .dossier-stat-tile {
+  border-top: 3px solid #8a9a5b !important;
+}
+[data-theme="floral"] .btn,
+[data-theme="floral"] .btn-primary,
+[data-theme="floral"] .btn-secondary,
+[data-theme="floral"] .brutal-btn,
+[data-theme="floral"] .theme-toggle-btn,
+[data-theme="floral"] .tag-btn,
+[data-theme="floral"] .search-input,
+[data-theme="floral"] .dossier-meta-badge,
+[data-theme="floral"] .tag-chip,
+[data-theme="floral"] .post-id-badge,
+[data-theme="floral"] .posts-count,
+[data-theme="floral"] .ticker-security-level,
+[data-theme="floral"] .filter-label,
+[data-theme="flora"] .btn,
+[data-theme="ghost"] .btn {
+  border-radius: 999px;
+}
+[data-theme="floral"] .dossier-meta-badge,
+[data-theme="flora"] .dossier-meta-badge,
+[data-theme="ghost"] .dossier-meta-badge {
+  background: linear-gradient(135deg, #f7f1e2 0%, #f3ede0 100%);
+  border: 1.5px dashed #8a9a5b;
+  border-left: 4px solid #2e8b57;
+  padding: 0.35rem 0.95rem;
+}
+[data-theme="floral"] .btn-primary,
+[data-theme="flora"] .btn-primary,
+[data-theme="ghost"] .btn-primary {
+  background: #2e8b57 !important;
+  border: 1.5px solid #4f7942 !important;
+  color: #fdfaf2 !important;
+  box-shadow: 3px 3px 0 #cfd8b4 !important;
+}
+[data-theme="floral"] .btn-primary:hover,
+[data-theme="flora"] .btn-primary:hover,
+[data-theme="ghost"] .btn-primary:hover {
+  background: #4f7942 !important;
+  color: #fdfaf2 !important;
+}
+[data-theme="floral"] .btn-secondary,
+[data-theme="flora"] .btn-secondary,
+[data-theme="ghost"] .btn-secondary {
+  background: #f7f1e2 !important;
+  border: 1.5px solid #d9cfb4 !important;
+  color: #1e4d34 !important;
+  box-shadow: 2px 2px 0 #e2dcc4 !important;
+}
+[data-theme="floral"] .btn-secondary:hover,
+[data-theme="flora"] .btn-secondary:hover,
+[data-theme="ghost"] .btn-secondary:hover {
+  background: #ede5d2 !important;
+}
+
+/* Vine rule on site footer */
+[data-theme="floral"] .site-footer,
+[data-theme="flora"] .site-footer,
+[data-theme="ghost"] .site-footer {
+  border-top: 4px solid transparent !important;
+  border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 10' preserveAspectRatio='none'><path d='M0 5 Q75 9 150 5 T300 5 T450 5 T600 5' stroke='%23c9d2ae' stroke-width='1.8' fill='none'/></svg>") 4 stretch !important;
+}
+
+/* Tag buttons / chips in Floral */
+[data-theme="floral"] .tag-btn.active,
+[data-theme="floral"] .filter-chip.active,
+[data-theme="flora"] .tag-btn.active,
+[data-theme="ghost"] .tag-btn.active {
+  background: #8a9a5b !important;
+  color: #fdfaf2 !important;
+  border-color: #4f7942 !important;
+}
+
+/* CVE badges & metadata in Floral */
+[data-theme="floral"] .post-severity-tag,
+[data-theme="floral"] .severity-critical,
+[data-theme="floral"] .severity-high,
+[data-theme="flora"] .post-severity-tag,
+[data-theme="ghost"] .post-severity-tag {
+  background: #c0724a !important;
+  color: #ffffff !important;
+  border: 1px solid #c0724a !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+}
+[data-theme="floral"] .post-id-badge,
+[data-theme="floral"] .archive-stat-val,
+[data-theme="flora"] .post-id-badge {
+  color: #4f7942 !important;
+  border: 1px dashed #8a9a5b !important;
+  background: #ede5d2 !important;
+  border-radius: 6px !important;
+}
+[data-theme="floral"] .tag-chip,
+[data-theme="floral"] .post-meta-tag,
+[data-theme="flora"] .tag-chip,
+[data-theme="ghost"] .tag-chip {
+  border: 1px dashed #8a9a5b !important;
+  background: #ede5d2 !important;
+  color: #6e473b !important;
+  border-radius: 999px !important;
+}
+[data-theme="floral"] .cve-badge,
+[data-theme="flora"] .cve-badge,
+[data-theme="ghost"] .cve-badge {
+  color: #4f7942 !important;
+  border-style: dashed !important;
 }
 
 /* Arctic — Deep Midnight Teal & Electric Blue Sci-Fi Terminal */
@@ -725,8 +1123,10 @@ header.site-header {
   z-index: 900;
 }
 
+[data-theme="floral"] header.site-header,
+[data-theme="flora"] header.site-header,
 [data-theme="ghost"] header.site-header {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(243, 237, 224, 0.95);
 }
 
 [data-theme="solar"] header.site-header {
