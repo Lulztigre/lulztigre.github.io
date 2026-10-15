@@ -1228,8 +1228,12 @@
         if (ctx) {
           ctx.shadowBlur = 0;
           ctx.shadowColor = 'transparent';
-          ctx.fillStyle = '#010602';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          if (scopeMode === 'radar') {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          } else {
+            ctx.fillStyle = '#010602';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
         }
       });
     }
@@ -1362,34 +1366,8 @@
 
           phase += 0.02;
         } else if (scopeMode === 'radar') {
-          // Vector Radar Reticle & Sweeping Beam
-          const maxR = Math.min(midX, midY) * 0.86;
-          ctx.beginPath();
-          ctx.arc(midX, midY, maxR, 0, Math.PI * 2);
-          ctx.arc(midX, midY, maxR * 0.66, 0, Math.PI * 2);
-          ctx.arc(midX, midY, maxR * 0.33, 0, Math.PI * 2);
-          ctx.stroke();
-
-          // Sweep Beam Line
-          const beamX = midX + Math.cos(radarAngle) * maxR;
-          const beamY = midY + Math.sin(radarAngle) * maxR;
-          ctx.beginPath();
-          ctx.moveTo(midX, midY);
-          ctx.lineTo(beamX, beamY);
-          ctx.stroke();
-
-          // Vector blips
-          blips.forEach(b => {
-            const bx = midX + Math.cos(b.angle) * (b.r * (maxR / 100));
-            const by = midY + Math.sin(b.angle) * (b.r * (maxR / 100));
-            ctx.fillStyle = b.color;
-            ctx.shadowColor = b.color;
-            ctx.beginPath();
-            ctx.arc(bx, by, 3.5 * dpr, 0, Math.PI * 2);
-            ctx.fill();
-          });
-
-          radarAngle += 0.045;
+          // Radar mode displays the full hardware CSS radar system; keep canvas clear
+          ctx.clearRect(0, 0, w, h);
           ctx.shadowBlur = 0;
           ctx.shadowColor = 'transparent';
         }
