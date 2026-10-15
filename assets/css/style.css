@@ -2842,36 +2842,871 @@ body.degauss-active {
   --shadow-emerald: 4px 4px 0px #d4ff00;
 }
 
-/* Cobalt — Rich navy blue with bright orange accents */
+/* ==========================================================================
+   Cobalt — Round 5 DeepSeek Cyanotype Light Blue Sheet & GLM Telemetry (id=co29)
+   Joint Winner: DeepSeek (Palette & Paper Architecture) + GLM (Brand & Core Map) + Agy (Acoustic Sonar)
+   ========================================================================== */
+
+/* Universal hidden defaults so other themes remain 100% clean and unaffected */
+.cobalt-wash,
+.cobalt-caustics-layer,
+.cobalt-boil,
+.cobalt-frame,
+.cobalt-titleblock,
+.cobalt-diodes,
+.brand-cobalt-trefoil,
+.cobalt-vow,
+.cobalt-hero-ping,
+.cobalt-instrument-tabs,
+.cobalt-radar-chassis,
+.cobalt-telemetry,
+.cobalt-dim {
+  display: none !important;
+}
+
 [data-theme="cobalt"] {
-  --bg-primary: #001b33;
-  --bg-surface: #002244;
-  --bg-elevated: #003366;
-  --bg-card: #00294f;
-  --bg-invert: #ff6a00;
+  /* DeepSeek Cyanotype Light Blue Sheet — Authentic light blue print stock */
+  --paper: #b8d7f2;
+  --bg-primary: #b8d7f2;
+  --bg-surface: #cee3f8;
+  --bg-card: #c4ddf6;
+  --bg-card-hover: #b4d3f2;
+  --bg-elevated: #a5cbf0;
+  --bg-invert: #062a55;
 
-  --text-primary: #d4e4f7;
-  --text-secondary: #8aacc8;
-  --text-muted: #4d7a9e;
-  --text-invert: #001b33;
+  --border-color: #5587ba;
+  --border-light: #7da5ce;
+  --border-highlight: #ff8c1a;
 
-  --border-color: #1a4d7a;
-  --border-light: #0d3a64;
-  --border-highlight: #ff6a00;
+  /* DeepSeek Cobalt Linework Inks */
+  --ink: #062a55;             /* deep prussian blue text/titles */
+  --ink-soft: #0e3e70;        /* architectural blue secondary */
+  --ink-muted: #245892;       /* soft engineering annotation */
+  --ink-faint: rgba(6, 42, 85, 0.22);
+  --ink-dim: rgba(6, 42, 85, 0.12);
 
-  --accent-primary: #ff6a00;
-  --accent-secondary: #ffa040;
-  --accent-amber: #ffcc00;
-  --accent-glow: rgba(255, 106, 0, 0.18);
-  --accent-tag-bg: #003366;
-  --accent-tag-text: #ffa040;
+  --text-primary: #062a55;
+  --text-secondary: #0e3e70;
+  --text-muted: #245892;
+  --text-invert: #ffffff;
 
-  --shadow-sm: 2px 2px 0px #000000;
-  --shadow-md: 4px 4px 0px #000000;
-  --shadow-lg: 7px 7px 0px #000000;
-  --shadow-hover: 5px 5px 0px #000000;
-  --shadow-active: 1px 1px 0px #000000;
-  --shadow-emerald: 4px 4px 0px #ff6a00;
+  /* Accent Palette */
+  --accent-primary: #0f4c8a;
+  --accent-secondary: #0284c7;
+  --accent-cyan: #0284c7;
+  --accent-amber: #d66000;
+  --accent-glow: rgba(15, 76, 138, 0.25);
+  --cyan-glow: rgba(2, 132, 199, 0.25);
+  --accent-tag-bg: #c4ddf6;
+  --accent-tag-text: #062a55;
+
+  /* DeepSeek Redline Pen (Terracotta / Vermilion Marker) */
+  --pen: #d66000;
+  --pen-soft: rgba(214, 96, 0, 0.45);
+  --pen-glow: rgba(214, 96, 0, 0.25);
+
+  /* GLM Boil & Reactor Optics */
+  --cob-boil: rgba(6, 42, 85, 0.22);
+  --cob-glow: 0 0 12px rgba(6, 42, 85, 0.2);
+
+  /* Shadows */
+  --shadow-sm: 2px 2px 0px rgba(6, 42, 85, 0.18);
+  --shadow-md: 3px 3px 0px rgba(6, 42, 85, 0.18);
+  --shadow-lg: 5px 5px 0px rgba(6, 42, 85, 0.22);
+  --shadow-hover: 4px 4px 0px rgba(6, 42, 85, 0.22);
+  --shadow-active: 1px 1px 0px rgba(6, 42, 85, 0.22);
+  --shadow-emerald: 4px 4px 0px #0f4c8a;
+
+  /* Typography Families */
+  --font-brand: 'Chakra Petch', 'Share Tech Mono', sans-serif;
+  --font-head: 'Saira Condensed', 'Oswald', sans-serif;
+  --font-mono: 'Roboto Mono', 'IBM Plex Mono', monospace;
+  --font-hand: 'Architects Daughter', cursive, sans-serif;
+
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+  font-family: var(--font-mono) !important;
+  background-image: 
+    linear-gradient(rgba(6, 42, 85, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 42, 85, 0.09) 1px, transparent 1px) !important;
+  background-size: 28px 28px !important;
+  background-position: -1px -1px !important;
+}
+
+/* Typography Overrides */
+[data-theme="cobalt"] .hero-heading,
+[data-theme="cobalt"] .dossier-hero-name,
+[data-theme="cobalt"] .dossier-heading,
+[data-theme="cobalt"] .hud-main-heading,
+[data-theme="cobalt"] .article-title,
+[data-theme="cobalt"] .post-title,
+[data-theme="cobalt"] .card-heading {
+  font-family: 'Saira Condensed', 'Oswald', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  color: var(--ink) !important;
+}
+
+[data-theme="cobalt"] .hero-heading .accent-terra-italic,
+[data-theme="cobalt"] .hero-heading .accent-word {
+  color: var(--pen) !important;
+  font-style: normal !important;
+}
+
+[data-theme="cobalt"] .site-brand {
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+  letter-spacing: 0.06em !important;
+}
+[data-theme="cobalt"] .site-brand:hover {
+  color: var(--pen) !important;
+}
+
+/* Header & Nav in Cobalt */
+[data-theme="cobalt"] header.site-header {
+  background: rgba(184, 215, 242, 0.94) !important;
+  backdrop-filter: blur(8px) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+[data-theme="cobalt"] .nav-link {
+  color: var(--ink-soft) !important;
+  font-family: var(--font-mono) !important;
+  border-left: 1px solid var(--border-light) !important;
+}
+[data-theme="cobalt"] .nav-link:hover {
+  color: var(--ink) !important;
+  background: rgba(15, 76, 138, 0.08) !important;
+}
+[data-theme="cobalt"] .nav-link.active {
+  color: var(--accent-primary) !important;
+  background: rgba(15, 76, 138, 0.12) !important;
+  border-bottom: 2px solid var(--accent-primary) !important;
+  font-weight: 700 !important;
+}
+[data-theme="cobalt"] .theme-toggle-btn {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--ink) !important;
+  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.15) !important;
+}
+[data-theme="cobalt"] .theme-toggle-btn:hover {
+  border-color: var(--pen) !important;
+  color: var(--pen) !important;
+}
+
+/* Trefoil Brand Mark */
+[data-theme="cobalt"] .brand-cobalt-trefoil {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin-right: 0.5rem !important;
+  color: var(--accent-primary) !important;
+  animation: cobRotateTrefoil 60s linear infinite !important;
+}
+@keyframes cobRotateTrefoil {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* id=(co29) Badge */
+[data-theme="cobalt"] .brand-badge {
+  font-size: 0 !important;
+  background: rgba(214, 96, 0, 0.12) !important;
+  color: var(--pen) !important;
+  border: 1px solid var(--pen) !important;
+  border-radius: 0 !important;
+  padding: 0.12rem 0.45rem !important;
+  font-family: var(--font-mono) !important;
+}
+[data-theme="cobalt"] .brand-badge::after {
+  content: "id=(co29)" !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 700 !important;
+  color: var(--pen) !important;
+}
+
+/* Top System Ticker */
+[data-theme="cobalt"] .system-ticker {
+  background: #a8caf0 !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--ink-soft) !important;
+  height: 32px !important;
+}
+[data-theme="cobalt"] .ticker-security-level {
+  display: none !important;
+}
+[data-theme="cobalt"] .ticker-audio-toggle {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--ink) !important;
+  box-shadow: 1px 1px 0px rgba(6, 42, 85, 0.12) !important;
+}
+[data-theme="cobalt"] .ticker-audio-toggle:hover {
+  border-color: var(--pen) !important;
+  color: var(--pen) !important;
+}
+[data-theme="cobalt"] .phos-diodes {
+  display: none !important;
+}
+[data-theme="cobalt"] .cobalt-diodes {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  font-size: 0.62rem !important;
+  margin-left: 0.6rem !important;
+}
+.cobalt-diode-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.cobalt-diode-item.warn {
+  color: var(--pen);
+}
+.cob-led {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-primary);
+  box-shadow: 0 0 5px var(--accent-primary);
+  border-radius: 1px;
+}
+.cob-led.amber {
+  background: var(--pen);
+  box-shadow: 0 0 5px var(--pen);
+}
+.cobalt-ticker-btn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.12rem 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 1px 1px 0px rgba(6, 42, 85, 0.12);
+}
+.cobalt-ticker-btn:hover {
+  background: var(--pen);
+  border-color: var(--pen);
+  color: #ffffff;
+}
+.cobalt-ticker-btn.scram {
+  border-color: var(--pen);
+  background: rgba(214, 96, 0, 0.12);
+  color: var(--pen);
+}
+.cobalt-ticker-btn.scram:hover {
+  background: var(--pen);
+  color: #ffffff;
+}
+[data-theme="cobalt"] .cobalt-hero-ping {
+  display: inline-flex !important;
+}
+
+/* DeepSeek Water Sheen Wash */
+[data-theme="cobalt"] .cobalt-wash {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  opacity: 0.12 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='420' viewBox='0 0 640 420'><g fill='none' stroke='%230f4c8a' stroke-opacity='0.48' stroke-width='1.25'><path d='M-20 40 Q 60 32 140 44 T 320 40 T 500 32 T 680 44'/><path d='M-20 96 Q 60 83 140 102 T 320 96 T 500 83 T 680 102'/><path d='M-20 158 Q 60 140 140 167 T 320 158 T 500 140 T 680 167'/><path d='M-20 208 Q 60 200 140 212 T 320 208 T 500 200 T 680 212'/><path d='M-20 268 Q 60 255 140 274 T 320 268 T 500 255 T 680 274'/><path d='M-20 330 Q 60 312 140 339 T 320 330 T 500 312 T 680 339'/><path d='M-20 384 Q 60 376 140 388 T 320 384 T 500 376 T 680 388'/></g><g fill='%230f4c8a' fill-opacity='0.06'><ellipse cx='84' cy='66' rx='40' ry='9'/><ellipse cx='300' cy='130' rx='52' ry='11'/><ellipse cx='170' cy='226' rx='34' ry='8'/><ellipse cx='430' cy='300' rx='58' ry='12'/><ellipse cx='250' cy='356' rx='44' ry='9'/></g></svg>") !important;
+  background-size: 640px 420px !important;
+  animation: cobaltWash 34s linear infinite !important;
+}
+@keyframes cobaltWash {
+  from { background-position: 0 0; }
+  to   { background-position: 640px -420px; }
+}
+
+/* Secondary Caustic Planes */
+[data-theme="cobalt"] .cobalt-caustics-layer {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+.caustic-plane-a {
+  position: absolute;
+  inset: -50px;
+  opacity: 0.10;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='220' viewBox='0 0 340 220'><g fill='none' stroke='%230f4c8a' stroke-opacity='0.4' stroke-width='1.1'><path d='M-20 40 Q 30 18 80 42 T 180 40 T 280 44 T 380 38'/><path d='M-20 96 Q 40 70 96 98 T 200 94 T 300 100 T 396 92'/><path d='M-20 158 Q 34 134 88 160 T 190 154 T 292 162 T 388 152'/><path d='M-20 208 Q 46 188 100 210 T 205 206 T 305 212 T 398 204'/></g><g fill='%230f4c8a' fill-opacity='0.05'><ellipse cx='70' cy='66' rx='34' ry='7'/><ellipse cx='238' cy='128' rx='42' ry='8'/><ellipse cx='130' cy='190' rx='30' ry='6'/></g></svg>");
+  background-size: 340px 220px;
+  animation: cobCausticA 28s linear infinite;
+}
+.caustic-plane-b {
+  position: absolute;
+  inset: -50px;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='480' height='300' viewBox='0 0 480 300'><g fill='none' stroke='%230f4c8a' stroke-opacity='0.3' stroke-width='1.3'><path d='M-20 70 Q 60 40 140 74 T 300 68 T 460 76 T 620 66'/><path d='M-20 170 Q 70 136 150 174 T 310 166 T 470 176 T 630 164'/><path d='M-20 262 Q 64 236 148 266 T 308 258 T 468 268 T 628 256'/></g></svg>");
+  background-size: 480px 300px;
+  animation: cobCausticB 44s linear infinite reverse;
+}
+@keyframes cobCausticA { from { background-position: 0 0; } to { background-position: 340px 220px; } }
+@keyframes cobCausticB { from { background-position: 0 0; } to { background-position: -480px 300px; } }
+
+/* GLM Suspended Water Boil */
+[data-theme="cobalt"] .cobalt-boil {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+.cobalt-boil span {
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), var(--cob-boil) 60%, transparent 85%);
+  box-shadow: 0 1px 4px rgba(15, 76, 138, 0.15);
+  animation: cobRise linear infinite;
+}
+.cobalt-boil span:nth-child(1) { left: 14%; width: 5px; height: 5px; animation-duration: 22s; animation-delay: -3s; }
+.cobalt-boil span:nth-child(2) { left: 29%; width: 3px; height: 3px; animation-duration: 29s; animation-delay: -11s; }
+.cobalt-boil span:nth-child(3) { left: 47%; width: 6px; height: 6px; animation-duration: 25s; animation-delay: -6s; }
+.cobalt-boil span:nth-child(4) { left: 64%; width: 4px; height: 4px; animation-duration: 32s; animation-delay: -16s; }
+.cobalt-boil span:nth-child(5) { left: 79%; width: 7px; height: 7px; animation-duration: 24s; animation-delay: -8s; }
+.cobalt-boil span:nth-child(6) { left: 92%; width: 4px; height: 4px; animation-duration: 30s; animation-delay: -15s; }
+
+@keyframes cobRise {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+  12%  { opacity: 0.65; }
+  50%  { transform: translate(14px, -48vh) scale(1.15); }
+  85%  { opacity: 0.65; }
+  100% { transform: translate(-8px, -105vh) scale(1.25); opacity: 0; }
+}
+
+/* DeepSeek Drafting Sheet Viewport Frame */
+[data-theme="cobalt"] .cobalt-frame {
+  display: block !important;
+  position: fixed !important;
+  top: 98px !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  left: 12px !important;
+  z-index: 9980 !important;
+  pointer-events: none !important;
+  border: 1px solid var(--border-color) !important;
+}
+.cobalt-frame::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px solid var(--border-color);
+}
+.cobalt-frame .zc-tl, .cobalt-frame .zc-tr, .cobalt-frame .zc-bl, .cobalt-frame .zc-br {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  color: var(--border-color);
+}
+.cobalt-frame .zc-tl { top: -12px; left: -12px; }
+.cobalt-frame .zc-tr { top: -12px; right: -12px; }
+.cobalt-frame .zc-bl { bottom: -12px; left: -12px; }
+.cobalt-frame .zc-br { bottom: -12px; right: -12px; }
+.cobalt-frame b {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  opacity: 0.85;
+  background: var(--paper);
+  padding: 0 4px;
+}
+
+/* DeepSeek Corner Engineering Title Block */
+[data-theme="cobalt"] .cobalt-titleblock {
+  display: grid !important;
+  grid-template-columns: auto 1fr !important;
+  position: fixed !important;
+  right: 22px !important;
+  bottom: 22px !important;
+  z-index: 9985 !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-surface) !important;
+  box-shadow: 2px 2px 0px rgba(15, 76, 138, 0.18), 0 4px 18px rgba(0, 0, 0, 0.12) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.52rem !important;
+  letter-spacing: 0.1em !important;
+  color: var(--ink) !important;
+  pointer-events: auto !important;
+}
+.cobalt-titleblock div {
+  padding: 0.18rem 0.45rem;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
+}
+.cobalt-titleblock div:nth-last-child(-n+2) { border-bottom: 0; }
+.cobalt-titleblock .k {
+  color: var(--ink-muted);
+  border-right: 1px solid var(--border-light);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.cobalt-titleblock .v {
+  color: var(--ink);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.cobalt-titleblock .v.pen { color: var(--pen); }
+.cobalt-titleblock .hand {
+  font-family: var(--font-hand);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.64rem;
+  color: var(--pen);
+}
+
+/* Statement Box & Architects Daughter Vow Line */
+[data-theme="cobalt"] .dossier-statement-box {
+  position: relative !important;
+  border: 1px solid var(--border-color) !important;
+  border-left: 3.5px solid var(--pen) !important;
+  background: var(--bg-surface) !important;
+  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.12), inset 0 0 0 1px var(--ink-faint) !important;
+}
+[data-theme="cobalt"] .dossier-statement-box::after {
+  content: "GENERAL NOTES — READ BEFORE USE";
+  position: absolute;
+  top: -0.62rem;
+  left: 0.8rem;
+  background: var(--paper);
+  padding: 0 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--pen);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+[data-theme="cobalt"] .cobalt-vow {
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  border: 1px dashed var(--border-color);
+  background: var(--bg-card);
+  padding: 0.65rem 0.9rem;
+  margin-top: 0.85rem;
+}
+.vow-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--pen);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.vow-handwritten {
+  font-family: var(--font-hand);
+  font-size: 1.22rem;
+  color: var(--pen);
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--pen-soft);
+}
+
+/* 45° Hatching Stat Tiles */
+[data-theme="cobalt"] .dossier-stat-tile {
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-card) !important;
+  background-image: repeating-linear-gradient(45deg, var(--ink-faint) 0 1px, transparent 1px 7px) !important;
+  padding: 0.85rem 0.75rem !important;
+  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.1) !important;
+  transition: all 0.2s ease;
+}
+[data-theme="cobalt"] .dossier-stat-tile:hover {
+  border-color: var(--accent-primary) !important;
+  background-image: repeating-linear-gradient(45deg, var(--ink-faint) 0 1px, transparent 1px 4px) !important;
+}
+[data-theme="cobalt"] .dossier-stat-tile .stat-num {
+  font-family: var(--font-head) !important;
+  font-size: 1.95rem !important;
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+  line-height: 1 !important;
+}
+[data-theme="cobalt"] .dossier-stat-tile .stat-critical {
+  color: var(--pen) !important;
+}
+[data-theme="cobalt"] .dossier-stat-tile .stat-lbl {
+  font-family: var(--font-mono) !important;
+  font-size: 0.58rem !important;
+  letter-spacing: 0.12em !important;
+  color: var(--ink-soft) !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+}
+
+/* DeepSeek Dimension Witness Line Divider */
+[data-theme="cobalt"] .cobalt-dim {
+  display: block !important;
+  position: relative;
+  height: 30px;
+  margin: 1.5rem 0 2rem;
+  pointer-events: none;
+}
+.cobalt-dim::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 14px;
+  height: 1px;
+  background: var(--border-color);
+}
+.cobalt-dim .arrow-l, .cobalt-dim .arrow-r {
+  position: absolute;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+.cobalt-dim .arrow-l { left: 0; border-right: 9px solid var(--ink); }
+.cobalt-dim .arrow-r { right: 0; border-left: 9px solid var(--ink); }
+.cobalt-dim .witness-l, .cobalt-dim .witness-r {
+  position: absolute;
+  top: 3px;
+  width: 1px;
+  height: 22px;
+  background: var(--border-color);
+}
+.cobalt-dim .witness-l { left: 0; }
+.cobalt-dim .witness-r { right: 0; }
+.cobalt-dim span {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  transform: translateX(-50%);
+  background: var(--paper);
+  padding: 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Telemetry Chassis & Instruments: GLM Core Map & Agy Sonar HUD */
+[data-theme="cobalt"] .hero-meta-chassis,
+[data-theme="cobalt"] .dossier-hero-chassis .chassis-hud-box {
+  position: relative !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-surface) !important;
+  box-shadow: 3px 3px 0px rgba(6, 42, 85, 0.14), 0 8px 24px rgba(6, 42, 85, 0.06) !important;
+}
+
+/* Hide Phosphor / Default radar elements in Cobalt mode */
+[data-theme="cobalt"] .hero-chassis-radar-mini,
+[data-theme="cobalt"] .chassis-radar-container {
+  height: 220px !important;
+  background: #020b18 !important;
+  border: 1px solid var(--border-color) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+[data-theme="cobalt"] .hero-chassis-radar-mini::before,
+[data-theme="cobalt"] .hero-chassis-radar-mini::after,
+[data-theme="cobalt"] .chassis-radar-container::before,
+[data-theme="cobalt"] .chassis-radar-container::after {
+  display: none !important;
+  content: none !important;
+}
+
+[data-theme="cobalt"] .hero-chassis-radar-mini > .radar-circle,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .radar-axis,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .radar-sweep-beam,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .radar-target,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .chassis-center-sig,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .oscilloscope-canvas,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .scope-grid-overlay,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .scope-center-axis,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .scope-center-vaxis,
+[data-theme="cobalt"] .hero-chassis-radar-mini > .garden,
+[data-theme="cobalt"] .scope-controls,
+[data-theme="cobalt"] .chassis-radar-container > .radar-circle,
+[data-theme="cobalt"] .chassis-radar-container > .radar-axis,
+[data-theme="cobalt"] .chassis-radar-container > .radar-sweep-beam,
+[data-theme="cobalt"] .chassis-radar-container > .radar-target,
+[data-theme="cobalt"] .chassis-radar-container > .chassis-center-sig,
+[data-theme="cobalt"] .chassis-radar-container > .oscilloscope-canvas,
+[data-theme="cobalt"] .chassis-radar-container > .scope-grid-overlay,
+[data-theme="cobalt"] .chassis-radar-container > .scope-center-axis,
+[data-theme="cobalt"] .chassis-radar-container > .scope-center-vaxis,
+[data-theme="cobalt"] .chassis-radar-container > .garden,
+[data-theme="cobalt"] .chassis-telemetry-feed {
+  display: none !important;
+}
+
+/* Show Cobalt Instrument Tabs */
+[data-theme="cobalt"] .cobalt-instrument-tabs {
+  display: flex !important;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+.inst-tab-btn {
+  flex: 1;
+  padding: 0.35rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-color);
+  background: #f4f8fd;
+  color: var(--ink-soft);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.inst-tab-btn:hover {
+  color: var(--ink);
+  border-color: var(--accent-primary);
+}
+.inst-tab-btn.active {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* Radar Display Box */
+[data-theme="cobalt"] .cobalt-radar-chassis {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: #020b18 !important;
+  border: 1px solid var(--border-color) !important;
+  overflow: hidden !important;
+}
+
+/* 1. GLM 7x5 Cellular Core Map */
+.cob-coremap {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background: #020b18;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.85);
+}
+.cob-coremap.active { display: block; }
+.coremap-cells {
+  position: absolute;
+  inset: 12px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 4px;
+}
+.core-cell {
+  border: 1px solid rgba(77, 141, 255, 0.2);
+  background: rgba(77, 141, 255, 0.06);
+  border-radius: 1px;
+  transition: all 0.5s ease;
+}
+.core-cell.warm {
+  background: rgba(77, 141, 255, 0.25);
+  border-color: rgba(77, 141, 255, 0.5);
+  box-shadow: inset 0 0 6px rgba(77, 141, 255, 0.35);
+}
+.core-cell.hot {
+  background: #ff8c1a;
+  border-color: #ffb700;
+  box-shadow: 0 0 16px rgba(255, 140, 26, 0.5), inset 0 0 6px #fff;
+  animation: cobHotCell 1.5s ease-in-out infinite;
+}
+@keyframes cobHotCell {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.4); }
+}
+.core-cret {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  border-radius: 50%;
+  border: 1px solid rgba(77, 141, 255, 0.45);
+  box-shadow: 0 0 12px rgba(77, 141, 255, 0.2), inset 0 0 12px rgba(77, 141, 255, 0.1);
+  pointer-events: none;
+}
+.core-cret::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  bottom: -10px;
+  width: 1px;
+  background: rgba(77, 141, 255, 0.5);
+}
+.core-cret::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  right: -10px;
+  height: 1px;
+  background: rgba(77, 141, 255, 0.5);
+}
+.core-clabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 28px);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: #00e5ff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.core-cfoot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  background: rgba(1, 6, 16, 0.92);
+  border-top: 1px solid rgba(77, 141, 255, 0.2);
+  color: #9abce6;
+}
+.core-cfoot b { color: #ff8c1a; }
+
+/* 2. Agy's Vector Hydro-Acoustic Sonar Canvas */
+.sonar-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+.sonar-canvas-wrap.active { display: block; }
+.sonar-canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Telemetry Readouts */
+[data-theme="cobalt"] .cobalt-telemetry {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 0.55rem 0;
+  margin: 0.75rem 0;
+  font-size: 0.64rem;
+}
+.tele-cell {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+}
+.tele-cell span:last-child {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+/* Post Cards & DeepSeek Drawing Plates */
+[data-theme="cobalt"] .post-card,
+[data-theme="cobalt"] .article-card,
+[data-theme="cobalt"] .dossier-card {
+  position: relative !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-surface) !important;
+  padding: 1.5rem 1.6rem 2.2rem !important;
+  box-shadow: 3px 3px 0px rgba(6, 42, 85, 0.12), inset 0 0 0 1px var(--ink-faint) !important;
+  transition: all 0.2s ease !important;
+}
+[data-theme="cobalt"] .post-card:hover,
+[data-theme="cobalt"] .article-card:hover,
+[data-theme="cobalt"] .dossier-card:hover {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 4px 4px 0px rgba(6, 42, 85, 0.18), 0 6px 20px rgba(6, 42, 85, 0.08) !important;
+  background: var(--bg-card-hover) !important;
+}
+[data-theme="cobalt"] .post-card::after {
+  content: "REF LZ-994 · SCALE 1:1 · REV D · PLATE " attr(data-id, "001");
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  padding: 0.22rem 0.8rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  pointer-events: none;
+  background: var(--bg-card);
+}
+
+/* Buttons & Tags in Cobalt Mode */
+[data-theme="cobalt"] .btn-primary {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.25) !important;
+}
+[data-theme="cobalt"] .btn-primary:hover {
+  background: #093460 !important;
+  border-color: #093460 !important;
+}
+[data-theme="cobalt"] .btn-secondary {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  color: var(--ink) !important;
+  box-shadow: 2px 2px 0px rgba(6, 42, 85, 0.1) !important;
+}
+[data-theme="cobalt"] .btn-secondary:hover {
+  border-color: var(--pen) !important;
+  color: var(--pen) !important;
+  background: rgba(214, 96, 0, 0.08) !important;
+}
+[data-theme="cobalt"] .tag-btn.active {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+}
+[data-theme="cobalt"] .tag-btn {
+  border-color: var(--border-color) !important;
+  background: var(--bg-card) !important;
+  color: var(--ink-soft) !important;
+}
+[data-theme="cobalt"] .tag-btn:hover {
+  border-color: var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+}
+
+/* Responsive queries for cobalt frame & titleblock */
+@media (max-width: 960px) {
+  [data-theme="cobalt"] .cobalt-frame { display: none !important; }
+  [data-theme="cobalt"] .cobalt-titleblock { display: none !important; }
 }
 
 /* Sakura — Cyberpunk cherry blossom / neon pink terminal */

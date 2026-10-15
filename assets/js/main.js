@@ -55,6 +55,7 @@
     const FLORA_ICON = '<span class="flora-btn-leaf" style="margin-right:0.35rem;vertical-align:-1px;font-size:1.05rem;">🌿</span>';
     const PHANTOM_SPECTER = '<span class="phantom-theme-specter" style="margin-right:0.35rem;vertical-align:-1px;font-size:1.05rem;filter:drop-shadow(0 0 6px rgba(0,255,136,0.6));">👻</span>';
     const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
+    const COBALT_TREFOIL = '<svg class="cob-mark-btn" width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;animation:cobRotateTrefoil 12s linear infinite;" fill="currentColor"><circle cx="12" cy="12" r="2.4"/><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/><g transform="rotate(120 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><g transform="rotate(240 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><circle cx="12" cy="12" r="10.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
     const icons = {
       phantom: PHANTOM_SPECTER + 'PHANTOM',
       void: PHANTOM_SPECTER + 'PHANTOM',
@@ -68,7 +69,7 @@
       phosphor: '█ PHOSPHOR',
       solar: '☀ SOLAR',
       hazard: '⚠ HAZARD',
-      cobalt: '◈ COBALT',
+      cobalt: COBALT_TREFOIL + 'COBALT',
       sakura: '✿ SAKURA',
       yua: '♡ YUA',
       blush: '♡ YUA'
@@ -82,6 +83,8 @@
       label = PHANTOM_SPECTER + 'PHANTOM';
     } else if (theme === 'phosphor') {
       label = '<span class="phos-cursor" style="display:inline-block;width:0.55em;height:0.95em;background:#33ff66;margin-right:0.35rem;vertical-align:-1px;box-shadow:0 0 8px rgba(51,255,102,0.8);"></span>PHOSPHOR';
+    } else if (theme === 'cobalt') {
+      label = COBALT_TREFOIL + 'COBALT';
     }
     btn.innerHTML = `<span>${label}</span>`;
   }
@@ -1378,6 +1381,369 @@
     requestAnimationFrame(renderScope);
   }
 
+  // --- ROUND 5 COBALT: GLM CORE MAP & AGY VECTOR SONAR CHASSIS ---
+  function initCobaltChassis() {
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioClass) audioCtx = new AudioClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function isAudioActive() {
+      return localStorage.getItem('phantom_sfx') !== 'off';
+    }
+
+    // 1. Audio Synthesizers
+    function playRelayClick(freq = 1400) {
+      if (!isAudioActive()) return;
+      try {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } catch (e) {}
+    }
+
+    function fireSonarPing() {
+      playRelayClick(800);
+      if (isAudioActive()) {
+        try {
+          const ctx = getAudioCtx();
+          if (ctx) {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(1760, now + 0.12);
+            osc.frequency.exponentialRampToValueAtTime(1100, now + 0.35);
+
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.35, now + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 1.25);
+          }
+        } catch (e) {}
+      }
+
+      if (window.triggerSonarRipple) {
+        window.triggerSonarRipple();
+      }
+      if (window.showToast) {
+        window.showToast('⚡ HYDRO-ACOUSTIC SONAR PING EMITTED // 1,420 YDS');
+      }
+    }
+    window.fireSonarPing = fireSonarPing;
+
+    function triggerScram() {
+      if (isAudioActive()) {
+        try {
+          const ctx = getAudioCtx();
+          if (ctx) {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(120, now);
+            osc.frequency.exponentialRampToValueAtTime(32, now + 0.6);
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.85);
+          }
+        } catch (e) {}
+      }
+
+      document.querySelectorAll('.core-cell').forEach(c => {
+        c.classList.remove('hot', 'warm');
+      });
+      if (window.showToast) {
+        window.showToast('☢ EMERGENCY SCRAM INITIATED // CONTROL RODS DROPPED');
+      }
+
+      setTimeout(() => {
+        updateCoreCellState();
+        if (window.showToast) {
+          window.showToast('REACTOR AUTO-RECOVERY // CORE RE-STABILIZED');
+        }
+      }, 1400);
+    }
+    window.triggerScram = triggerScram;
+
+    // 2. GLM 7x5 Core Map Lattice
+    const coreRows = 5;
+    const coreCols = 7;
+    let activeCoreRow = 2; // R3
+    let activeCoreCol = 3; // C4
+
+    function buildCoreLattice(container) {
+      if (!container) return;
+      container.innerHTML = '';
+      for (let r = 0; r < coreRows; r++) {
+        for (let c = 0; c < coreCols; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'core-cell';
+          cell.dataset.r = r;
+          cell.dataset.c = c;
+          container.appendChild(cell);
+        }
+      }
+    }
+
+    const latticeMain = document.getElementById('coreCellLattice');
+    const latticeAbout = document.getElementById('coreCellLatticeAbout');
+    buildCoreLattice(latticeMain);
+    buildCoreLattice(latticeAbout);
+
+    function updateCoreCellState() {
+      document.querySelectorAll('.core-cell').forEach(cell => {
+        const r = parseInt(cell.dataset.r, 10);
+        const c = parseInt(cell.dataset.c, 10);
+        const dist = Math.hypot(r - activeCoreRow, c - activeCoreCol);
+        cell.classList.remove('hot', 'warm');
+        if (dist === 0) {
+          cell.classList.add('hot');
+        } else if (dist <= 1.45) {
+          cell.classList.add('warm');
+        }
+      });
+
+      const srcText = `R${activeCoreRow + 1}-C${activeCoreCol + 1}`;
+      const srcDisplay = document.getElementById('coreCellSrc');
+      if (srcDisplay) srcDisplay.textContent = srcText;
+      const srcDisplayAbout = document.getElementById('coreCellSrcAbout');
+      if (srcDisplayAbout) srcDisplayAbout.textContent = srcText;
+    }
+    updateCoreCellState();
+
+    setInterval(() => {
+      if (document.documentElement.getAttribute('data-theme') !== 'cobalt') return;
+      const dr = (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.4 ? 1 : 0);
+      const dc = (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.4 ? 1 : 0);
+
+      activeCoreRow = Math.max(1, Math.min(coreRows - 2, activeCoreRow + dr));
+      activeCoreCol = Math.max(1, Math.min(coreCols - 2, activeCoreCol + dc));
+      updateCoreCellState();
+
+      const dose = (0.13 + Math.random() * 0.03).toFixed(2) + ' µSv/h';
+      const doseEl = document.getElementById('coreDoseReadout');
+      if (doseEl) doseEl.textContent = dose;
+      const doseElAbout = document.getElementById('coreDoseReadoutAbout');
+      if (doseElAbout) doseElAbout.textContent = dose;
+    }, 3500);
+
+    // 3. Agy Vector Sonar Canvas Engine
+    const sonarCanvases = [
+      document.getElementById('sonarCanvas'),
+      document.getElementById('sonarCanvasAbout')
+    ].filter(Boolean);
+
+    let sweepAngle = 0;
+    let pingRipples = [];
+
+    window.triggerSonarRipple = function () {
+      sonarCanvases.forEach(canvas => {
+        pingRipples.push({
+          r: 10,
+          alpha: 1.0,
+          maxR: Math.min(canvas.width, canvas.height) * 0.48
+        });
+      });
+    };
+
+    function resizeSonar() {
+      sonarCanvases.forEach(canvas => {
+        const parent = canvas.parentElement;
+        if (!parent) return;
+        const rect = parent.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          canvas.width = rect.width * (window.devicePixelRatio || 1);
+          canvas.height = rect.height * (window.devicePixelRatio || 1);
+        }
+      });
+    }
+    resizeSonar();
+    window.addEventListener('resize', resizeSonar);
+
+    function renderSonarLoop() {
+      if (document.documentElement.getAttribute('data-theme') === 'cobalt') {
+        sonarCanvases.forEach(canvas => {
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return;
+          const w = canvas.width;
+          const h = canvas.height;
+          if (w === 0 || h === 0) return;
+          const cx = w / 2;
+          const cy = h / 2;
+          const maxRadius = Math.min(cx, cy) * 0.88;
+
+          ctx.clearRect(0, 0, w, h);
+
+          // Concentric range rings
+          ctx.strokeStyle = 'rgba(77, 141, 255, 0.25)';
+          ctx.lineWidth = 1;
+          for (let i = 1; i <= 4; i++) {
+            ctx.beginPath();
+            ctx.arc(cx, cy, (maxRadius / 4) * i, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          // Crosshairs
+          ctx.strokeStyle = 'rgba(77, 141, 255, 0.3)';
+          ctx.beginPath();
+          ctx.moveTo(cx - maxRadius, cy);
+          ctx.lineTo(cx + maxRadius, cy);
+          ctx.moveTo(cx, cy - maxRadius);
+          ctx.lineTo(cx, cy + maxRadius);
+          ctx.stroke();
+
+          // Expanding ping ripples
+          for (let i = pingRipples.length - 1; i >= 0; i--) {
+            const p = pingRipples[i];
+            ctx.save();
+            ctx.strokeStyle = `rgba(0, 229, 255, ${p.alpha})`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(cx, cy, p.r, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            p.r += 2.2;
+            p.alpha -= 0.012;
+            if (p.alpha <= 0 || p.r >= p.maxR) {
+              pingRipples.splice(i, 1);
+            }
+          }
+
+          // Sweeping beam
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(sweepAngle);
+
+          const sweepGrad = ctx.createLinearGradient(0, 0, maxRadius, 0);
+          sweepGrad.addColorStop(0, 'rgba(0, 229, 255, 0.45)');
+          sweepGrad.addColorStop(0.5, 'rgba(0, 229, 255, 0.15)');
+          sweepGrad.addColorStop(1, 'rgba(0, 229, 255, 0)');
+
+          ctx.fillStyle = sweepGrad;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, maxRadius, -0.28, 0);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.strokeStyle = '#00e5ff';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(maxRadius, 0);
+          ctx.stroke();
+          ctx.restore();
+
+          // Detected targets
+          const targets = [
+            { angle: 0.74, dist: 0.65, label: 'CVE-2026-41042 [JDBC]' },
+            { angle: 2.45, dist: 0.45, label: 'CVE-2026-67363 [PHP]' },
+            { angle: 4.85, dist: 0.78, label: 'BEACON: HTTPS:443' }
+          ];
+
+          targets.forEach(t => {
+            const bx = cx + Math.cos(t.angle) * (maxRadius * t.dist);
+            const by = cy + Math.sin(t.angle) * (maxRadius * t.dist);
+            const diff = (sweepAngle - t.angle + Math.PI * 2) % (Math.PI * 2);
+
+            let intensity = 0.2;
+            if (diff < 0.6) {
+              intensity = 1.0 - (diff / 0.6) * 0.7;
+            }
+
+            ctx.fillStyle = `rgba(255, 140, 26, ${intensity})`;
+            ctx.beginPath();
+            ctx.arc(bx, by, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (diff < 0.25) {
+              ctx.font = '9px "Roboto Mono", monospace';
+              ctx.fillStyle = '#ff8c1a';
+              ctx.fillText(t.label, bx + 8, by + 3);
+            }
+          });
+        });
+
+        sweepAngle += 0.024;
+        if (sweepAngle >= Math.PI * 2) sweepAngle = 0;
+      }
+      requestAnimationFrame(renderSonarLoop);
+    }
+    requestAnimationFrame(renderSonarLoop);
+
+    // 4. Instrument Tab Switching
+    function setInstrument(mode, isAbout) {
+      playRelayClick(1200);
+      const suffix = isAbout ? 'About' : '';
+      const coreMap = document.getElementById('coreMapDisplay' + suffix);
+      const sonarHud = document.getElementById('sonarCanvasDisplay' + suffix);
+      const btnCore = document.getElementById('tabCoreMap' + suffix);
+      const btnSonar = document.getElementById('tabSonarHud' + suffix);
+
+      if (mode === 'core') {
+        if (coreMap) coreMap.classList.add('active');
+        if (sonarHud) sonarHud.classList.remove('active');
+        if (btnCore) btnCore.classList.add('active');
+        if (btnSonar) btnSonar.classList.remove('active');
+      } else {
+        if (coreMap) coreMap.classList.remove('active');
+        if (sonarHud) sonarHud.classList.add('active');
+        if (btnCore) btnCore.classList.remove('active');
+        if (btnSonar) btnSonar.classList.add('active');
+        resizeSonar();
+      }
+    }
+
+    const tabCore = document.getElementById('tabCoreMap');
+    const tabSonar = document.getElementById('tabSonarHud');
+    if (tabCore) tabCore.addEventListener('click', () => setInstrument('core', false));
+    if (tabSonar) tabSonar.addEventListener('click', () => setInstrument('sonar', false));
+
+    const tabCoreAbout = document.getElementById('tabCoreMapAbout');
+    const tabSonarAbout = document.getElementById('tabSonarHudAbout');
+    if (tabCoreAbout) tabCoreAbout.addEventListener('click', () => setInstrument('core', true));
+    if (tabSonarAbout) tabSonarAbout.addEventListener('click', () => setInstrument('sonar', true));
+
+    // Button event listeners
+    ['cobalt-ping-btn', 'cobalt-ping-btn-about', 'cobalt-hero-ping-btn'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', fireSonarPing);
+    });
+
+    ['cobalt-scram-btn', 'cobalt-scram-btn-about'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', triggerScram);
+    });
+  }
+
   // --- INITIALIZE ALL MODULES ---
   function initAll() {
     initTheme();
@@ -1393,6 +1759,7 @@
     initSakuraEffect();
     initPhantomDecorations();
     initPhosphorOscilloscope();
+    initCobaltChassis();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {

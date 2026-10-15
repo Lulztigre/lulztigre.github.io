@@ -12,6 +12,7 @@ This document tracks all design competition rounds, winners, component lineage, 
 | **R2** | **Ghost → Floral (Flora Ecosystem)** | **Agy** | • **Field Notes & Botanical Architecture**: Agy (`agyghost.html`)<br>• **Canvas**: Crisp botanical parchment (`#fcfaf5`), pure white card surfaces (`#ffffff`), hunter green headings (`#1B4D3E`), moss green borders (`#8A9A5B`), and sage drop shadows (`#c3d2ab`)<br>• **Typography**: Classical serif `Playfair Display` (700 headers), typewriter `Courier Prime` (body), and `Special Elite` (stamps)<br>• **Organic elements**: Leaf emoji toggle (`🌿 FLORA`), circular botanical crest (`.flora-crest-svg`), `id=(flora)` badge, leaf-vein watermark statement box with corner stem flourishes and wavy vow underline, and subtle pollen pattern | [`agyghost.html`](file:///C:/Users/moyoo/lulztigre.pw/agyghost.html) | **Active in production** (`[data-theme="floral"]`) |
 | **R3** | **Phantom (Spectral Wraith)** | **DeepSeek** | • **Winner**: DeepSeek (`deepseekphantom.html`)<br>• **Fonts, borders & boxes**: Mimo (`mimophantom.html` Orbitron headers, layered tactical boxes, sharp borders)<br>• **Motes & Beam**: Agy (`agyphantom.html` floating motes and laser sweep beam)<br>• **Sigil**: Specter from Agy (👻)<br>• **Badge**: `id=(phantom)` | [`deepseekphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphantom.html)<br>[`agyphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphantom.html)<br>[`mimophantom.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophantom.html) | Ready for deployment / production theme rollout |
 | **R4** | **Phosphor (Cathode Ray Terminal)** | **GLM** | • **Overall Winner / Chassis Base**: GLM (`glmphospor.html` CRT glass stack, rolling refresh bar, power strike, vignette, inverse vow bar)<br>• **Typography**: Mimo (`mimophosphor.html` `VT323` display headers with beam convergence wobble, `Share Tech Mono` & `Space Mono` body)<br>• **Radar**: Agy (`agyphosphor.html` vector oscilloscope chassis, 20px grid reticle, concentric rings & 360° sweeping beam) | [`glmphospor.html`](file:///C:/Users/moyoo/lulztigre.pw/glmphospor.html)<br>[`mimophosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophosphor.html)<br>[`agyphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphosphor.html)<br>[`deepseekphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphosphor.html) | **Active in production** (`[data-theme="phosphor"]`) |
+| **R5** | **Cobalt (Cyanotype Light Blue Sheet & Reactor Acoustics)** | **DeepSeek & GLM** *(Joint Winners)* | • **Canvas & Borders**: DeepSeek (`deepseekcobalt.html` Cyanotype light blue stock `#b8d7f2` — not white, drafting borders with zone ticks `1–4` / `A–D`, corner registration crosses, corner engineering title block, dimension witness lines, 45° hatching, redline vow in Architects Daughter, subtle observable water sheen wash)<br>• **Reactor Optics & Brand**: GLM (`glmcobalt.html` 7x5 cellular Core Map lattice with migrating hot fuel cell, rotating radiation trefoil brand with `Chakra Petch`, suspended boil bubbles)<br>• **Acoustic Sonar**: Agy (`agycobalt.html` native Web Audio API hydro-acoustic chirp synthesizer, Doppler indicators, vector sonar canvas HUD)<br>• **System Tag**: `id=(co29)`<br>• **Dead Last**: Copilot (4th consecutive loss) | [`agycobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/agycobalt.html)<br>[`deepseekcobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekcobalt.html)<br>[`glmcobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/glmcobalt.html) | Revamped synthesis in [`agycobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/agycobalt.html) |
 
 ---
 
@@ -101,6 +102,35 @@ This document tracks all design competition rounds, winners, component lineage, 
   - Mimo: [`mimophosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophosphor.html)
   - Agy: [`agyphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphosphor.html)
   - DeepSeek: [`deepseekphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphosphor.html)
+
+---
+
+### Round 5: Cobalt (Cyanotype Light Blue Blueprint & Reactor Hydro-Acoustics)
+- **Prompt & Concept**: Blue-water naval engineering and nuclear reactor research facility theme, synthesized from the top model innovations.
+- **Winning Implementations**: **DeepSeek & GLM** (Joint Winners), synthesized into **[`agycobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/agycobalt.html)**.
+- **Key Component Attribution**:
+  - **DeepSeek Contributions (Visual Architecture, Sheet Canvas & Drafting Language)**:
+    - **Cyanotype Light Blue Sheet Ground**: Authentic light blue blueprint stock (`#b8d7f2`, replacing plain white) paired with deep Prussian navy ink (`#062a55`), architectural blue secondary inks, and light blue card containers (`#cee3f8` / `#c4ddf6`).
+    - **Drafting Border System**: Double hairline rules with perimeter coordinate zone ticks (`1–4`, `A–D`) and four corner optical alignment registration crosses.
+    - **Corner Engineering Title Block**: Bottom-right drafting drawing plate (`DRG NO LZ-994-CO29`, `TITLE: CYANOTYPE LIGHT BLUE SHEET`, `SCALE: 1:1 FULL`, `REV D`, `ID: CO29`, `DRAWN: LULZTIGRE`, hand note `DEEPSEEK & GLM JOINT WINNER` in Architects Daughter).
+    - **Stolen Ocean / Water Sheen Wash**: Observable, subtle wave ripples (`.cobalt-wash`) flowing across the light blue stock with deep cobalt stroke paths (`#0f4c8a`), providing an authentic cyanotype developing bath wash without compromising text contrast.
+    - **Drafting Typography & Markings**: Single-stroke technical titling in `Saira Condensed`, typed technical annotation in `Roboto Mono`, dimension witness lines (`.cobalt-dim`), 45° hatched stat tiles, and redline pen vow note in `Architects Daughter` with wavy underline.
+  - **GLM Contributions (Reactor Optics, Trefoil Identity & Bubble Physics)**:
+    - **7x5 Cellular Core Map Lattice**: Dynamic reactor core lattice (`.coremap-cells`) tracking fuel pin flux with an autonomous wandering hot fuel cell (`.core-cell.hot`) and thermal dispersion ring (`.core-cell.warm`).
+    - **Lulztigre Brand Identity**: Rotating cobalt radiation trefoil SVG mark (`.cob-mark`) paired with `Chakra Petch` geometric brand font.
+    - **Suspended Boil**: Gentle rising bubble physics (`.cobalt-boil`) with translucent radial gradients floating up the viewport.
+  - **Agy Contributions (Active Hydro-Acoustic Sonar Engine)**:
+    - **Native Web Audio API Sonar Synth**: Zero-dependency audio synthesizer generating real 880Hz → 1760Hz chirped sonar pings with reverberant decay, mechanical relay clicks, and emergency SCRAM bass thuds.
+    - **Vector Sonar Canvas HUD**: Expanding hydro-acoustic wave fronts, Doppler frequency indicators (`+4.2 Hz UP`), bearing tracking (`042.8° TRUE`), range telemetry (`1,420 YDS`), and detected target blips.
+    - **Multi-Instrument Switcher**: Seamless live toggle in the telemetry chassis between GLM's Core Map lattice and Agy's Sonar HUD.
+  - **Badge Identity**: Unified to `id=co29` across header pill, title block, and telemetry metadata.
+  - **Copilot Standing**: Placed dead last for the 4th consecutive round due to repetitive layout bloat and unrefined styling.
+- **Associated Mockup Files**:
+  - Revamped Synthesis: [`agycobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/agycobalt.html)
+  - DeepSeek: [`deepseekcobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekcobalt.html)
+  - GLM: [`glmcobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/glmcobalt.html)
+  - Mimo: [`mimocobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/mimocobalt.html)
+  - Copilot: [`copilotcobalt.html`](file:///C:/Users/moyoo/lulztigre.pw/copilotcobalt.html)
 
 ---
 
