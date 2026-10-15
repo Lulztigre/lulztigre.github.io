@@ -7,7 +7,7 @@
 
   // --- 1. THEME TOGGLE & PERSISTENCE ---
   const THEME_KEY = 'phantom_kernel_theme';
-  const themes = ['phantom', 'amber', 'floral', 'uchiha', 'arctic', 'phosphor', 'solar', 'cobalt', 'sakura', 'yua'];
+  const themes = ['phantom', 'floral', 'uchiha', 'arctic', 'phosphor', 'solar', 'cobalt', 'sakura', 'yua'];
   
   function initTheme() {
     let savedTheme = localStorage.getItem(THEME_KEY) || 'floral';
@@ -23,7 +23,7 @@
       savedTheme = 'floral';
       localStorage.setItem(THEME_KEY, 'floral');
     }
-    if (savedTheme === 'hazard' || savedTheme === 'synthwave') {
+    if (savedTheme === 'hazard' || savedTheme === 'synthwave' || savedTheme === 'amber') {
       savedTheme = 'phantom';
       localStorage.setItem(THEME_KEY, 'phantom');
     }
