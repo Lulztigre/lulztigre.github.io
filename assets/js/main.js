@@ -80,6 +80,8 @@
       label = FLORA_ICON + 'FLORA';
     } else if (theme === 'phantom' || theme === 'void') {
       label = PHANTOM_SPECTER + 'PHANTOM';
+    } else if (theme === 'phosphor') {
+      label = '<span class="phos-cursor" style="display:inline-block;width:0.55em;height:0.95em;background:#33ff66;margin-right:0.35rem;vertical-align:-1px;box-shadow:0 0 8px rgba(51,255,102,0.8);"></span>PHOSPHOR';
     }
     btn.innerHTML = `<span>${label}</span>`;
   }
@@ -434,6 +436,10 @@
       if ((e.key === 't' || e.key === 'T') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
         cycleTheme();
       }
+
+      if ((e.key === 'd' || e.key === 'D') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        if (window.triggerDegauss) window.triggerDegauss();
+      }
     });
   }
 
@@ -574,6 +580,30 @@
         gain.connect(audioCtx.destination);
 
         const now = audioCtx.currentTime;
+        const isPhosphor = document.documentElement.getAttribute('data-theme') === 'phosphor';
+
+        if (isPhosphor) {
+          if (type === 'hover') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(1400, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.02);
+            gain.gain.setValueAtTime(0.04, now);
+            gain.gain.linearRampToValueAtTime(0.001, now + 0.02);
+            osc.start(now);
+            osc.stop(now + 0.02);
+          } else {
+            // Authentic Agy CRT mechanical relay click
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(950, now);
+            osc.frequency.exponentialRampToValueAtTime(120, now + 0.04);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.linearRampToValueAtTime(0.001, now + 0.04);
+            osc.start(now);
+            osc.stop(now + 0.04);
+          }
+          return;
+        }
+
         if (type === 'confirm') {
           osc.type = 'triangle';
           osc.frequency.setValueAtTime(880, now);
@@ -1100,7 +1130,274 @@
         wisp.innerHTML = '<span class="phantom-specter-sigil" style="font-size:1.15rem;vertical-align:-1px;filter:drop-shadow(0 0 8px #00ff88);display:inline-block;">👻</span>';
         icon.appendChild(wisp);
       }
+      if (!icon.querySelector('.phos-cursor')) {
+        const cur = document.createElement('span');
+        cur.className = 'phos-cursor';
+        cur.setAttribute('aria-hidden', 'true');
+        icon.appendChild(cur);
+      }
     });
+  }
+
+  // --- PHOSPHOR CRT AUDIO & DEGAUSS (AGY SFX) ---
+  function playCrtClick(freq = 950, duration = 0.04) {
+    if (localStorage.getItem('phantom_sfx') === 'off') return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const actx = new AudioCtx();
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, actx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(120, actx.currentTime + duration);
+
+      gain.gain.setValueAtTime(0.08, actx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.001, actx.currentTime + duration);
+
+      osc.connect(gain);
+      gain.connect(actx.destination);
+      osc.start();
+      osc.stop(actx.currentTime + duration);
+    } catch (_) {}
+  }
+  window.playCrtClick = playCrtClick;
+
+  function playDegaussSound() {
+    if (localStorage.getItem('phantom_sfx') === 'off') return;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const actx = new AudioCtx();
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(180, actx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(35, actx.currentTime + 0.65);
+
+      gain.gain.setValueAtTime(0.25, actx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.001, actx.currentTime + 0.65);
+
+      osc.connect(gain);
+      gain.connect(actx.destination);
+      osc.start();
+      osc.stop(actx.currentTime + 0.65);
+    } catch (_) {}
+  }
+  window.playDegaussSound = playDegaussSound;
+
+  window.triggerDegauss = function () {
+    document.body.classList.remove('degauss-active');
+    void document.body.offsetWidth;
+    document.body.classList.add('degauss-active');
+    playDegaussSound();
+    setTimeout(() => document.body.classList.remove('degauss-active'), 800);
+  };
+
+  // --- PHOSPHOR VECTOR OSCILLOSCOPE & RADAR (AGY CROWN JEWEL) ---
+  function initPhosphorOscilloscope() {
+    const canvases = [
+      document.getElementById('oscilloscopeCanvas'),
+      document.getElementById('oscilloscopeCanvasAbout')
+    ].filter(Boolean);
+
+    if (canvases.length === 0) return;
+
+    // Randomize between sine, lissajous, and radar per page refresh
+    const modes = ['sine', 'lissajous', 'radar'];
+    let scopeMode = modes[Math.floor(Math.random() * modes.length)];
+    let scopeGain = 1.0;
+    let phase = 0;
+    let radarAngle = 0;
+
+    const blips = [
+      { r: 45, angle: 1.2, color: '#33ff66' },
+      { r: 70, angle: 3.8, color: '#a9ffbb' },
+      { r: 25, angle: 5.4, color: '#ffb000' }
+    ];
+
+    function updateScopeButtons() {
+      document.querySelectorAll('.phos-scope-controls .scope-btn[data-mode]').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-mode') === scopeMode);
+      });
+      document.documentElement.setAttribute('data-scope-mode', scopeMode);
+    }
+    function clearScopeCanvases() {
+      canvases.forEach(canvas => {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.shadowBlur = 0;
+          ctx.shadowColor = 'transparent';
+          ctx.fillStyle = '#010602';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      });
+    }
+
+    function updateScopeButtons() {
+      document.querySelectorAll('.phos-scope-controls .scope-btn[data-mode]').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-mode') === scopeMode);
+      });
+      document.documentElement.setAttribute('data-scope-mode', scopeMode);
+      clearScopeCanvases();
+    }
+    updateScopeButtons();
+
+    // Mode button listeners
+    document.querySelectorAll('.phos-scope-controls .scope-btn[data-mode]').forEach(b => {
+      b.addEventListener('click', () => {
+        const m = b.getAttribute('data-mode');
+        if (m) {
+          scopeMode = m;
+          updateScopeButtons();
+          playCrtClick(800, 0.04);
+        }
+      });
+    });
+
+    // Gain buttons
+    const gainUps = [document.getElementById('scopeGainUp'), document.getElementById('scopeGainUpAbout')].filter(Boolean);
+    const gainDowns = [document.getElementById('scopeGainDown'), document.getElementById('scopeGainDownAbout')].filter(Boolean);
+
+    gainUps.forEach(btn => btn.addEventListener('click', () => {
+      scopeGain = Math.min(2.0, scopeGain * 1.2);
+      playCrtClick(1200, 0.03);
+    }));
+
+    gainDowns.forEach(btn => btn.addEventListener('click', () => {
+      scopeGain = Math.max(0.3, scopeGain * 0.8);
+      playCrtClick(600, 0.03);
+    }));
+
+    function resizeCanvases() {
+      canvases.forEach(canvas => {
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          canvas.width = Math.round(rect.width * (window.devicePixelRatio || 1));
+          canvas.height = Math.round(rect.height * (window.devicePixelRatio || 1));
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#010602';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
+        }
+      });
+    }
+    window.addEventListener('resize', resizeCanvases);
+    resizeCanvases();
+
+    function renderScope() {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (theme !== 'phosphor') {
+        document.documentElement.removeAttribute('data-scope-active');
+        requestAnimationFrame(renderScope);
+        return;
+      }
+      document.documentElement.setAttribute('data-scope-active', 'true');
+
+      const phosphorColor = '#33ff66';
+      const hotColor = '#d9ffdf';
+      const dpr = window.devicePixelRatio || 1;
+
+      canvases.forEach(canvas => {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        const w = canvas.width;
+        const h = canvas.height;
+        if (w === 0 || h === 0) return;
+
+        const midX = w / 2;
+        const midY = h / 2;
+
+        // Faint persistence phosphor decay wash with explicit shadow reset
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = 'transparent';
+        ctx.fillStyle = 'rgba(2, 8, 3, 0.22)';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.strokeStyle = phosphorColor;
+        ctx.shadowColor = phosphorColor;
+        ctx.shadowBlur = 10 * dpr;
+        ctx.lineWidth = 2.2 * dpr;
+
+        if (scopeMode === 'sine') {
+          ctx.beginPath();
+          for (let x = 0; x < w; x++) {
+            const t = (x / w) * Math.PI * 6 + phase;
+            const yOffset = (Math.sin(t) * 0.7 + Math.sin(t * 2.3 + phase * 0.5) * 0.25) * (h * 0.35) * scopeGain;
+            const y = midY + yOffset;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+
+          // White-hot center beam pass
+          ctx.shadowBlur = 0;
+          ctx.strokeStyle = hotColor;
+          ctx.lineWidth = 1 * dpr;
+          ctx.stroke();
+
+          phase += 0.055;
+        } else if (scopeMode === 'lissajous') {
+          // Dual-axis Lissajous curve
+          ctx.beginPath();
+          const steps = 360;
+          const rx = (w * 0.38) * scopeGain;
+          const ry = (h * 0.38) * scopeGain;
+          for (let i = 0; i <= steps; i++) {
+            const t = (i / steps) * Math.PI * 2;
+            const x = midX + Math.sin(3 * t + phase) * rx;
+            const y = midY + Math.sin(4 * t) * ry;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+
+          // White-hot center beam pass
+          ctx.shadowBlur = 0;
+          ctx.strokeStyle = hotColor;
+          ctx.lineWidth = 1 * dpr;
+          ctx.stroke();
+
+          phase += 0.02;
+        } else if (scopeMode === 'radar') {
+          // Vector Radar Reticle & Sweeping Beam
+          const maxR = Math.min(midX, midY) * 0.86;
+          ctx.beginPath();
+          ctx.arc(midX, midY, maxR, 0, Math.PI * 2);
+          ctx.arc(midX, midY, maxR * 0.66, 0, Math.PI * 2);
+          ctx.arc(midX, midY, maxR * 0.33, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Sweep Beam Line
+          const beamX = midX + Math.cos(radarAngle) * maxR;
+          const beamY = midY + Math.sin(radarAngle) * maxR;
+          ctx.beginPath();
+          ctx.moveTo(midX, midY);
+          ctx.lineTo(beamX, beamY);
+          ctx.stroke();
+
+          // Vector blips
+          blips.forEach(b => {
+            const bx = midX + Math.cos(b.angle) * (b.r * (maxR / 100));
+            const by = midY + Math.sin(b.angle) * (b.r * (maxR / 100));
+            ctx.fillStyle = b.color;
+            ctx.shadowColor = b.color;
+            ctx.beginPath();
+            ctx.arc(bx, by, 3.5 * dpr, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          radarAngle += 0.045;
+          ctx.shadowBlur = 0;
+          ctx.shadowColor = 'transparent';
+        }
+      });
+
+      requestAnimationFrame(renderScope);
+    }
+    requestAnimationFrame(renderScope);
   }
 
   // --- INITIALIZE ALL MODULES ---
@@ -1117,6 +1414,7 @@
     initDossierEnhancements();
     initSakuraEffect();
     initPhantomDecorations();
+    initPhosphorOscilloscope();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {

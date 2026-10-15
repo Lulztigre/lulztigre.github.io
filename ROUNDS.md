@@ -11,6 +11,7 @@ This document tracks all design competition rounds, winners, component lineage, 
 | **R1** | **Uchiha / Bloodmoon** | **Mimo** | • **Header font & typography base**: Agy (`Shippori Mincho`, `Crimson Pro`)<br>• **Visual layout & crimson palette**: Mimo<br>• **Giant Mangekyō Sharingan background**: Agy (custom SVG overlay) | [`mimo.html`](file:///C:/Users/moyoo/lulztigre.pw/mimo.html)<br>[`agy.html`](file:///C:/Users/moyoo/lulztigre.pw/agy.html) | **Active in production** (`[data-theme="uchiha"]`) |
 | **R2** | **Ghost → Floral (Flora Ecosystem)** | **Agy** | • **Field Notes & Botanical Architecture**: Agy (`agyghost.html`)<br>• **Canvas**: Crisp botanical parchment (`#fcfaf5`), pure white card surfaces (`#ffffff`), hunter green headings (`#1B4D3E`), moss green borders (`#8A9A5B`), and sage drop shadows (`#c3d2ab`)<br>• **Typography**: Classical serif `Playfair Display` (700 headers), typewriter `Courier Prime` (body), and `Special Elite` (stamps)<br>• **Organic elements**: Leaf emoji toggle (`🌿 FLORA`), circular botanical crest (`.flora-crest-svg`), `id=(flora)` badge, leaf-vein watermark statement box with corner stem flourishes and wavy vow underline, and subtle pollen pattern | [`agyghost.html`](file:///C:/Users/moyoo/lulztigre.pw/agyghost.html) | **Active in production** (`[data-theme="floral"]`) |
 | **R3** | **Phantom (Spectral Wraith)** | **DeepSeek** | • **Winner**: DeepSeek (`deepseekphantom.html`)<br>• **Fonts, borders & boxes**: Mimo (`mimophantom.html` Orbitron headers, layered tactical boxes, sharp borders)<br>• **Motes & Beam**: Agy (`agyphantom.html` floating motes and laser sweep beam)<br>• **Sigil**: Specter from Agy (👻)<br>• **Badge**: `id=(phantom)` | [`deepseekphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphantom.html)<br>[`agyphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphantom.html)<br>[`mimophantom.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophantom.html) | Ready for deployment / production theme rollout |
+| **R4** | **Phosphor (Cathode Ray Terminal)** | **GLM** | • **Overall Winner / Chassis Base**: GLM (`glmphospor.html` CRT glass stack, rolling refresh bar, power strike, vignette, inverse vow bar)<br>• **Typography**: Mimo (`mimophosphor.html` `VT323` display headers with beam convergence wobble, `Share Tech Mono` & `Space Mono` body)<br>• **Radar**: Agy (`agyphosphor.html` vector oscilloscope chassis, 20px grid reticle, concentric rings & 360° sweeping beam) | [`glmphospor.html`](file:///C:/Users/moyoo/lulztigre.pw/glmphospor.html)<br>[`mimophosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophosphor.html)<br>[`agyphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphosphor.html)<br>[`deepseekphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphosphor.html) | **Active in production** (`[data-theme="phosphor"]`) |
 
 ---
 
@@ -73,6 +74,33 @@ This document tracks all design competition rounds, winners, component lineage, 
   - Agy: [`agyphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphantom.html)
   - Mimo: [`mimophantom.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophantom.html)
   - DeepSeek: [`deepseekphantom.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphantom.html)
+
+---
+
+### Round 4: Phosphor (P1 / P31 High-Persistence Cathode Ray Terminal)
+- **Prompt & Concept**: Monochrome green cathode-ray tube terminal viewed through curved glass, featuring scanlines, shadow mask, rolling refresh band, electron persistence decay, and amber alerts.
+- **Winning Implementation**: `GLM` (`glmphospor.html`)
+- **Key Component Attribution**:
+  - **GLM Core Heritage (Winner & Base Architecture)**:
+    - **CRT Glass Stack**: Fixed full-screen cathode ray overlay stack (`.phos-glass`) composed of horizontal raster scanlines, aperture grille shadow mask, rolling refresh sync bar, spherical tube curvature vignette, and hardware curved bezel.
+    - **Cathode Ray Lifecycle**: Power-on strike beam (`.phos-power`) expanding into vertical bloom, tube persistence decay engine (`@keyframes phosDecay`), and degauss shockwave wobble.
+    - **Hardware Indicators & Badges**: Hardware ticker diodes (`.phos-diode` for PWR, RASTER, P1 nm), solid terminal block cursor (`.phos-cursor`) replacing emojis, and system tag `id=(p69)`.
+    - **Dossier & Statements**: High-contrast inverse-video vow line bar (`statement-quote strong`), base-16 hex corner tags ("0x") seared on cards, and amber (`#ffb000`) critical alert strobe.
+  - **Mimo Contributions (Typography)**:
+    - **Header & Display Face**: Retro terminal matrix font `VT323` paired with `Share Tech Mono` for titles, navigation, and badges.
+    - **Convergence Wobble**: Electron-beam convergence settling animation (`@keyframes converge`) on headline elements.
+    - **Body Font**: Structured monospace pairing (`'Share Tech Mono', 'Space Mono', monospace`) for crisp terminal documentation readability.
+    - **Persistence Text Shadows**: Layered glowing afterglow text shadows (`0 0 4px rgba(242, 255, 244, 0.9), 0 0 14px rgba(77, 255, 106, 0.7)`).
+  - **Agy Contributions (Vector Oscilloscope & Sweeping Radar)**:
+    - **Radar Frame & Reticle**: P31 vector oscilloscope chassis with dark cathode glass (`#010602`), green border bezel (`#22bb3b`), inset glow, and 20px x 20px phosphor reticle grid.
+    - **Center Crosshairs & Concentric Rings**: Axis crosshairs (`.scope-center-axis`, `.scope-center-vaxis`) and concentric vector range rings (100%, 66%, 33%).
+    - **360° Vector Sweep Beam**: Rotating radar beam with phosphor persistence tail and decay wash.
+    - **Phosphor Radar Targets**: Illuminated, pulsing blips marking active CVEs and coordinated pipeline discoveries.
+- **Associated Mockup Files**:
+  - GLM: [`glmphospor.html`](file:///C:/Users/moyoo/lulztigre.pw/glmphospor.html)
+  - Mimo: [`mimophosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/mimophosphor.html)
+  - Agy: [`agyphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/agyphosphor.html)
+  - DeepSeek: [`deepseekphosphor.html`](file:///C:/Users/moyoo/lulztigre.pw/deepseekphosphor.html)
 
 ---
 

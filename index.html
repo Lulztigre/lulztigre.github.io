@@ -19,7 +19,7 @@
   <!-- Google Fonts: Space Mono, Space Grotesk, Newsreader, Orbitron, Rajdhani, Share Tech Mono, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=VT323&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
 
   <!-- KaTeX Math Rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -51,12 +51,24 @@
 </head>
 <body>
 
+  <!-- Phosphor CRT Hardware Overlays (Active under [data-theme="phosphor"]) -->
+  <div class="phos-glass" aria-hidden="true">
+    <div class="scan"></div><div class="mask"></div><div class="roll"></div>
+    <div class="vig"></div><div class="glare"></div><div class="frame"></div>
+  </div>
+  <div class="phos-power" aria-hidden="true"><i></i></div>
+
   <!-- Top System Telemetry Ticker -->
   <div class="system-ticker">
     <div class="ticker-left">
       <span class="status-indicator"><span class="status-dot"></span>DOSSIER: LZ-994</span>
       <span class="ticker-security-level">CLEARANCE: LEVEL-4 // TOP SECRET</span>
       <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
+      <div class="phos-diodes" aria-hidden="true">
+        <span class="phos-diode"><i></i> PWR</span>
+        <span class="phos-diode"><i></i> RASTER</span>
+        <span class="phos-diode warn"><i></i> P1 525nm</span>
+      </div>
     </div>
     <div class="ticker-right">
       <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
@@ -72,7 +84,7 @@
       <a href="index.html" class="site-brand">
         <svg class="brand-sharingan" viewBox="0 0 40 40" width="22" height="22" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.2"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>
         <svg class="brand-sprig flora-crest-svg" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true" title="Flora Botanical Crest"><circle cx="50" cy="50" r="46" fill="rgba(46,139,87,0.12)" stroke="#2E8B57" stroke-width="2.5"/><path d="M 50,86 C 50,60 50,30 50,16" stroke="#2E8B57" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M 50,65 C 32,65 24,52 22,40 C 35,40 48,52 50,65 Z" fill="#4F7942" stroke="#1B4D3E" stroke-width="2"/><path d="M 50,48 C 68,48 76,35 78,23 C 65,23 52,35 50,48 Z" fill="#2E8B57" stroke="#1B4D3E" stroke-width="2"/><circle cx="50" cy="18" r="5" fill="#E88C9E" stroke="#A0522D" stroke-width="1.5"/></svg>
-        <span>LULZTIGRE</span>
+        <span>LULZTIGRE</span><span class="phos-cursor" aria-hidden="true"></span>
         <span class="brand-badge">id=(root)</span>
       </a>
 
@@ -199,6 +211,37 @@
               <div class="gtarget gt2" title="Seed Target 02"></div>
               <div class="gtarget gt3" title="Seed Target 03"></div>
               <div class="gcenter"><span style="font-size:1.6rem">🌱</span><span style="font-family:'Courier Prime',monospace;font-size:.6rem;letter-spacing:.15em;color:#8B4513">LZ-994</span></div>
+            </div>
+
+            <div class="scope-grid-overlay"></div>
+            <div class="scope-center-axis"></div>
+            <div class="scope-center-vaxis"></div>
+            <canvas id="oscilloscopeCanvas" class="oscilloscope-canvas" width="400" height="220"></canvas>
+            <div class="radar-circle circle-outer"></div>
+            <div class="radar-circle circle-mid"></div>
+            <div class="radar-circle circle-inner"></div>
+            <div class="radar-axis axis-x"></div>
+            <div class="radar-axis axis-y"></div>
+            <div class="radar-sweep-beam"></div>
+            <div class="radar-target target-1" title="Balbooa Forms CVE-2026-67364"></div>
+            <div class="radar-target target-2" title="iCagenda CVE-2026-75948"></div>
+            <div class="radar-target target-3" title="Embargoed 0-Day Pipeline"></div>
+
+            <div class="chassis-center-sig">
+              <span class="sig-text">LZ-994</span>
+            </div>
+          </div>
+          <div class="scope-controls phos-scope-controls">
+            <div>
+              <span class="scope-lbl">TRACE:</span>
+              <button type="button" class="scope-btn" id="scopeBtnSine" data-mode="sine">SINE</button>
+              <button type="button" class="scope-btn" id="scopeBtnLiss" data-mode="lissajous">LISSAJOUS</button>
+              <button type="button" class="scope-btn" id="scopeBtnRadar" data-mode="radar">RADAR</button>
+            </div>
+            <div>
+              <span class="scope-lbl">GAIN:</span>
+              <button type="button" class="scope-btn" id="scopeGainUp" title="Increase gain">▲</button>
+              <button type="button" class="scope-btn" id="scopeGainDown" title="Decrease gain">▼</button>
             </div>
           </div>
           <div class="hero-chassis-body">
