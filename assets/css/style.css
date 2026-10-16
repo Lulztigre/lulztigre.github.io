@@ -4713,6 +4713,169 @@ body.degauss-active {
   --shadow-emerald: 4px 4px 0px #ff3385;
 }
 
+/* ==========================================================================
+   ROUND 7 SAKURA THEME: ADOPTED SEIGAIHA (青海波) WAVE DESIGN & NIGHT HANAMI
+   ========================================================================== */
+
+/* 1. Brand Mon Crest & Badge */
+.brand-sakura-mon {
+  display: none !important;
+}
+
+[data-theme="sakura"] .brand-sakura-mon {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin-right: 0.5rem !important;
+  filter: drop-shadow(0 0 6px rgba(255, 117, 181, 0.65)) !important;
+}
+
+[data-theme="sakura"] .brand-badge {
+  font-size: 0 !important;
+  border-color: #ff75b5 !important;
+  color: #ff75b5 !important;
+}
+
+[data-theme="sakura"] .brand-badge::after {
+  content: "id=(somei)" !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.1em !important;
+  color: #ff75b5 !important;
+}
+
+/* 2. Hero Headline Accents */
+[data-theme="sakura"] .headline .accent-word,
+[data-theme="sakura"] .hero-heading .accent-word,
+[data-theme="sakura"] .hero-heading .accent-terra-italic,
+[data-theme="sakura"] .accent-terra-italic,
+[data-theme="sakura"] .acc {
+  background: linear-gradient(100deg, #ffffff 0%, #ffc7dd 30%, #ff75b5 70%, #ff3385 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+/* 3. Statement Box & Vow Line */
+[data-theme="sakura"] .dossier-statement-box,
+[data-theme="sakura"] .statement {
+  background: #170915 !important;
+  border: 1px solid #4a1938 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
+[data-theme="sakura"] .vow,
+[data-theme="sakura"] .statement-quote strong {
+  color: #ff75b5 !important;
+  text-decoration: underline wavy #ff3385 !important;
+  text-underline-offset: 6px !important;
+  text-shadow: 0 0 12px rgba(255, 51, 133, 0.45) !important;
+  background: transparent !important;
+}
+
+/* 4. Stat Tiles */
+[data-theme="sakura"] .dossier-stat-tile,
+[data-theme="sakura"] .stat-tile,
+[data-theme="sakura"] .tile,
+[data-theme="sakura"] .stat-card {
+  background: #1c0b1a !important;
+  border: 1px solid #4a1938 !important;
+  border-top: 2px solid #ff75b5 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="sakura"] .stat-num,
+[data-theme="sakura"] .stat-val {
+  color: #ff75b5 !important;
+}
+
+[data-theme="sakura"] .stat-critical,
+[data-theme="sakura"] .cvss-critical {
+  color: #ff3385 !important;
+  text-shadow: 0 0 12px rgba(255, 51, 133, 0.6) !important;
+}
+
+[data-theme="sakura"] .stat-lbl,
+[data-theme="sakura"] .stat-label {
+  color: #cca0b9 !important;
+}
+
+/* 5. Buttons */
+[data-theme="sakura"] .btn-primary,
+[data-theme="sakura"] .dossier-btn-primary {
+  background: #ff3385 !important;
+  color: #ffffff !important;
+  border-color: #ff3385 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="sakura"] .btn-primary:hover,
+[data-theme="sakura"] .dossier-btn-primary:hover {
+  background: #ff75b5 !important;
+  border-color: #ff75b5 !important;
+  color: #0d050c !important;
+}
+
+[data-theme="sakura"] .btn-secondary,
+[data-theme="sakura"] .dossier-btn-secondary {
+  background: #170915 !important;
+  color: #fde8f3 !important;
+  border-color: #4a1938 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="sakura"] .btn-secondary:hover,
+[data-theme="sakura"] .dossier-btn-secondary:hover {
+  border-color: #ff75b5 !important;
+  color: #ff75b5 !important;
+}
+
+/* 6. Adopted Seigaiha (青海波) Wave Divider */
+.sak-seigaiha-wrap {
+  display: none !important;
+}
+
+[data-theme="sakura"] .sak-seigaiha-wrap {
+  display: block !important;
+  width: 100%;
+}
+
+[data-theme="sakura"] .sak-seigaiha {
+  display: flex !important;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2rem 0 0.8rem;
+  width: 100%;
+}
+
+[data-theme="sakura"] .sak-seigaiha .waves {
+  flex: 1;
+  height: 26px;
+  opacity: 0.85;
+}
+
+[data-theme="sakura"] .sak-seigaiha svg.mark {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  filter: drop-shadow(0 0 8px rgba(255, 117, 181, 0.7));
+}
+
+[data-theme="sakura"] .sak-seigaiha .cap {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: #ff75b5;
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 51, 133, 0.5);
+}
+
+/* 7. Header Seigaiha Line */
+[data-theme="sakura"] header.site-header {
+  background: rgba(23, 9, 21, 0.95) !important;
+  border-bottom: 2px solid #4a1938 !important;
+}
+
 /* Yua — Soft pastel rose / bubblegum pink mode */
 [data-theme="yua"],
 [data-theme="blush"] {

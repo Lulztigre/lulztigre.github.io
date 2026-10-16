@@ -870,7 +870,7 @@
     }
   }
 
-  // --- 13. SAKURA CHERRY BLOSSOM PETALS & FLOWERS EFFECT ---
+  // --- 13. SAKURA CHERRY BLOSSOM ENGINE (MUSE WIND-FIELD PETAL DIRECTION) ---
   function initSakuraEffect() {
     let canvas = document.getElementById('sakura-canvas');
     let ctx = null;
@@ -879,6 +879,25 @@
     let isRunning = false;
     let width = 0;
     let height = 0;
+
+    // Muse dynamic wind-field: natural drifting breeze
+    let dirDeg = 315; // Natural North-West to South-East Hanami breeze
+    let windNow = 3.2; // Gentle breeze speed in m/s
+    let windVX = 0.8;
+    let windVY = 0.1;
+    let tick = 0;
+
+    function stepWind() {
+      // Wind meanders smoothly
+      windNow = Math.max(1.2, Math.min(6.5, windNow + (Math.random() - 0.48) * 0.8));
+      dirDeg = (dirDeg + (Math.random() - 0.5) * 14 + 360) % 360;
+      const rad = dirDeg * Math.PI / 180;
+      windVX = Math.sin(rad) * windNow * 0.38;
+      windVY = -Math.cos(rad) * windNow * 0.06;
+    }
+
+    setInterval(stepWind, 3000);
+    stepWind();
 
     function resize() {
       if (!canvas) return;
@@ -894,64 +913,62 @@
       }
     }
 
-    function drawSakuraPetalPath(context, size) {
-      context.beginPath();
-      context.moveTo(0, 0);
-      context.bezierCurveTo(-size * 0.45, -size * 0.35, -size * 0.55, -size * 0.75, -size * 0.18, -size);
-      context.lineTo(0, -size * 0.84);
-      context.lineTo(size * 0.18, -size);
-      context.bezierCurveTo(size * 0.55, -size * 0.75, size * 0.45, -size * 0.35, 0, 0);
-      context.closePath();
+    // Muse's quadratic curved notched petal outline
+    function drawPetalShape(c, s) {
+      c.beginPath();
+      c.moveTo(0, -s);
+      c.quadraticCurveTo(s * 0.9, -s * 0.3, s * 0.55, s * 0.7);
+      c.quadraticCurveTo(s * 0.2, s * 1.1, 0, s * 0.8);
+      c.quadraticCurveTo(-s * 0.2, s * 1.1, -s * 0.55, s * 0.7);
+      c.quadraticCurveTo(-s * 0.9, -s * 0.3, 0, -s);
+      c.fill();
+    }
+
+    // Muse's 5-petal blossom with golden pistil center
+    function drawBlossomShape(c, s) {
+      for (let k = 0; k < 5; k++) {
+        c.save();
+        c.rotate((k / 5) * Math.PI * 2);
+        drawPetalShape(c, s * 0.62);
+        c.restore();
+      }
+      c.beginPath();
+      c.arc(0, 0, s * 0.22, 0, Math.PI * 2);
+      c.fillStyle = '#ffb347';
+      c.fill();
     }
 
     function createParticle(isInitial) {
       const isMobile = window.innerWidth <= 768;
-      // Sparingly and scantily: predominantly single petals with occasional whole 5-petal blossoms
-      const isFlower = Math.random() < 0.28;
+      const isFlower = Math.random() < 0.22;
       const size = isFlower
-        ? (isMobile ? 14 + Math.random() * 8 : 18 + Math.random() * 12)
-        : (isMobile ? 9 + Math.random() * 7 : 11 + Math.random() * 9);
+        ? (isMobile ? 12 + Math.random() * 6 : 15 + Math.random() * 8)
+        : (isMobile ? 7 + Math.random() * 5 : 9 + Math.random() * 8);
 
-      // Color variations for subtle natural beauty
-      const theme = document.documentElement.getAttribute('data-theme');
-      const isFloral = theme === 'floral' || theme === 'flora';
-      const colorPalettes = isFloral ? [
-        { base: 'rgba(232, 160, 191, 0.90)', tip: 'rgba(255, 235, 240, 0.85)' },
-        { base: 'rgba(233, 196, 106, 0.85)', tip: 'rgba(250, 246, 236, 0.80)' },
-        { base: 'rgba(138, 154, 91, 0.85)',  tip: 'rgba(240, 245, 230, 0.80)' },
-        { base: 'rgba(192, 114, 74, 0.85)',  tip: 'rgba(253, 240, 230, 0.80)' }
-      ] : [
-        { base: 'rgba(255, 51, 133, 0.95)', tip: 'rgba(255, 168, 204, 0.8)' },
-        { base: 'rgba(255, 117, 181, 0.95)', tip: 'rgba(253, 232, 243, 0.85)' },
-        { base: 'rgba(230, 0, 102, 0.95)', tip: 'rgba(255, 182, 218, 0.75)' },
-        { base: 'rgba(255, 80, 150, 0.95)', tip: 'rgba(255, 220, 238, 0.9)' }
-      ];
-      const palette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+      const pal = ['#ffc7dd', '#ff9ec4', '#ff75b5', '#ffd3e3', '#f48fb1'];
+      const color = pal[Math.floor(Math.random() * pal.length)];
 
       return {
-        type: isFlower ? 'flower' : 'petal',
+        isFlower: isFlower,
         size: size,
         x: Math.random() * (width || window.innerWidth),
-        y: isInitial ? Math.random() * (height || window.innerHeight) : -40 - Math.random() * 30,
-        vx: 0.15 + Math.random() * 0.45,
-        vy: 0.45 + Math.random() * 0.65,
-        swayAmp: 0.8 + Math.random() * 1.4,
-        swayFreq: 0.012 + Math.random() * 0.018,
-        swayPhase: Math.random() * Math.PI * 2,
+        y: isInitial ? Math.random() * (height || window.innerHeight) : -25 - Math.random() * 35,
+        fall: 0.6 + Math.random() * 0.9,
+        depth: 0.35 + Math.random() * 0.65,
+        sw: 0.4 + Math.random() * 1.1,
+        ph: Math.random() * Math.PI * 2,
         rot: Math.random() * Math.PI * 2,
-        vRot: (Math.random() - 0.5) * 0.02,
+        vr: (Math.random() - 0.5) * 0.04,
         flip: Math.random() * Math.PI * 2,
         vFlip: 0.015 + Math.random() * 0.025,
-        opacity: isFlower ? (0.65 + Math.random() * 0.25) : (0.45 + Math.random() * 0.35),
-        colorBase: palette.base,
-        tipColor: palette.tip
+        color: color
       };
     }
 
     function initParticles() {
       const isMobile = window.innerWidth <= 768;
-      // "sparringly and scantily": only 11 on desktop, 6 on mobile
-      const targetCount = isMobile ? 6 : 11;
+      // Scantily and serene: 26 on desktop, 13 on mobile
+      const targetCount = isMobile ? 13 : 26;
       particles = [];
       for (let i = 0; i < targetCount; i++) {
         particles.push(createParticle(true));
@@ -960,68 +977,41 @@
 
     function render() {
       if (!ctx || !isRunning) return;
+      tick += 0.016;
       ctx.clearRect(0, 0, width, height);
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        p.y += p.vy;
-        p.x += p.vx + Math.sin(p.swayPhase) * p.swayAmp;
-        p.swayPhase += p.swayFreq;
-        p.rot += p.vRot;
+        const sway = Math.sin(tick * p.sw + p.ph) * p.sw * 0.55;
+
+        // Muse directional wind-field physics:
+        p.x += (windVX * p.depth + sway);
+        p.y += (p.fall * p.depth + windVY * p.depth);
+        p.rot += p.vr;
         p.flip += p.vFlip;
 
-        // Wrap or reset if off screen
-        if (p.y > height + 45) {
-          const fresh = createParticle(false);
-          particles[i] = fresh;
-          continue;
+        // Screen boundary wrap
+        if (p.y > height + 30) {
+          p.y = -30;
+          p.x = Math.random() * width;
         }
-        if (p.x < -45) {
-          p.x = width + 20;
-        } else if (p.x > width + 45) {
-          p.x = -20;
+        if (p.x > width + 30) {
+          p.x = -30;
+        } else if (p.x < -30) {
+          p.x = width + 30;
         }
 
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rot);
         ctx.scale(1, Math.cos(p.flip));
-        ctx.globalAlpha = p.opacity;
+        ctx.globalAlpha = 0.3 + 0.6 * p.depth;
+        ctx.fillStyle = p.color;
 
-        if (p.type === 'flower') {
-          // 5-petaled sakura flower
-          for (let step = 0; step < 5; step++) {
-            ctx.save();
-            ctx.rotate((step * 2 * Math.PI) / 5);
-            const grad = ctx.createLinearGradient(0, 0, 0, -p.size * 0.55);
-            grad.addColorStop(0, p.colorBase);
-            grad.addColorStop(1, p.tipColor);
-            ctx.fillStyle = grad;
-            drawSakuraPetalPath(ctx, p.size * 0.55);
-            ctx.fill();
-            ctx.restore();
-          }
-          // Center pistil / stamen dots
-          ctx.beginPath();
-          ctx.arc(0, 0, p.size * 0.1, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255, 245, 235, 0.95)';
-          ctx.fill();
-          for (let st = 0; st < 5; st++) {
-            const angle = (st * 2 * Math.PI) / 5 + Math.PI / 5;
-            const dist = p.size * 0.18;
-            ctx.beginPath();
-            ctx.arc(Math.cos(angle) * dist, Math.sin(angle) * dist, p.size * 0.035, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 215, 140, 0.9)';
-            ctx.fill();
-          }
+        if (p.isFlower) {
+          drawBlossomShape(ctx, p.size);
         } else {
-          // Single delicate cherry petal
-          const grad = ctx.createLinearGradient(0, 0, 0, -p.size);
-          grad.addColorStop(0, p.colorBase);
-          grad.addColorStop(1, p.tipColor);
-          ctx.fillStyle = grad;
-          drawSakuraPetalPath(ctx, p.size);
-          ctx.fill();
+          drawPetalShape(ctx, p.size);
         }
 
         ctx.restore();
