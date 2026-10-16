@@ -2,7 +2,6 @@
 composer.html
 *.md
 !README.md
-!ROUNDS.md
 publish.py
 .DS_Store
 Thumbs.db
