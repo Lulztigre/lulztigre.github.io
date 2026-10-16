@@ -2778,37 +2778,923 @@ body.degauss-active {
 }
 
 
-/* Solar — Warm golden/sepia light mode */
-[data-theme="solar"] {
-  --bg-primary: #faf6ee;
-  --bg-surface: #ffffff;
-  --bg-elevated: #f0e8d8;
-  --bg-card: #fffdf8;
-  --bg-invert: #8b5e14;
+/* ==========================================================================
+   Solar — Round 6 Winner Mimo Watch Console, DeepSeek Plex & Muse Shadows (id=sol)
+   Winner: Mimo (Concept & Heliograph) | Body: DeepSeek (IBM Plex Mono) | Head: Mimo (Unbounded)
+   Borders: DeepSeek (#3a2a10) | Box Shadows: Muse (Hard Offset 2px/4px #1c1206) | Dead Last: Copilot
+   ========================================================================== */
 
-  --text-primary: #2c1d04;
-  --text-secondary: #5c4522;
-  --text-muted: #8c7a5a;
-  --text-invert: #faf6ee;
-
-  --border-color: #2c1d04;
-  --border-light: #ddd0b8;
-  --border-highlight: #c47f17;
-
-  --accent-primary: #c47f17;
-  --accent-secondary: #a35f00;
-  --accent-amber: #e6a020;
-  --accent-glow: rgba(196, 127, 23, 0.12);
-  --accent-tag-bg: #f0e8d8;
-  --accent-tag-text: #8b5e14;
-
-  --shadow-sm: 2px 2px 0px #2c1d04;
-  --shadow-md: 4px 4px 0px #2c1d04;
-  --shadow-lg: 7px 7px 0px #2c1d04;
-  --shadow-hover: 5px 5px 0px #2c1d04;
-  --shadow-active: 1px 1px 0px #2c1d04;
-  --shadow-emerald: 4px 4px 0px #c47f17;
+/* Universal hidden defaults so other themes remain 100% clean and unaffected */
+.solar-flare-stripe,
+.solar-coord-frame,
+.solar-heliograph-chassis,
+.solar-diodes,
+.solar-seal-stamp {
+  display: none !important;
 }
+
+[data-theme="solar"] {
+  /* Theme Background: Mimo Photosphere Warm Dark Ground */
+  --bg-primary: #0b0806;
+  --bg-surface: #120d08;
+  --bg-card: #150f08;
+  --bg-card-hover: #1d150c;
+  --bg-elevated: #1a120a;
+  --bg-invert: #ffb02e;
+
+  /* Inks: Mimo Warm Solar Texts */
+  --text-primary: #f8edda;
+  --text-secondary: #cbb594;
+  --text-muted: #8f7a5c;
+  --text-invert: #0b0806;
+
+  /* Borders: DeepSeek Box Border Color System */
+  --border-color: #3a2a10;           /* DeepSeek iron-gall box border color */
+  --border-light: #271c10;          /* DeepSeek faint rule / divider */
+  --border-highlight: #c47f17;      /* DeepSeek gold border highlight */
+  --border-gold: #c47f17;
+
+  /* Solar Accents: Mimo */
+  --accent-primary: #ffb02e;          /* Photosphere gold */
+  --accent-secondary: #ffd98a;        /* Limb glow */
+  --accent-amber: #e6a020;
+  --accent-ember: #ff4d1c;            /* Flare X-class red */
+  --accent-glow: rgba(255, 176, 46, 0.25);
+  --accent-tag-bg: #1a120a;
+  --accent-tag-text: #ffd98a;
+
+  /* Box Shadows: Muse Hard Offset Neo-Brutalist System */
+  --shadow-sm: 2px 2px 0px #1c1206;
+  --shadow-md: 4px 4px 0px #1c1206;
+  --shadow-lg: 7px 7px 0px #1c1206;
+  --shadow-hover: 5px 5px 0px #1c1206;
+  --shadow-active: 1px 1px 0px #1c1206;
+  --shadow-emerald: 4px 4px 0px #c47f17;
+
+  /* Typography Families */
+  --font-head: 'Unbounded', -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  --font-mono: 'IBM Plex Mono', 'Space Mono', monospace;
+
+  background-color: #0b0806 !important;
+  color: #f8edda !important;
+}
+
+[data-theme="solar"] body {
+  background-color: #0b0806 !important;
+  color: #f8edda !important;
+  font-family: var(--font-body) !important;
+  position: relative;
+}
+
+[data-theme="solar"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: 
+    radial-gradient(900px 520px at 88% -10%, rgba(255, 140, 30, 0.16), transparent 62%),
+    radial-gradient(700px 620px at -6% 108%, rgba(122, 62, 0, 0.22), transparent 66%) !important;
+}
+
+/* Headings in Mimo's Unbounded Face */
+[data-theme="solar"] h1,
+[data-theme="solar"] h2,
+[data-theme="solar"] h3,
+[data-theme="solar"] h4,
+[data-theme="solar"] .hero-heading,
+[data-theme="solar"] .dossier-hero-name,
+[data-theme="solar"] .dossier-heading,
+[data-theme="solar"] .hud-main-heading,
+[data-theme="solar"] .article-title,
+[data-theme="solar"] .post-title,
+[data-theme="solar"] .card-heading,
+[data-theme="solar"] .stat-num,
+[data-theme="solar"] .stat-val,
+[data-theme="solar"] .section-title,
+[data-theme="solar"] .site-brand > span:first-child,
+[data-theme="solar"] .headline {
+  font-family: 'Unbounded', -apple-system, 'Segoe UI', sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+}
+
+[data-theme="solar"] .headline .accent-word,
+[data-theme="solar"] .hero-heading .accent-word,
+[data-theme="solar"] .hero-heading .accent-terra-italic,
+[data-theme="solar"] .accent-terra-italic,
+[data-theme="solar"] .acc {
+  background: linear-gradient(100deg, #ffd98a 0%, #ffb02e 45%, #ff4d1c 95%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-style: normal !important;
+}
+
+/* Solar Cards & Boxes: Mimo Box Structure + DeepSeek Border Color + Muse Hard Offset Shadows */
+[data-theme="solar"] .post-card,
+[data-theme="solar"] .article-card,
+[data-theme="solar"] .dossier-card,
+[data-theme="solar"] .hud-card,
+[data-theme="solar"] .terminal-card,
+[data-theme="solar"] .directive-card,
+[data-theme="solar"] .panel,
+[data-theme="solar"] .cve-ledger-card,
+[data-theme="solar"] .archive-entry-card {
+  background: #150f08 !important;
+  border: 1px solid #3a2a10 !important;
+  border-top: 2px solid #c47f17 !important;
+  box-shadow: 4px 4px 0px #1c1206 !important;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background-color .12s ease !important;
+  position: relative;
+}
+
+[data-theme="solar"] .post-card:hover,
+[data-theme="solar"] .article-card:hover,
+[data-theme="solar"] .dossier-card:hover,
+[data-theme="solar"] .hud-card:hover,
+[data-theme="solar"] .cve-ledger-card:hover,
+[data-theme="solar"] .archive-entry-card:hover {
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 5px 5px 0px #1c1206 !important;
+  border-color: #c47f17 !important;
+  background: #1d150c !important;
+}
+
+[data-theme="solar"] .post-card:active,
+[data-theme="solar"] .article-card:active,
+[data-theme="solar"] .dossier-card:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #1c1206 !important;
+}
+
+[data-theme="solar"] .post-card::after {
+  content: attr(data-ref, "LZ-994") " · SOL OBS LOG · CR 2298";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  padding: 0.16rem 0.55rem;
+  border-top: 1px solid #271c10;
+  background: #150f08;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* Statement Box: Mimo Advisory Box with DeepSeek Border & Muse Shadow */
+[data-theme="solar"] .dossier-statement-box,
+[data-theme="solar"] .statement {
+  background: color-mix(in srgb, #150f08 92%, transparent) !important;
+  border: 1px solid #3a2a10 !important;
+  border-top: 2px solid #c47f17 !important;
+  box-shadow: 4px 4px 0px #1c1206 !important;
+  position: relative;
+}
+
+[data-theme="solar"] .statement-corner-tl,
+[data-theme="solar"] .statement-corner-br,
+[data-theme="solar"] .card-reticle {
+  border-color: #c47f17 !important;
+}
+
+/* Vow Line: Wavy underline with amber glow (Mimo) */
+[data-theme="solar"] .statement-quote strong,
+[data-theme="solar"] .dossier-statement-box .statement-quote strong,
+[data-theme="solar"] .vow {
+  color: #f8edda !important;
+  background: transparent !important;
+  text-decoration: underline !important;
+  text-decoration-color: #ffb02e !important;
+  text-decoration-style: wavy !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 6px !important;
+  text-shadow: 0 0 16px rgba(255, 176, 46, 0.55), 0 0 42px rgba(255, 120, 20, 0.28) !important;
+  animation: solarVowPulse 4.8s ease-in-out infinite;
+}
+
+@keyframes solarVowPulse {
+  0%, 100% { text-shadow: 0 0 14px rgba(255, 176, 46, 0.45), 0 0 36px rgba(255, 120, 20, 0.2); }
+  50% { text-shadow: 0 0 22px rgba(255, 217, 138, 0.8), 0 0 56px rgba(255, 120, 20, 0.4); }
+}
+
+/* Stat Tiles: Mimo Layout + DeepSeek Gold Top Border + Muse Hard Offset Shadows */
+[data-theme="solar"] .dossier-stat-tile,
+[data-theme="solar"] .stat-tile,
+[data-theme="solar"] .stat-card,
+[data-theme="solar"] .tile {
+  background: #150f08 !important;
+  border: 1px solid #3a2a10 !important;
+  border-top: 2px solid #c47f17 !important;
+  box-shadow: 2px 2px 0px #1c1206 !important;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease !important;
+}
+
+[data-theme="solar"] .stat-num,
+[data-theme="solar"] .stat-val {
+  color: #ffb02e !important;
+}
+
+[data-theme="solar"] .stat-critical,
+[data-theme="solar"] .cvss-critical,
+[data-theme="solar"] .post-severity-tag.severity-critical {
+  color: #ff4d1c !important;
+  text-shadow: 0 0 14px rgba(255, 77, 28, 0.45) !important;
+}
+
+[data-theme="solar"] .stat-lbl,
+[data-theme="solar"] .stat-label {
+  color: #8f7a5c !important;
+}
+
+[data-theme="solar"] .dossier-stat-tile:hover,
+[data-theme="solar"] .stat-tile:hover,
+[data-theme="solar"] .tile:hover {
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 4px 4px 0px #1c1206 !important;
+  border-color: #c47f17 !important;
+}
+
+[data-theme="solar"] .dossier-stat-tile:active,
+[data-theme="solar"] .stat-tile:active,
+[data-theme="solar"] .tile:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #1c1206 !important;
+}
+
+/* Buttons with Muse Offset Shadows */
+[data-theme="solar"] .btn-primary,
+[data-theme="solar"] .btn:not(.ghost):not(.btn-secondary) {
+  background: #ffb02e !important;
+  border-color: #c47f17 !important;
+  color: #160c02 !important;
+  box-shadow: 2px 2px 0px #1c1206 !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  transition: all .12s ease !important;
+}
+
+[data-theme="solar"] .btn-primary:hover,
+[data-theme="solar"] .btn:not(.ghost):not(.btn-secondary):hover {
+  background: #ffd98a !important;
+  border-color: #ffb02e !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 4px 4px 0px #1c1206 !important;
+}
+
+[data-theme="solar"] .btn-primary:active,
+[data-theme="solar"] .btn:not(.ghost):not(.btn-secondary):active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #1c1206 !important;
+}
+
+[data-theme="solar"] .btn-secondary,
+[data-theme="solar"] .btn.ghost {
+  background: #120d08 !important;
+  border-color: #3a2a10 !important;
+  color: #cbb594 !important;
+  box-shadow: 2px 2px 0px #1c1206 !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 600 !important;
+  transition: all .12s ease !important;
+}
+
+[data-theme="solar"] .btn-secondary:hover,
+[data-theme="solar"] .btn.ghost:hover {
+  border-color: #c47f17 !important;
+  color: #f8edda !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 4px 4px 0px #1c1206 !important;
+}
+
+[data-theme="solar"] .tag-btn.active {
+  background: #ffb02e !important;
+  border-color: #c47f17 !important;
+  color: #160c02 !important;
+  box-shadow: 2px 2px 0px #1c1206 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="solar"] .tag-btn {
+  border-color: #3a2a10 !important;
+  background: #150f08 !important;
+  color: #cbb594 !important;
+  box-shadow: 2px 2px 0px #1c1206 !important;
+  transition: all .12s ease !important;
+}
+
+[data-theme="solar"] .tag-btn:hover {
+  border-color: #c47f17 !important;
+  color: #f8edda !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 4px 4px 0px #1c1206 !important;
+}
+
+/* Links, Code, Selection in Solar Mode */
+[data-theme="solar"] a {
+  color: #ffd98a;
+}
+
+[data-theme="solar"] a:hover {
+  color: #ffb02e;
+}
+
+[data-theme="solar"] code {
+  background: #1a120a;
+  border: 1px solid #3a2a10;
+  color: #ffd98a;
+  font-family: var(--font-mono);
+}
+
+[data-theme="solar"] pre {
+  background: #0d0804 !important;
+  border: 1px solid #3a2a10 !important;
+  color: #f8edda !important;
+}
+
+[data-theme="solar"] ::selection {
+  background: #ffb02e;
+  color: #0b0806;
+}
+
+/* Solar Overlays & Display rules */
+[data-theme="solar"] .solar-flare-stripe {
+  display: block !important;
+  height: 4px;
+  background: linear-gradient(90deg, #ff4d1c 0 14%, #ffb02e 14% 45%, #ffd98a 45% 75%, #ff4d1c 75% 100%);
+  opacity: 0.9;
+}
+
+[data-theme="solar"] .solar-heliograph-chassis {
+  display: block !important;
+  border: 1px solid #3a2a10;
+  border-top: 2px solid #c47f17;
+  background: color-mix(in srgb, #150f08 94%, transparent);
+  box-shadow: 4px 4px 0px #1c1206;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="solar"] .solar-diodes {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: #cbb594;
+}
+
+[data-theme="solar"] .solar-diodes i.sol-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffb02e;
+  box-shadow: 0 0 8px #ffb02e;
+  display: inline-block;
+  animation: coronaPulse 3.2s ease-in-out infinite;
+}
+
+[data-theme="solar"] .solar-diodes i.sol-led.red {
+  background: #ff4d1c;
+  box-shadow: 0 0 8px #ff4d1c;
+}
+
+/* id=(sol) Badge */
+[data-theme="solar"] .brand-badge {
+  font-size: 0 !important;
+  background: transparent !important;
+  color: #ffd98a !important;
+  border: 1px solid #c47f17 !important;
+  border-radius: 2px !important;
+  padding: 0.12rem 0.45rem !important;
+  font-family: var(--font-mono) !important;
+}
+[data-theme="solar"] .brand-badge::after {
+  content: "id=(sol)" !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 700 !important;
+  color: #ffd98a !important;
+}
+
+/* Top System Ticker in Solar Mode */
+[data-theme="solar"] .system-ticker {
+  background: #120d08 !important;
+  border-bottom: 1px solid #3a2a10 !important;
+  color: #cbb594 !important;
+}
+
+/* Hide standard radar elements in Solar Mode so Heliograph instrument takes over */
+[data-theme="solar"] .hero-chassis-radar-mini > .radar-circle,
+[data-theme="solar"] .hero-chassis-radar-mini > .radar-axis,
+[data-theme="solar"] .hero-chassis-radar-mini > .radar-sweep-beam,
+[data-theme="solar"] .hero-chassis-radar-mini > .radar-target,
+[data-theme="solar"] .hero-chassis-radar-mini > .chassis-center-sig,
+[data-theme="solar"] .chassis-radar-container > .radar-circle,
+[data-theme="solar"] .chassis-radar-container > .radar-axis,
+[data-theme="solar"] .chassis-radar-container > .radar-sweep-beam,
+[data-theme="solar"] .chassis-radar-container > .radar-target,
+[data-theme="solar"] .chassis-radar-container > .chassis-center-sig,
+[data-theme="solar"] .scope-controls,
+[data-theme="solar"] .phos-scope-controls {
+  display: none !important;
+}
+
+[data-theme="solar"] .chassis-radar-container {
+  height: auto !important;
+  min-height: 290px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* ==========================================================================
+   ROUND 6 SOLAR: MIMO EUV 131Å FALSE-COLOR CHANNEL (AIA 131Å HOT PLASMA)
+   ========================================================================== */
+[data-theme="solar"][data-solar-mode="euv"] {
+  /* Deep Space EUV Ground: Mimo EUV Palette */
+  --bg-primary: #04090c;
+  --bg-surface: #081114;
+  --bg-card: #091518;
+  --bg-card-hover: #0e1e22;
+  --bg-elevated: #0c1b1f;
+  --bg-invert: #2fe3c0;
+
+  /* Inks: EUV Phosphor Teals & Muted Sages */
+  --text-primary: #e2fbf5;
+  --text-secondary: #9ccdc3;
+  --text-muted: #5d8a82;
+  --text-invert: #04090c;
+
+  /* DeepSeek-harmonized EUV borders */
+  --border-color: #13403c;
+  --border-light: #0d2b29;
+  --border-highlight: #2fe3c0;
+  --border-gold: #2fe3c0;
+
+  /* EUV Accents: Mimo SDO 131Å Flare False Color */
+  --accent-primary: #2fe3c0;
+  --accent-secondary: #9ff5e6;
+  --accent-amber: #2fe3c0;
+  --accent-ember: #ff7a45;
+  --accent-glow: rgba(47, 227, 192, 0.35);
+  --accent-tag-bg: #0c1b1f;
+  --accent-tag-text: #9ff5e6;
+
+  /* Muse Neo-brutalist Offset Shadows in EUV Void */
+  --shadow-sm: 2px 2px 0px #021210;
+  --shadow-md: 4px 4px 0px #021210;
+  --shadow-lg: 7px 7px 0px #021210;
+  --shadow-hover: 5px 5px 0px #021210;
+  --shadow-active: 1px 1px 0px #021210;
+  --shadow-emerald: 4px 4px 0px #2fe3c0;
+
+  background-color: #04090c !important;
+  color: #e2fbf5 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] body {
+  background-color: #04090c !important;
+  color: #e2fbf5 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] body::before {
+  background: 
+    radial-gradient(900px 520px at 90% -8%, rgba(47, 227, 192, 0.14), transparent 62%),
+    radial-gradient(700px 600px at -6% 108%, rgba(11, 79, 69, 0.28), transparent 66%) !important;
+}
+
+/* EUV Flare Stripe: Teal/cyan gradient */
+[data-theme="solar"][data-solar-mode="euv"] .solar-flare-stripe {
+  background: linear-gradient(90deg, #04090c 0%, #13403c 15%, #2fe3c0 50%, #9ff5e6 75%, #04090c 100%) !important;
+}
+
+/* EUV Cards & Panels */
+[data-theme="solar"][data-solar-mode="euv"] .post-card,
+[data-theme="solar"][data-solar-mode="euv"] .article-card,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-card,
+[data-theme="solar"][data-solar-mode="euv"] .hud-card,
+[data-theme="solar"][data-solar-mode="euv"] .panel,
+[data-theme="solar"][data-solar-mode="euv"] .cve-ledger-card,
+[data-theme="solar"][data-solar-mode="euv"] .archive-entry-card {
+  background: #091518 !important;
+  border-color: #13403c !important;
+  border-top-color: #2fe3c0 !important;
+  box-shadow: 4px 4px 0px #021210 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .post-card:hover,
+[data-theme="solar"][data-solar-mode="euv"] .article-card:hover,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-card:hover,
+[data-theme="solar"][data-solar-mode="euv"] .hud-card:hover,
+[data-theme="solar"][data-solar-mode="euv"] .archive-entry-card:hover {
+  background: #0e1e22 !important;
+  border-color: #2fe3c0 !important;
+  box-shadow: 5px 5px 0px #021210 !important;
+}
+
+/* EUV Statement Box */
+[data-theme="solar"][data-solar-mode="euv"] .dossier-statement-box,
+[data-theme="solar"][data-solar-mode="euv"] .statement {
+  background: #091518 !important;
+  border: 1px solid #13403c !important;
+  border-top: 2px solid #2fe3c0 !important;
+  box-shadow: 4px 4px 0px #021210 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .statement-corner-tl,
+[data-theme="solar"][data-solar-mode="euv"] .statement-corner-br,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-statement-box::before,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-statement-box::after {
+  border-color: #2fe3c0 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .statement-quote {
+  color: #e2fbf5 !important;
+}
+
+/* EUV Wavy Vow Underline (No Background Smear, Pure Native Wave) */
+[data-theme="solar"][data-solar-mode="euv"] .vow,
+[data-theme="solar"][data-solar-mode="euv"] .statement-quote strong,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-statement-box .statement-quote strong {
+  color: #d9fff6 !important;
+  background: transparent !important;
+  background-image: none !important;
+  text-decoration: underline !important;
+  text-decoration-color: #2fe3c0 !important;
+  text-decoration-style: wavy !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 6px !important;
+  text-shadow: 0 0 16px rgba(47, 227, 192, 0.65), 0 0 44px rgba(47, 227, 192, 0.3) !important;
+  animation: solarVowPulseEUV 4.8s ease-in-out infinite !important;
+}
+
+@keyframes solarVowPulseEUV {
+  0%, 100% { text-shadow: 0 0 14px rgba(47, 227, 192, 0.45), 0 0 36px rgba(11, 79, 69, 0.3); }
+  50% { text-shadow: 0 0 22px rgba(159, 245, 230, 0.85), 0 0 56px rgba(47, 227, 192, 0.5); }
+}
+
+/* EUV Stat Tiles */
+[data-theme="solar"][data-solar-mode="euv"] .dossier-stat-tile,
+[data-theme="solar"][data-solar-mode="euv"] .stat-tile,
+[data-theme="solar"][data-solar-mode="euv"] .tile,
+[data-theme="solar"][data-solar-mode="euv"] .stat-card {
+  background: #091518 !important;
+  border: 1px solid #13403c !important;
+  border-top: 2px solid #2fe3c0 !important;
+  box-shadow: 2px 2px 0px #021210 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .stat-num,
+[data-theme="solar"][data-solar-mode="euv"] .stat-val {
+  color: #2fe3c0 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .stat-critical,
+[data-theme="solar"][data-solar-mode="euv"] .cvss-critical,
+[data-theme="solar"][data-solar-mode="euv"] .post-severity-tag.severity-critical {
+  color: #ff7a45 !important;
+  text-shadow: 0 0 14px rgba(255, 122, 69, 0.5) !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .stat-lbl,
+[data-theme="solar"][data-solar-mode="euv"] .stat-label {
+  color: #5d8a82 !important;
+}
+
+/* EUV Headings Accent Word */
+[data-theme="solar"][data-solar-mode="euv"] .headline .accent-word,
+[data-theme="solar"][data-solar-mode="euv"] .hero-heading .accent-word,
+[data-theme="solar"][data-solar-mode="euv"] .hero-heading .accent-terra-italic,
+[data-theme="solar"][data-solar-mode="euv"] .accent-terra-italic,
+[data-theme="solar"][data-solar-mode="euv"] .acc {
+  background: linear-gradient(100deg, #9ff5e6 0%, #2fe3c0 60%, #0fae94 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-style: normal !important;
+}
+
+/* EUV Buttons & Active Pills */
+[data-theme="solar"][data-solar-mode="euv"] .btn:not(.ghost):not(.btn-outline):not(.btn-secondary),
+[data-theme="solar"][data-solar-mode="euv"] .btn-primary,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-btn-primary {
+  background: #2fe3c0 !important;
+  color: #03211b !important;
+  border-color: #2fe3c0 !important;
+  box-shadow: 2px 2px 0px #021210 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .btn-secondary,
+[data-theme="solar"][data-solar-mode="euv"] .btn.ghost,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-btn-secondary,
+[data-theme="solar"][data-solar-mode="euv"] .dossier-btn-ghost {
+  background: #081114 !important;
+  border-color: #13403c !important;
+  color: #9ccdc3 !important;
+  box-shadow: 2px 2px 0px #021210 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .tag-btn.active,
+[data-theme="solar"][data-solar-mode="euv"] .tag-chip.active {
+  background: #2fe3c0 !important;
+  color: #03211b !important;
+  border-color: #2fe3c0 !important;
+  box-shadow: 2px 2px 0px #021210 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .system-ticker {
+  background: #081114 !important;
+  border-bottom: 1px solid #13403c !important;
+  color: #9ccdc3 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .brand-badge {
+  border-color: #2fe3c0 !important;
+  color: #2fe3c0 !important;
+}
+[data-theme="solar"][data-solar-mode="euv"] .brand-badge::after {
+  content: "id=(euv131)" !important;
+  color: #2fe3c0 !important;
+}
+
+[data-theme="solar"][data-solar-mode="euv"] .solar-diodes i.sol-led {
+  background: #2fe3c0 !important;
+  box-shadow: 0 0 8px #2fe3c0 !important;
+}
+[data-theme="solar"][data-solar-mode="euv"] .solar-diode-item {
+  color: #9ccdc3 !important;
+}
+
+/* ==========================================================================
+   ROUND 6 SOLAR: MIMO TOTALITY (ECLIPSE / CORONA WHITE) MODE
+   ========================================================================== */
+[data-theme="solar"][data-solar-mode="totality"] {
+  --bg-primary: #050506;
+  --bg-surface: #0b0b0e;
+  --bg-card: #0d0d11;
+  --bg-card-hover: #141419;
+  --bg-elevated: #121216;
+  --bg-invert: #e8ecf2;
+
+  --text-primary: #eef1f6;
+  --text-secondary: #b6bcc9;
+  --text-muted: #6d7382;
+  --text-invert: #050506;
+
+  --border-color: #333845;
+  --border-light: #23262f;
+  --border-highlight: #e8ecf2;
+  --border-gold: #e8ecf2;
+
+  --accent-primary: #e8ecf2;
+  --accent-secondary: #ffffff;
+  --accent-amber: #e8ecf2;
+  --accent-ember: #ff5a2e;
+  --accent-glow: rgba(232, 236, 242, 0.35);
+  --accent-tag-bg: #121216;
+  --accent-tag-text: #ffffff;
+
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-lg: 7px 7px 0px #000000;
+  --shadow-hover: 5px 5px 0px #000000;
+  --shadow-active: 1px 1px 0px #000000;
+  --shadow-emerald: 4px 4px 0px #e8ecf2;
+
+  background-color: #050506 !important;
+  color: #eef1f6 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] body {
+  background-color: #050506 !important;
+  color: #eef1f6 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] body::before {
+  background: 
+    radial-gradient(820px 620px at 88% 0%, rgba(232, 236, 242, 0.1), transparent 60%),
+    radial-gradient(600px 500px at -6% 110%, rgba(120, 130, 150, 0.1), transparent 66%) !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .solar-flare-stripe {
+  background: linear-gradient(90deg, #050506 0%, #333845 20%, #e8ecf2 50%, #ffffff 75%, #050506 100%) !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .post-card,
+[data-theme="solar"][data-solar-mode="totality"] .article-card,
+[data-theme="solar"][data-solar-mode="totality"] .dossier-card,
+[data-theme="solar"][data-solar-mode="totality"] .hud-card,
+[data-theme="solar"][data-solar-mode="totality"] .panel,
+[data-theme="solar"][data-solar-mode="totality"] .cve-ledger-card,
+[data-theme="solar"][data-solar-mode="totality"] .archive-entry-card {
+  background: #0d0d11 !important;
+  border-color: #333845 !important;
+  border-top-color: #e8ecf2 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .post-card:hover,
+[data-theme="solar"][data-solar-mode="totality"] .article-card:hover,
+[data-theme="solar"][data-solar-mode="totality"] .dossier-card:hover,
+[data-theme="solar"][data-solar-mode="totality"] .hud-card:hover,
+[data-theme="solar"][data-solar-mode="totality"] .archive-entry-card:hover {
+  background: #141419 !important;
+  border-color: #ffffff !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .dossier-statement-box,
+[data-theme="solar"][data-solar-mode="totality"] .statement {
+  background: #0d0d11 !important;
+  border: 1px solid #333845 !important;
+  border-top: 2px solid #e8ecf2 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .statement-corner-tl,
+[data-theme="solar"][data-solar-mode="totality"] .statement-corner-br {
+  border-color: #e8ecf2 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .statement-quote {
+  color: #eef1f6 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .vow,
+[data-theme="solar"][data-solar-mode="totality"] .statement-quote strong,
+[data-theme="solar"][data-solar-mode="totality"] .dossier-statement-box .statement-quote strong {
+  color: #ffffff !important;
+  background: transparent !important;
+  text-decoration: underline !important;
+  text-decoration-color: #ffffff !important;
+  text-decoration-style: wavy !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 6px !important;
+  text-shadow: 0 0 16px rgba(232, 236, 242, 0.65), 0 0 44px rgba(232, 236, 242, 0.3) !important;
+  animation: solarVowPulseTotality 4.8s ease-in-out infinite !important;
+}
+
+@keyframes solarVowPulseTotality {
+  0%, 100% { text-shadow: 0 0 14px rgba(232, 236, 242, 0.45), 0 0 38px rgba(232, 236, 242, 0.2); }
+  50% { text-shadow: 0 0 22px rgba(255, 255, 255, 0.85), 0 0 58px rgba(232, 236, 242, 0.4); }
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .dossier-stat-tile,
+[data-theme="solar"][data-solar-mode="totality"] .stat-tile,
+[data-theme="solar"][data-solar-mode="totality"] .tile,
+[data-theme="solar"][data-solar-mode="totality"] .stat-card {
+  background: #0d0d11 !important;
+  border: 1px solid #333845 !important;
+  border-top: 2px solid #e8ecf2 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .stat-num,
+[data-theme="solar"][data-solar-mode="totality"] .stat-val {
+  color: #e8ecf2 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .stat-critical,
+[data-theme="solar"][data-solar-mode="totality"] .cvss-critical {
+  color: #ff5a2e !important;
+  text-shadow: 0 0 14px rgba(255, 90, 46, 0.5) !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .stat-lbl,
+[data-theme="solar"][data-solar-mode="totality"] .stat-label {
+  color: #6d7382 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .headline .accent-word,
+[data-theme="solar"][data-solar-mode="totality"] .hero-heading .accent-word,
+[data-theme="solar"][data-solar-mode="totality"] .hero-heading .accent-terra-italic,
+[data-theme="solar"][data-solar-mode="totality"] .accent-terra-italic,
+[data-theme="solar"][data-solar-mode="totality"] .acc {
+  background: linear-gradient(100deg, #ffffff 0%, #e8ecf2 55%, #9aa3b4 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  font-style: normal !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .btn:not(.ghost):not(.btn-outline):not(.btn-secondary),
+[data-theme="solar"][data-solar-mode="totality"] .btn-primary,
+[data-theme="solar"][data-solar-mode="totality"] .dossier-btn-primary {
+  background: #e8ecf2 !important;
+  color: #050506 !important;
+  border-color: #e8ecf2 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .btn-secondary,
+[data-theme="solar"][data-solar-mode="totality"] .btn.ghost,
+[data-theme="solar"][data-solar-mode="totality"] .dossier-btn-secondary,
+[data-theme="solar"][data-solar-mode="totality"] .dossier-btn-ghost {
+  background: #0b0b0e !important;
+  border-color: #333845 !important;
+  color: #b6bcc9 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .tag-btn.active,
+[data-theme="solar"][data-solar-mode="totality"] .tag-chip.active {
+  background: #e8ecf2 !important;
+  color: #050506 !important;
+  border-color: #e8ecf2 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .system-ticker {
+  background: #0b0b0e !important;
+  border-bottom: 1px solid #333845 !important;
+  color: #b6bcc9 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .brand-badge {
+  border-color: #e8ecf2 !important;
+  color: #e8ecf2 !important;
+}
+[data-theme="solar"][data-solar-mode="totality"] .brand-badge::after {
+  content: "id=(eclipse)" !important;
+  color: #e8ecf2 !important;
+}
+
+[data-theme="solar"][data-solar-mode="totality"] .solar-diodes i.sol-led {
+  background: #e8ecf2 !important;
+  box-shadow: 0 0 8px #ffffff !important;
+}
+[data-theme="solar"][data-solar-mode="totality"] .solar-diode-item {
+  color: #b6bcc9 !important;
+}
+
+/* Solar Channel Selector (HMI 6173Å vs AIA 131Å vs ECLIPSE) */
+.solar-channel-selector {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+.solar-chan-btn {
+  background: #1a120a;
+  border: 1px solid #3a2a10;
+  color: #8f7a5c;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  padding: 0.12rem 0.45rem;
+  cursor: pointer;
+  border-radius: 2px;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+.solar-chan-btn:hover {
+  border-color: #c47f17;
+  color: #f8edda;
+}
+.solar-chan-btn.active {
+  background: #ffb02e;
+  border-color: #ffb02e;
+  color: #0b0806;
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(255, 176, 46, 0.4);
+}
+[data-theme="solar"][data-solar-mode="euv"] .solar-chan-btn {
+  background: #0c1b1f;
+  border-color: #13403c;
+  color: #5d8a82;
+}
+[data-theme="solar"][data-solar-mode="euv"] .solar-chan-btn:hover {
+  border-color: #2fe3c0;
+  color: #e2fbf5;
+}
+[data-theme="solar"][data-solar-mode="euv"] .solar-chan-btn.active {
+  background: #2fe3c0;
+  border-color: #2fe3c0;
+  color: #03211b;
+  box-shadow: 0 0 8px rgba(47, 227, 192, 0.45);
+}
+[data-theme="solar"][data-solar-mode="totality"] .solar-chan-btn {
+  background: #121216;
+  border-color: #333845;
+  color: #6d7382;
+}
+[data-theme="solar"][data-solar-mode="totality"] .solar-chan-btn:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+[data-theme="solar"][data-solar-mode="totality"] .solar-chan-btn.active {
+  background: #e8ecf2;
+  border-color: #e8ecf2;
+  color: #050506;
+  box-shadow: 0 0 8px rgba(232, 236, 242, 0.5);
+}
+
 
 /* Hazard — Neon yellow/lime on dark, warning-sign energy */
 [data-theme="hazard"] {
@@ -3990,7 +4876,8 @@ header.site-header {
 }
 
 [data-theme="solar"] header.site-header {
-  background: rgba(250, 246, 238, 0.95);
+  background: rgba(11, 8, 6, 0.94);
+  border-bottom: 2px solid #3a2a10;
 }
 
 [data-theme="sakura"] header.site-header {

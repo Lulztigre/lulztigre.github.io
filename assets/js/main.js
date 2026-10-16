@@ -39,6 +39,18 @@
     } else {
       document.documentElement.removeAttribute('data-palette');
     }
+    if (theme === 'solar') {
+      const savedMode = localStorage.getItem('solar_spectral_mode') || 'photosphere';
+      if (typeof window.setSolarMode === 'function') {
+        window.setSolarMode(savedMode);
+      } else if (savedMode === 'euv' || savedMode === 'totality') {
+        document.documentElement.setAttribute('data-solar-mode', savedMode);
+      } else {
+        document.documentElement.removeAttribute('data-solar-mode');
+      }
+    } else {
+      document.documentElement.removeAttribute('data-solar-mode');
+    }
     localStorage.setItem(THEME_KEY, theme);
     updateThemeButtonLabel(theme);
   }
@@ -58,6 +70,7 @@
     const PHANTOM_SPECTER = '<span class="phantom-theme-specter" style="margin-right:0.35rem;vertical-align:-1px;font-size:1.05rem;filter:drop-shadow(0 0 6px rgba(0,255,136,0.6));">👻</span>';
     const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
     const COBALT_TREFOIL = '<svg class="cob-mark-btn" width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;animation:cobRotateTrefoil 12s linear infinite;" fill="currentColor"><circle cx="12" cy="12" r="2.4"/><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/><g transform="rotate(120 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><g transform="rotate(240 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><circle cx="12" cy="12" r="10.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+    const SOLAR_MARK = '<svg class="sol-mark-btn" width="14" height="14" viewBox="0 0 48 48" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#ffb02e;animation:cobRotateTrefoil 35s linear infinite;" fill="currentColor"><circle cx="24" cy="24" r="10" fill="currentColor"/><g stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="24" y1="4" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="44"/><line x1="4" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="44" y2="24"/><line x1="9.9" y1="9.9" x2="14.1" y2="14.1"/><line x1="33.9" y1="33.9" x2="38.1" y2="38.1"/><line x1="9.9" y1="38.1" x2="14.1" y2="33.9"/><line x1="33.9" y1="14.1" x2="38.1" y2="9.9"/></g></svg>';
     const icons = {
       phantom: PHANTOM_SPECTER + 'PHANTOM',
       void: PHANTOM_SPECTER + 'PHANTOM',
@@ -69,7 +82,7 @@
       arctic: '◇ ARCTIC',
       synthwave: '♦ SYNTHWAVE',
       phosphor: '█ PHOSPHOR',
-      solar: '☀ SOLAR',
+      solar: SOLAR_MARK + 'SOLAR',
       hazard: '⚠ HAZARD',
       cobalt: COBALT_TREFOIL + 'COBALT',
       sakura: '✿ SAKURA',
@@ -87,6 +100,8 @@
       label = '<span class="phos-cursor" style="display:inline-block;width:0.55em;height:0.95em;background:#33ff66;margin-right:0.35rem;vertical-align:-1px;box-shadow:0 0 8px rgba(51,255,102,0.8);"></span>PHOSPHOR';
     } else if (theme === 'cobalt') {
       label = COBALT_TREFOIL + 'COBALT';
+    } else if (theme === 'solar') {
+      label = SOLAR_MARK + 'SOLAR';
     }
     btn.innerHTML = `<span>${label}</span>`;
   }
@@ -1984,6 +1999,391 @@
     });
   }
 
+  // --- ROUND 6 SOLAR: MIMO LIVE ANIMATED HELIOGRAPH CANVAS & GOES STRIP ---
+  function initSolarHeliograph() {
+    const sunCanvases = [document.getElementById('solarHeliographCanvas'), document.getElementById('solarHeliographCanvasAbout')].filter(Boolean);
+    const goesCanvases = [document.getElementById('solarGoesCanvas'), document.getElementById('solarGoesCanvasAbout')].filter(Boolean);
+    if (!sunCanvases.length && !goesCanvases.length) return;
+
+    function mulberry32(a) {
+      return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function fitCanvas(cv) {
+      if (!cv) return null;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = cv.getBoundingClientRect();
+      const w = Math.floor(rect.width * dpr);
+      const h = Math.floor(rect.height * dpr);
+      if (w < 10 || h < 10) return null;
+      if (cv.width !== w || cv.height !== h) {
+        cv.width = w; cv.height = h;
+      }
+      return { ctx: cv.getContext('2d'), w: w, h: h, dpr: dpr };
+    }
+
+    // 1. GOES X-ray Flux strip
+    let fluxRng = mulberry32(42042);
+    let fluxBuf = [];
+    const BUF_LEN = 90;
+    for (let i = 0; i < BUF_LEN; i++) {
+      fluxBuf.push(1e-8 * (1.2 + fluxRng() * 0.8));
+    }
+    let activeFlare = null;
+
+    function tickFlux() {
+      if (document.documentElement.getAttribute('data-theme') !== 'solar') return;
+      if (!activeFlare && fluxRng() < 0.035) {
+        const roll = fluxRng();
+        const cls = roll < 0.65 ? 'C' : roll < 0.92 ? 'M' : 'X';
+        const mag = 1 + fluxRng() * 8.9;
+        const peak = (cls === 'C' ? 1e-6 : cls === 'M' ? 1e-5 : 1e-4) * mag;
+        activeFlare = { peak: peak, t: 0, dur: 45 + fluxRng() * 55, cls: cls, mag: mag.toFixed(1) };
+        ['solarGoesEvents', 'solarGoesEventsAbout'].forEach(id => {
+          const evEl = document.getElementById(id);
+          if (evEl) {
+            evEl.innerHTML = `<span style="color:${cls === 'X' ? '#ff4d1c' : '#ffb02e'}">FLARE ${cls}${mag.toFixed(1)} ACTIVE // AR13664</span>`;
+          }
+        });
+      }
+      let nxt = 1e-8 * (1.2 + Math.sin(Date.now() / 6000) * 0.4 + (fluxRng() - 0.5) * 0.3);
+      if (activeFlare) {
+        activeFlare.t++;
+        const p = activeFlare.t / activeFlare.dur;
+        const fVal = (p < 0.18) ? (p / 0.18) : Math.exp(-(p - 0.18) * 3.8);
+        nxt += activeFlare.peak * Math.max(fVal, 0);
+        if (activeFlare.t >= activeFlare.dur) activeFlare = null;
+      }
+      fluxBuf.shift();
+      fluxBuf.push(Math.max(nxt, 5e-9));
+    }
+
+    function drawGoes() {
+      if (document.documentElement.getAttribute('data-theme') !== 'solar') return;
+      goesCanvases.forEach(goesCv => {
+        const f = fitCanvas(goesCv);
+        if (!f) return;
+        const ctx = f.ctx, W = f.w, H = f.h;
+        const padL = 22, padR = 6, padT = 6, padB = 14;
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#050403';
+        ctx.fillRect(0, 0, W, H);
+
+        const logMin = -8.5, logMax = -3.5;
+        function yOf(l) {
+          return padT + (H - padT - padB) * (1 - (l - logMin) / (logMax - logMin));
+        }
+        const bands = [{ l: -8, k: 'A' }, { l: -7, k: 'B' }, { l: -6, k: 'C' }, { l: -5, k: 'M' }, { l: -4, k: 'X' }];
+        ctx.font = '6.5px "IBM Plex Mono", monospace';
+        bands.forEach(b => {
+          const y = yOf(b.l);
+          ctx.strokeStyle = (b.k === 'X') ? 'rgba(255,77,28,.35)' : 'rgba(58,42,16,.55)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+          ctx.fillStyle = (b.k === 'X') ? '#ff4d1c' : '#8f7a5c';
+          ctx.fillText(b.k, 6, y + 2);
+        });
+
+        const sMode = document.documentElement.getAttribute('data-solar-mode');
+        const st = (W - padL - padR) / (fluxBuf.length - 1);
+        ctx.strokeStyle = (sMode === 'totality') ? '#e8ecf2' : (sMode === 'euv') ? '#2fe3c0' : '#ffb02e';
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        for (let i = 0; i < fluxBuf.length; i++) {
+          const x = padL + i * st;
+          const y = yOf(Math.log10(fluxBuf[i]));
+          i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        }
+        ctx.stroke();
+
+        const lastX = padL + (fluxBuf.length - 1) * st;
+        const lastY = yOf(Math.log10(fluxBuf[fluxBuf.length - 1]));
+        ctx.fillStyle = (sMode === 'totality') ? '#ffffff' : (sMode === 'euv') ? '#2fe3c0' : '#ff4d1c';
+        ctx.beginPath(); ctx.arc(lastX, lastY, 2.5, 0, 7); ctx.fill();
+      });
+    }
+
+    setInterval(() => {
+      tickFlux();
+      drawGoes();
+    }, 180);
+
+    // 2. Channel Switching & Persistence (Photosphere HMI vs EUV AIA 131 vs Totality Eclipse)
+    const validSolarModes = ['photosphere', 'euv', 'totality'];
+    let solarMode = localStorage.getItem('solar_spectral_mode') || 'photosphere';
+    if (!validSolarModes.includes(solarMode)) solarMode = 'photosphere';
+
+    function applySolarMode(mode) {
+      solarMode = validSolarModes.includes(mode) ? mode : 'photosphere';
+      localStorage.setItem('solar_spectral_mode', solarMode);
+      if (solarMode === 'photosphere') {
+        document.documentElement.removeAttribute('data-solar-mode');
+      } else {
+        document.documentElement.setAttribute('data-solar-mode', solarMode);
+      }
+
+      // Update Channel Buttons & Header Labels
+      document.querySelectorAll('.solar-chan-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.chan === solarMode);
+      });
+      ['solarFeedChannel', 'solarFeedChannelAbout'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (solarMode === 'totality') {
+            el.textContent = 'ECLIPSE · CORONA STREAMERS';
+          } else if (solarMode === 'euv') {
+            el.textContent = 'SDO / AIA · 131 Å (HOT CORONA)';
+          } else {
+            el.textContent = 'HMI / EIT · WHITE-LIGHT';
+          }
+        }
+      });
+    }
+
+    window.setSolarMode = applySolarMode;
+
+    // Initialize mode if in solar theme
+    if (document.documentElement.getAttribute('data-theme') === 'solar') {
+      applySolarMode(solarMode);
+    }
+
+    // Attach click listeners to channel selector buttons & header
+    document.querySelectorAll('.solar-chan-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        applySolarMode(btn.dataset.chan);
+        showToast(`SOLAR CHANNEL: [${btn.dataset.chan.toUpperCase()}]`);
+      });
+    });
+
+    ['solarFeedChannel', 'solarFeedChannelAbout'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', () => {
+          const cycleOrder = ['photosphere', 'euv', 'totality'];
+          const nextIdx = (cycleOrder.indexOf(solarMode) + 1) % cycleOrder.length;
+          const next = cycleOrder[nextIdx];
+          applySolarMode(next);
+          showToast(`SOLAR CHANNEL: [${next.toUpperCase()}]`);
+        });
+      }
+    });
+
+    // Keyboard Shortcuts: [U] to toggle EUV 131, [E] to toggle Totality Eclipse
+    window.addEventListener('keydown', (e) => {
+      if (document.documentElement.getAttribute('data-theme') !== 'solar') return;
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (e.key === 'u' || e.key === 'U') {
+        e.preventDefault();
+        const next = (solarMode === 'euv') ? 'photosphere' : 'euv';
+        applySolarMode(next);
+        showToast(`SOLAR CHANNEL: [${next.toUpperCase()}]`);
+      } else if (e.key === 'e' || e.key === 'E') {
+        e.preventDefault();
+        const next = (solarMode === 'totality') ? 'photosphere' : 'totality';
+        applySolarMode(next);
+        showToast(`SOLAR CHANNEL: [${next.toUpperCase()}]`);
+      }
+    });
+
+    // 3. 60FPS Live Heliograph Sun Canvas (Photosphere vs EUV 131 vs Totality)
+    const sunRng = mulberry32(60606);
+    const granules = [];
+    const spots = [];
+    for (let gi = 0; gi < 100; gi++) {
+      granules.push({
+        a: sunRng() * Math.PI * 2,
+        r: sunRng(),
+        s: 3.5 + sunRng() * 8,
+        ph: sunRng() * Math.PI * 2,
+        dark: sunRng() < 0.5
+      });
+    }
+    const defs = [[0.4, 0.12, 8, 'AR13664'], [1.9, -0.22, 6, 'AR13666'], [3.5, 0.05, 4.5, 'AR13670']];
+    defs.forEach(d => { spots.push({ lam: d[0], lat: d[1], s: d[2], ar: d[3] }); });
+
+    const OMEGA = Math.PI * 2 / 70;
+    const coronaRays = [];
+    const cr = mulberry32(30430);
+    for (let i = 0; i < 30; i++) {
+      coronaRays.push({
+        j: cr() * Math.PI * 2,
+        base: 0.98 + cr() * 1.05,
+        al: 0.05 + cr() * 0.15,
+        bow: (cr() - 0.5) * 0.55,
+        w: 0.9 + cr() * 1.5
+      });
+    }
+
+    let simT = 0, lastTs = 0;
+    function renderSun(ts) {
+      if (document.documentElement.getAttribute('data-theme') === 'solar') {
+        if (!lastTs) lastTs = ts;
+        const dt = Math.min((ts - lastTs) / 1000, 0.1);
+        lastTs = ts;
+        simT += dt;
+
+        const sMode = document.documentElement.getAttribute('data-solar-mode') || 'photosphere';
+        const isTotality = (sMode === 'totality');
+        const isEuv = (sMode === 'euv');
+
+        sunCanvases.forEach(sunCv => {
+          const f = fitCanvas(sunCv);
+          if (f) {
+            const ctx = f.ctx, W = f.w, H = f.h;
+            const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.38;
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = isTotality ? '#050506' : (isEuv ? '#010507' : '#020202');
+            ctx.fillRect(0, 0, W, H);
+
+            if (isTotality) {
+              // Totality: Mimo seeded irregular bowed corona streamers
+              ctx.save();
+              ctx.globalCompositeOperation = 'lighter';
+              for (let r = 0; r < coronaRays.length; r++) {
+                const ray = coronaRays[r];
+                const ang = (r / coronaRays.length) * Math.PI * 2 + ray.j * 0.14 + simT * 0.012;
+                const len = R * (ray.base + 0.22 * Math.sin(simT * 0.3 + ray.j));
+                const x0 = cx + Math.cos(ang) * R * 0.98, y0 = cy + Math.sin(ang) * R * 0.98;
+                const x1 = cx + Math.cos(ang) * len, y1 = cy + Math.sin(ang) * len;
+                const mx = (x0 + x1) / 2 - Math.sin(ang) * ray.bow * R * 0.3;
+                const my = (y0 + y1) / 2 + Math.cos(ang) * ray.bow * R * 0.3;
+                const g = ctx.createLinearGradient(x0, y0, x1, y1);
+                g.addColorStop(0, `rgba(255, 255, 255, ${ray.al.toFixed(3)})`);
+                g.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                ctx.strokeStyle = g;
+                ctx.lineWidth = ray.w;
+                ctx.beginPath();
+                ctx.moveTo(x0, y0);
+                ctx.quadraticCurveTo(mx, my, x1, y1);
+                ctx.stroke();
+              }
+              ctx.restore();
+
+              // Inner ring (Baily's beads hint)
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+              ctx.lineWidth = 1.6;
+              ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+              ctx.strokeStyle = 'rgba(232, 236, 242, 0.22)';
+              ctx.lineWidth = 6;
+              ctx.beginPath(); ctx.arc(cx, cy, R + 2, 0, Math.PI * 2); ctx.stroke();
+
+              // Occulting dark moon disk
+              ctx.fillStyle = '#050506';
+              ctx.beginPath(); ctx.arc(cx, cy, R - 0.5, 0, Math.PI * 2); ctx.fill();
+
+              // Totality watermark
+              ctx.fillStyle = 'rgba(232, 236, 242, 0.45)';
+              ctx.font = '6px "IBM Plex Mono", monospace';
+              ctx.fillText('TOTALITY FEED · CORONA STREAMERS · CR 2298', 8, 12);
+            } else {
+              // Photosphere and EUV 131
+              // Corona outer glow
+              const cg = ctx.createRadialGradient(cx, cy, R * 0.9, cx, cy, R * 1.85);
+              if (isEuv) {
+                cg.addColorStop(0, 'rgba(47, 227, 192, 0.32)');
+                cg.addColorStop(1, 'rgba(47, 227, 192, 0)');
+              } else {
+                cg.addColorStop(0, 'rgba(255, 140, 30, 0.3)');
+                cg.addColorStop(1, 'rgba(255, 90, 10, 0)');
+              }
+              ctx.fillStyle = cg;
+              ctx.beginPath(); ctx.arc(cx, cy, R * 1.85, 0, Math.PI * 2); ctx.fill();
+
+              // Disk Gradient: Photosphere Gold vs EUV Deep Cyan
+              const dg = ctx.createRadialGradient(cx - R * 0.12, cy - R * 0.12, R * 0.05, cx, cy, R);
+              if (isEuv) {
+                dg.addColorStop(0, '#0c3f38');
+                dg.addColorStop(0.75, '#062622');
+                dg.addColorStop(1, '#031412');
+              } else {
+                dg.addColorStop(0, '#fff6e0');
+                dg.addColorStop(0.5, '#ffcf6e');
+                dg.addColorStop(0.85, '#ff9d2e');
+                dg.addColorStop(0.97, '#e86e12');
+                dg.addColorStop(1, '#b34d06');
+              }
+              ctx.fillStyle = dg;
+              ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+
+              // Granulation Convection Cells
+              ctx.save();
+              ctx.beginPath(); ctx.arc(cx, cy, R - 1, 0, Math.PI * 2); ctx.clip();
+              for (let i = 0; i < granules.length; i++) {
+                const gr = granules[i];
+                const a = gr.a + simT * OMEGA;
+                const gx = cx + Math.cos(a) * gr.r * R * 0.94;
+                const gy = cy + Math.sin(a) * gr.r * R * 0.55 + Math.sin(simT * 0.7 + gr.ph) * 1.2;
+                const al = 0.03 + 0.025 * Math.sin(simT * 1.3 + gr.ph);
+                if (isEuv) {
+                  ctx.fillStyle = gr.dark ? `rgba(4,25,22,${Math.max(al,0).toFixed(3)})` : `rgba(159,245,230,${Math.max(al*0.8,0).toFixed(3)})`;
+                } else {
+                  ctx.fillStyle = gr.dark ? `rgba(120,50,0,${Math.max(al,0).toFixed(3)})` : `rgba(255,255,255,${Math.max(al,0).toFixed(3)})`;
+                }
+                ctx.beginPath(); ctx.ellipse(gx, gy, gr.s, gr.s * 0.7, a, 0, Math.PI * 2); ctx.fill();
+              }
+              ctx.restore();
+
+              // Sunspots / Active Regions: In EUV, Active Regions GLOW Hot Plasma!
+              for (let i = 0; i < spots.length; i++) {
+                const sp = spots[i];
+                sp.lam += OMEGA * dt;
+                if (sp.lam > Math.PI * 2) sp.lam -= Math.PI * 2;
+                const depth = Math.cos(sp.lam);
+                if (depth <= 0.05) continue;
+                const sx = cx + Math.sin(sp.lam) * R * 0.92;
+                const sy = cy + sp.lat * R * 1.6;
+                const foresh = Math.max(depth, 0.18);
+
+                if (isEuv) {
+                  const eg = ctx.createRadialGradient(sx, sy, 0, sx, sy, sp.s * 2.6);
+                  eg.addColorStop(0, 'rgba(217, 255, 246, 0.95)');
+                  eg.addColorStop(0.35, 'rgba(47, 227, 192, 0.65)');
+                  eg.addColorStop(1, 'rgba(47, 227, 192, 0)');
+                  ctx.fillStyle = eg;
+                  ctx.beginPath();
+                  ctx.ellipse(sx, sy, sp.s * 2.6 * foresh, sp.s * 2.4, 0, 0, Math.PI * 2);
+                  ctx.fill();
+                } else {
+                  ctx.fillStyle = 'rgba(140, 70, 10, 0.85)';
+                  ctx.beginPath(); ctx.ellipse(sx, sy, sp.s * 1.9 * foresh, sp.s * 1.5, 0, 0, Math.PI * 2); ctx.fill();
+                  ctx.fillStyle = '#2a1403';
+                  ctx.beginPath(); ctx.ellipse(sx, sy, sp.s * foresh, sp.s * 0.78, 0, 0, Math.PI * 2); ctx.fill();
+                }
+
+                if (sp.ar && depth > 0.5) {
+                  ctx.strokeStyle = isEuv ? '#9ff5e6' : 'rgba(255, 243, 217, 0.75)';
+                  ctx.lineWidth = 1;
+                  ctx.beginPath(); ctx.moveTo(sx + sp.s * 2, sy - sp.s); ctx.lineTo(sx + sp.s * 2 + 10, sy - sp.s - 10); ctx.stroke();
+                  ctx.fillStyle = isEuv ? '#9ff5e6' : 'rgba(255, 243, 217, 0.9)';
+                  ctx.font = '6.5px "IBM Plex Mono", monospace';
+                  ctx.fillText(sp.ar, sx + sp.s * 2 + 12, sy - sp.s - 10);
+                }
+              }
+
+              // Limb Ring
+              ctx.strokeStyle = isEuv ? 'rgba(47, 227, 192, 0.45)' : 'rgba(255, 157, 46, 0.5)';
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
+
+              // Header mark
+              ctx.fillStyle = isEuv ? 'rgba(156, 205, 195, 0.55)' : 'rgba(207, 181, 148, 0.4)';
+              ctx.font = '6px "IBM Plex Mono", monospace';
+              ctx.fillText(isEuv ? 'AIA 131 FEED · SDO · 10 MK' : 'HMI FEED · LZ-994 · CR 2298', 8, 12);
+            }
+          }
+        });
+      }
+      requestAnimationFrame(renderSun);
+    }
+    requestAnimationFrame(renderSun);
+  }
+
   // --- INITIALIZE ALL MODULES ---
   function initAll() {
     initTheme();
@@ -2000,6 +2400,7 @@
     initPhantomDecorations();
     initPhosphorOscilloscope();
     initCobaltChassis();
+    initSolarHeliograph();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {

@@ -19,7 +19,7 @@
   <!-- Google Fonts: Space Mono, Space Grotesk, Newsreader, Orbitron, Rajdhani, Share Tech Mono, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=VT323&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Architects+Daughter&family=Chakra+Petch:wght@500;600;700&family=Oswald:wght@500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Saira+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=VT323&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Architects+Daughter&family=Chakra+Petch:wght@500;600;700&family=Oswald:wght@500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Saira+Condensed:wght@500;600;700&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- KaTeX Math Rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -28,17 +28,24 @@
           onload="renderMathInElement(document.body);"></script>
 
   <!-- Core Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=2.7">
+  <link rel="stylesheet" href="assets/css/style.css?v=2.9">
 
   <!-- Prevent Theme Flash & Randomize Theme on Visit, Reload & Navigation -->
   <script>
     (function(){
       var THEME_KEY = 'phantom_kernel_theme';
       var themes = ['phantom', 'floral', 'uchiha', 'arctic', 'phosphor', 'solar', 'cobalt', 'sakura', 'yua'];
+      var params = new URLSearchParams(window.location.search);
+      var urlTheme = params.get('theme');
       var lastTheme = localStorage.getItem(THEME_KEY);
-      var pool = themes.filter(function(t) { return t !== lastTheme; });
-      if (pool.length === 0) pool = themes;
-      var chosen = pool[Math.floor(Math.random() * pool.length)] || 'floral';
+      var chosen;
+      if (urlTheme && themes.indexOf(urlTheme) !== -1) {
+        chosen = urlTheme;
+      } else {
+        var pool = themes.filter(function(t) { return t !== lastTheme; });
+        if (pool.length === 0) pool = themes;
+        chosen = pool[Math.floor(Math.random() * pool.length)] || 'floral';
+      }
       localStorage.setItem(THEME_KEY, chosen);
       document.documentElement.setAttribute('data-theme', chosen);
       if (chosen === 'floral' || chosen === 'flora' || chosen === 'ghost') {
@@ -103,14 +110,22 @@
         <span class="cobalt-diode-item warn"><i class="cob-led amber"></i> CORE: 1.33 MeV GAMMA</span>
         <button type="button" class="cobalt-ticker-btn" id="cobalt-ping-btn" title="Fire acoustic sonar ping">⚡ PING</button>
       </div>
+      <div class="solar-diodes" aria-hidden="true">
+        <span class="solar-diode-item"><i class="sol-led"></i> CR 2298</span>
+        <span class="solar-diode-item"><i class="sol-led red"></i> AR13664</span>
+        <span class="solar-diode-item">FLUX: B1.4</span>
+      </div>
     </div>
     <div class="ticker-right">
       <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
         <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
       </button>
-      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [/] SEARCH</span>
+      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [U] EUV / [E] ECLIPSE / [/] SEARCH</span>
     </div>
   </div>
+
+  <!-- Solar Round 6 Hardware Flare Stripe -->
+  <div class="solar-flare-stripe" aria-hidden="true"></div>
 
   <!-- Header & Navigation -->
   <header class="site-header">
@@ -300,6 +315,36 @@
               <div class="sonar-canvas-wrap" id="sonarCanvasDisplay">
                 <canvas id="sonarCanvas"></canvas>
               </div>
+            </div>
+
+            <!-- Solar Round 6 Heliograph Instrument: Mimo Animated 60FPS Sun Canvas & GOES Strip -->
+            <div class="solar-heliograph-chassis" id="solarHeliographChassis" aria-hidden="true">
+              <div class="feed-head" style="display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0.6rem 0.15rem;font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase;">
+                <div style="display:inline-flex;align-items:center;gap:0.45rem;">
+                  <span id="solarFeedChannel" style="cursor:pointer;" title="Click to toggle EUV 131Å / White-Light">HMI / EIT · WHITE-LIGHT</span>
+                  <div class="solar-channel-selector" aria-label="Spectral Channel">
+                    <button type="button" class="solar-chan-btn active" data-chan="photosphere" title="HMI 6173Å Visible Light">HMI</button>
+                    <button type="button" class="solar-chan-btn" data-chan="euv" title="SDO AIA 131Å Extreme Ultraviolet">AIA 131</button>
+                    <button type="button" class="solar-chan-btn" data-chan="totality" title="Totality Eclipse Corona Streamers">ECLIPSE</button>
+                  </div>
+                </div>
+                <span style="color:#ff4d1c;display:inline-flex;align-items:center;gap:0.3rem;"><i class="sol-led red" style="width:5px;height:5px;border-radius:50%;background:#ff4d1c;display:inline-block;"></i>LIVE</span>
+              </div>
+              <div class="sun-feed" style="position:relative;margin:0 0.4rem;background:#020202;border:1px solid #3a2a10;overflow:hidden;">
+                <canvas id="solarHeliographCanvas" width="340" height="200" style="display:block;width:100%;"></canvas>
+              </div>
+              <div class="feed-foot" style="display:flex;justify-content:space-between;padding:0.25rem 0.6rem 0.1rem;font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase;">
+                <span>SIM RATE ×36 000</span>
+                <span>ROT 25.38 d · CR 2298</span>
+              </div>
+              <div class="scope-head" style="display:flex;justify-content:space-between;align-items:center;padding:0.35rem 0.6rem 0.1rem;font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase;">
+                <span>GOES-18 · 0.1–0.8 nm</span>
+                <span style="color:#ff4d1c;font-size:0.52rem;">SIM ×400</span>
+              </div>
+              <div class="goes-wrap" style="margin:0 0.4rem;background:#050403;border:1px solid #3a2a10;overflow:hidden;">
+                <canvas id="solarGoesCanvas" width="340" height="75" style="display:block;width:100%;"></canvas>
+              </div>
+              <div id="solarGoesEvents" style="padding:0.2rem 0.6rem 0.35rem;font-family:var(--font-mono);font-size:0.55rem;color:var(--text-secondary);letter-spacing:0.04em;">EVENT LOG: QUIET SUN</div>
             </div>
           </div>
 
@@ -644,7 +689,7 @@
   <div class="phantom-motes" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=2.5"></script>
+  <script src="assets/js/main.js?v=2.7"></script>
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://lulztigre.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
