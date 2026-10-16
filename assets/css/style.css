@@ -4717,16 +4717,18 @@ body.degauss-active {
    ROUND 7 SAKURA THEME: ADOPTED SEIGAIHA (青海波) WAVE DESIGN & NIGHT HANAMI
    ========================================================================== */
 
-/* 1. Brand Mon Crest & Badge */
+/* 1. Brand Kamon Crest & Badge */
+.brand-sakura-kamon,
 .brand-sakura-mon {
   display: none !important;
 }
 
+[data-theme="sakura"] .brand-sakura-kamon,
 [data-theme="sakura"] .brand-sakura-mon {
   display: inline-block !important;
   vertical-align: middle !important;
-  margin-right: 0.5rem !important;
-  filter: drop-shadow(0 0 6px rgba(255, 117, 181, 0.65)) !important;
+  margin-right: 0.55rem !important;
+  filter: drop-shadow(0 0 7px rgba(255, 117, 181, 0.8)) !important;
 }
 
 [data-theme="sakura"] .brand-badge {
@@ -4874,6 +4876,113 @@ body.degauss-active {
 [data-theme="sakura"] header.site-header {
   background: rgba(23, 9, 21, 0.95) !important;
   border-bottom: 2px solid #4a1938 !important;
+}
+
+/* 8. GLM Sakura Night Lanterns (Yozakura) */
+.lantern-row {
+  display: none !important;
+}
+
+[data-theme="sakura"] .lantern-row {
+  position: absolute;
+  top: 0;
+  left: 6%;
+  display: flex !important;
+  gap: 3.4rem;
+  pointer-events: none;
+  z-index: 4;
+}
+
+[data-theme="sakura"] .hero-section,
+[data-theme="sakura"] .dossier-hero,
+[data-theme="sakura"] .archive-ledger-banner {
+  position: relative;
+}
+
+@media (max-width: 1080px) {
+  [data-theme="sakura"] .lantern-row {
+    display: none !important;
+  }
+}
+
+.lantern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  animation: lanternSway 5.2s ease-in-out infinite;
+}
+
+.lantern:nth-child(2) { animation-delay: -1.3s; }
+.lantern:nth-child(3) { animation-delay: -2.6s; }
+.lantern:nth-child(4) { animation-delay: -3.9s; }
+
+@keyframes lanternSway {
+  0%, 100% { transform: rotate(3.4deg); }
+  50% { transform: rotate(-3.4deg); }
+}
+
+.lantern .cord {
+  width: 1px;
+  height: 2.2rem;
+  background: #8c5d78;
+}
+
+.lantern .body {
+  width: 34px;
+  height: 44px;
+  border-radius: 46% 46% 42% 42% / 54% 54% 40% 40%;
+  background: radial-gradient(60% 52% at 50% 38%, #ffd9a0, #f5a657 58%, #c96f2e);
+  box-shadow: 0 0 22px rgba(255, 170, 90, 0.55), 0 0 60px rgba(255, 150, 70, 0.25), inset 0 -6px 12px rgba(120, 50, 10, 0.35);
+  position: relative;
+}
+
+.lantern .body::before,
+.lantern .body::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: rgba(90, 40, 12, 0.65);
+  border-radius: 2px;
+}
+
+.lantern .body::before { top: 4px; }
+.lantern .body::after { bottom: 4px; }
+
+.lantern .body i {
+  position: absolute;
+  inset: 10px 6px;
+  background: repeating-linear-gradient(90deg, rgba(120, 50, 10, 0.2) 0 1px, transparent 1px 5px);
+  border-radius: 40%;
+  display: block;
+}
+
+.lantern .tassel {
+  width: 1px;
+  height: 14px;
+  background: #ffb347;
+}
+
+.lantern .tassel::after {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width: 4px;
+  height: 9px;
+  background: #ff3385;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255, 51, 133, 0.5);
+}
+
+/* 9. Flasher symbol in Sakura mode */
+[data-theme="sakura"] .flasher-symbol {
+  font-size: 0 !important;
+}
+[data-theme="sakura"] .flasher-symbol::after {
+  content: "🌸" !important;
+  font-size: 1.25rem !important;
 }
 
 /* Yua — Soft pastel rose / bubblegum pink mode */

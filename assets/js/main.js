@@ -938,6 +938,17 @@
       c.fill();
     }
 
+    // GLM mouse pointer tracking for interactive petal repulsion
+    const mouse = { x: -9999, y: -9999 };
+    function onPointerMove(e) {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }
+    function onPointerLeave() {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    }
+
     function createParticle(isInitial) {
       const isMobile = window.innerWidth <= 768;
       const isFlower = Math.random() < 0.22;
@@ -961,7 +972,9 @@
         vr: (Math.random() - 0.5) * 0.04,
         flip: Math.random() * Math.PI * 2,
         vFlip: 0.015 + Math.random() * 0.025,
-        color: color
+        color: color,
+        vx: 0,
+        vy: 0
       };
     }
 
@@ -982,11 +995,28 @@
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
+
+        // GLM cursor repulsion: mouse cursor pushes falling petals and blossoms away
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const md = Math.sqrt(dx * dx + dy * dy);
+        const repulseRadius = 115;
+        if (md < repulseRadius && md > 0.1) {
+          const force = (repulseRadius - md) / repulseRadius;
+          p.vx += (dx / md) * force * 3.4;
+          p.vy += (dy / md) * force * 2.2;
+          p.vFlip += force * 0.04;
+          p.vr += (dx > 0 ? 0.03 : -0.03) * force;
+        }
+
+        p.vx *= 0.93;
+        p.vy *= 0.93;
+
         const sway = Math.sin(tick * p.sw + p.ph) * p.sw * 0.55;
 
-        // Muse directional wind-field physics:
-        p.x += (windVX * p.depth + sway);
-        p.y += (p.fall * p.depth + windVY * p.depth);
+        // Combined Muse directional wind-field + GLM cursor repulsion impulse:
+        p.x += (windVX * p.depth + sway + p.vx);
+        p.y += (p.fall * p.depth + windVY * p.depth + p.vy);
         p.rot += p.vr;
         p.flip += p.vFlip;
 
@@ -1036,6 +1066,8 @@
           initParticles();
         }, { passive: true });
       }
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
+      window.addEventListener('pointerleave', onPointerLeave, { passive: true });
       resize();
       initParticles();
       isRunning = true;
@@ -1046,6 +1078,10 @@
     function stop() {
       if (!isRunning) return;
       isRunning = false;
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerleave', onPointerLeave);
+      mouse.x = -9999;
+      mouse.y = -9999;
       if (animId) {
         cancelAnimationFrame(animId);
         animId = null;
