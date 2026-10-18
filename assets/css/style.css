@@ -398,6 +398,177 @@ body[data-theme="uchiha"]::before,
 }
 
 /* ==========================================================================
+   UCHIHA SHARINGAN RADAR (DŌJUTSU RADIAL ARRAY & OCULAR TELEMETRY)
+   ========================================================================== */
+[data-theme="uchiha"] .hero-chassis-radar-mini {
+  height: auto !important;
+  min-height: 310px !important;
+  background: #000000 !important;
+  border: 1px solid #3d0000 !important;
+  box-shadow: 0 0 24px rgba(255, 0, 0, 0.25), inset 0 0 30px rgba(139, 0, 0, 0.4) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Hide standard placeholder radar elements in Uchiha mode */
+[data-theme="uchiha"] .hero-chassis-radar-mini > .radar-circle,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .radar-axis,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .radar-sweep-beam,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .radar-target,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .chassis-center-sig,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .garden,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .oscilloscope-canvas,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .scope-grid-overlay,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .scope-center-axis,
+[data-theme="uchiha"] .hero-chassis-radar-mini > .scope-center-vaxis,
+[data-theme="uchiha"] .cobalt-radar-chassis,
+[data-theme="uchiha"] .solar-heliograph-chassis,
+[data-theme="uchiha"] .arctic-allsky-chassis,
+[data-theme="uchiha"] .cobalt-telemetry {
+  display: none !important;
+}
+
+/* Display Uchiha Sharingan Chassis */
+.uchiha-radar-chassis {
+  display: none;
+}
+
+[data-theme="uchiha"] .uchiha-radar-chassis {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: relative;
+  background: #050002;
+}
+
+.sharingan-radar-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0.75rem 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  background: #0d0102;
+  border-bottom: 1px solid #3d0000;
+  color: #ff3344;
+}
+
+.sharingan-radar-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff0000;
+  box-shadow: 0 0 8px #ff0000;
+  display: inline-block;
+  margin-right: 0.4rem;
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+.sharingan-radar-mode-tag {
+  background: #2a0003;
+  border: 1px solid #ff1a1a;
+  color: #ff3344;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+}
+
+.sharingan-canvas-wrap {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 0.25rem 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+}
+
+.sharingan-canvas-wrap canvas {
+  display: block;
+  width: 210px;
+  height: 210px;
+  cursor: crosshair;
+  filter: drop-shadow(0 0 16px rgba(255, 0, 0, 0.35));
+}
+
+.sharingan-readouts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #0a0102;
+  border-top: 1px solid #3d0000;
+  border-bottom: 1px solid #3d0000;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.shari-ro-cell {
+  padding: 0.35rem 0.5rem;
+  border-right: 1px solid #200000;
+}
+.shari-ro-cell:last-child {
+  border-right: none;
+}
+.shari-ro-cell dt {
+  color: #803333;
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+}
+.shari-ro-cell dd {
+  color: #ffffff;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.shari-ro-cell dd.hot {
+  color: #ff1a2b;
+  text-shadow: 0 0 6px rgba(255, 0, 0, 0.7);
+}
+
+.sharingan-controls-bar {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.35rem 0.5rem;
+  background: #070001;
+  justify-content: space-between;
+}
+
+.shari-ctl-btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: #150102;
+  border: 1px solid #3d0000;
+  color: #ff6677;
+  padding: 0.28rem 0.35rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.shari-ctl-btn:hover {
+  border-color: #ff0000;
+  color: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+}
+
+.shari-ctl-btn.active {
+  background: #990000;
+  border-color: #ff0000;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+/* ==========================================================================
    FLORAL THEME — BOTANICAL ECOSYSTEM & SCIENTIFIC FIELD NOTES (AGY R2 WINNER)
    Direct 1:1 implementation matching agyghost.html
    Parchment creamy off-white canvas (#fcfaf5), surface (#ffffff), card (#f8f5ed),
