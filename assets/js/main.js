@@ -51,6 +51,9 @@
     } else {
       document.documentElement.removeAttribute('data-solar-mode');
     }
+    if (theme === 'arctic') {
+      document.body.style.setProperty('--aur-badge', '"id=(kp7)"');
+    }
     localStorage.setItem(THEME_KEY, theme);
     updateThemeButtonLabel(theme);
   }
@@ -71,6 +74,7 @@
     const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
     const COBALT_TREFOIL = '<svg class="cob-mark-btn" width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;animation:cobRotateTrefoil 12s linear infinite;" fill="currentColor"><circle cx="12" cy="12" r="2.4"/><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/><g transform="rotate(120 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><g transform="rotate(240 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><circle cx="12" cy="12" r="10.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
     const SOLAR_MARK = '<svg class="sol-mark-btn" width="14" height="14" viewBox="0 0 48 48" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#ffb02e;animation:cobRotateTrefoil 35s linear infinite;" fill="currentColor"><circle cx="24" cy="24" r="10" fill="currentColor"/><g stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="24" y1="4" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="44"/><line x1="4" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="44" y2="24"/><line x1="9.9" y1="9.9" x2="14.1" y2="14.1"/><line x1="33.9" y1="33.9" x2="38.1" y2="38.1"/><line x1="9.9" y1="38.1" x2="14.1" y2="33.9"/><line x1="33.9" y1="14.1" x2="38.1" y2="9.9"/></g></svg>';
+    const ARCTIC_CRYSTAL = '<svg class="arc-mark-btn" width="14" height="14" viewBox="0 0 48 48" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#5ef2c0;animation:cobRotateTrefoil 14s linear infinite;" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M24 4 V44 M6 14 L42 34 M42 14 L6 34"/><path d="M24 12 l-5-5 M24 12 l5-5 M24 36 l-5 5 M24 36 l5 5"/><path d="M10 17 l1-7 M10 17 l7-1 M38 31 l-1 7 M38 31 l-7 1"/><path d="M38 17 l-7-1 M38 17 l-1-7 M10 31 l7 1 M10 31 l1 7"/></g></svg>';
     const icons = {
       phantom: PHANTOM_SPECTER + 'PHANTOM',
       void: PHANTOM_SPECTER + 'PHANTOM',
@@ -79,7 +83,7 @@
       flora: FLORA_ICON + 'FLORA',
       ghost: FLORA_ICON + 'FLORA',
       uchiha: THEME_EYE + 'UCHIHA',
-      arctic: '◇ ARCTIC',
+      arctic: ARCTIC_CRYSTAL + 'ARCTIC',
       synthwave: '♦ SYNTHWAVE',
       phosphor: '█ PHOSPHOR',
       solar: SOLAR_MARK + 'SOLAR',
@@ -102,6 +106,8 @@
       label = COBALT_TREFOIL + 'COBALT';
     } else if (theme === 'solar') {
       label = SOLAR_MARK + 'SOLAR';
+    } else if (theme === 'arctic') {
+      label = ARCTIC_CRYSTAL + 'ARCTIC';
     }
     btn.innerHTML = `<span>${label}</span>`;
   }
@@ -2410,6 +2416,311 @@
     requestAnimationFrame(renderSun);
   }
 
+  // --- ARCTIC AURORA OBSERVATORY (MIMO WINNING DESIGN) ---
+  function initArcticAurora() {
+    const auroraCanvases = [
+      document.getElementById('aurora-canvas'),
+      document.getElementById('aurora-canvas-about'),
+      document.getElementById('aurora-canvas-archive')
+    ].filter(Boolean);
+
+    const skyCanvases = [
+      document.getElementById('allSkyCanvas'),
+      document.getElementById('allSkyCanvasAbout')
+    ].filter(Boolean);
+
+    const kpEls = [
+      document.getElementById('arctic-kp-val'),
+      document.getElementById('arctic-kp-val-about')
+    ].filter(Boolean);
+
+    if (!auroraCanvases.length && !skyCanvases.length) return;
+
+    let aRaf = null;
+    let sRaf = null;
+    let t0 = 0;
+    let sT0 = 0;
+    let isRunning = false;
+
+    // Aurora curtain config (Mimo palette: violet, mint, cyan)
+    const COLS = [[180, 140, 242], [94, 242, 192], [53, 214, 236], [120, 230, 180], [160, 150, 250]];
+    const auroraData = auroraCanvases.map(canvas => ({
+      canvas,
+      ctx: canvas.getContext('2d'),
+      strands: [],
+      stars: [],
+      snow: []
+    }));
+
+    function fitAurora() {
+      auroraData.forEach(item => {
+        const parent = item.canvas.parentElement;
+        if (!parent) return;
+        const rect = parent.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          item.canvas.width = rect.width;
+          item.canvas.height = rect.height;
+        }
+      });
+    }
+
+    function seedAurora() {
+      auroraData.forEach(item => {
+        const w = item.canvas.width || 800;
+        const h = item.canvas.height || 400;
+        item.strands = [];
+        for (let i = 0; i < 6; i++) {
+          item.strands.push({
+            x: w * (0.08 + Math.random() * 0.86),
+            w: 28 + Math.random() * 42,
+            len: h * (0.42 + Math.random() * 0.45),
+            ph: Math.random() * 6.28,
+            sp: 0.0004 + Math.random() * 0.0007,
+            col: COLS[i % COLS.length],
+            a: 0.15 + Math.random() * 0.14
+          });
+        }
+        item.stars = [];
+        for (let j = 0; j < 70; j++) {
+          item.stars.push({
+            x: Math.random() * w,
+            y: Math.random() * h * 0.65,
+            r: Math.random() * 1.1 + 0.2,
+            tw: Math.random() * 6.28
+          });
+        }
+        item.snow = [];
+        for (let k = 0; k < 45; k++) {
+          item.snow.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            v: 0.3 + Math.random() * 0.8,
+            r: 0.6 + Math.random() * 1.4,
+            ph: Math.random() * 6.28
+          });
+        }
+      });
+    }
+
+    function drawAurora(ts) {
+      if (!t0) t0 = ts;
+      const t = ts - t0;
+
+      auroraData.forEach(item => {
+        const { canvas, ctx, strands, stars, snow } = item;
+        if (!ctx || canvas.width === 0 || canvas.height === 0) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 1. Stars
+        stars.forEach(s => {
+          ctx.globalAlpha = 0.22 + 0.55 * Math.abs(Math.sin(t * 0.001 + s.tw));
+          ctx.fillStyle = '#dff4ff';
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+
+        // 2. Aurora Curtains (vertical gradient ribbons along sinuous baselines)
+        strands.forEach(s => {
+          const baseX = s.x + Math.sin(t * s.sp + s.ph) * 90 + Math.sin(t * s.sp * 2.3 + s.ph) * 26;
+          const grad = ctx.createLinearGradient(0, 0, 0, s.len);
+          const c = s.col;
+          grad.addColorStop(0, `rgba(${c[0]},${c[1]},${c[2]},0)`);
+          grad.addColorStop(0.28, `rgba(${c[0]},${c[1]},${c[2]},${(s.a * 0.7).toFixed(3)})`);
+          grad.addColorStop(0.62, `rgba(${c[0]},${c[1]},${c[2]},${s.a.toFixed(3)})`);
+          grad.addColorStop(1, `rgba(${c[0]},${c[1]},${c[2]},0)`);
+          ctx.fillStyle = grad;
+          const wob = Math.sin(t * s.sp * 1.7 + s.ph) * 14;
+          ctx.beginPath();
+          ctx.moveTo(baseX - s.w / 2, 0);
+          ctx.quadraticCurveTo(baseX - s.w / 2 + wob, s.len * 0.5, baseX - s.w / 3 + wob, s.len);
+          ctx.lineTo(baseX + s.w / 3 + wob, s.len);
+          ctx.quadraticCurveTo(baseX + s.w / 2 + wob, s.len * 0.5, baseX + s.w / 2, 0);
+          ctx.closePath();
+          ctx.fill();
+        });
+
+        // 3. Diamond Dust Snow
+        snow.forEach(f => {
+          f.y += f.v;
+          f.x += Math.sin(f.y * 0.02) * 0.3;
+          if (f.y > canvas.height) {
+            f.y = -4;
+            f.x = Math.random() * canvas.width;
+          }
+          ctx.globalAlpha = 0.55;
+          ctx.fillStyle = '#e9fff7';
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+      });
+
+      if (isRunning) {
+        aRaf = requestAnimationFrame(drawAurora);
+      }
+    }
+
+    // All-Sky Camera setup
+    const skyData = skyCanvases.map(canvas => ({
+      canvas,
+      ctx: canvas.getContext('2d'),
+      stars: []
+    }));
+
+    function seedSky() {
+      skyData.forEach(item => {
+        item.stars = [];
+        for (let i = 0; i < 60; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const r = Math.random() * 185;
+          item.stars.push({
+            x: 200 + Math.cos(a) * r,
+            y: 200 + Math.sin(a) * r,
+            tw: Math.random() * Math.PI * 2
+          });
+        }
+      });
+    }
+
+    function drawSky(ts) {
+      if (!sT0) sT0 = ts;
+      const t = ts - sT0;
+
+      skyData.forEach(item => {
+        const { ctx, stars } = item;
+        if (!ctx) return;
+        ctx.clearRect(0, 0, 400, 400);
+
+        // Fisheye sky disc
+        const g = ctx.createRadialGradient(200, 200, 20, 200, 200, 200);
+        g.addColorStop(0, '#031018');
+        g.addColorStop(1, '#010609');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(200, 200, 200, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Stars
+        stars.forEach(s => {
+          ctx.globalAlpha = 0.2 + 0.6 * Math.abs(Math.sin(t * 0.0012 + s.tw));
+          ctx.fillStyle = '#dff4ff';
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+
+        // Aurora oval: rotating mint conic arc band
+        const rot = t * 0.00022;
+        let og = null;
+        if (typeof ctx.createConicGradient === 'function') {
+          og = ctx.createConicGradient(rot, 200, 200);
+          og.addColorStop(0, 'rgba(94, 242, 192, 0)');
+          og.addColorStop(0.1, 'rgba(94, 242, 192, 0.32)');
+          og.addColorStop(0.18, 'rgba(53, 214, 236, 0.18)');
+          og.addColorStop(0.3, 'rgba(94, 242, 192, 0)');
+          og.addColorStop(1, 'rgba(94, 242, 192, 0)');
+          ctx.strokeStyle = og;
+        } else {
+          ctx.strokeStyle = 'rgba(94, 242, 192, 0.25)';
+        }
+        ctx.lineWidth = 34;
+        ctx.beginPath();
+        ctx.arc(200, 200, 132, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Horizon ring & crosshairs
+        ctx.strokeStyle = 'rgba(53, 214, 236, 0.35)';
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(200, 200, 196, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'rgba(53, 214, 236, 0.18)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(200, 10); ctx.lineTo(200, 390);
+        ctx.moveTo(10, 200); ctx.lineTo(390, 200);
+        ctx.stroke();
+
+        // Moon
+        ctx.fillStyle = 'rgba(228, 244, 248, 0.85)';
+        ctx.beginPath();
+        ctx.arc(306, 118, 9, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      if (isRunning) {
+        sRaf = requestAnimationFrame(drawSky);
+      }
+    }
+
+    function startAll() {
+      if (isRunning) return;
+      isRunning = true;
+      fitAurora();
+      seedAurora();
+      seedSky();
+      t0 = 0;
+      sT0 = 0;
+      aRaf = requestAnimationFrame(drawAurora);
+      sRaf = requestAnimationFrame(drawSky);
+    }
+
+    function stopAll() {
+      isRunning = false;
+      if (aRaf) { cancelAnimationFrame(aRaf); aRaf = null; }
+      if (sRaf) { cancelAnimationFrame(sRaf); sRaf = null; }
+      auroraData.forEach(item => {
+        if (item.ctx && item.canvas.width > 0) {
+          item.ctx.clearRect(0, 0, item.canvas.width, item.canvas.height);
+        }
+      });
+      skyData.forEach(item => {
+        if (item.ctx) item.ctx.clearRect(0, 0, 400, 400);
+      });
+    }
+
+    // KP drift ticker
+    let kpV = 7;
+    setInterval(() => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme !== 'arctic' || !kpEls.length) return;
+      kpV = Math.max(5, Math.min(9, kpV + (Math.random() < 0.5 ? -1 : 1)));
+      kpEls.forEach(el => { el.textContent = kpV; });
+    }, 4200);
+
+    // Initial check
+    if (document.documentElement.getAttribute('data-theme') === 'arctic') {
+      startAll();
+    }
+
+    // Theme switch observer
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          const t = document.documentElement.getAttribute('data-theme');
+          if (t === 'arctic') {
+            startAll();
+          } else {
+            stopAll();
+          }
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    window.addEventListener('resize', () => {
+      if (document.documentElement.getAttribute('data-theme') === 'arctic') {
+        fitAurora();
+        seedAurora();
+      }
+    }, { passive: true });
+  }
+
   // --- INITIALIZE ALL MODULES ---
   function initAll() {
     initTheme();
@@ -2427,6 +2738,7 @@
     initPhosphorOscilloscope();
     initCobaltChassis();
     initSolarHeliograph();
+    initArcticAurora();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {

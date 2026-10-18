@@ -1998,41 +1998,38 @@ body[data-theme="flora"].no-petals::before,
   50% { transform: translateY(-4px); }
 }
 
-/* Arctic — Deep Midnight Teal & Electric Blue Sci-Fi Terminal */
+/* Arctic — Mimo Aurora Observatory: Polar Night Station LZ-994 */
 [data-theme="arctic"] {
-  /* Deepest midnight teal background */
-  --bg-primary: #010d14;
-  --bg-surface: #031520;
-  --bg-elevated: #061f2f;
-  --bg-card: #02121c;
-  --bg-invert: #00f0ff;
+  --bg-primary: #04090d;
+  --bg-surface: #071219;
+  --bg-elevated: #0a1a24;
+  --bg-card: #081520;
+  --bg-invert: #35d6ec;
 
-  /* Pure white text for crisp terminal contrast */
-  --text-primary: #ffffff;
-  --text-secondary: #c5e9f7;
-  --text-muted: #5e91a4;
-  --text-invert: #010d14;
+  --text-primary: #e4f4f8;
+  --text-secondary: #94b8c4;
+  --text-muted: #5c7f8d;
+  --text-invert: #04090d;
 
-  /* Deep midnight teal borders with electric cyan highlight */
-  --border-color: #0c3647;
-  --border-light: #06212d;
-  --border-highlight: #00f0ff;
+  --border-color: #14313f;
+  --border-light: #0e2430;
+  --border-highlight: #5ef2c0;
 
-  /* Electric blue accents & neon glow */
-  --accent-primary: #00f0ff;
-  --accent-secondary: #38bdf8;
-  --accent-amber: #00f0ff;
-  --accent-glow: rgba(0, 240, 255, 0.45);
-  --accent-tag-bg: #052130;
-  --accent-tag-text: #00f0ff;
+  --accent-primary: #35d6ec;   /* Electric Cyan */
+  --accent-secondary: #5ef2c0; /* Aurora Mint */
+  --accent-mint: #5ef2c0;
+  --accent-violet: #b48cf2;    /* Aurora Lavender */
+  --accent-amber: #ffd166;
+  --accent-glow: 0 0 8px rgba(53, 214, 236, 0.4), 0 0 24px rgba(94, 242, 192, 0.18);
+  --accent-tag-bg: rgba(94, 242, 192, 0.08);
+  --accent-tag-text: #5ef2c0;
 
-  /* Brutalist shadows with electric blue accents */
-  --shadow-sm: 2px 2px 0px #000000;
-  --shadow-md: 4px 4px 0px #000000;
-  --shadow-lg: 7px 7px 0px #000000;
-  --shadow-hover: 5px 5px 0px #00f0ff;
-  --shadow-active: 1px 1px 0px #000000;
-  --shadow-emerald: 4px 4px 0px #00f0ff;
+  --shadow-sm: 0 4px 12px rgba(0, 4, 8, 0.45);
+  --shadow-md: 0 12px 30px rgba(0, 4, 8, 0.55);
+  --shadow-lg: 0 18px 44px rgba(0, 4, 8, 0.6);
+  --shadow-hover: 0 16px 36px rgba(53, 214, 236, 0.22);
+  --shadow-active: 0 2px 6px rgba(0, 4, 8, 0.5);
+  --shadow-emerald: 0 0 20px rgba(94, 242, 192, 0.35);
 }
 
 /* Synthwave — Purple/magenta cyberpunk neon */
@@ -10027,249 +10024,492 @@ html, body {
    STRICT NARROW MONOSPACE BODY, & SHARP DELIBERATE QUOTE HIGHLIGHTS)
    ========================================================================== */
 
-/* 1. Strict Narrow Monospace Body & Industrial Sci-Fi Display Variables */
+/* ==========================================================================
+   ROUND 8 ARCTIC: MIMO AURORA OBSERVATORY (POLAR NIGHT STATION LZ-994, 68.3°N)
+   ========================================================================== */
+
+/* 1. Global Arctic Grid & Typography */
 [data-theme="arctic"] {
-  --font-sans: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', 'Space Mono', monospace;
-  --font-mono: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', 'Space Mono', monospace;
-  background-image: radial-gradient(rgba(0, 240, 255, 0.15) 1.5px, transparent 1.5px);
-  background-size: 28px 28px;
+  --font-heading: 'Iceland', 'Space Grotesk', -apple-system, sans-serif;
+  --font-body: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Space Mono', 'Share Tech Mono', monospace;
 }
 
 [data-theme="arctic"] body {
-  font-family: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
   letter-spacing: 0.015em;
-  background-image: radial-gradient(rgba(0, 240, 255, 0.15) 1.5px, transparent 1.5px);
-  background-size: 28px 28px;
+  color: #e4f4f8;
 }
 
-/* Strict narrow monospace applied across content containers */
-[data-theme="arctic"] p,
-[data-theme="arctic"] .prose,
-[data-theme="arctic"] .hero-desc,
-[data-theme="arctic"] .post-summary,
-[data-theme="arctic"] .bio-v,
-[data-theme="arctic"] .bio-k,
-[data-theme="arctic"] .chassis-row,
-[data-theme="arctic"] .dossier-stat-desc,
-[data-theme="arctic"] .hud-card-desc,
-[data-theme="arctic"] .ticker-track span,
-[data-theme="arctic"] .credentials-lead,
-[data-theme="arctic"] .channel-value,
-[data-theme="arctic"] .channel-label,
-[data-theme="arctic"] .post-meta,
-[data-theme="arctic"] .status-indicator,
-[data-theme="arctic"] .search-input,
-[data-theme="arctic"] .dossier-index-list a,
-[data-theme="arctic"] .nav-link,
-[data-theme="arctic"] .tag-btn,
-[data-theme="arctic"] .btn {
-  font-family: 'Share Tech Mono', 'JetBrains Mono', 'Fira Code', monospace;
-  letter-spacing: 0.02em;
+[data-theme="arctic"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(53, 214, 236, 0.08) 1.5px, transparent 1.5px) !important;
+  background-size: 28px 28px !important;
+  pointer-events: none;
 }
 
-/* Pure White for All Primary Text */
-[data-theme="arctic"],
-[data-theme="arctic"] body,
-[data-theme="arctic"] p,
-[data-theme="arctic"] .prose,
-[data-theme="arctic"] .post-content,
-[data-theme="arctic"] .post-summary,
-[data-theme="arctic"] .bio-v,
-[data-theme="arctic"] .hero-desc,
-[data-theme="arctic"] .post-card-title a,
-[data-theme="arctic"] .post-title,
-[data-theme="arctic"] .chassis-val,
-[data-theme="arctic"] .operative-widget-role,
-[data-theme="arctic"] .footer-bottom span {
-  color: #ffffff;
+/* 2. Headline & Display Faces (Iceland + Mint Glow) */
+[data-theme="arctic"] h1.headline,
+[data-theme="arctic"] .hero-heading,
+[data-theme="arctic"] .dossier-hero-name,
+[data-theme="arctic"] .archive-title {
+  font-family: 'Iceland', 'Space Grotesk', sans-serif !important;
+  font-weight: 400 !important;
+  color: #f0fbff !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 0 22px rgba(94, 242, 192, 0.25), 0 4px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* 2. Glow Effect (Text Shadows) — Glowing in the Dark */
-[data-theme="arctic"] h1,
+[data-theme="arctic"] .hero-heading .accent-terra-italic,
+[data-theme="arctic"] .hero-heading .accent-text,
+[data-theme="arctic"] .accent-terra-italic {
+  color: #5ef2c0 !important;
+  text-shadow: 0 0 16px rgba(94, 242, 192, 0.5) !important;
+  font-style: normal !important;
+}
+
 [data-theme="arctic"] h2,
 [data-theme="arctic"] h3,
 [data-theme="arctic"] h4,
 [data-theme="arctic"] .section-title,
-[data-theme="arctic"] .brand-text,
-[data-theme="arctic"] .site-logo-text,
-[data-theme="arctic"] .operative-widget-name,
-[data-theme="arctic"] .hud-tab-idx,
-[data-theme="arctic"] .hud-tab-title,
 [data-theme="arctic"] .dossier-title-tag {
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.65), 0 0 24px rgba(0, 240, 255, 0.3);
-}
-
-/* 3. The Main Header ("AKINLABI" / Hero Heading) — Sharp Cyberpunk Display */
-[data-theme="arctic"] .dossier-hero-name,
-[data-theme="arctic"] .hero-heading {
-  font-family: 'Orbitron', 'Rajdhani', 'Bebas Neue', 'Oswald', sans-serif;
-  text-transform: uppercase;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  text-shadow: 0 0 12px rgba(0, 240, 255, 0.75), 0 0 28px rgba(0, 240, 255, 0.4);
+  font-family: 'Iceland', 'Space Grotesk', sans-serif;
+  letter-spacing: 0.05em;
+  color: #f0fbff;
 }
 
 [data-theme="arctic"] .dossier-alias {
-  font-family: 'Orbitron', monospace;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #00f0ff;
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.9), 0 0 22px rgba(0, 240, 255, 0.55);
-}
-
-[data-theme="arctic"] .brand-text,
-[data-theme="arctic"] .site-logo-text,
-[data-theme="arctic"] .section-title,
-[data-theme="arctic"] .operative-widget-name {
-  font-family: 'Orbitron', 'Rajdhani', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-/* 4. The "Quote" Highlights (Statement Box & Deliberate Blue Quote Text) */
-[data-theme="arctic"] .statement-quote {
-  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
-  color: #ffffff;
-  letter-spacing: 0.025em;
-  line-height: 1.65;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
-}
-
-[data-theme="arctic"] .statement-quote strong {
-  color: #00f0ff;
-  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
-  font-weight: 800;
-  font-size: 0.98rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  display: block;
-  margin-top: 0.75rem;
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.85), 0 0 24px rgba(0, 240, 255, 0.45);
-}
-
-[data-theme="arctic"] .prose blockquote,
-[data-theme="arctic"] blockquote {
-  border-left: 3px solid #00f0ff;
-  background: #041924;
-  color: #ffffff;
-  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.06);
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
-}
-
-[data-theme="arctic"] mark,
-[data-theme="arctic"] .text-highlight {
-  background: rgba(0, 240, 255, 0.16);
-  color: #00f0ff;
+  font-family: 'Iceland', monospace;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  border-bottom: 2px solid #00f0ff;
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.75);
+  color: #5ef2c0;
+  text-shadow: 0 0 12px rgba(94, 242, 192, 0.6);
 }
 
-/* 5. Electric Blue Accents, Buttons, Badges & Hardware Indicators */
-[data-theme="arctic"] .btn-primary {
-  background: #00f0ff;
-  color: #010d14;
-  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
-  font-weight: 800;
+/* 3. Hero Aurora Curtains Canvas & 22° Atmospheric Halo */
+.aurora-curtain-canvas {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-theme="arctic"] .aurora-curtain-canvas {
+  display: block;
+}
+
+.arctic-halo {
+  display: none;
+}
+
+[data-theme="arctic"] .arctic-halo {
+  display: block;
+  position: absolute;
+  top: -140px;
+  right: -90px;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 46%, rgba(255, 180, 120, 0.14) 47.5%, rgba(120, 200, 255, 0.16) 49.5%, rgba(180, 140, 255, 0.12) 51%, transparent 53%),
+    radial-gradient(circle at 50% 50%, rgba(228, 244, 248, 0.10) 0 26%, transparent 30%);
+}
+
+/* 4. Polar Observatory Rotated Double-Bordered Stamp */
+.arctic-stamp {
+  display: none;
+}
+
+[data-theme="arctic"] .arctic-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  height: 40px;
+  flex: none;
+  padding: 0 0.5rem;
+  border: 2px double #b48cf2;
+  border-radius: 4px;
+  color: #b48cf2;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(-6deg);
+  box-shadow: 0 0 12px rgba(180, 140, 242, 0.25);
+  background: rgba(8, 21, 32, 0.6);
+}
+
+/* 5. Brand Identity: Fine-Line Rotating Ice Crystal */
+.brand-arctic-crystal {
+  display: none;
+}
+
+[data-theme="arctic"] .brand-arctic-crystal {
+  display: inline-block;
+  vertical-align: middle;
+  animation: crystalTurn 14s linear infinite;
+  color: #5ef2c0;
+}
+
+@keyframes crystalTurn {
+  to { transform: rotate(360deg); }
+}
+
+[data-theme="arctic"] .brand-sharingan,
+[data-theme="arctic"] .flora-crest-svg,
+[data-theme="arctic"] .brand-cobalt-trefoil,
+[data-theme="arctic"] .brand-sakura-kamon {
+  display: none !important;
+}
+
+[data-theme="arctic"] .brand-badge {
+  border-radius: 3px !important;
+  border: 1px solid #5ef2c0 !important;
+  background: rgba(94, 242, 192, 0.08) !important;
+  color: #5ef2c0 !important;
+  box-shadow: 0 0 10px rgba(94, 242, 192, 0.25) !important;
+  font-size: 0 !important;
+}
+
+[data-theme="arctic"] .brand-badge::after {
+  content: var(--aur-badge, "id=(kp7)");
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+}
+
+[data-theme="arctic"] .arctic-crystal-flasher {
+  display: inline-flex !important;
+  animation: crystalTurn 14s linear infinite;
+  color: #5ef2c0;
+}
+
+[data-theme="arctic"] .flasher-symbol,
+[data-theme="arctic"] .uchiha-subsystem-icon,
+[data-theme="arctic"] .legacy-bolt,
+[data-theme="arctic"] .phantom-wisp-icon {
+  display: none !important;
+}
+
+/* 6. Space Weather & Polar Station Ticker Diodes */
+.arctic-diodes {
+  display: none !important;
+}
+
+[data-theme="arctic"] .arctic-diodes {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Space Mono', 'Share Tech Mono', monospace;
+  font-size: 0.64rem;
   letter-spacing: 0.06em;
-  border: 2px solid #00f0ff;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.45), var(--shadow-sm);
-  text-shadow: none;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+[data-theme="arctic"] .arc-chip {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #5ef2c0;
+  clip-path: polygon(50% 0, 100% 28%, 100% 72%, 50% 100%, 0 72%, 0 28%);
+  box-shadow: 0 0 9px rgba(94, 242, 192, 0.7);
+  animation: blink 2.6s ease-in-out infinite;
+}
+
+[data-theme="arctic"] .arc-kp {
+  color: #b48cf2;
+  font-weight: 700;
+}
+
+[data-theme="arctic"] .status-dot {
+  clip-path: polygon(50% 0, 100% 28%, 100% 72%, 50% 100%, 0 72%, 0 28%) !important;
+  border-radius: 0 !important;
+  background-color: #5ef2c0 !important;
+  box-shadow: 0 0 9px rgba(94, 242, 192, 0.7) !important;
+}
+
+/* 7. Statement Box with Aurora Shimmer Vow Line */
+[data-theme="arctic"] .dossier-statement-box {
+  border: 1px solid #14313f !important;
+  background: linear-gradient(180deg, rgba(94, 242, 192, 0.04), transparent 42%), rgba(8, 21, 32, 0.9) !important;
+  box-shadow: 0 12px 30px rgba(0, 4, 8, 0.55) !important;
+  position: relative;
+  border-radius: 4px;
+}
+
+[data-theme="arctic"] .dossier-statement-box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #5ef2c0, #b48cf2);
+  border-radius: 4px 0 0 4px;
+}
+
+[data-theme="arctic"] .statement-quote strong,
+[data-theme="arctic"] .vow-handwritten {
+  background: linear-gradient(100deg, #35d6ec 0%, #5ef2c0 30%, #e9fff7 46%, #5ef2c0 62%, #b48cf2 100%) !important;
+  background-size: 240% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  text-shadow: 0 0 10px rgba(94, 242, 192, 0.4), 0 0 30px rgba(180, 140, 242, 0.22) !important;
+  animation: auroraSweep 5s linear infinite !important;
+}
+
+@keyframes auroraSweep {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+[data-theme="arctic"] .vow-line-box {
+  border-left-color: #5ef2c0 !important;
+}
+
+/* 8. All-Sky Fisheye Aurora Camera Chassis HUD */
+.arctic-allsky-chassis {
+  display: none !important;
+}
+
+[data-theme="arctic"] .arctic-allsky-chassis {
+  display: block !important;
+  background: #081520;
+  border: 1px solid #14313f;
+  border-top: 2px solid #5ef2c0;
+  box-shadow: 0 12px 30px rgba(0, 4, 8, 0.55);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.allsky-hd {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid #0e2430;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #94b8c4;
+  text-transform: uppercase;
+}
+
+.allsky-led {
+  width: 8px;
+  height: 8px;
+  background: #5ef2c0;
+  clip-path: polygon(50% 0, 100% 28%, 100% 72%, 50% 100%, 0 72%, 0 28%);
+  box-shadow: 0 0 8px rgba(94, 242, 192, 0.8);
+  animation: blink 2.2s infinite;
+}
+
+.allsky-tag {
+  margin-left: auto;
+  color: #5ef2c0;
+  font-size: 0.56rem;
+}
+
+.allsky-lens {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 0.75rem auto 0.5rem;
+}
+
+#allSkyCanvas, #allSkyCanvasAbout {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.allsky-feed {
+  padding: 0.35rem 0.8rem 0.5rem;
+}
+
+.allsky-frow {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-bottom: 1px dashed #0e2430;
+  padding: 0.28rem 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+}
+
+.allsky-frow .fk {
+  color: #5c7f8d;
+}
+
+.allsky-frow .fv {
+  color: #e4f4f8;
+  font-weight: 700;
+}
+
+.allsky-frow .fv.hot {
+  color: #b48cf2;
+}
+
+.allsky-foot {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0.8rem;
+  border-top: 1px solid #0e2430;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.56rem;
+  color: #5c7f8d;
+}
+
+.allsky-link-ok {
+  color: #35d6ec;
+}
+
+/* Hide standard radar elements in Arctic mode so All-Sky Camera takes over */
+[data-theme="arctic"] .hero-chassis-radar-mini,
+[data-theme="arctic"] .chassis-radar-container {
+  height: auto !important;
+  min-height: 290px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+[data-theme="arctic"] .hero-chassis-radar-mini > .radar-circle,
+[data-theme="arctic"] .hero-chassis-radar-mini > .radar-axis,
+[data-theme="arctic"] .hero-chassis-radar-mini > .radar-sweep-beam,
+[data-theme="arctic"] .hero-chassis-radar-mini > .radar-target,
+[data-theme="arctic"] .hero-chassis-radar-mini > .chassis-center-sig,
+[data-theme="arctic"] .hero-chassis-radar-mini > .garden,
+[data-theme="arctic"] .hero-chassis-radar-mini > .oscilloscope-canvas,
+[data-theme="arctic"] .hero-chassis-radar-mini > .scope-grid-overlay,
+[data-theme="arctic"] .hero-chassis-radar-mini > .scope-center-axis,
+[data-theme="arctic"] .hero-chassis-radar-mini > .scope-center-vaxis,
+[data-theme="arctic"] .chassis-radar-container > .radar-circle,
+[data-theme="arctic"] .chassis-radar-container > .radar-axis,
+[data-theme="arctic"] .chassis-radar-container > .radar-sweep-beam,
+[data-theme="arctic"] .chassis-radar-container > .radar-target,
+[data-theme="arctic"] .chassis-radar-container > .chassis-center-sig,
+[data-theme="arctic"] .chassis-radar-container > .garden,
+[data-theme="arctic"] .chassis-radar-container > .oscilloscope-canvas,
+[data-theme="arctic"] .chassis-radar-container > .scope-grid-overlay,
+[data-theme="arctic"] .chassis-radar-container > .scope-center-axis,
+[data-theme="arctic"] .chassis-radar-container > .scope-center-vaxis,
+[data-theme="arctic"] .scope-controls,
+[data-theme="arctic"] .phos-scope-controls,
+[data-theme="arctic"] .cobalt-instrument-tabs,
+[data-theme="arctic"] .cobalt-telemetry {
+  display: none !important;
+}
+
+/* 9. Dispatch Cards (Ice-Core Strata) */
+[data-theme="arctic"] .post-card,
+[data-theme="arctic"] .tactical-dossier-card {
+  background: linear-gradient(180deg, #0a1c28, #07141d 70%) !important;
+  border: 1px solid #14313f !important;
+  box-shadow: 0 12px 30px rgba(0, 4, 8, 0.55) !important;
+  position: relative;
+  border-radius: 4px !important;
+}
+
+[data-theme="arctic"] .post-card::before,
+[data-theme="arctic"] .tactical-dossier-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #5ef2c0, #35d6ec, #b48cf2) !important;
+  opacity: 0.85;
+  border-radius: 4px 4px 0 0;
+}
+
+[data-theme="arctic"] .post-card:hover {
+  border-color: #35d6ec !important;
+  box-shadow: 0 16px 36px rgba(53, 214, 236, 0.22) !important;
+  transform: translateY(-2px);
+}
+
+[data-theme="arctic"] .tag-btn,
+[data-theme="arctic"] .filter-tag-pill,
+[data-theme="arctic"] .post-tag {
+  border-color: #14313f !important;
+  background: rgba(8, 21, 32, 0.8) !important;
+  color: #94b8c4 !important;
+}
+
+[data-theme="arctic"] .tag-btn.active,
+[data-theme="arctic"] .filter-tag-pill.active {
+  background: #35d6ec !important;
+  color: #04090d !important;
+  border-color: #35d6ec !important;
+  box-shadow: 0 0 14px rgba(53, 214, 236, 0.45) !important;
+}
+
+/* 10. Stat Tiles & Buttons */
+[data-theme="arctic"] .dossier-stat-tile {
+  background: #081520 !important;
+  border: 1px solid #14313f !important;
+  border-top: 2px solid #5ef2c0 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 8px 24px rgba(0, 4, 8, 0.5) !important;
+}
+
+[data-theme="arctic"] .dossier-stat-num {
+  font-family: 'Iceland', 'Space Grotesk', sans-serif !important;
+  color: #eefcff !important;
+  text-shadow: 0 0 14px rgba(94, 242, 192, 0.3) !important;
+}
+
+[data-theme="arctic"] .btn-primary {
+  background: transparent !important;
+  color: #5ef2c0 !important;
+  border: 1px solid #5ef2c0 !important;
+  box-shadow: 0 0 14px rgba(94, 242, 192, 0.35) !important;
+  border-radius: 3px !important;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
 }
 
 [data-theme="arctic"] .btn-primary:hover {
-  background: #ffffff;
-  color: #010d14;
-  border-color: #ffffff;
-  box-shadow: 0 0 24px rgba(0, 240, 255, 0.75);
+  background: rgba(94, 242, 192, 0.12) !important;
+  color: #eefcff !important;
+  box-shadow: 0 0 20px rgba(94, 242, 192, 0.5) !important;
 }
 
 [data-theme="arctic"] .btn-secondary,
 [data-theme="arctic"] .btn-outline {
-  border-color: #0c3647;
-  color: #ffffff;
-  background: #02141f;
+  border-color: #14313f !important;
+  color: #94b8c4 !important;
+  background: #081520 !important;
+  border-radius: 3px !important;
+  font-family: 'Space Mono', monospace;
 }
 
 [data-theme="arctic"] .btn-secondary:hover,
 [data-theme="arctic"] .btn-outline:hover {
-  border-color: #00f0ff;
-  color: #00f0ff;
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
-}
-
-[data-theme="arctic"] .brand-badge {
-  background: #00f0ff;
-  color: #010d14;
-  font-weight: 800;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
-}
-
-[data-theme="arctic"] .ticker-security-level {
-  border: 1.5px solid #00f0ff;
-  color: #00f0ff;
-  background: rgba(0, 240, 255, 0.12);
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
-}
-
-[data-theme="arctic"] .status-dot,
-[data-theme="arctic"] .hero-signal-ping,
-[data-theme="arctic"] .dossier-beacon,
-[data-theme="arctic"] .chassis-led-dot,
-[data-theme="arctic"] .hud-beacon-dot,
-[data-theme="arctic"] .operative-beacon-dot {
-  background-color: #00f0ff;
-  box-shadow: 0 0 10px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.65);
-}
-
-[data-theme="arctic"] .statement-corner-tl,
-[data-theme="arctic"] .statement-corner-br,
-[data-theme="arctic"] .corner-bracket {
-  border-color: #00f0ff;
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
-}
-
-[data-theme="arctic"] .tag-btn.active {
-  background: #00f0ff;
-  color: #010d14;
-  border-color: #00f0ff;
-  font-weight: 800;
-  box-shadow: 0 0 14px rgba(0, 240, 255, 0.55);
-}
-
-[data-theme="arctic"] a:hover,
-[data-theme="arctic"] .post-title a:hover,
-[data-theme="arctic"] .text-accent,
-[data-theme="arctic"] .text-glow {
-  color: #00f0ff;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.85), 0 0 20px rgba(0, 240, 255, 0.5);
+  border-color: #35d6ec !important;
+  color: #e4f4f8 !important;
 }
 
 [data-theme="arctic"] ::selection {
-  background: rgba(0, 240, 255, 0.35);
-  color: #ffffff;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.8);
-}
-
-/* Hardened borders with subtle electric luminescence */
-[data-theme="arctic"] .dossier-statement-box,
-[data-theme="arctic"] .dossier-stat-tile,
-[data-theme="arctic"] .post-card,
-[data-theme="arctic"] .hero-meta-chassis,
-[data-theme="arctic"] .toc-card,
-[data-theme="arctic"] .hud-card {
-  box-shadow: 0 0 16px rgba(0, 240, 255, 0.06), var(--shadow-md);
-}
-
-[data-theme="arctic"] .post-card:hover {
-  box-shadow: 0 0 22px rgba(0, 240, 255, 0.18), var(--shadow-hover);
-  border-color: #00f0ff;
+  background: #b48cf2 !important;
+  color: #08040f !important;
 }
 
 
