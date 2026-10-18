@@ -21,7 +21,145 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&family=VT323&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Architects+Daughter&family=Chakra+Petch:wght@500;600;700&family=Oswald:wght@500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Saira+Condensed:wght@500;600;700&family=Unbounded:wght@400;600;700;800;900&family=Iceland&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/style.css?v=3.3">
+  <link rel="stylesheet" href="assets/css/style.css?v=3.5">
+
+  <!-- Uchiha Mangekyō Tracking Scope Critical Styles (Guaranteed Instant Render) -->
+  <style id="uchiha-scope-critical">
+    .scope-wrap { display: none !important; }
+    [data-theme="uchiha"] .scope-wrap {
+      display: block !important;
+      position: relative;
+      background: radial-gradient(circle at 50% 46%, #16060a 0%, #0a0304 58%, #050102 100%);
+      border: 1px solid #3d1a1f;
+      border-radius: 10px;
+      padding: 1.1rem;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, .8), 0 18px 44px rgba(0, 0, 0, .6);
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+    }
+    .scope-wrap .scope {
+      position: relative;
+      width: min(100%, 520px);
+      aspect-ratio: 1;
+      margin: 0 auto;
+    }
+    .scope-wrap .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(204, 0, 0, .28);
+      pointer-events: none;
+    }
+    .scope-wrap .ring.o { inset: 0; border-color: rgba(204, 0, 0, .4); }
+    .scope-wrap .ring.m { inset: 11%; }
+    .scope-wrap .ring.i { inset: 24%; border-style: dashed; border-color: rgba(204, 0, 0, .3); }
+    .scope-wrap .ticks {
+      position: absolute;
+      inset: 3.5%;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 51, 68, .35);
+      pointer-events: none;
+    }
+    .scope-wrap .cross {
+      position: absolute;
+      background: rgba(204, 0, 0, .18);
+      pointer-events: none;
+    }
+    .scope-wrap .cross.x { left: 2%; right: 2%; top: 50%; height: 1px; }
+    .scope-wrap .cross.y { top: 2%; bottom: 2%; left: 50%; width: 1px; }
+    .scope-wrap .sweep {
+      position: absolute;
+      inset: 6%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0deg 310deg, rgba(255, 51, 68, .05) 330deg, rgba(255, 51, 68, .22) 356deg, #ff3344 360deg);
+      animation: mimoSweep 6s linear infinite;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    @keyframes mimoSweep { to { transform: rotate(360deg); } }
+    .scope-wrap .watermark {
+      position: absolute;
+      inset: 12%;
+      opacity: .055;
+      animation: mimoSlowCCW 90s linear infinite;
+      pointer-events: none;
+    }
+    .scope-wrap .watermark svg { width: 100%; height: 100%; display: block; }
+    @keyframes mimoSlowCCW { to { transform: rotate(-360deg); } }
+    .scope-wrap .core {
+      position: absolute;
+      inset: 33%;
+      filter: drop-shadow(0 0 18px rgba(255, 30, 40, .55)) drop-shadow(0 0 44px rgba(204, 0, 0, .35));
+    }
+    .scope-wrap .core svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      animation: mimoCoreSpin 16s linear infinite;
+    }
+    @keyframes mimoCoreSpin { to { transform: rotate(360deg); } }
+    .scope-wrap .blip {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, #000 0 26%, #cc0000 27% 62%, #ff3344 63% 78%, #660000 79% 100%);
+      box-shadow: 0 0 9px rgba(255, 51, 68, .8);
+      animation: mimoBlip 2.4s steps(1) infinite;
+    }
+    @keyframes mimoBlip { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+    .scope-wrap .b1 { top: 19%; left: 62%; }
+    .scope-wrap .b2 { top: 60%; left: 20%; animation-delay: .8s; }
+    .scope-wrap .b3 { top: 73%; left: 70%; animation-delay: 1.6s; }
+    .scope-wrap .track {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border: 1.5px solid rgba(255, 51, 68, .8);
+      border-radius: 4px;
+      animation: mimoTrackPulse 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes mimoTrackPulse {
+      0%, 100% { opacity: .9; transform: scale(1); }
+      50% { opacity: .4; transform: scale(1.12); }
+    }
+    .scope-wrap .t1 { top: calc(19% - 9px); left: calc(62% - 9px); }
+    .scope-wrap .t2 { top: calc(60% - 9px); left: calc(20% - 9px); animation-delay: .8s; }
+    .scope-wrap .t3 { top: calc(73% - 9px); left: calc(70% - 9px); animation-delay: 1.6s; }
+    .scope-wrap .corner {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border: 2px solid rgba(204, 0, 0, .5);
+      pointer-events: none;
+    }
+    .scope-wrap .corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+    .scope-wrap .corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+    .scope-wrap .corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+    .scope-wrap .corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+    .scope-wrap .scope-cap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .5rem .3rem 0;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.5rem, 1.8vw, 0.6rem);
+      letter-spacing: .08em;
+      color: #8a4a52;
+      text-transform: uppercase;
+      white-space: nowrap;
+      gap: 0.5rem;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scope-wrap .sweep,
+      .scope-wrap .watermark,
+      .scope-wrap .core svg,
+      .scope-wrap .track,
+      .scope-wrap .blip {
+        animation: none !important;
+      }
+    }
+  </style>
 
   <!-- Prevent Theme Flash & Randomize Theme on Visit, Reload & Navigation -->
   <script>
@@ -401,17 +539,17 @@
             </div>
 
             <!-- Uchiha Sharingan Radar Instrument: Mimo Mangekyō Tracking Scope (Itachi Uchiha Canon) -->
-            <div class="scope-wrap uchiha-radar-chassis" id="uchihaRadarChassisAbout" aria-hidden="true">
-              <div class="scope">
-                <div class="watermark" aria-hidden="true">
-                  <svg viewBox="0 0 300 300"><path fill="#ff3344" d="M 177.6,10.7 C 135,68.4 155.4,100.7 179.8,118.5 C 260.9,160.6 274.8,214.5 255.9,244.9 C 237.3,191.9 198,172.4 158.5,194.9 C 86.9,238.6 40.7,231.2 15.7,196.6 C 58.2,203.1 109.1,193.5 107.9,128.3 C 109.5,97.6 111.5,16.6 177.6,10.7 z"/></svg>
+            <div class="scope-wrap uchiha-radar-chassis" id="uchihaRadarChassisAbout" aria-hidden="true" style="position:relative;background:radial-gradient(circle at 50% 46%, #16060a 0%, #0a0304 58%, #050102 100%);border:1px solid #3d1a1f;border-radius:10px;padding:1.1rem;box-shadow:inset 0 0 60px rgba(0,0,0,.8), 0 18px 44px rgba(0,0,0,.6);overflow:hidden;">
+              <div class="scope" style="position:relative;width:min(100%,520px);aspect-ratio:1;margin:0 auto;">
+                <div class="watermark" aria-hidden="true" style="position:absolute;inset:12%;opacity:0.055;pointer-events:none;">
+                  <svg viewBox="0 0 300 300" style="width:100%;height:100%;display:block;"><path fill="#ff3344" d="M 177.6,10.7 C 135,68.4 155.4,100.7 179.8,118.5 C 260.9,160.6 274.8,214.5 255.9,244.9 C 237.3,191.9 198,172.4 158.5,194.9 C 86.9,238.6 40.7,231.2 15.7,196.6 C 58.2,203.1 109.1,193.5 107.9,128.3 C 109.5,97.6 111.5,16.6 177.6,10.7 z"/></svg>
                 </div>
                 <div class="ring o"></div><div class="ring m"></div><div class="ring i"></div>
                 <div class="ticks"></div>
                 <div class="cross x"></div><div class="cross y"></div>
                 <div class="sweep"></div>
-                <div class="core">
-                  <svg viewBox="0 0 300 300" role="img" aria-label="Itachi Uchiha Mangekyo Sharingan eye">
+                <div class="core" style="position:absolute;inset:33%;">
+                  <svg viewBox="0 0 300 300" role="img" aria-label="Itachi Uchiha Mangekyo Sharingan eye" style="width:100%;height:100%;display:block;">
                     <defs>
                       <radialGradient id="ir-ab" cx="50%" cy="46%" r="60%">
                         <stop offset="0" stop-color="#660000"/>
@@ -433,7 +571,7 @@
                 <div class="corner tl"></div><div class="corner tr"></div>
                 <div class="corner bl"></div><div class="corner br"></div>
               </div>
-              <div class="scope-cap"><span>SCOPE: MANGEKYŌ // ITACHI</span><span>TRACK: 3 // RANGE: ∞</span></div>
+              <div class="scope-cap" style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .3rem 0;font-family:'Share Tech Mono',monospace;font-size:clamp(0.5rem, 1.8vw, 0.6rem);letter-spacing:.08em;color:#8a4a52;text-transform:uppercase;white-space:nowrap;gap:0.5rem;"><span>SCOPE: MANGEKYŌ // ITACHI</span><span>TRACK: 3 // RANGE: ∞</span></div>
             </div>
           </div>
 

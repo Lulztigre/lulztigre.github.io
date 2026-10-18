@@ -441,11 +441,13 @@ body[data-theme="uchiha"]::before,
 }
 
 /* ---------- UCHIHA MANGEKYŌ TRACKING SCOPE (MIMO ITACHI CANON) ---------- */
-.scope-wrap {
+.scope-wrap,
+.uchiha-radar-chassis {
   display: none !important;
 }
 
-[data-theme="uchiha"] .scope-wrap {
+[data-theme="uchiha"] .scope-wrap,
+[data-theme="uchiha"] .uchiha-radar-chassis {
   display: block !important;
   position: relative;
   background: radial-gradient(circle at 50% 46%, #16060a 0%, #0a0304 58%, #050102 100%);
