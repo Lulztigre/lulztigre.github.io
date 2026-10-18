@@ -10190,6 +10190,74 @@ html, body {
 }
 
 /* ==========================================================================
+   YUA BUBBLES CANVAS & BURSTING OPTICS (GLM YUA WINNER)
+   ========================================================================== */
+#bubbles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9960;
+  pointer-events: none;
+  opacity: 0.95;
+  display: none;
+}
+
+[data-theme="yua"] #bubbles-canvas {
+  display: block;
+}
+
+.brand-yua-heart {
+  display: none;
+}
+
+[data-theme="yua"] .brand-yua-heart {
+  display: inline-block !important;
+  color: #f472b6;
+  animation: heartBeat 1.1s infinite;
+  transform-origin: 50% 60%;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(1.18); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.12); }
+  48% { transform: scale(1); }
+}
+
+[data-theme="yua"] .brand-sharingan,
+[data-theme="yua"] .brand-sprig,
+[data-theme="yua"] .brand-cobalt-trefoil,
+[data-theme="yua"] .brand-sakura-kamon,
+[data-theme="yua"] .brand-arctic-crystal {
+  display: none !important;
+}
+
+[data-theme="yua"] .brand-badge {
+  font-size: 0 !important;
+  border-radius: 999px !important;
+  background: #f472b6 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  padding: 0.18rem 0.65rem !important;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(244, 114, 182, 0.4) !important;
+}
+
+[data-theme="yua"] .brand-badge::after {
+  content: "id=(yua)";
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+}
+
+[data-theme="yua"] .hero-chassis-radar-mini {
+  height: auto !important;
+  min-height: 280px !important;
+}
+
+/* ==========================================================================
    ARCTIC THEME SPECIFIC STYLING (DEEP MIDNIGHT TEAL, ELECTRIC BLUE,
    GLOWING DARK TERMINAL EFFECT, PURE WHITE TEXT, ORBITRON/RAJDHANI HEADERS,
    STRICT NARROW MONOSPACE BODY, & SHARP DELIBERATE QUOTE HIGHLIGHTS)

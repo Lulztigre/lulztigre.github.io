@@ -74,7 +74,8 @@
     const THEME_EYE = '<svg class="uchiha-theme-eye" width="14" height="14" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.4"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>';
     const COBALT_TREFOIL = '<svg class="cob-mark-btn" width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;animation:cobRotateTrefoil 12s linear infinite;" fill="currentColor"><circle cx="12" cy="12" r="2.4"/><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/><g transform="rotate(120 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><g transform="rotate(240 12 12)"><path d="M12 10.2 L12 2.6 A9.4 9.4 0 0 0 4.2 6.9 L10.6 10.9 A2.2 2.2 0 0 1 12 10.2 Z"/></g><circle cx="12" cy="12" r="10.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
     const SOLAR_MARK = '<svg class="sol-mark-btn" width="14" height="14" viewBox="0 0 48 48" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#ffb02e;animation:cobRotateTrefoil 35s linear infinite;" fill="currentColor"><circle cx="24" cy="24" r="10" fill="currentColor"/><g stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="24" y1="4" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="44"/><line x1="4" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="44" y2="24"/><line x1="9.9" y1="9.9" x2="14.1" y2="14.1"/><line x1="33.9" y1="33.9" x2="38.1" y2="38.1"/><line x1="9.9" y1="38.1" x2="14.1" y2="33.9"/><line x1="33.9" y1="14.1" x2="38.1" y2="9.9"/></g></svg>';
-    const ARCTIC_CRYSTAL = '<svg class="arc-mark-btn" width="14" height="14" viewBox="0 0 48 48" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#5ef2c0;animation:cobRotateTrefoil 14s linear infinite;" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M24 4 V44 M6 14 L42 34 M42 14 L6 34"/><path d="M24 12 l-5-5 M24 12 l5-5 M24 36 l-5 5 M24 36 l5 5"/><path d="M10 17 l1-7 M10 17 l7-1 M38 31 l-1 7 M38 31 l-7 1"/><path d="M38 17 l-7-1 M38 17 l-1-7 M10 31 l7 1 M10 31 l1 7"/></g></svg>';
+    const ARCTIC_CRYSTAL = '<svg class="arc-mark-btn" width="14" height="14" viewBox="0 0 48 48" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#5ef2c0;animation:cobRotateTrefoil 14s linear infinite;" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M24 4 V44 M6 14 L42 34 M42 14 L6 34"/><path d="M24 12 l-5-5 M24 12 l5-5 M24 36 l-5 5 M24 36 l5 5"/><path d="M10 17 l1-7 M10 17 l7-1 M38 31 l-1 7 M38 31 l-7 1"/><path d="M38 17 l-7-1 M38 17 l-1-7 M10 31 l7 1 M10 31 l1 7"/></svg>';
+    const YUA_HEART = '<svg class="yua-mark-btn" width="14" height="14" viewBox="0 0 40 40" style="vertical-align:-2px;margin-right:0.35rem;display:inline-block;color:#f472b6;animation:heartBeat 1.1s infinite;transform-origin:50% 60%;" fill="currentColor"><path d="M20 34 C 10 27, 4 20.5, 4 13.8 C 4 8.6, 8 5, 12.6 5 C 16 5, 18.8 7, 20 9.6 C 21.2 7, 24 5, 27.4 5 C 32 5, 36 8.6, 36 13.8 C 36 20.5, 30 27, 20 34 Z"/><circle cx="14" cy="13" r="3.4" fill="#fff" opacity="0.75"/></svg>';
     const icons = {
       phantom: PHANTOM_SPECTER + 'PHANTOM',
       void: PHANTOM_SPECTER + 'PHANTOM',
@@ -90,8 +91,8 @@
       hazard: '⚠ HAZARD',
       cobalt: COBALT_TREFOIL + 'COBALT',
       sakura: '✿ SAKURA',
-      yua: '♡ YUA',
-      blush: '♡ YUA'
+      yua: YUA_HEART + 'YUA',
+      blush: YUA_HEART + 'YUA'
     };
     let label = icons[theme] || '◐ THEME';
     if (theme === 'uchiha') {
@@ -108,6 +109,8 @@
       label = SOLAR_MARK + 'SOLAR';
     } else if (theme === 'arctic') {
       label = ARCTIC_CRYSTAL + 'ARCTIC';
+    } else if (theme === 'yua' || theme === 'blush') {
+      label = YUA_HEART + 'YUA';
     }
     btn.innerHTML = `<span>${label}</span>`;
   }
@@ -465,6 +468,12 @@
 
       if ((e.key === 'd' || e.key === 'D') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
         if (window.triggerDegauss) window.triggerDegauss();
+      }
+
+      if ((e.key === 'p' || e.key === 'P') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        if (document.documentElement.getAttribute('data-theme') === 'yua' && typeof window.popYuaBubble === 'function') {
+          window.popYuaBubble();
+        }
       }
     });
   }
@@ -2721,6 +2730,863 @@
     }, { passive: true });
   }
 
+  // --- ROUND 9+ UCHIHA: DŌJUTSU SHARINGAN & MANGEKYŌ OCULAR RADAR ---
+  function initUchihaSharinganRadar() {
+    const chassis = document.getElementById('uchihaRadarChassis');
+    const canvas = document.getElementById('sharinganCanvas');
+    if (!chassis || !canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const TAU = Math.PI * 2;
+    const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Telemetry DOM elements
+    const tagMode = document.getElementById('sharinganModeTag');
+    const roMode = document.getElementById('shariRoMode');
+    const roRpm = document.getElementById('shariRoRpm');
+    const roLock = document.getElementById('shariRoLock');
+    const roTgt = document.getElementById('shariRoTgt');
+    const btnScan = document.getElementById('btnShariScan');
+    const btnLock = document.getElementById('btnShariLock');
+    const btnMangekyo = document.getElementById('btnShariMangekyo');
+    const btnRelease = document.getElementById('btnShariRelease');
+
+    // Radar Contacts (CVE / Offensive targets)
+    const CONTACTS = [
+      { tag: 'CVE-67363', sub: 'BALBOOA RCE', b: 0.52, r: 0.38, hot: true },
+      { tag: 'CVE-32640', sub: 'GRAVITINO RCE', b: 1.74, r: 0.65, hot: false },
+      { tag: 'CVE-75948', sub: 'ICAGENDA XSS', b: 2.88, r: 0.48, hot: false },
+      { tag: 'eBPF-SINK', sub: 'KERNEL HOOK', b: 4.15, r: 0.76, hot: true },
+      { tag: '0-DAY-PIPE', sub: 'EMBARGOED CHAIN', b: 5.35, r: 0.58, hot: true }
+    ];
+    CONTACTS.forEach(c => { c.prev = 99; });
+
+    let S = 560, CX = 280, CY = 280, R = 230;
+    let sweep = 0.5;
+    let rpm = 10;
+    let targetRpm = 10;
+    let locked = -1;
+    let ocularMode = 'tomoe'; // 'tomoe' or 'mangekyo'
+    let mangekyoSpin = 0;
+    let ripples = [];
+    let animId = null;
+    let isRunning = false;
+    let lastTime = performance.now();
+
+    function fit() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const parent = canvas.parentElement;
+      const cssW = Math.min(parent ? parent.clientWidth - 16 : 280, 320);
+      canvas.style.width = cssW + 'px';
+      canvas.style.height = cssW + 'px';
+      S = Math.round(cssW * dpr);
+      canvas.width = S;
+      canvas.height = S;
+      CX = S / 2;
+      CY = S / 2;
+      R = S * 0.45;
+    }
+
+    function pol(b, r) {
+      return [CX + Math.sin(b) * R * r, CY - Math.cos(b) * R * r];
+    }
+
+    function fmtBrg(b) {
+      const d = Math.round((b * 360) / TAU) % 360;
+      return (d < 100 ? (d < 10 ? '00' : '0') : '') + d + '°';
+    }
+
+    // Audio SFX for Uchiha radar
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+    function isAudioActive() {
+      return localStorage.getItem('phantom_sfx') !== 'off';
+    }
+    function playOcularTone(freq, duration = 0.12, type = 'sine') {
+      if (!isAudioActive()) return;
+      try {
+        const actx = getAudioCtx();
+        if (!actx) return;
+        const now = actx.currentTime;
+        const osc = actx.createOscillator();
+        const gain = actx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.6, now + duration);
+        gain.gain.setValueAtTime(0.04, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain);
+        gain.connect(actx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      } catch (e) {}
+    }
+
+    // Draw authentic Sharingan Iris, Reticle & Cardinal Marks
+    function drawBase() {
+      // Deep Crimson Iris with Limbus Ring
+      const irisGrad = ctx.createRadialGradient(CX, CY, R * 0.08, CX, CY, R);
+      irisGrad.addColorStop(0, '#0a0002');
+      irisGrad.addColorStop(0.25, '#3b0004');
+      irisGrad.addColorStop(0.60, '#88000a');
+      irisGrad.addColorStop(0.85, '#cc0014');
+      irisGrad.addColorStop(0.97, '#380005');
+      irisGrad.addColorStop(1, '#000000');
+      ctx.beginPath();
+      ctx.arc(CX, CY, R, 0, TAU);
+      ctx.fillStyle = irisGrad;
+      ctx.fill();
+
+      // Radiating ocular striations (subtle dōjutsu chakra texture)
+      ctx.save();
+      ctx.globalAlpha = 0.12;
+      ctx.strokeStyle = '#ff3344';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 36; i++) {
+        const a = (i / 36) * TAU;
+        ctx.beginPath();
+        ctx.moveTo(CX + Math.sin(a) * (R * 0.18), CY - Math.cos(a) * (R * 0.18));
+        ctx.lineTo(CX + Math.sin(a) * (R * 0.94), CY - Math.cos(a) * (R * 0.94));
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Range Rings (Concentric targeting circles)
+      [0.32, 0.52, 0.76, 1.0].forEach((f) => {
+        ctx.beginPath();
+        ctx.arc(CX, CY, R * f, 0, TAU);
+        ctx.strokeStyle = (f === 0.52) ? 'rgba(0, 0, 0, 0.65)' : (f === 1.0 ? '#ff1a2b' : 'rgba(255, 30, 40, 0.25)');
+        ctx.lineWidth = (f === 0.52) ? 2.5 : (f === 1.0 ? 2 : 1);
+        if (f === 0.76) {
+          ctx.setLineDash([4, 6]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        } else {
+          ctx.stroke();
+        }
+      });
+
+      // Axis crosshairs
+      ctx.strokeStyle = 'rgba(255, 20, 30, 0.22)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(CX - R * 0.98, CY); ctx.lineTo(CX + R * 0.98, CY);
+      ctx.moveTo(CX, CY - R * 0.98); ctx.lineTo(CX, CY + R * 0.98);
+      ctx.stroke();
+
+      // 72 Bearing ticks with Japanese Cardinal Points
+      ctx.font = Math.round(S * 0.026) + "px 'JetBrains Mono', monospace";
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i < 72; i++) {
+        const a = (i / 72) * TAU;
+        const isCardinal = i % 18 === 0;
+        const isMajor = i % 6 === 0;
+        const r1 = R * (isCardinal ? 0.92 : (isMajor ? 0.95 : 0.97));
+        const r2 = R * 1.0;
+        ctx.beginPath();
+        ctx.moveTo(CX + Math.sin(a) * r1, CY - Math.cos(a) * r1);
+        ctx.lineTo(CX + Math.sin(a) * r2, CY - Math.cos(a) * r2);
+        ctx.strokeStyle = isCardinal ? '#ff2b3c' : (isMajor ? 'rgba(255, 60, 70, 0.7)' : 'rgba(255, 30, 40, 0.3)');
+        ctx.lineWidth = isCardinal ? 2 : 1;
+        ctx.stroke();
+
+        if (isCardinal) {
+          const kanji = i === 0 ? '北' : (i === 18 ? '東' : (i === 36 ? '南' : '西'));
+          const rText = R * 0.85;
+          ctx.fillStyle = '#ff4455';
+          ctx.fillText(kanji, CX + Math.sin(a) * rText, CY - Math.cos(a) * rText);
+        }
+      }
+    }
+
+    // Draw authentic Japanese Mitsudomoe (Three-Tomoe)
+    function drawTomoe(angle, orbit, headRadius) {
+      const hx = CX + Math.sin(angle) * orbit;
+      const hy = CY - Math.cos(angle) * orbit;
+
+      ctx.save();
+      ctx.translate(hx, hy);
+      ctx.rotate(angle + Math.PI / 2);
+
+      // Organic curved tomoe blade
+      ctx.beginPath();
+      ctx.arc(0, 0, headRadius, -Math.PI / 2, Math.PI / 2, false);
+      const tailLen = headRadius * 3.2;
+      ctx.bezierCurveTo(headRadius * 0.6, headRadius * 1.5, tailLen * 0.7, headRadius * 0.8, tailLen, -headRadius * 0.3);
+      ctx.bezierCurveTo(tailLen * 0.5, headRadius * 0.2, headRadius * 0.3, -headRadius * 0.6, 0, -headRadius);
+      ctx.closePath();
+
+      // Deep jet black with red gloss
+      const tomoeGrad = ctx.createRadialGradient(-headRadius * 0.2, -headRadius * 0.2, headRadius * 0.1, 0, 0, headRadius * 1.8);
+      tomoeGrad.addColorStop(0, '#1a0003');
+      tomoeGrad.addColorStop(0.5, '#050001');
+      tomoeGrad.addColorStop(1, '#000000');
+      ctx.fillStyle = tomoeGrad;
+      ctx.fill();
+      ctx.strokeStyle = '#2b0004';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Subtle crimson specular glint on head
+      ctx.beginPath();
+      ctx.arc(-headRadius * 0.3, -headRadius * 0.3, headRadius * 0.25, 0, TAU);
+      ctx.fillStyle = 'rgba(255, 50, 60, 0.4)';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // Draw Mangekyō Sharingan Pinwheel Form
+    function drawMangekyoBlades(spin) {
+      ctx.save();
+      ctx.translate(CX, CY);
+      ctx.rotate(spin);
+
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = '#ff0015';
+
+      for (let i = 0; i < 3; i++) {
+        ctx.save();
+        ctx.rotate((i * TAU) / 3);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(R * 0.2, -R * 0.1, R * 0.45, -R * 0.35, R * 0.82, -R * 0.15);
+        ctx.bezierCurveTo(R * 0.65, -R * 0.05, R * 0.35, R * 0.05, 0, 0);
+        ctx.closePath();
+
+        const bGrad = ctx.createLinearGradient(0, 0, R * 0.8, -R * 0.2);
+        bGrad.addColorStop(0, '#000000');
+        bGrad.addColorStop(0.5, '#0d0002');
+        bGrad.addColorStop(0.85, '#200003');
+        bGrad.addColorStop(1, '#ff1a2b');
+        ctx.fillStyle = bGrad;
+        ctx.fill();
+
+        ctx.strokeStyle = '#ff3344';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    // Draw Central Pupil with Dōjutsu Glint
+    function drawPupil() {
+      const pr = R * 0.14;
+      ctx.beginPath();
+      ctx.arc(CX, CY, pr, 0, TAU);
+      ctx.fillStyle = '#000000';
+      ctx.fill();
+      ctx.strokeStyle = '#ff1a2b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Central red iris core
+      ctx.beginPath();
+      ctx.arc(CX, CY, pr * 0.35, 0, TAU);
+      ctx.fillStyle = '#cc0014';
+      ctx.fill();
+
+      // Glint highlight
+      ctx.beginPath();
+      ctx.arc(CX - pr * 0.35, CY - pr * 0.35, pr * 0.22, 0, TAU);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.fill();
+    }
+
+    // Phosphor Sweep Trail
+    function drawSweepTrail() {
+      const TRAIL = 1.35; // ~77 deg wedge
+      const steps = 30;
+      for (let i = 0; i < steps; i++) {
+        const f1 = sweep - TRAIL * (i / steps);
+        const f0 = sweep - TRAIL * ((i + 1) / steps);
+        const t = 1 - (i + 0.5) / steps;
+        ctx.beginPath();
+        ctx.moveTo(CX, CY);
+        ctx.arc(CX, CY, R * 0.98, f0 - Math.PI / 2, f1 - Math.PI / 2, false);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255, 0, 20,' + (0.28 * Math.pow(t, 1.8)).toFixed(3) + ')';
+        ctx.fill();
+      }
+
+      // Laser Leading Edge Ray
+      const ex = CX + Math.sin(sweep) * R * 0.98;
+      const ey = CY - Math.cos(sweep) * R * 0.98;
+      ctx.beginPath();
+      ctx.moveTo(CX, CY);
+      ctx.lineTo(ex, ey);
+      ctx.strokeStyle = 'rgba(255, 200, 210, 0.95)';
+      ctx.lineWidth = 1.8;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = '#ff1a2b';
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    // Radar Contacts & Ocular Reticle
+    function drawContacts(dt) {
+      CONTACTS.forEach((c, idx) => {
+        const rel = ((sweep - c.b) % TAU + TAU) % TAU;
+        const bright = RM ? 1 : Math.exp(-rel * 1.15);
+        if (rel < 0.14 && c.prev >= 0.14 && !RM) {
+          ripples.push({ b: c.b, r: c.r, radius: 4, alpha: 0.8 });
+          if (idx === locked) playOcularTone(880, 0.15, 'triangle');
+        }
+        c.prev = rel;
+
+        if (bright < 0.04 && idx !== locked) return;
+
+        const p = pol(c.b, c.r);
+        const isLock = idx === locked;
+        const s = (c.hot ? 6 : 5) * (S / 560) + (isLock ? 3 : 2) * bright;
+
+        // Diamond blip
+        ctx.save();
+        ctx.translate(p[0], p[1]);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillStyle = isLock ? '#ff0033' : (c.hot ? `rgba(255, 40, 50, ${Math.max(bright, 0.5).toFixed(2)})` : `rgba(255, 140, 150, ${bright.toFixed(2)})`);
+        ctx.shadowBlur = isLock ? 12 : 6;
+        ctx.shadowColor = '#ff0022';
+        ctx.fillRect(-s / 2, -s / 2, s, s);
+        ctx.restore();
+
+        // Alphanumeric callout label
+        if (bright > 0.38 || isLock) {
+          ctx.font = '700 ' + Math.round(S * 0.024) + "px 'JetBrains Mono', monospace";
+          ctx.fillStyle = isLock ? '#ffffff' : `rgba(255, 220, 225, ${Math.min(1, bright + 0.3).toFixed(2)})`;
+          ctx.fillText(c.tag, p[0] + 12, p[1] - 6);
+
+          ctx.font = Math.round(S * 0.019) + "px 'JetBrains Mono', monospace";
+          ctx.fillStyle = isLock ? '#ff4d66' : `rgba(255, 120, 130, ${Math.min(0.9, bright).toFixed(2)})`;
+          ctx.fillText(c.sub, p[0] + 12, p[1] + 8);
+        }
+
+        // Genjutsu / Ocular Target Lock Reticle
+        if (isLock) {
+          const L = 14 * (S / 560);
+          const box = s + 10;
+          ctx.strokeStyle = '#ff0033';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(sg => {
+            const bx = p[0] + sg[0] * box;
+            const by = p[1] + sg[1] * box;
+            ctx.moveTo(bx - sg[0] * L, by);
+            ctx.lineTo(bx, by);
+            ctx.lineTo(bx, by - sg[1] * L);
+          });
+          ctx.stroke();
+
+          // Tracking vector ray from ocular center
+          ctx.beginPath();
+          ctx.moveTo(CX, CY);
+          ctx.lineTo(p[0], p[1]);
+          ctx.setLineDash([5, 4]);
+          ctx.strokeStyle = 'rgba(255, 30, 50, 0.7)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      });
+    }
+
+    // Ripple wave emissions
+    function drawRipples(dt) {
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const rp = ripples[i];
+        const p = pol(rp.b, rp.r);
+        rp.radius += dt * 80;
+        rp.alpha -= dt * 0.85;
+        if (rp.alpha <= 0) {
+          ripples.splice(i, 1);
+          continue;
+        }
+        ctx.beginPath();
+        ctx.arc(p[0], p[1], rp.radius, 0, TAU);
+        ctx.strokeStyle = `rgba(255, 20, 40, ${rp.alpha.toFixed(2)})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+    }
+
+    // Animation Render Frame
+    function render(now) {
+      if (!isRunning) return;
+      const dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+
+      rpm += (targetRpm - rpm) * 0.05;
+      sweep = (sweep + (rpm / 60) * TAU * dt) % TAU;
+      mangekyoSpin = (mangekyoSpin + (rpm / 60) * 1.5 * TAU * dt) % TAU;
+
+      ctx.clearRect(0, 0, S, S);
+
+      drawBase();
+      drawSweepTrail();
+
+      if (ocularMode === 'tomoe') {
+        const orbit = R * 0.52;
+        const headR = R * 0.078;
+        for (let i = 0; i < 3; i++) {
+          drawTomoe(sweep + (i * TAU) / 3, orbit, headR);
+        }
+      } else {
+        drawMangekyoBlades(mangekyoSpin);
+      }
+
+      drawPupil();
+      drawContacts(dt);
+      drawRipples(dt);
+
+      if (roRpm) roRpm.textContent = Math.round(rpm) + ' RPM';
+
+      animId = requestAnimationFrame(render);
+    }
+
+    // Control Handlers
+    function setTargetLock(idx) {
+      locked = idx;
+      const isLock = idx >= 0;
+      targetRpm = isLock ? 26 : (ocularMode === 'mangekyo' ? 32 : 10);
+
+      if (roMode) {
+        roMode.textContent = isLock ? 'LOCK' : (ocularMode === 'mangekyo' ? 'MANGEKYŌ' : 'SCAN');
+        roMode.classList.toggle('hot', isLock || ocularMode === 'mangekyo');
+      }
+      if (roLock) {
+        roLock.textContent = isLock ? CONTACTS[idx].tag : '--';
+        roLock.classList.toggle('hot', isLock);
+      }
+      if (roTgt) {
+        roTgt.textContent = isLock ? `${CONTACTS[idx].sub} // ${fmtBrg(CONTACTS[idx].b)}` : '--';
+      }
+
+      btnScan && btnScan.classList.toggle('active', !isLock && ocularMode === 'tomoe');
+      btnLock && btnLock.classList.toggle('active', isLock);
+      btnMangekyo && btnMangekyo.classList.toggle('active', ocularMode === 'mangekyo');
+
+      if (isLock) {
+        playOcularTone(1050, 0.22, 'sawtooth');
+      }
+    }
+
+    function switchMode(mode) {
+      ocularMode = mode;
+      if (tagMode) tagMode.textContent = mode === 'mangekyo' ? 'MANGEKYŌ' : '3-TOMOE';
+      targetRpm = mode === 'mangekyo' ? 32 : (locked >= 0 ? 26 : 10);
+      if (roMode) {
+        roMode.textContent = locked >= 0 ? 'LOCK' : (mode === 'mangekyo' ? 'MANGEKYŌ' : 'SCAN');
+        roMode.classList.toggle('hot', locked >= 0 || mode === 'mangekyo');
+      }
+      btnScan && btnScan.classList.toggle('active', mode === 'tomoe' && locked < 0);
+      btnMangekyo && btnMangekyo.classList.toggle('active', mode === 'mangekyo');
+      playOcularTone(mode === 'mangekyo' ? 1200 : 640, 0.25, 'sine');
+    }
+
+    function nearestTo(b) {
+      let best = -1, minDiff = 99;
+      CONTACTS.forEach((c, idx) => {
+        let diff = ((b - c.b) % TAU + TAU) % TAU;
+        if (diff > Math.PI) diff = TAU - diff;
+        if (diff < minDiff) {
+          minDiff = diff;
+          best = idx;
+        }
+      });
+      return minDiff < 0.65 ? best : -1;
+    }
+
+    // Click interactive targeting
+    canvas.addEventListener('click', (ev) => {
+      const rect = canvas.getBoundingClientRect();
+      const dx = ev.clientX - rect.left - rect.width / 2;
+      const dy = ev.clientY - rect.top - rect.height / 2;
+      const distRatio = Math.sqrt(dx * dx + dy * dy) / (rect.width / 2);
+      if (distRatio > 0.98 || distRatio < 0.08) {
+        setTargetLock(-1);
+        return;
+      }
+      let b = Math.atan2(dx, -dy);
+      if (b < 0) b += TAU;
+      const hit = nearestTo(b);
+      setTargetLock(hit);
+    });
+
+    if (btnScan) {
+      btnScan.addEventListener('click', () => {
+        switchMode('tomoe');
+        setTargetLock(-1);
+      });
+    }
+    if (btnLock) {
+      btnLock.addEventListener('click', () => {
+        const tgt = locked >= 0 ? (locked + 1) % CONTACTS.length : nearestTo(sweep);
+        setTargetLock(tgt >= 0 ? tgt : 0);
+      });
+    }
+    if (btnMangekyo) {
+      btnMangekyo.addEventListener('click', () => {
+        switchMode(ocularMode === 'mangekyo' ? 'tomoe' : 'mangekyo');
+      });
+    }
+    if (btnRelease) {
+      btnRelease.addEventListener('click', () => {
+        switchMode('tomoe');
+        setTargetLock(-1);
+      });
+    }
+
+    function start() {
+      if (isRunning) return;
+      fit();
+      isRunning = true;
+      lastTime = performance.now();
+      animId = requestAnimationFrame(render);
+    }
+
+    function stop() {
+      if (!isRunning) return;
+      isRunning = false;
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    }
+
+    // Auto start if theme is currently Uchiha
+    if (document.documentElement.getAttribute('data-theme') === 'uchiha') {
+      start();
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('mangekyo') === '1') {
+          switchMode('mangekyo');
+        }
+        if (params.get('lock') !== null) {
+          const lk = parseInt(params.get('lock'), 10);
+          setTargetLock(isNaN(lk) ? 0 : lk);
+        }
+      } catch (e) {}
+    }
+
+    // Observer for theme switches
+    const obs = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          if (document.documentElement.getAttribute('data-theme') === 'uchiha') {
+            start();
+          } else {
+            stop();
+          }
+        }
+      });
+    });
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    window.addEventListener('resize', () => {
+      if (document.documentElement.getAttribute('data-theme') === 'uchiha') {
+        fit();
+      }
+    }, { passive: true });
+  }
+
+  // --- 16. YUA IRIDESCENT BUBBLES & BURSTING ENGINE (GLM YUA WINNING EFFECT) ---
+  function initYuaBubbles() {
+    let canvas = document.getElementById('bubbles-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'bubbles-canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      document.body.prepend(canvas);
+    }
+    const ctx = canvas.getContext('2d');
+    let BW = 0, BH = 0;
+    let bubbles = [], droplets = [];
+    const mouse = { x: -9999, y: -9999 };
+    let animId = null;
+    let isRunning = false;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    function sizeBubbles() {
+      BW = window.innerWidth;
+      BH = window.innerHeight;
+      canvas.width = Math.floor(BW * DPR);
+      canvas.height = Math.floor(BH * DPR);
+      canvas.style.width = BW + 'px';
+      canvas.style.height = BH + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+
+    function spawnBubble(topUp) {
+      const r = 12 + Math.random() * 22;
+      bubbles.push({
+        x: Math.random() * BW,
+        y: topUp ? -40 : BH * Math.random(),
+        r: r,
+        vy: -(0.14 + Math.random() * 0.3) * (0.6 + r / 40),
+        ph: Math.random() * 6.28,
+        swA: 0.25 + Math.random() * 0.5,
+        swF: 0.0009 + Math.random() * 0.0014,
+        wob: Math.random() * 6.28,
+        alpha: 0.5 + Math.random() * 0.3,
+        tint: Math.random() < 0.3 ? 'lilac' : 'pink'
+      });
+    }
+
+    function drawBubble(c, b, t) {
+      const body = b.tint === 'lilac' ? 'rgba(196,165,245,' : 'rgba(255,160,205,';
+      const a = b.alpha;
+      const g = c.createRadialGradient(b.x - b.r * 0.3, b.y - b.r * 0.35, b.r * 0.1, b.x, b.y, b.r);
+      g.addColorStop(0, 'rgba(255,255,255,' + Math.min(0.95, a + 0.25) + ')');
+      g.addColorStop(0.55, body + (a * 0.28) + ')');
+      g.addColorStop(1, body + (a * 0.5) + ')');
+      c.beginPath();
+      c.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      c.fillStyle = g;
+      c.fill();
+
+      // Iridescent rim
+      c.beginPath();
+      c.arc(b.x, b.y, Math.max(0.5, b.r - 0.8), 0, Math.PI * 2);
+      c.strokeStyle = 'rgba(236,72,153,' + (a * 0.55) + ')';
+      c.lineWidth = 1.6;
+      c.stroke();
+
+      // Specular highlight
+      c.beginPath();
+      c.arc(b.x - b.r * 0.34, b.y - b.r * 0.38, b.r * 0.18, 0, Math.PI * 2);
+      c.fillStyle = 'rgba(255,255,255,' + Math.min(0.95, a + 0.2) + ')';
+      c.fill();
+
+      // Wobble shimmer
+      c.beginPath();
+      c.arc(b.x + b.r * 0.25, b.y + b.r * 0.1, b.r * 0.09, 0, Math.PI * 2);
+      c.fillStyle = 'rgba(255,255,255,' + (a * 0.5 * Math.abs(Math.sin(t * 0.002 + b.wob))) + ')';
+      c.fill();
+    }
+
+    function popBubbleSound() {
+      try {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioClass) return;
+        if (!window._yuaAudioCtx) window._yuaAudioCtx = new AudioClass();
+        const actx = window._yuaAudioCtx;
+        if (actx.state === 'suspended') actx.resume();
+
+        const t0 = actx.currentTime;
+        const o = actx.createOscillator();
+        const g = actx.createGain();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(480, t0);
+        o.frequency.exponentialRampToValueAtTime(920, t0 + 0.07);
+        g.gain.setValueAtTime(0.18, t0);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.12);
+        o.connect(g);
+        g.connect(actx.destination);
+        o.start(t0);
+        o.stop(t0 + 0.14);
+      } catch (e) {
+        // Audio optional ignore
+      }
+    }
+
+    function popBubble(b) {
+      if (!b || b.dead) return;
+      b.dead = true;
+      const n = 7;
+      for (let i = 0; i < n; i++) {
+        const ang = (Math.PI * 2 / n) * i + Math.random() * 0.6;
+        droplets.push({
+          x: b.x,
+          y: b.y,
+          vx: Math.cos(ang) * (1.4 + Math.random() * 1.6),
+          vy: Math.sin(ang) * (1.4 + Math.random() * 1.6) - 0.6,
+          r: 1.6 + Math.random() * 2.4,
+          life: 1
+        });
+      }
+      droplets.push({ x: b.x, y: b.y, ring: true, r: b.r * 0.8, life: 1 });
+      popBubbleSound();
+    }
+
+    function popAnyBubble() {
+      if (!bubbles.length) return;
+      const alive = bubbles.filter(b => !b.dead);
+      if (!alive.length) return;
+      const chosen = alive[Math.floor(Math.random() * alive.length)];
+      popBubble(chosen);
+      setTimeout(() => spawnBubble(true), 900);
+    }
+    window.popYuaBubble = popAnyBubble;
+
+    function bubblesFrame(t) {
+      ctx.clearRect(0, 0, BW, BH);
+      const target = Math.min(18, Math.max(9, Math.floor(BW * BH / 95000)));
+      while (bubbles.length < target) spawnBubble(false);
+
+      for (let i = bubbles.length - 1; i >= 0; i--) {
+        const b = bubbles[i];
+        if (b.dead) {
+          bubbles.splice(i, 1);
+          continue;
+        }
+        b.ph += b.swF * 16.7;
+        b.wob += 0.02;
+
+        // Repel from cursor
+        const dx = b.x - mouse.x;
+        const dy = b.y - mouse.y;
+        const md = Math.sqrt(dx * dx + dy * dy);
+        if (md < 110 && md > 0.1) {
+          const f = (110 - md) / 110;
+          b.x += (dx / md) * f * 1.5;
+          b.y += (dy / md) * f * 1.1;
+        }
+
+        b.x += Math.sin(b.ph) * b.swA * 0.5;
+        b.y += b.vy * 0.28;
+
+        if (b.y < -50) {
+          b.y = BH + 40;
+          b.x = Math.random() * BW;
+        }
+        if (b.x < -60) b.x = BW + 50;
+        else if (b.x > BW + 60) b.x = -50;
+
+        drawBubble(ctx, b, t);
+      }
+
+      // Droplets & expanding ripple rings on burst
+      for (let i = droplets.length - 1; i >= 0; i--) {
+        const d = droplets[i];
+        d.life -= 0.022;
+        if (d.life <= 0) {
+          droplets.splice(i, 1);
+          continue;
+        }
+        if (d.ring) {
+          d.r += 1.8;
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(236,72,153,${(d.life * 0.5).toFixed(3)})`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        } else {
+          d.x += d.vx;
+          d.y += d.vy;
+          d.vy += 0.06;
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, Math.max(0.2, d.r * d.life), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(244,114,182,${(d.life * 0.75).toFixed(3)})`;
+          ctx.fill();
+        }
+      }
+
+      if (isRunning) {
+        animId = requestAnimationFrame(bubblesFrame);
+      }
+    }
+
+    // Pointer events for bubble repulsion and click burst
+    function onPointerMove(e) {
+      if (document.documentElement.getAttribute('data-theme') !== 'yua') return;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }
+    function onPointerLeave() {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    }
+    function onPointerDown(e) {
+      if (document.documentElement.getAttribute('data-theme') !== 'yua') return;
+      if (e.target.closest('button, a, input, textarea, select, .modal-overlay, #search-input')) return;
+      for (let i = 0; i < bubbles.length; i++) {
+        const b = bubbles[i];
+        if (b.dead) continue;
+        const dx = b.x - e.clientX;
+        const dy = b.y - e.clientY;
+        if (dx * dx + dy * dy < (b.r + 14) * (b.r + 14)) {
+          popBubble(b);
+          setTimeout(() => spawnBubble(true), 900);
+          break;
+        }
+      }
+    }
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerleave', onPointerLeave, { passive: true });
+    window.addEventListener('pointerdown', onPointerDown);
+
+    // Allow clicking the brand-badge to pop a bubble in Yua
+    document.querySelectorAll('.brand-badge').forEach(badge => {
+      badge.addEventListener('click', (e) => {
+        if (document.documentElement.getAttribute('data-theme') === 'yua') {
+          e.preventDefault();
+          popAnyBubble();
+        }
+      });
+    });
+
+    function start() {
+      if (isRunning) return;
+      isRunning = true;
+      sizeBubbles();
+      bubbles = [];
+      droplets = [];
+      const n0 = Math.min(16, Math.max(9, Math.floor(window.innerWidth * window.innerHeight / 95000)));
+      for (let i = 0; i < n0; i++) spawnBubble(false);
+      animId = requestAnimationFrame(bubblesFrame);
+    }
+
+    function stop() {
+      isRunning = false;
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      bubbles = [];
+      droplets = [];
+    }
+
+    // Initial check
+    if (document.documentElement.getAttribute('data-theme') === 'yua') {
+      start();
+    }
+
+    // Lifecycle observer
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
+          const t = document.documentElement.getAttribute('data-theme');
+          if (t === 'yua') {
+            start();
+          } else {
+            stop();
+          }
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    window.addEventListener('resize', () => {
+      if (document.documentElement.getAttribute('data-theme') === 'yua') {
+        sizeBubbles();
+      }
+    }, { passive: true });
+  }
+
   // --- INITIALIZE ALL MODULES ---
   function initAll() {
     initTheme();
@@ -2739,6 +3605,8 @@
     initCobaltChassis();
     initSolarHeliograph();
     initArcticAurora();
+    initUchihaSharinganRadar();
+    initYuaBubbles();
 
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (themeToggleBtn) {
