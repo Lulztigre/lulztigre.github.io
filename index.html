@@ -393,30 +393,40 @@
               </div>
             </div>
 
-            <!-- Uchiha Sharingan Radar Instrument -->
-            <div class="uchiha-radar-chassis" id="uchihaRadarChassis" aria-hidden="true">
-              <div class="sharingan-radar-hd">
-                <div style="display:inline-flex;align-items:center;">
-                  <span class="sharingan-radar-led"></span>
-                  <span class="sharingan-radar-title">写輪眼 // SHARINGAN OCULAR HUD</span>
+            <!-- Uchiha Sharingan Radar Instrument: Mimo Mangekyō Tracking Scope (Itachi Uchiha Canon) -->
+            <div class="scope-wrap uchiha-radar-chassis" id="uchihaRadarChassis" aria-hidden="true">
+              <div class="scope">
+                <div class="watermark" id="wm" aria-hidden="true">
+                  <svg viewBox="0 0 300 300"><path fill="#ff3344" d="M 177.6,10.7 C 135,68.4 155.4,100.7 179.8,118.5 C 260.9,160.6 274.8,214.5 255.9,244.9 C 237.3,191.9 198,172.4 158.5,194.9 C 86.9,238.6 40.7,231.2 15.7,196.6 C 58.2,203.1 109.1,193.5 107.9,128.3 C 109.5,97.6 111.5,16.6 177.6,10.7 z"/></svg>
                 </div>
-                <span class="sharingan-radar-mode-tag" id="sharinganModeTag">3-TOMOE</span>
+                <div class="ring o"></div><div class="ring m"></div><div class="ring i"></div>
+                <div class="ticks"></div>
+                <div class="cross x"></div><div class="cross y"></div>
+                <div class="sweep"></div>
+                <div class="core" id="core">
+                  <svg viewBox="0 0 300 300" role="img" aria-label="Itachi Uchiha Mangekyo Sharingan eye">
+                    <defs>
+                      <radialGradient id="ir" cx="50%" cy="46%" r="60%">
+                        <stop offset="0" stop-color="#660000"/>
+                        <stop offset=".5" stop-color="#c30000"/>
+                        <stop offset="1" stop-color="#a00000"/>
+                      </radialGradient>
+                    </defs>
+                    <circle cx="150" cy="150" r="145" fill="url(#ir)" stroke="#000" stroke-width="10"/>
+                    <path fill="#000" d="M 177.6,10.7 C 135,68.4 155.4,100.7 179.8,118.5 C 260.9,160.6 274.8,214.5 255.9,244.9 C 237.3,191.9 198,172.4 158.5,194.9 C 86.9,238.6 40.7,231.2 15.7,196.6 C 58.2,203.1 109.1,193.5 107.9,128.3 C 109.5,97.6 111.5,16.6 177.6,10.7 z"/>
+                    <circle cx="150" cy="150" r="20" fill="#a00000"/>
+                  </svg>
+                </div>
+                <div class="blip b1" title="Target LZ-1"></div>
+                <div class="blip b2" title="Target LZ-2"></div>
+                <div class="blip b3" title="Target LZ-3"></div>
+                <div class="track t1"></div>
+                <div class="track t2"></div>
+                <div class="track t3"></div>
+                <div class="corner tl"></div><div class="corner tr"></div>
+                <div class="corner bl"></div><div class="corner br"></div>
               </div>
-              <div class="sharingan-canvas-wrap">
-                <canvas id="sharinganCanvas" width="560" height="560" role="img" aria-label="Sharingan radar scope with rotating tomoe sweep and contacts"></canvas>
-              </div>
-              <div class="sharingan-readouts">
-                <div class="shari-ro-cell"><dt>MODE</dt><dd id="shariRoMode">SCAN</dd></div>
-                <div class="shari-ro-cell"><dt>SWEEP</dt><dd id="shariRoRpm">10 RPM</dd></div>
-                <div class="shari-ro-cell"><dt>LOCK</dt><dd id="shariRoLock" class="hot">--</dd></div>
-                <div class="shari-ro-cell"><dt>CONTACT</dt><dd id="shariRoTgt">--</dd></div>
-              </div>
-              <div class="sharingan-controls-bar">
-                <button type="button" class="shari-ctl-btn active" id="btnShariScan">SCAN</button>
-                <button type="button" class="shari-ctl-btn" id="btnShariLock">LOCK</button>
-                <button type="button" class="shari-ctl-btn" id="btnShariMangekyo">MANGEKYŌ</button>
-                <button type="button" class="shari-ctl-btn" id="btnShariRelease">RELEASE</button>
-              </div>
+              <div class="scope-cap"><span id="capL">SCOPE: MANGEKYŌ // ITACHI</span><span>TRACK: 3 // RANGE: ∞</span></div>
             </div>
           </div>
 

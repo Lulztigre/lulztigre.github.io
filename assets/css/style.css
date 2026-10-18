@@ -400,16 +400,15 @@ body[data-theme="uchiha"]::before,
 /* ==========================================================================
    UCHIHA SHARINGAN RADAR (DŌJUTSU RADIAL ARRAY & OCULAR TELEMETRY)
    ========================================================================== */
-[data-theme="uchiha"] .hero-chassis-radar-mini {
+[data-theme="uchiha"] .hero-chassis-radar-mini,
+[data-theme="uchiha"] .chassis-radar-container {
   height: auto !important;
-  min-height: 310px !important;
-  background: #000000 !important;
-  border: 1px solid #3d0000 !important;
-  box-shadow: 0 0 24px rgba(255, 0, 0, 0.25), inset 0 0 30px rgba(139, 0, 0, 0.4) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   padding: 0 !important;
-  overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
+  overflow: visible !important;
+  display: block !important;
 }
 
 /* Hide standard placeholder radar elements in Uchiha mode */
@@ -423,149 +422,210 @@ body[data-theme="uchiha"]::before,
 [data-theme="uchiha"] .hero-chassis-radar-mini > .scope-grid-overlay,
 [data-theme="uchiha"] .hero-chassis-radar-mini > .scope-center-axis,
 [data-theme="uchiha"] .hero-chassis-radar-mini > .scope-center-vaxis,
+[data-theme="uchiha"] .chassis-radar-container > .radar-circle,
+[data-theme="uchiha"] .chassis-radar-container > .radar-axis,
+[data-theme="uchiha"] .chassis-radar-container > .radar-sweep-beam,
+[data-theme="uchiha"] .chassis-radar-container > .radar-target,
+[data-theme="uchiha"] .chassis-radar-container > .chassis-center-sig,
+[data-theme="uchiha"] .chassis-radar-container > .garden,
+[data-theme="uchiha"] .chassis-radar-container > .oscilloscope-canvas,
+[data-theme="uchiha"] .chassis-radar-container > .scope-grid-overlay,
+[data-theme="uchiha"] .chassis-radar-container > .scope-center-axis,
+[data-theme="uchiha"] .chassis-radar-container > .scope-center-vaxis,
 [data-theme="uchiha"] .cobalt-radar-chassis,
 [data-theme="uchiha"] .solar-heliograph-chassis,
 [data-theme="uchiha"] .arctic-allsky-chassis,
-[data-theme="uchiha"] .cobalt-telemetry {
+[data-theme="uchiha"] .cobalt-telemetry,
+[data-theme="uchiha"] .cobalt-instrument-tabs {
   display: none !important;
 }
 
-/* Display Uchiha Sharingan Chassis */
-.uchiha-radar-chassis {
-  display: none;
+/* ---------- UCHIHA MANGEKYŌ TRACKING SCOPE (MIMO ITACHI CANON) ---------- */
+.scope-wrap {
+  display: none !important;
 }
 
-[data-theme="uchiha"] .uchiha-radar-chassis {
-  display: flex !important;
-  flex-direction: column !important;
-  width: 100% !important;
-  height: 100% !important;
+[data-theme="uchiha"] .scope-wrap {
+  display: block !important;
   position: relative;
-  background: #050002;
-}
-
-.sharingan-radar-hd {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.45rem 0.75rem 0.35rem;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  background: #0d0102;
-  border-bottom: 1px solid #3d0000;
-  color: #ff3344;
-}
-
-.sharingan-radar-led {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #ff0000;
-  box-shadow: 0 0 8px #ff0000;
-  display: inline-block;
-  margin-right: 0.4rem;
-  animation: pulseDot 1.4s infinite ease-in-out;
-}
-
-.sharingan-radar-mode-tag {
-  background: #2a0003;
-  border: 1px solid #ff1a1a;
-  color: #ff3344;
-  padding: 0.1rem 0.45rem;
-  border-radius: 3px;
-  font-weight: 700;
-  font-size: 0.58rem;
-  letter-spacing: 0.06em;
-}
-
-.sharingan-canvas-wrap {
-  position: relative;
-  width: 100%;
-  padding: 0.5rem 0.25rem 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000000;
-}
-
-.sharingan-canvas-wrap canvas {
-  display: block;
-  width: 210px;
-  height: 210px;
-  cursor: crosshair;
-  filter: drop-shadow(0 0 16px rgba(255, 0, 0, 0.35));
-}
-
-.sharingan-readouts {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background: #0a0102;
-  border-top: 1px solid #3d0000;
-  border-bottom: 1px solid #3d0000;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-}
-
-.shari-ro-cell {
-  padding: 0.35rem 0.5rem;
-  border-right: 1px solid #200000;
-}
-.shari-ro-cell:last-child {
-  border-right: none;
-}
-.shari-ro-cell dt {
-  color: #803333;
-  font-size: 0.56rem;
-  letter-spacing: 0.08em;
-}
-.shari-ro-cell dd {
-  color: #ffffff;
-  font-weight: 700;
-  white-space: nowrap;
+  background: radial-gradient(circle at 50% 46%, #16060a 0%, #0a0304 58%, #050102 100%);
+  border: 1px solid #3d1a1f;
+  border-radius: 10px;
+  padding: 1.1rem;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, .8), 0 18px 44px rgba(0, 0, 0, .6);
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-.shari-ro-cell dd.hot {
-  color: #ff1a2b;
-  text-shadow: 0 0 6px rgba(255, 0, 0, 0.7);
+  margin-bottom: 0.8rem;
 }
 
-.sharingan-controls-bar {
+.scope-wrap .scope {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.scope-wrap .ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(204, 0, 0, .28);
+  pointer-events: none;
+}
+.scope-wrap .ring.o {
+  inset: 0;
+  border-color: rgba(204, 0, 0, .4);
+}
+.scope-wrap .ring.m {
+  inset: 11%;
+}
+.scope-wrap .ring.i {
+  inset: 24%;
+  border-style: dashed;
+  border-color: rgba(204, 0, 0, .3);
+}
+
+/* tick ring via dashed circle */
+.scope-wrap .ticks {
+  position: absolute;
+  inset: 3.5%;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 51, 68, .35);
+  pointer-events: none;
+}
+
+.scope-wrap .cross {
+  position: absolute;
+  background: rgba(204, 0, 0, .18);
+  pointer-events: none;
+}
+.scope-wrap .cross.x {
+  left: 2%;
+  right: 2%;
+  top: 50%;
+  height: 1px;
+}
+.scope-wrap .cross.y {
+  top: 2%;
+  bottom: 2%;
+  left: 50%;
+  width: 1px;
+}
+
+/* sweep */
+.scope-wrap .sweep {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg 310deg, rgba(255, 51, 68, .05) 330deg, rgba(255, 51, 68, .22) 356deg, #ff3344 360deg);
+  animation: sweep 6s linear infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+@keyframes sweep {
+  to { transform: rotate(360deg); }
+}
+
+/* giant watermark Mangekyo, counter-rotating */
+.scope-wrap .watermark {
+  position: absolute;
+  inset: 12%;
+  opacity: .055;
+  animation: slowCCW 90s linear infinite;
+  pointer-events: none;
+}
+.scope-wrap .watermark svg {
+  width: 100%;
+  height: 100%;
+}
+@keyframes slowCCW {
+  to { transform: rotate(-360deg); }
+}
+
+/* center Mangekyo eye */
+.scope-wrap .core {
+  position: absolute;
+  inset: 33%;
+  filter: drop-shadow(0 0 18px rgba(255, 30, 40, .55)) drop-shadow(0 0 44px rgba(204, 0, 0, .35));
+}
+.scope-wrap .core svg {
+  width: 100%;
+  height: 100%;
+  animation: coreSpin 16s linear infinite;
+}
+@keyframes coreSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* blip targets — mini sharingan dots */
+.scope-wrap .blip {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, #000 0 26%, #cc0000 27% 62%, #ff3344 63% 78%, #660000 79% 100%);
+  box-shadow: 0 0 9px rgba(255, 51, 68, .8);
+  animation: blip 2.4s steps(1) infinite;
+}
+@keyframes blip {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .25; }
+}
+.scope-wrap .b1 { top: 19%; left: 62%; }
+.scope-wrap .b2 { top: 60%; left: 20%; animation-delay: .8s; }
+.scope-wrap .b3 { top: 73%; left: 70%; animation-delay: 1.6s; }
+
+/* tracking brackets on blips */
+.scope-wrap .track {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid rgba(255, 51, 68, .8);
+  border-radius: 4px;
+  animation: trackPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes trackPulse {
+  0%, 100% { opacity: .9; transform: scale(1); }
+  50% { opacity: .4; transform: scale(1.12); }
+}
+.scope-wrap .t1 { top: calc(19% - 9px); left: calc(62% - 9px); }
+.scope-wrap .t2 { top: calc(60% - 9px); left: calc(20% - 9px); animation-delay: .8s; }
+.scope-wrap .t3 { top: calc(73% - 9px); left: calc(70% - 9px); animation-delay: 1.6s; }
+
+/* corner HUD marks */
+.scope-wrap .corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid rgba(204, 0, 0, .5);
+  pointer-events: none;
+}
+.scope-wrap .corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.scope-wrap .corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+.scope-wrap .corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+.scope-wrap .corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+.scope-wrap .scope-cap {
   display: flex;
-  gap: 0.3rem;
-  padding: 0.35rem 0.5rem;
-  background: #070001;
   justify-content: space-between;
+  align-items: center;
+  padding: .5rem .3rem 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(0.5rem, 1.8vw, 0.6rem);
+  letter-spacing: .08em;
+  color: #8a4a52;
+  text-transform: uppercase;
+  white-space: nowrap;
+  gap: 0.5rem;
 }
 
-.shari-ctl-btn {
-  flex: 1;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  background: #150102;
-  border: 1px solid #3d0000;
-  color: #ff6677;
-  padding: 0.28rem 0.35rem;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.15s ease;
-  text-align: center;
-}
-
-.shari-ctl-btn:hover {
-  border-color: #ff0000;
-  color: #ffffff;
-  box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
-}
-
-.shari-ctl-btn.active {
-  background: #990000;
-  border-color: #ff0000;
-  color: #ffffff;
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+@media (prefers-reduced-motion: reduce) {
+  .scope-wrap .sweep,
+  .scope-wrap .watermark,
+  .scope-wrap .core svg,
+  .scope-wrap .track,
+  .scope-wrap .blip {
+    animation: none !important;
+  }
 }
 
 /* ==========================================================================

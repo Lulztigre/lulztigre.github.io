@@ -2730,72 +2730,10 @@
     }, { passive: true });
   }
 
-  // --- ROUND 9+ UCHIHA: DŌJUTSU SHARINGAN & MANGEKYŌ OCULAR RADAR ---
+  // --- ROUND 9+ UCHIHA: MIMO MANGEKYŌ TRACKING SCOPE (ITACHI CANON) ---
   function initUchihaSharinganRadar() {
-    const chassis = document.getElementById('uchihaRadarChassis');
-    const canvas = document.getElementById('sharinganCanvas');
-    if (!chassis || !canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const TAU = Math.PI * 2;
-    const RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Telemetry DOM elements
-    const tagMode = document.getElementById('sharinganModeTag');
-    const roMode = document.getElementById('shariRoMode');
-    const roRpm = document.getElementById('shariRoRpm');
-    const roLock = document.getElementById('shariRoLock');
-    const roTgt = document.getElementById('shariRoTgt');
-    const btnScan = document.getElementById('btnShariScan');
-    const btnLock = document.getElementById('btnShariLock');
-    const btnMangekyo = document.getElementById('btnShariMangekyo');
-    const btnRelease = document.getElementById('btnShariRelease');
-
-    // Radar Contacts (CVE / Offensive targets)
-    const CONTACTS = [
-      { tag: 'CVE-67363', sub: 'BALBOOA RCE', b: 0.52, r: 0.38, hot: true },
-      { tag: 'CVE-32640', sub: 'GRAVITINO RCE', b: 1.74, r: 0.65, hot: false },
-      { tag: 'CVE-75948', sub: 'ICAGENDA XSS', b: 2.88, r: 0.48, hot: false },
-      { tag: 'eBPF-SINK', sub: 'KERNEL HOOK', b: 4.15, r: 0.76, hot: true },
-      { tag: '0-DAY-PIPE', sub: 'EMBARGOED CHAIN', b: 5.35, r: 0.58, hot: true }
-    ];
-    CONTACTS.forEach(c => { c.prev = 99; });
-
-    let S = 560, CX = 280, CY = 280, R = 230;
-    let sweep = 0.5;
-    let rpm = 10;
-    let targetRpm = 10;
-    let locked = -1;
-    let ocularMode = 'tomoe'; // 'tomoe' or 'mangekyo'
-    let mangekyoSpin = 0;
-    let ripples = [];
-    let animId = null;
-    let isRunning = false;
-    let lastTime = performance.now();
-
-    function fit() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const parent = canvas.parentElement;
-      const cssW = Math.min(parent ? parent.clientWidth - 16 : 280, 320);
-      canvas.style.width = cssW + 'px';
-      canvas.style.height = cssW + 'px';
-      S = Math.round(cssW * dpr);
-      canvas.width = S;
-      canvas.height = S;
-      CX = S / 2;
-      CY = S / 2;
-      R = S * 0.45;
-    }
-
-    function pol(b, r) {
-      return [CX + Math.sin(b) * R * r, CY - Math.cos(b) * R * r];
-    }
-
-    function fmtBrg(b) {
-      const d = Math.round((b * 360) / TAU) % 360;
-      return (d < 100 ? (d < 10 ? '00' : '0') : '') + d + '°';
-    }
+    const chassisList = document.querySelectorAll('.scope-wrap.uchiha-radar-chassis');
+    if (!chassisList.length) return;
 
     // Audio SFX for Uchiha radar
     let audioCtx = null;
@@ -2810,7 +2748,7 @@
     function isAudioActive() {
       return localStorage.getItem('phantom_sfx') !== 'off';
     }
-    function playOcularTone(freq, duration = 0.12, type = 'sine') {
+    function playOcularTone(freq, duration = 0.16, type = 'sine') {
       if (!isAudioActive()) return;
       try {
         const actx = getAudioCtx();
@@ -2820,8 +2758,8 @@
         const gain = actx.createGain();
         osc.type = type;
         osc.frequency.setValueAtTime(freq, now);
-        osc.frequency.exponentialRampToValueAtTime(freq * 0.6, now + duration);
-        gain.gain.setValueAtTime(0.04, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.7, now + duration);
+        gain.gain.setValueAtTime(0.05, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
         osc.connect(gain);
         gain.connect(actx.destination);
@@ -2830,475 +2768,71 @@
       } catch (e) {}
     }
 
-    // Draw authentic Sharingan Iris, Reticle & Cardinal Marks
-    function drawBase() {
-      // Deep Crimson Iris with Limbus Ring
-      const irisGrad = ctx.createRadialGradient(CX, CY, R * 0.08, CX, CY, R);
-      irisGrad.addColorStop(0, '#0a0002');
-      irisGrad.addColorStop(0.25, '#3b0004');
-      irisGrad.addColorStop(0.60, '#88000a');
-      irisGrad.addColorStop(0.85, '#cc0014');
-      irisGrad.addColorStop(0.97, '#380005');
-      irisGrad.addColorStop(1, '#000000');
-      ctx.beginPath();
-      ctx.arc(CX, CY, R, 0, TAU);
-      ctx.fillStyle = irisGrad;
-      ctx.fill();
+    const TARGETS = {
+      '1': { tag: 'CVE-67364', name: 'BALBOOA RCE', brg: '062°', rng: '0.38' },
+      '2': { tag: 'CVE-32640', name: 'GRAVITINO RCE', brg: '208°', rng: '0.65' },
+      '3': { tag: 'CVE-75948', name: 'ICAGENDA XSS', brg: '315°', rng: '0.48' }
+    };
 
-      // Radiating ocular striations (subtle dōjutsu chakra texture)
-      ctx.save();
-      ctx.globalAlpha = 0.12;
-      ctx.strokeStyle = '#ff3344';
-      ctx.lineWidth = 1;
-      for (let i = 0; i < 36; i++) {
-        const a = (i / 36) * TAU;
-        ctx.beginPath();
-        ctx.moveTo(CX + Math.sin(a) * (R * 0.18), CY - Math.cos(a) * (R * 0.18));
-        ctx.lineTo(CX + Math.sin(a) * (R * 0.94), CY - Math.cos(a) * (R * 0.94));
-        ctx.stroke();
-      }
-      ctx.restore();
+    chassisList.forEach(chassis => {
+      const blips = chassis.querySelectorAll('.blip');
+      const tracks = chassis.querySelectorAll('.track');
+      const capSpans = chassis.querySelectorAll('.scope-cap span');
+      const capL = capSpans[0];
+      const capR = capSpans[1];
+      const core = chassis.querySelector('.core');
 
-      // Range Rings (Concentric targeting circles)
-      [0.32, 0.52, 0.76, 1.0].forEach((f) => {
-        ctx.beginPath();
-        ctx.arc(CX, CY, R * f, 0, TAU);
-        ctx.strokeStyle = (f === 0.52) ? 'rgba(0, 0, 0, 0.65)' : (f === 1.0 ? '#ff1a2b' : 'rgba(255, 30, 40, 0.25)');
-        ctx.lineWidth = (f === 0.52) ? 2.5 : (f === 1.0 ? 2 : 1);
-        if (f === 0.76) {
-          ctx.setLineDash([4, 6]);
-          ctx.stroke();
-          ctx.setLineDash([]);
-        } else {
-          ctx.stroke();
-        }
-      });
+      let currentLock = null;
 
-      // Axis crosshairs
-      ctx.strokeStyle = 'rgba(255, 20, 30, 0.22)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(CX - R * 0.98, CY); ctx.lineTo(CX + R * 0.98, CY);
-      ctx.moveTo(CX, CY - R * 0.98); ctx.lineTo(CX, CY + R * 0.98);
-      ctx.stroke();
-
-      // 72 Bearing ticks with Japanese Cardinal Points
-      ctx.font = Math.round(S * 0.026) + "px 'JetBrains Mono', monospace";
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      for (let i = 0; i < 72; i++) {
-        const a = (i / 72) * TAU;
-        const isCardinal = i % 18 === 0;
-        const isMajor = i % 6 === 0;
-        const r1 = R * (isCardinal ? 0.92 : (isMajor ? 0.95 : 0.97));
-        const r2 = R * 1.0;
-        ctx.beginPath();
-        ctx.moveTo(CX + Math.sin(a) * r1, CY - Math.cos(a) * r1);
-        ctx.lineTo(CX + Math.sin(a) * r2, CY - Math.cos(a) * r2);
-        ctx.strokeStyle = isCardinal ? '#ff2b3c' : (isMajor ? 'rgba(255, 60, 70, 0.7)' : 'rgba(255, 30, 40, 0.3)');
-        ctx.lineWidth = isCardinal ? 2 : 1;
-        ctx.stroke();
-
-        if (isCardinal) {
-          const kanji = i === 0 ? '北' : (i === 18 ? '東' : (i === 36 ? '南' : '西'));
-          const rText = R * 0.85;
-          ctx.fillStyle = '#ff4455';
-          ctx.fillText(kanji, CX + Math.sin(a) * rText, CY - Math.cos(a) * rText);
-        }
-      }
-    }
-
-    // Draw authentic Japanese Mitsudomoe (Three-Tomoe)
-    function drawTomoe(angle, orbit, headRadius) {
-      const hx = CX + Math.sin(angle) * orbit;
-      const hy = CY - Math.cos(angle) * orbit;
-
-      ctx.save();
-      ctx.translate(hx, hy);
-      ctx.rotate(angle + Math.PI / 2);
-
-      // Organic curved tomoe blade
-      ctx.beginPath();
-      ctx.arc(0, 0, headRadius, -Math.PI / 2, Math.PI / 2, false);
-      const tailLen = headRadius * 3.2;
-      ctx.bezierCurveTo(headRadius * 0.6, headRadius * 1.5, tailLen * 0.7, headRadius * 0.8, tailLen, -headRadius * 0.3);
-      ctx.bezierCurveTo(tailLen * 0.5, headRadius * 0.2, headRadius * 0.3, -headRadius * 0.6, 0, -headRadius);
-      ctx.closePath();
-
-      // Deep jet black with red gloss
-      const tomoeGrad = ctx.createRadialGradient(-headRadius * 0.2, -headRadius * 0.2, headRadius * 0.1, 0, 0, headRadius * 1.8);
-      tomoeGrad.addColorStop(0, '#1a0003');
-      tomoeGrad.addColorStop(0.5, '#050001');
-      tomoeGrad.addColorStop(1, '#000000');
-      ctx.fillStyle = tomoeGrad;
-      ctx.fill();
-      ctx.strokeStyle = '#2b0004';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      // Subtle crimson specular glint on head
-      ctx.beginPath();
-      ctx.arc(-headRadius * 0.3, -headRadius * 0.3, headRadius * 0.25, 0, TAU);
-      ctx.fillStyle = 'rgba(255, 50, 60, 0.4)';
-      ctx.fill();
-
-      ctx.restore();
-    }
-
-    // Draw Mangekyō Sharingan Pinwheel Form
-    function drawMangekyoBlades(spin) {
-      ctx.save();
-      ctx.translate(CX, CY);
-      ctx.rotate(spin);
-
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = '#ff0015';
-
-      for (let i = 0; i < 3; i++) {
-        ctx.save();
-        ctx.rotate((i * TAU) / 3);
-
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(R * 0.2, -R * 0.1, R * 0.45, -R * 0.35, R * 0.82, -R * 0.15);
-        ctx.bezierCurveTo(R * 0.65, -R * 0.05, R * 0.35, R * 0.05, 0, 0);
-        ctx.closePath();
-
-        const bGrad = ctx.createLinearGradient(0, 0, R * 0.8, -R * 0.2);
-        bGrad.addColorStop(0, '#000000');
-        bGrad.addColorStop(0.5, '#0d0002');
-        bGrad.addColorStop(0.85, '#200003');
-        bGrad.addColorStop(1, '#ff1a2b');
-        ctx.fillStyle = bGrad;
-        ctx.fill();
-
-        ctx.strokeStyle = '#ff3344';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      ctx.restore();
-    }
-
-    // Draw Central Pupil with Dōjutsu Glint
-    function drawPupil() {
-      const pr = R * 0.14;
-      ctx.beginPath();
-      ctx.arc(CX, CY, pr, 0, TAU);
-      ctx.fillStyle = '#000000';
-      ctx.fill();
-      ctx.strokeStyle = '#ff1a2b';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Central red iris core
-      ctx.beginPath();
-      ctx.arc(CX, CY, pr * 0.35, 0, TAU);
-      ctx.fillStyle = '#cc0014';
-      ctx.fill();
-
-      // Glint highlight
-      ctx.beginPath();
-      ctx.arc(CX - pr * 0.35, CY - pr * 0.35, pr * 0.22, 0, TAU);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-      ctx.fill();
-    }
-
-    // Phosphor Sweep Trail
-    function drawSweepTrail() {
-      const TRAIL = 1.35; // ~77 deg wedge
-      const steps = 30;
-      for (let i = 0; i < steps; i++) {
-        const f1 = sweep - TRAIL * (i / steps);
-        const f0 = sweep - TRAIL * ((i + 1) / steps);
-        const t = 1 - (i + 0.5) / steps;
-        ctx.beginPath();
-        ctx.moveTo(CX, CY);
-        ctx.arc(CX, CY, R * 0.98, f0 - Math.PI / 2, f1 - Math.PI / 2, false);
-        ctx.closePath();
-        ctx.fillStyle = 'rgba(255, 0, 20,' + (0.28 * Math.pow(t, 1.8)).toFixed(3) + ')';
-        ctx.fill();
-      }
-
-      // Laser Leading Edge Ray
-      const ex = CX + Math.sin(sweep) * R * 0.98;
-      const ey = CY - Math.cos(sweep) * R * 0.98;
-      ctx.beginPath();
-      ctx.moveTo(CX, CY);
-      ctx.lineTo(ex, ey);
-      ctx.strokeStyle = 'rgba(255, 200, 210, 0.95)';
-      ctx.lineWidth = 1.8;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = '#ff1a2b';
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-    }
-
-    // Radar Contacts & Ocular Reticle
-    function drawContacts(dt) {
-      CONTACTS.forEach((c, idx) => {
-        const rel = ((sweep - c.b) % TAU + TAU) % TAU;
-        const bright = RM ? 1 : Math.exp(-rel * 1.15);
-        if (rel < 0.14 && c.prev >= 0.14 && !RM) {
-          ripples.push({ b: c.b, r: c.r, radius: 4, alpha: 0.8 });
-          if (idx === locked) playOcularTone(880, 0.15, 'triangle');
-        }
-        c.prev = rel;
-
-        if (bright < 0.04 && idx !== locked) return;
-
-        const p = pol(c.b, c.r);
-        const isLock = idx === locked;
-        const s = (c.hot ? 6 : 5) * (S / 560) + (isLock ? 3 : 2) * bright;
-
-        // Diamond blip
-        ctx.save();
-        ctx.translate(p[0], p[1]);
-        ctx.rotate(Math.PI / 4);
-        ctx.fillStyle = isLock ? '#ff0033' : (c.hot ? `rgba(255, 40, 50, ${Math.max(bright, 0.5).toFixed(2)})` : `rgba(255, 140, 150, ${bright.toFixed(2)})`);
-        ctx.shadowBlur = isLock ? 12 : 6;
-        ctx.shadowColor = '#ff0022';
-        ctx.fillRect(-s / 2, -s / 2, s, s);
-        ctx.restore();
-
-        // Alphanumeric callout label
-        if (bright > 0.38 || isLock) {
-          ctx.font = '700 ' + Math.round(S * 0.024) + "px 'JetBrains Mono', monospace";
-          ctx.fillStyle = isLock ? '#ffffff' : `rgba(255, 220, 225, ${Math.min(1, bright + 0.3).toFixed(2)})`;
-          ctx.fillText(c.tag, p[0] + 12, p[1] - 6);
-
-          ctx.font = Math.round(S * 0.019) + "px 'JetBrains Mono', monospace";
-          ctx.fillStyle = isLock ? '#ff4d66' : `rgba(255, 120, 130, ${Math.min(0.9, bright).toFixed(2)})`;
-          ctx.fillText(c.sub, p[0] + 12, p[1] + 8);
+      function setTarget(key) {
+        if (!key || key === currentLock) {
+          currentLock = null;
+          blips.forEach(b => b.classList.remove('locked'));
+          tracks.forEach(t => t.classList.remove('locked'));
+          if (capL) capL.textContent = 'SCOPE: MANGEKYŌ // ITACHI';
+          if (capR) capR.textContent = 'TRACK: 3 // RANGE: ∞';
+          playOcularTone(640, 0.2, 'sine');
+          return;
         }
 
-        // Genjutsu / Ocular Target Lock Reticle
-        if (isLock) {
-          const L = 14 * (S / 560);
-          const box = s + 10;
-          ctx.strokeStyle = '#ff0033';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(sg => {
-            const bx = p[0] + sg[0] * box;
-            const by = p[1] + sg[1] * box;
-            ctx.moveTo(bx - sg[0] * L, by);
-            ctx.lineTo(bx, by);
-            ctx.lineTo(bx, by - sg[1] * L);
-          });
-          ctx.stroke();
+        const tgt = TARGETS[key];
+        if (!tgt) return;
 
-          // Tracking vector ray from ocular center
-          ctx.beginPath();
-          ctx.moveTo(CX, CY);
-          ctx.lineTo(p[0], p[1]);
-          ctx.setLineDash([5, 4]);
-          ctx.strokeStyle = 'rgba(255, 30, 50, 0.7)';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-      });
-    }
+        currentLock = key;
+        blips.forEach(b => {
+          b.classList.toggle('locked', b.classList.contains('b' + key));
+        });
+        tracks.forEach(t => {
+          t.classList.toggle('locked', t.classList.contains('t' + key));
+        });
 
-    // Ripple wave emissions
-    function drawRipples(dt) {
-      for (let i = ripples.length - 1; i >= 0; i--) {
-        const rp = ripples[i];
-        const p = pol(rp.b, rp.r);
-        rp.radius += dt * 80;
-        rp.alpha -= dt * 0.85;
-        if (rp.alpha <= 0) {
-          ripples.splice(i, 1);
-          continue;
-        }
-        ctx.beginPath();
-        ctx.arc(p[0], p[1], rp.radius, 0, TAU);
-        ctx.strokeStyle = `rgba(255, 20, 40, ${rp.alpha.toFixed(2)})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
-    }
-
-    // Animation Render Frame
-    function render(now) {
-      if (!isRunning) return;
-      const dt = Math.min(0.05, (now - lastTime) / 1000);
-      lastTime = now;
-
-      rpm += (targetRpm - rpm) * 0.05;
-      sweep = (sweep + (rpm / 60) * TAU * dt) % TAU;
-      mangekyoSpin = (mangekyoSpin + (rpm / 60) * 1.5 * TAU * dt) % TAU;
-
-      ctx.clearRect(0, 0, S, S);
-
-      drawBase();
-      drawSweepTrail();
-
-      if (ocularMode === 'tomoe') {
-        const orbit = R * 0.52;
-        const headR = R * 0.078;
-        for (let i = 0; i < 3; i++) {
-          drawTomoe(sweep + (i * TAU) / 3, orbit, headR);
-        }
-      } else {
-        drawMangekyoBlades(mangekyoSpin);
-      }
-
-      drawPupil();
-      drawContacts(dt);
-      drawRipples(dt);
-
-      if (roRpm) roRpm.textContent = Math.round(rpm) + ' RPM';
-
-      animId = requestAnimationFrame(render);
-    }
-
-    // Control Handlers
-    function setTargetLock(idx) {
-      locked = idx;
-      const isLock = idx >= 0;
-      targetRpm = isLock ? 26 : (ocularMode === 'mangekyo' ? 32 : 10);
-
-      if (roMode) {
-        roMode.textContent = isLock ? 'LOCK' : (ocularMode === 'mangekyo' ? 'MANGEKYŌ' : 'SCAN');
-        roMode.classList.toggle('hot', isLock || ocularMode === 'mangekyo');
-      }
-      if (roLock) {
-        roLock.textContent = isLock ? CONTACTS[idx].tag : '--';
-        roLock.classList.toggle('hot', isLock);
-      }
-      if (roTgt) {
-        roTgt.textContent = isLock ? `${CONTACTS[idx].sub} // ${fmtBrg(CONTACTS[idx].b)}` : '--';
-      }
-
-      btnScan && btnScan.classList.toggle('active', !isLock && ocularMode === 'tomoe');
-      btnLock && btnLock.classList.toggle('active', isLock);
-      btnMangekyo && btnMangekyo.classList.toggle('active', ocularMode === 'mangekyo');
-
-      if (isLock) {
+        if (capL) capL.textContent = `SCOPE: MANGEKYŌ // LOCK: ${tgt.tag}`;
+        if (capR) capR.textContent = `${tgt.name} // ${tgt.brg}`;
         playOcularTone(1050, 0.22, 'sawtooth');
       }
-    }
 
-    function switchMode(mode) {
-      ocularMode = mode;
-      if (tagMode) tagMode.textContent = mode === 'mangekyo' ? 'MANGEKYŌ' : '3-TOMOE';
-      targetRpm = mode === 'mangekyo' ? 32 : (locked >= 0 ? 26 : 10);
-      if (roMode) {
-        roMode.textContent = locked >= 0 ? 'LOCK' : (mode === 'mangekyo' ? 'MANGEKYŌ' : 'SCAN');
-        roMode.classList.toggle('hot', locked >= 0 || mode === 'mangekyo');
-      }
-      btnScan && btnScan.classList.toggle('active', mode === 'tomoe' && locked < 0);
-      btnMangekyo && btnMangekyo.classList.toggle('active', mode === 'mangekyo');
-      playOcularTone(mode === 'mangekyo' ? 1200 : 640, 0.25, 'sine');
-    }
-
-    function nearestTo(b) {
-      let best = -1, minDiff = 99;
-      CONTACTS.forEach((c, idx) => {
-        let diff = ((b - c.b) % TAU + TAU) % TAU;
-        if (diff > Math.PI) diff = TAU - diff;
-        if (diff < minDiff) {
-          minDiff = diff;
-          best = idx;
-        }
+      // Blip click listeners
+      blips.forEach(b => {
+        b.style.cursor = 'pointer';
+        b.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const match = b.className.match(/\bb([1-3])\b/);
+          if (match) setTarget(match[1]);
+        });
       });
-      return minDiff < 0.65 ? best : -1;
-    }
 
-    // Click interactive targeting
-    canvas.addEventListener('click', (ev) => {
-      const rect = canvas.getBoundingClientRect();
-      const dx = ev.clientX - rect.left - rect.width / 2;
-      const dy = ev.clientY - rect.top - rect.height / 2;
-      const distRatio = Math.sqrt(dx * dx + dy * dy) / (rect.width / 2);
-      if (distRatio > 0.98 || distRatio < 0.08) {
-        setTargetLock(-1);
-        return;
+      // Core click easter-egg: pulse chakra sound
+      if (core) {
+        core.style.cursor = 'pointer';
+        core.addEventListener('click', () => {
+          playOcularTone(880, 0.35, 'triangle');
+          core.style.transform = 'scale(1.08)';
+          setTimeout(() => {
+            core.style.transform = '';
+          }, 300);
+        });
       }
-      let b = Math.atan2(dx, -dy);
-      if (b < 0) b += TAU;
-      const hit = nearestTo(b);
-      setTargetLock(hit);
     });
-
-    if (btnScan) {
-      btnScan.addEventListener('click', () => {
-        switchMode('tomoe');
-        setTargetLock(-1);
-      });
-    }
-    if (btnLock) {
-      btnLock.addEventListener('click', () => {
-        const tgt = locked >= 0 ? (locked + 1) % CONTACTS.length : nearestTo(sweep);
-        setTargetLock(tgt >= 0 ? tgt : 0);
-      });
-    }
-    if (btnMangekyo) {
-      btnMangekyo.addEventListener('click', () => {
-        switchMode(ocularMode === 'mangekyo' ? 'tomoe' : 'mangekyo');
-      });
-    }
-    if (btnRelease) {
-      btnRelease.addEventListener('click', () => {
-        switchMode('tomoe');
-        setTargetLock(-1);
-      });
-    }
-
-    function start() {
-      if (isRunning) return;
-      fit();
-      isRunning = true;
-      lastTime = performance.now();
-      animId = requestAnimationFrame(render);
-    }
-
-    function stop() {
-      if (!isRunning) return;
-      isRunning = false;
-      if (animId) {
-        cancelAnimationFrame(animId);
-        animId = null;
-      }
-    }
-
-    // Auto start if theme is currently Uchiha
-    if (document.documentElement.getAttribute('data-theme') === 'uchiha') {
-      start();
-      try {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('mangekyo') === '1') {
-          switchMode('mangekyo');
-        }
-        if (params.get('lock') !== null) {
-          const lk = parseInt(params.get('lock'), 10);
-          setTargetLock(isNaN(lk) ? 0 : lk);
-        }
-      } catch (e) {}
-    }
-
-    // Observer for theme switches
-    const obs = new MutationObserver(mutations => {
-      mutations.forEach(m => {
-        if (m.type === 'attributes' && m.attributeName === 'data-theme') {
-          if (document.documentElement.getAttribute('data-theme') === 'uchiha') {
-            start();
-          } else {
-            stop();
-          }
-        }
-      });
-    });
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-    window.addEventListener('resize', () => {
-      if (document.documentElement.getAttribute('data-theme') === 'uchiha') {
-        fit();
-      }
-    }, { passive: true });
   }
 
   // --- 16. YUA IRIDESCENT BUBBLES & BURSTING ENGINE (GLM YUA WINNING EFFECT) ---
