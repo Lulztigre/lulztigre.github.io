@@ -658,10 +658,11 @@
       <div class="container feed-controls-grid">
         <div class="tag-filters">
           <span class="filter-label">CATEGORY:</span>
-          <button class="tag-btn active" data-tag="ALL">ALL (5)</button>
+          <button class="tag-btn active" data-tag="ALL">ALL (6)</button>
           <button class="tag-btn" data-tag="OFFENSIVE SECURITY">OFFENSIVE SECURITY</button>
           <button class="tag-btn" data-tag="RED TEAM">RED TEAM</button>
           <button class="tag-btn" data-tag="CVE RESEARCH">CVE RESEARCH</button>
+          <button class="tag-btn" data-tag="N-DAY">N-DAY</button>
           <button class="tag-btn" data-tag="WEB">WEB</button>
           <button class="tag-btn" data-tag="VOIP">VOIP</button>
         </div>
@@ -678,10 +679,52 @@
       <div class="container">
         <div class="section-header-bar">
           <h2 class="section-title"><span>▶</span> RESEARCH LOG & PREPRINTS</h2>
-          <span class="posts-count" id="filtered-count">[5 RECORDS FOUND]</span>
+          <span class="posts-count" id="filtered-count">[6 RECORDS FOUND]</span>
         </div>
 
         <div class="posts-feed" id="posts-feed">
+
+          <!-- Auto-generated: MEMO #009 - CVE-2026-72867 in Dokploy: From Advisory to Working PoC -->
+          <article class="post-card" 
+                   data-tags="OFFENSIVE SECURITY, CVE RESEARCH, N-DAY, RCE, DOKPLOY, RED TEAM, PATCH ANALYSIS"
+                   data-bibtex="@article{lulz2026_dokploy-cv,
+  author    = {Lulztigre},
+  title     = {CVE-2026-72867 in Dokploy: From Advisory to Working PoC},
+  journal   = {Lulztigre Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/dokploy-cve-2026-72867-working-poc.html}
+}">
+            <div class="post-card-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="post-id-badge">MEMO #009</span>
+                <span>DATE: 2026-10-19</span>
+              </div>
+              <span>EST. TIME: ~18 MIN</span>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href="posts/dokploy-cve-2026-72867-working-poc.html">CVE-2026-72867 in Dokploy: From Advisory to Working PoC</a>
+            </h3>
+
+            <p class="post-abstract">
+              A red team engagement put a vulnerable Dokploy instance in front of me. The CVE had a score, a patch, and no public exploit, so I read the write path and the deploy path, rebuilt the exact image in a lab, and wrote the missing PoC. This memo documents the write path, the deploy path, the lab repro, and the detection script.
+            </p>
+
+            <div class="post-card-footer">
+              <div class="post-tags">
+                <span class="tag-chip">OFFENSIVE SECURITY</span>
+                <span class="tag-chip">CVE RESEARCH</span>
+                <span class="tag-chip">N-DAY</span>
+                <span class="tag-chip">RCE</span>
+                <span class="tag-chip">DOKPLOY</span>
+                <span class="tag-chip">RED TEAM</span>
+              </div>
+              <div class="post-card-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openBibtexModal(this)">BIBTEX</button>
+                <a href="posts/dokploy-cve-2026-72867-working-poc.html" class="btn btn-primary btn-sm">READ DISPATCH →</a>
+              </div>
+            </div>
+          </article>
 
           <!-- Auto-generated: MEMO #008 - Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms -->
           <article class="post-card" 

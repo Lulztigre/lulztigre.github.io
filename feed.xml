@@ -5,8 +5,16 @@
     <link>https://lulztigre.pw/</link>
     <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Oct 2026 20:02:29 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 20 Oct 2026 22:03:37 GMT</lastBuildDate>
     <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>CVE-2026-72867 in Dokploy: From Advisory to Working PoC</title>
+      <link>https://lulztigre.pw/posts/dokploy-cve-2026-72867-working-poc.html</link>
+      <guid>https://lulztigre.pw/posts/dokploy-cve-2026-72867-working-poc.html</guid>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate>
+      <description>A red team engagement put a vulnerable Dokploy instance in front of me. The CVE had a score, a patch, and no public exploit, so I read the write path and the deploy path, rebuilt the exact image in a lab, and wrote the missing PoC. This memo documents the write path, the deploy path, the lab repro, and the detection script.</description>
+    </item>
 
     <item>
       <title>Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</title>
