@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Stage4 Probe</title></head>
+<body>
+<p>Stage4 Probe loaded. This page reports its own URL and then stops.</p>
+<script>
+(function () {
+  var body = JSON.stringify({
+    lane: "grok",
+    event: "ns-package-load",
+    pkgName: "zz.owner.stage4probe",
+    copy: "CHA",
+    href: String(location.href),
+    ua: navigator.userAgent,
+    t: Date.now()
+  });
+  try {
+    fetch("http://192.168.100.189:8888/dump", {method: "POST", body: body});
+  } catch (e) {}
+})();
+</script>
+</body></html>

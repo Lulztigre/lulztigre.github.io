@@ -1,0 +1,12 @@
+{
+  "appId": "9001",
+  "pkgName": "zz.owner.stage4probe",
+  "packageName": "zz.owner.stage4probe",
+  "appName": "Stage4 Probe",
+  "version": "0.0.1-r20261022a",
+  "type": "ns",
+  "thumbnail": "thumbnail.png",
+  "iconSmall": "thumbnail.png",
+  "iconBig": "thumbnail.png",
+  "storetype": "hisense"
+}

