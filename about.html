@@ -1078,6 +1078,79 @@
 
           <div class="cve-ledger-stack">
 
+            <!-- CVE Record: High 7.8 (CVE-2026-102799) -->
+            <div class="cve-ledger-card cve-high-border">
+              <div class="cve-card-header">
+                <div class="cve-id-group">
+                  <a href="https://www.cve.org/CVERecord?id=CVE-2026-102799" target="_blank" rel="noopener" class="cve-id-badge cve-high-text">
+                    <span class="cve-prefix">CVE:</span> 2026-102799
+                    <span class="cve-external-arrow">↗</span>
+                  </a>
+                  <button type="button" class="cve-copy-btn" data-copy="CVE-2026-102799" title="Copy CVE ID">COPY ID</button>
+                  <span class="cve-vuln-class">CSV FORMULA INJECTION IN REGISTRATIONS EXPORT</span>
+                </div>
+                <div class="cve-cvss-meter">
+                  <div class="cvss-val-badge cvss-high">CVSS 4.0 // 7.8 HIGH</div>
+                  <div class="cvss-bar-track">
+                    <div class="cvss-bar-fill cvss-fill-78" style="width: 78%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cve-card-body">
+                <div class="cve-target-spec">
+                  <span class="spec-k">TARGET:</span>
+                  <span class="spec-v">iCagenda (Joomla Component) 3.5.0–4.0.16</span>
+                </div>
+                <p class="cve-analysis-text">
+                  The registrations export controller fails to neutralize formula trigger characters (<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>) in attendee input strings prior to CSV file compilation. When administrators export and open registrations in desktop spreadsheet processors, arbitrary formula execution occurs, enabling command execution and workstation compromise.
+                </p>
+                <div class="cve-primitives-strip">
+                  <span class="cve-chip chip-high">PRIMITIVE: CSV COMMAND INJECTION</span>
+                  <span class="cve-chip">VECTOR: UNESCAPED SPREADSHEET FORMULAS</span>
+                  <span class="cve-chip">SINK: REGISTRATION EXPORT CONTROLLER</span>
+                  <span class="cve-chip" style="color: #ff9900; border-color: #ff9900;">STATUS: WRITEUP PENDING</span>
+                  <a href="posts/icagenda-csv-formula-injection-102799.html" class="cve-chip chip-verified" style="text-decoration: none;">VIEW PLACEHOLDER MEMO #011 →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- CVE Record: High 7.5 (CVE-2026-102790) -->
+            <div class="cve-ledger-card cve-high-border">
+              <div class="cve-card-header">
+                <div class="cve-id-group">
+                  <a href="https://www.cve.org/CVERecord?id=CVE-2026-102790" target="_blank" rel="noopener" class="cve-id-badge cve-high-text">
+                    <span class="cve-prefix">CVE:</span> 2026-102790
+                    <span class="cve-external-arrow">↗</span>
+                  </a>
+                  <button type="button" class="cve-copy-btn" data-copy="CVE-2026-102790" title="Copy CVE ID">COPY ID</button>
+                  <span class="cve-vuln-class">STORED CROSS-SITE SCRIPTING (XSS) VIA URL CUSTOM FIELD</span>
+                </div>
+                <div class="cve-cvss-meter">
+                  <div class="cvss-val-badge cvss-high">CVSS 4.0 // 7.5 HIGH</div>
+                  <div class="cvss-bar-track">
+                    <div class="cvss-bar-fill cvss-fill-75" style="width: 75%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cve-card-body">
+                <div class="cve-target-spec">
+                  <span class="spec-k">TARGET:</span>
+                  <span class="spec-v">iCagenda (Joomla Component) 3.2.1–4.0.16</span>
+                </div>
+                <p class="cve-analysis-text">
+                  Event custom fields of type URL fail to validate input schemes and fail to contextually escape rendered output attributes. An attacker can store malicious script payloads in event records that execute within administrative and attendee browser sessions upon schedule rendering, leading to administrative session hijack.
+                </p>
+                <div class="cve-primitives-strip">
+                  <span class="cve-chip chip-high">PRIMITIVE: STORED XSS</span>
+                  <span class="cve-chip">VECTOR: URL CUSTOM FIELD RENDERING</span>
+                  <span class="cve-chip">SINK: EVENT CUSTOM FIELD DISPLAYER</span>
+                  <span class="cve-chip" style="color: #ff9900; border-color: #ff9900;">STATUS: WRITEUP PENDING</span>
+                  <a href="posts/icagenda-stored-xss-102790.html" class="cve-chip chip-verified" style="text-decoration: none;">VIEW PLACEHOLDER MEMO #010 →</a>
+                </div>
+              </div>
+            </div>
             <!-- CVE Record 1: Critical 10.0 -->
             <div class="cve-ledger-card cve-critical-border">
               <div class="cve-card-header">

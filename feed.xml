@@ -5,8 +5,24 @@
     <link>https://lulztigre.pw/</link>
     <description>Stealth research blog exploring mechanistic interpretability, distributed consensus, and zero-knowledge cryptography.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Oct 2026 22:10:53 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 04 Nov 2026 07:01:44 GMT</lastBuildDate>
     <atom:link href="https://lulztigre.pw/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>CVE-2026-102799 in iCagenda: CSV Formula Injection in Registrations Export</title>
+      <link>https://lulztigre.pw/posts/icagenda-csv-formula-injection-102799.html</link>
+      <guid>https://lulztigre.pw/posts/icagenda-csv-formula-injection-102799.html</guid>
+      <pubDate>Wed, 04 Nov 2026 00:00:00 GMT</pubDate>
+      <description>A formula injection vulnerability (CWE-1236) in iCagenda 3.5.0 through 4.0.16 registrations export module. Untrusted attendee inputs commencing with formula triggers execute arbitrary client commands upon CSV review. Lab reproduction harness and coordinated disclosure notes landing here shortly.</description>
+    </item>
+
+    <item>
+      <title>CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field</title>
+      <link>https://lulztigre.pw/posts/icagenda-stored-xss-102790.html</link>
+      <guid>https://lulztigre.pw/posts/icagenda-stored-xss-102790.html</guid>
+      <pubDate>Wed, 04 Nov 2026 00:00:00 GMT</pubDate>
+      <description>A stored cross-site scripting (XSS) vulnerability across iCagenda 3.2.1 through 4.0.16 via URL-type event custom fields. Unsanitized attribute rendering permits arbitrary script execution inside privileged administrator sessions. Detailed source code walkthrough, lab repro, and weaponized PoC arriving upon disclosure completion.</description>
+    </item>
 
     <item>
       <title>CVE-2026-72867 in Dokploy: From Advisory to Working PoC</title>
@@ -20,7 +36,7 @@
       <title>Pay a Penny, Run Code: CVE-2026-67363 and CVE-2026-67364 in Balbooa Forms</title>
       <link>https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html</link>
       <guid>https://lulztigre.pw/posts/balbooa-forms-penny-rce-67363-67364.html</guid>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
+      <pubDate>Sun, 30 Aug 2026 00:00:00 GMT</pubDate>
       <description>While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.</description>
     </item>
 
@@ -28,7 +44,7 @@
       <title>The Test Connection That Executes Code: CVE-2026-41042 in Apache Gravitino</title>
       <link>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</link>
       <guid>https://lulztigre.pw/posts/gravitino-test-connection-rce-41042.html</guid>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
+      <pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>
       <description>While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.</description>
     </item>
 
@@ -36,7 +52,7 @@
       <title>DropoutJeep: The Phishing Simulator That Refuses to Drop Out</title>
       <link>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</link>
       <guid>https://lulztigre.pw/posts/dropoutjeep-the-phishing-simulator-that-refuses-to-drop-out.html</guid>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
       <description>DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.</description>
     </item>
 
@@ -44,7 +60,7 @@
       <title>The String the Fix Stopped Watching: CVE-2026-75948 in iCagenda</title>
       <link>https://lulztigre.pw/posts/icagenda-stored-xss-75948.html</link>
       <guid>https://lulztigre.pw/posts/icagenda-stored-xss-75948.html</guid>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
+      <pubDate>Sat, 12 Sep 2026 00:00:00 GMT</pubDate>
       <description>A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.</description>
     </item>
 
@@ -52,7 +68,7 @@
       <title>GrandScream: From One Desk Phone to a Root PBX</title>
       <link>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</link>
       <guid>https://lulztigre.pw/posts/grandscream-phone-to-pbx-root.html</guid>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
       <description>One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.</description>
     </item>
   </channel>

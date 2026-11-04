@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="floral" data-palette="sage">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field // Lulztigre</title>
+  <meta name="description" content="A stored cross-site scripting (XSS) vulnerability across iCagenda 3.2.1 through 4.0.16 via URL-type event custom fields. Unsanitized attribute rendering permits arbitrary script execution inside privileged administrator sessions. Detailed source code walkthrough, lab repro, and weaponized PoC arriving upon disclosure completion.">
+  <meta name="author" content="Lulztigre">
+
+  <meta property="og:title" content="CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field">
+  <meta property="og:description" content="A stored cross-site scripting (XSS) vulnerability across iCagenda 3.2.1 through 4.0.16 via URL-type event custom fields. Unsanitized attribute rendering permits arbitrary script execution inside privileged administrator sessions.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lulztigre.pw/posts/icagenda-stored-xss-102790.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Shippori+Mincho:wght@700;800;900&family=Yuji+Boku&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Architects+Daughter&family=Chakra+Petch:wght@500;600;700&family=Oswald:wght@500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Saira+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body);"></script>
+
+  <link rel="stylesheet" href="../assets/css/style.css?v=3.5">
+
+  <!-- Prevent Theme Flash & Randomize Theme on Visit, Reload & Navigation -->
+  <script>
+    (function(){
+      var THEME_KEY = 'phantom_kernel_theme';
+      var themes = ['phantom', 'floral', 'uchiha', 'arctic', 'phosphor', 'solar', 'cobalt', 'sakura', 'yua'];
+      var lastTheme = localStorage.getItem(THEME_KEY);
+      var pool = themes.filter(function(t) { return t !== lastTheme; });
+      if (pool.length === 0) pool = themes;
+      var chosen = pool[Math.floor(Math.random() * pool.length)] || 'floral';
+      localStorage.setItem(THEME_KEY, chosen);
+      document.documentElement.setAttribute('data-theme', chosen);
+      if (chosen === 'floral' || chosen === 'flora' || chosen === 'ghost') {
+        document.documentElement.setAttribute('data-palette', 'sage');
+      } else {
+        document.documentElement.removeAttribute('data-palette');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <div id="reading-progress"></div>
+
+  <!-- Top System Telemetry Ticker -->
+  <div class="system-ticker">
+    <div class="ticker-left">
+      <span class="status-indicator"><span class="status-dot"></span>MEMO #010 // CLASSIFIED FIELD DISPATCH</span>
+      <span class="ticker-security-level">CLEARANCE: LEVEL-4 // TOP SECRET</span>
+      <span class="ticker-utc-clock" id="top-ticker-utc">UTC: --:--:--</span>
+    </div>
+    <div class="ticker-right">
+      <button type="button" class="ticker-audio-toggle" id="audio-toggle-btn" title="Toggle cyber audio feedback">
+        <span class="audio-icon">🔇</span> <span class="audio-text">SFX: OFF</span>
+      </button>
+      <span class="ticker-shortcut">SHORTCUT: [T] THEME / [ESC] BACK</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="site-brand">
+        <svg class="brand-sharingan" viewBox="0 0 40 40" width="22" height="22" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#8B0000"/><circle cx="20" cy="20" r="17" fill="none" stroke="#FF0000" stroke-width="2.2"/><circle cx="20" cy="20" r="5.2" fill="#000"/><g fill="#000"><circle cx="20" cy="8.6" r="3.9"/><circle cx="29.9" cy="25.7" r="3.9"/><circle cx="10.1" cy="25.7" r="3.9"/></g><g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round"><path d="M20 8.6 C 25.2 8.6 28.9 12.3 28.9 17.4"/><path d="M29.9 25.7 C 27.3 30.2 22 31.6 17.6 29.1"/><path d="M10.1 25.7 C 7.5 21.2 9.4 15.8 13.9 13.4"/></g></svg>
+        <svg class="brand-sprig flora-crest-svg" viewBox="0 0 100 100" width="22" height="22" aria-hidden="true" title="Flora Botanical Crest"><circle cx="50" cy="50" r="46" fill="rgba(46,139,87,0.12)" stroke="#2E8B57" stroke-width="2.5"/><path d="M 50,86 C 50,60 50,30 50,16" stroke="#2E8B57" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M 50,65 C 32,65 24,52 22,40 C 35,40 48,52 50,65 Z" fill="#4F7942" stroke="#1B4D3E" stroke-width="2"/><path d="M 50,48 C 68,48 76,35 78,23 C 65,23 52,35 50,48 Z" fill="#2E8B57" stroke="#1B4D3E" stroke-width="2"/><circle cx="50" cy="18" r="5" fill="#E88C9E" stroke="#A0522D" stroke-width="1.5"/></svg>
+        <span>LULZTIGRE</span>
+        <span class="brand-badge">id=(spore)</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link active">/DISPATCHES</a></li>
+          <li class="nav-item"><a href="../llm-clock.html" class="nav-link">/LLM_CLOCK</a></li>
+          <li class="nav-item"><a href="../wikirun/index.html" class="nav-link">/WIKIRUN</a></li>
+          <li class="nav-item"><a href="../archive.html" class="nav-link">/ARCHIVE</a></li>
+          <li class="nav-item"><a href="../about.html" class="nav-link">/ABOUT_ME</a></li>
+          <li class="nav-item"><a href="../feed.xml" class="nav-link" target="_blank">/RSS</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-controls">
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cycle visual theme">
+          <span>● PHANTOM</span>
+        </button>
+        <button class="mobile-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <header class="article-header" style="background: transparent; border-bottom: none; padding: 2rem 0 0.5rem;">
+    <div class="container">
+      <div class="uchiha-moon" aria-hidden="true"></div>
+
+      <div class="article-tactical-header-card">
+        <span class="card-reticle tl"></span>
+        <span class="card-reticle br"></span>
+
+        <div class="article-breadcrumbs">
+          <a href="../index.html">ROOT</a> <span>/</span> 
+          <a href="../archive.html">DISPATCHES</a> <span>/</span> 
+          <span>MEMO #010</span>
+        </div>
+
+        <div class="dossier-meta-badge" style="margin-bottom: 0.75rem;">
+          <span class="dossier-beacon"></span>
+          <span class="dossier-code">DISPATCH // FIELD INTELLIGENCE MEMO</span>
+          <span class="dossier-sub-id" style="color: #ff9900;">CVSS 7.5 HIGH</span>
+          <span class="uchiha-hanko" aria-hidden="true">忍</span>
+          <span class="floral-stamp" aria-hidden="true">✿</span>
+        </div>
+
+        <h1 class="article-title" data-scramble="CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field" style="margin-bottom: 1rem;">
+          CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field
+        </h1>
+
+        <!-- CVSS Meter -->
+        <div class="cvss-bar-track" style="margin-bottom: 1rem;">
+          <div class="cvss-bar-fill" style="width: 75%; background: linear-gradient(90deg, #ff9900, #ff5500);"></div>
+        </div>
+
+        <div class="article-tactical-telemetry">
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">CVE IDENTIFIER</span>
+            <span class="article-telemetry-val" style="color: #ff9900;">CVE-2026-102790</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">TARGET RUNTIME</span>
+            <span class="article-telemetry-val">iCagenda 3.2.1–4.0.16</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">VULN PRIMITIVE</span>
+            <span class="article-telemetry-val">Stored Custom Field XSS</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">DISCLOSURE DATE</span>
+            <span class="article-telemetry-val">2026-11-04 UTC</span>
+          </div>
+          <div class="article-telemetry-col">
+            <span class="article-telemetry-lbl">RESEARCH OPERATIVE</span>
+            <span class="article-telemetry-val">Akinlabi [Lulztigre]</span>
+          </div>
+        </div>
+
+        <div class="article-meta-panel" style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 1.25rem; font-family: var(--font-mono); font-size: 0.78rem;">
+          <div class="meta-item"><span class="meta-label">DATE:</span> <strong>2026-11-04</strong></div>
+          <div class="meta-item"><span class="meta-label">AUTHOR:</span> <strong>Lulztigre</strong></div>
+          <div class="meta-item"><span class="meta-label">CATEGORY:</span> <strong>OFFENSIVE SECURITY</strong></div>
+          <div class="meta-item"><span class="meta-label">READ TIME:</span> <strong>~14 MIN</strong></div>
+          <div class="meta-item"><span class="meta-label">TAGS:</span> <strong>#OFFENSIVE SECURITY #CVE RESEARCH #ICAGENDA #STORED XSS #JOOMLA #VENDOR DISCLOSURE #0-DAY</strong></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="article-layout">
+      
+      <article class="prose">
+        <div class="callout callout-definition" id="abstract">
+          <div class="callout-header">
+            <span>[ABSTRACT &amp; CORE THESIS]</span>
+          </div>
+          <p>A stored cross-site scripting (XSS) vulnerability across iCagenda 3.2.1 through 4.0.16 via URL-type event custom fields. Unsanitized attribute rendering permits arbitrary script execution inside privileged administrator sessions. Detailed source code walkthrough, lab repro, and weaponized PoC arriving upon disclosure completion.</p>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- PLACEHOLDER BANNER: TECHNICAL WRITEUP IN LAB FINALIZATION -->
+        <!-- ======================================================== -->
+        <div class="callout callout-warning" style="border-left: 4px solid #ff9900; background: rgba(255, 153, 0, 0.08); padding: 1.5rem; margin: 2rem 0; border-radius: 4px;">
+          <div class="callout-header" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; color: #ff9900; font-family: var(--font-mono); font-weight: 700;">
+            <span>⚡ [RESEARCH DISCLOSURE PLACEHOLDER // PUBLICATION PENDING]</span>
+          </div>
+          <p style="margin-bottom: 0.75rem;">
+            <strong>CVE-2026-102790</strong> has been officially assigned and coordinated with the vendor. The full technical writeup, source-level sink audit, reproducible lab environment, and remediation diff are currently being finalized for publication.
+          </p>
+          <p style="margin-bottom: 0; font-size: 0.9em; opacity: 0.9;">
+            <em>When the comprehensive blog analysis is released, this memo will be updated in place with the complete disclosure breakdown.</em>
+          </p>
+        </div>
+
+        <h2 id="vulnerability-target-profile">Vulnerability Target Profile</h2>
+        <div style="overflow-x: auto; margin: 1.5rem 0;">
+          <table style="width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.85rem;">
+            <thead>
+              <tr style="background: var(--bg-surface-elevated, rgba(255,255,255,0.05)); text-align: left;">
+                <th style="padding: 0.75rem; border: 1px solid var(--border-light);">METRIC</th>
+                <th style="padding: 0.75rem; border: 1px solid var(--border-light);">SPECIFICATION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">CVE Identifier</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); color: #ff9900;">CVE-2026-102790</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">Affected Software</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light);">iCagenda (Joomla! Component)</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">Vulnerable Versions</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light);">3.2.1 through 4.0.16</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">Common Weakness</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light);">CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">Attack Vector</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light);">Network (Remote) / Unescaped URL Custom Field Render Sink</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">CVSS Score</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light);">7.5 (High)</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); font-weight: bold;">Status</td>
+                <td style="padding: 0.65rem; border: 1px solid var(--border-light); color: var(--accent-primary);">Assigned // Coordinated Disclosure // Writeup in Progress</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="vulnerability-summary">Vulnerability Summary</h2>
+        <p>
+          While expanding variant analysis on the iCagenda input pipeline, a stored Cross-Site Scripting (XSS) vulnerability was identified within the URL-type event custom field mechanism. Custom fields configured with the URL type fail to properly validate and escape URI schemes and attributes upon persistence and subsequent front-end or back-end rendering.
+        </p>
+        <p>
+          An attacker capable of registering or modifying event entries can inject crafted JavaScript pseudo-protocols or breakout vectors into the URL field. When administrative personnel review incoming submissions or when authenticated site visitors view the event detail view, the malicious payload executes in the context of the user session, facilitating administrative account takeover and unauthorized actions.
+        </p>
+
+        <h2 id="disclosure-timeline">Disclosure Timeline</h2>
+        <ul style="font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.8;">
+          <li><strong>2026-Q3:</strong> Vulnerability identified during comprehensive variant audit of iCagenda custom field architecture.</li>
+          <li><strong>2026-Q3:</strong> Cleanroom reproduction harness and minimal proof-of-concept verified.</li>
+          <li><strong>2026-Q4:</strong> Security advisory and technical details submitted to vendor.</li>
+          <li><strong>2026-Q4:</strong> CVE-2026-102790 officially assigned.</li>
+          <li><strong>2026-11-04:</strong> Research placeholder registered; full technical deep dive and patch diff queued for release.</li>
+        </ul>
+
+        <!-- ======================================================== -->
+        <!-- BLOG CONTENT PLACEHOLDER: FULL DISCLOSURE WRITEUP SLOT   -->
+        <!-- ======================================================== -->
+        <div style="margin-top: 3rem; padding: 2rem; border: 2px dashed var(--border-light); border-radius: 6px; text-align: center;">
+          <span style="font-size: 1.8rem;">📝</span>
+          <h3 style="margin-top: 0.5rem; margin-bottom: 0.5rem; font-family: var(--font-mono); font-size: 1rem;">// FULL TECHNICAL WRITEUP WILL APPEAR HERE</h3>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 600px; margin: 0 auto;">
+            Source code traces, render sink disassembly, AST comparison, and exploitation scripts will be published directly in this section once the embargo window clears.
+          </p>
+        </div>
+
+        <!-- BibTeX Citation -->
+        <div class="callout" id="bibtex" style="margin-top: 3.5rem;">
+          <div class="callout-header">
+            <span>BIBTEX CITATION</span>
+          </div>
+          <pre class="bibtex-code">@article{lulz2026_icagenda_102790,
+  author    = {Lulztigre},
+  title     = {CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field},
+  journal   = {Lulztigre Dispatches},
+  year      = {2026},
+  url       = {https://lulztigre.pw/posts/icagenda-stored-xss-102790.html}
+}</pre>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <!-- Operative Dossier Mini-Widget -->
+        <div class="operative-dossier-widget">
+          <span class="card-reticle tl"></span>
+          <span class="card-reticle br"></span>
+          <div class="operative-widget-header">
+            <span>OPERATIVE TELEMETRY</span>
+            <span>LZ-994</span>
+          </div>
+          <div class="operative-widget-profile">
+            <div class="operative-widget-avatar">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.84 2.16 7.18 5.34 8.86.32-.4.65-.87.97-1.42.23-.4.43-.83.61-1.29-.6-.4-1.12-.9-1.54-1.5-.7-.99-1.09-2.22-1.09-3.53 0-3.31 2.69-6 6-6s6 2.69 6 6c0 1.31-.39 2.54-1.09 3.53-.42.6-.94 1.1-1.54 1.5.18.46.38.89.61 1.29.32.55.65 1.02.97 1.42C19.84 19.18 22 15.84 22 12c0-5.52-4.48-10-10-10zm-3 12c-.83 0-1.5-.67-1.5-1.5S8.17 11 9 11s1.5.67 1.5 1.5S9.83 14 9 14zm6 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </div>
+            <div class="operative-widget-info">
+              <h4 class="operative-widget-name">AKINLABI</h4>
+              <span class="operative-widget-role">HEAD OF RED TEAM &amp; RESEARCH</span>
+            </div>
+          </div>
+          <div class="operative-doctrine-box">
+            <span class="doctrine-prefix">DOCTRINE //</span>
+            <span class="doctrine-quote">"pick a god and pray"</span>
+          </div>
+          <a href="../about.html" class="operative-widget-link">VIEW FULL DOSSIER →</a>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// NAVIGATION INDEX</div>
+          <ul class="toc-list">
+            <li><a href="#abstract" class="toc-link">0. Abstract &amp; Thesis</a></li>
+            <li><a href="#vulnerability-target-profile" class="toc-link">1. Target Profile</a></li>
+            <li><a href="#vulnerability-summary" class="toc-link">2. Vulnerability Summary</a></li>
+            <li><a href="#disclosure-timeline" class="toc-link">3. Disclosure Timeline</a></li>
+            <li><a href="#bibtex" class="toc-link">BibTeX Citation</a></li>
+          </ul>
+        </div>
+
+        <div class="toc-card">
+          <div class="toc-title">// ARTICLE ACTIONS</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="window.print()">PRINT / PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(window.location.href); showToast('Link copied');">SHARE PERMALINK</button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>© 2026 LULZTIGRE. OPEN ACCESS.</span>
+        <a href="../index.html" style="color: inherit; text-decoration: underline;">← BACK TO ALL DISPATCHES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js?v=2.5"></script>
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://lulztigre.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

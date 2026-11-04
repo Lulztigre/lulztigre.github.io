@@ -159,7 +159,7 @@
       <!-- Archive Stats Strip -->
       <div class="archive-stats-strip">
         <div class="archive-stat-tile">
-          <span class="archive-stat-val">5</span>
+          <span class="archive-stat-val">8</span>
           <span class="archive-stat-lbl">PUBLISHED MEMOS</span>
         </div>
         <div class="archive-stat-tile">
@@ -167,7 +167,7 @@
           <span class="archive-stat-lbl">MAX CVSS SEVERITY</span>
         </div>
         <div class="archive-stat-tile">
-          <span class="archive-stat-val">4</span>
+          <span class="archive-stat-val">6</span>
           <span class="archive-stat-lbl">CVE DISCLOSURES</span>
         </div>
         <div class="archive-stat-tile">
@@ -218,7 +218,79 @@
 
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
 
-          <!-- Entry 0x09: Dokploy CVE-2026-72867 -->
+          <!-- Entry 0x0B: MEMO #011 -->
+          <article class="archive-entry-card" style="border-left: 4px solid #ff9900;">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x0B</span>
+                <span class="memo-num-badge">MEMO #011</span>
+                <span class="target-badge-pill">TARGET: <strong>iCagenda 3.5.0–4.0.16</strong></span>
+                <span>2026-11-04</span>
+              </div>
+              <span class="post-cvss-indicator high">CVSS 7.8 HIGH</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/icagenda-csv-formula-injection-102799.html">
+                CVE-2026-102799 in iCagenda: CSV Formula Injection in Registrations Export
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              A formula injection vulnerability (CWE-1236) in iCagenda 3.5.0 through 4.0.16 registrations export module. Untrusted attendee inputs commencing with formula triggers execute arbitrary client commands upon CSV review. Lab reproduction harness and coordinated disclosure notes landing here shortly.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-high">CVE-2026-102799</span>
+                <span class="tag-chip chip-high">PLACEHOLDER</span>
+                <span class="tag-chip">ICAGENDA</span>
+                <span class="tag-chip">CSV INJECTION</span>
+              </div>
+              <a href="posts/icagenda-csv-formula-injection-102799.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+          <!-- Entry 0x0A: MEMO #010 -->
+          <article class="archive-entry-card" style="border-left: 4px solid #ff9900;">
+            <span class="card-reticle tl"></span>
+            <span class="card-reticle br"></span>
+
+            <div class="archive-entry-top">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="hex-counter-badge">0x0A</span>
+                <span class="memo-num-badge">MEMO #010</span>
+                <span class="target-badge-pill">TARGET: <strong>iCagenda 3.2.1–4.0.16</strong></span>
+                <span>2026-11-04</span>
+              </div>
+              <span class="post-cvss-indicator high">CVSS 7.5 HIGH</span>
+            </div>
+
+            <h3 class="archive-entry-title">
+              <a href="posts/icagenda-stored-xss-102790.html">
+                CVE-2026-102790 in iCagenda: Stored XSS via URL Custom Field
+              </a>
+            </h3>
+
+            <p class="archive-entry-desc">
+              A stored cross-site scripting (XSS) vulnerability across iCagenda 3.2.1 through 4.0.16 via URL-type event custom fields. Unsanitized attribute rendering permits arbitrary script execution inside privileged administrator sessions. Detailed source code walkthrough, lab repro, and weaponized PoC arriving upon disclosure completion.
+            </p>
+
+            <div class="archive-entry-bottom">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <span class="tag-chip chip-high">CVE-2026-102790</span>
+                <span class="tag-chip chip-high">PLACEHOLDER</span>
+                <span class="tag-chip">ICAGENDA</span>
+                <span class="tag-chip">STORED XSS</span>
+              </div>
+              <a href="posts/icagenda-stored-xss-102790.html" class="btn btn-primary btn-sm">VIEW MEMO →</a>
+            </div>
+          </article>
+
+          <!-- Entry 0x09: MEMO #009 -->
           <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
             <span class="card-reticle tl"></span>
             <span class="card-reticle br"></span>
@@ -240,7 +312,7 @@
             </h3>
 
             <p class="archive-entry-desc">
-              A red team engagement put a vulnerable Dokploy instance in front of me. The CVE had a score, a patch, and no public exploit, so I read the write path and the deploy path, rebuilt the exact image in a lab, and wrote the missing PoC.
+              A red team engagement put a vulnerable Dokploy instance in front of me. The CVE had a score, a patch, and no public exploit, so I read the write path and the deploy path, rebuilt the exact image in a lab, and wrote the missing PoC. This memo documents the write path, the deploy path, the lab repro, and the detection script.
             </p>
 
             <div class="archive-entry-bottom">
@@ -254,7 +326,7 @@
             </div>
           </article>
 
-          <!-- Entry 0x08: Balbooa Forms -->
+          <!-- Entry 0x08: MEMO #008 -->
           <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
             <span class="card-reticle tl"></span>
             <span class="card-reticle br"></span>
@@ -276,7 +348,7 @@
             </h3>
 
             <p class="archive-entry-desc">
-              While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws: custom-PHP eval() query injection and payment parameter tampering.
+              While variant-hunting the pre-auth upload RCEs in Balbooa Forms, a line-by-line read of the shortcode engine and the payment tasks surfaced two separate flaws. The custom-PHP handler eval()s an unescaped query parameter behind a CSRF token that anyone can mint, and both payment endpoints charge the attacker-supplied total straight to Stripe and Authorize.net. This memo walks both code paths line by line, the MITM wire capture, and the disclosure to JSST.
             </p>
 
             <div class="archive-entry-bottom">
@@ -290,7 +362,7 @@
             </div>
           </article>
 
-          <!-- Entry 0x07: Apache Gravitino -->
+          <!-- Entry 0x07: MEMO #007 -->
           <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
             <span class="card-reticle tl"></span>
             <span class="card-reticle br"></span>
@@ -312,7 +384,7 @@
             </h3>
 
             <p class="archive-entry-desc">
-              While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation.
+              While hunting an incomplete-fix pattern across Apache Gravitino's catalog REST surface, an unauthenticated testConnection endpoint surfaced that hands attacker-controlled jdbc-url strings to the connection factory with zero validation. This memo walks the patch diff, the variant sweep, and the first working PoC for CVE-2026-41042.
             </p>
 
             <div class="archive-entry-bottom">
@@ -325,7 +397,7 @@
             </div>
           </article>
 
-          <!-- Entry 0x06: DropoutJeep -->
+          <!-- Entry 0x06: MEMO #006 -->
           <article class="archive-entry-card" style="border-left: 4px solid var(--accent-primary);">
             <span class="card-reticle tl"></span>
             <span class="card-reticle br"></span>
@@ -347,7 +419,7 @@
             </h3>
 
             <p class="archive-entry-desc">
-              DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability.
+              DropoutJeep is a phishing-simulation and red-team platform with 80-plus utility modules spanning OSINT, pretext generation, payload crafting, C2, exfiltration, evasion, persistence, and deliverability. This memo covers why it exists, why it keeps growing, and why its authors now read Gmail spam-filter documentation for fun.
             </p>
 
             <div class="archive-entry-bottom">
@@ -360,7 +432,7 @@
             </div>
           </article>
 
-          <!-- Entry 0x05: iCagenda -->
+          <!-- Entry 0x05: MEMO #005 -->
           <article class="archive-entry-card" style="border-left: 4px solid #ff9900;">
             <span class="card-reticle tl"></span>
             <span class="card-reticle br"></span>
@@ -382,7 +454,7 @@
             </h3>
 
             <p class="archive-entry-desc">
-              A stored XSS in iCagenda 4.0.8 through 4.0.12, found while rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores image and file fields as raw unescaped strings.
+              A stored XSS in iCagenda 4.0.8 through 4.0.12, found while I was rebuilding the extension's KEV-listed upload bug during an incident response. The event submission form stores the image and file fields as raw strings, and the event page prints them straight into an img src and an a href. This memo walks the code line by line, the lab repro, and the retest of the vendor candidate build.
             </p>
 
             <div class="archive-entry-bottom">
@@ -395,7 +467,7 @@
             </div>
           </article>
 
-          <!-- Entry 0x04: GrandScream -->
+          <!-- Entry 0x04: MEMO #004 -->
           <article class="archive-entry-card" style="border-left: 4px solid #ff3366;">
             <span class="card-reticle tl"></span>
             <span class="card-reticle br"></span>
@@ -417,12 +489,12 @@
             </h3>
 
             <p class="archive-entry-desc">
-              One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. Full narrative of the unauth leak to blind SQLi to root.
+              One unauthenticated request against a Grandstream desk phone is enough to locate the PBX, fingerprint its firmware, and eventually own it, root shell included. This memo is the narrative of that chain: the leaks that pointed the way, the blind SQLi that gave up the password, and the credential reuse that collapsed three devices into one.
             </p>
 
             <div class="archive-entry-bottom">
               <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-                <span class="tag-chip chip-critical">ROOT CHAIN</span>
+                <span class="tag-chip chip-verified">ROOT CHAIN</span>
                 <span class="tag-chip chip-verified">PROVEN WEAPONIZATION</span>
                 <span class="tag-chip">VOIP ROOT</span>
               </div>
